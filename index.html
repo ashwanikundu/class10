@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#070b14">
-<title>Class 10 Master Portal • Module 9 (Board Exam Strategy & Time Management Hub)</title>
+<title>Class 10 Master Portal • Module 10 (Interactive Formula Practice & Test Hub)</title>
 <style>
   :root {
     --primary: #4f46e5;
@@ -74,10 +74,14 @@
     background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 16px; padding: 20px;
     margin-bottom: 16px; box-shadow: var(--shadow); position: relative; overflow: hidden;
   }
-  .card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: linear-gradient(180deg, #ec4899, #8b5cf6); }
+  .card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: linear-gradient(180deg, #10b981, #3b82f6); }
   
-  .tip-box { background: var(--sub-box, var(--sub-bg)); border: 1px solid var(--border); padding: 14px 16px; border-radius: 12px; margin-top: 12px; }
-  .tip-title { font-weight: 800; color: #f472b6; font-size: 0.95rem; margin-bottom: 4px; }
+  .btn {
+    background: linear-gradient(135deg, #10b981, #047857); color: #fff; border: none;
+    padding: 10px 18px; border-radius: 10px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem;
+  }
+  
+  .practice-input { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--sub-bg); color: var(--text); margin-top: 10px; font-family: inherit; }
 
   footer { text-align: center; padding: 20px; color: var(--muted); font-size: 0.78rem; }
 </style>
@@ -89,7 +93,7 @@
     <div class="brand-row">
       <div>
         <h1 class="brand-title">Class 10 Master Portal (CBSE & HBSE)</h1>
-        <p class="brand-sub">Module 9: Board Exam Strategy & Time Management Hub</p>
+        <p class="brand-sub">Module 10: Interactive Formula Practice & Test Hub</p>
       </div>
       <div class="top-controls">
         <div class="medium-switch">
@@ -108,7 +112,7 @@
 </div>
 
 <footer>
-  Class 10 Master Portal • Module 9 (Strategy Hub) • Zero Data Loss Engine
+  Class 10 Master Portal • Module 10 (Practice Hub) • Zero Data Loss Engine
 </footer>
 
 <script>
@@ -119,8 +123,34 @@ const SafeStore = {
 
 let state = {
   medium: SafeStore.get('mp_med', 'en'),
-  isDark: SafeStore.get('mp_dark', '1') === '1'
+  isDark: SafeStore.get('mp_dark', '1') === '1',
+  qIndex: 0,
+  userAnswer: '',
+  feedback: ''
 };
+
+const PRACTICE_ITEMS = [
+  {
+    promptEn: "Type the formula for Discriminant (D) of quadratic equation:",
+    promptHi: "द्विघात समीकरण के विविक्तकर (Discriminant / D) का सूत्र टाइप करें:",
+    ans: "b^2 - 4ac"
+  },
+  {
+    promptEn: "Type Ohm's Law relation between V, I and R:",
+    promptHi: "V, I और R के बीच ओह्म का नियम टाइप करें:",
+    ans: "ir"
+  },
+  {
+    promptEn: "Type the formula for Sum of zeroes (α + β) for quadratic polynomial:",
+    promptHi: "द्विघात बहुपद के शून्यकों के योग (α + β) का सूत्र टाइप करें:",
+    ans: "-b/a"
+  },
+  {
+    promptEn: "Type the Lens Formula (1/v - 1/u = 1/f):",
+    promptHi: "लेंस सूत्र टाइप करें (1/v - 1/u = 1/f):",
+    ans: "1/v - 1/u = 1/f"
+  }
+];
 
 function applyTheme() {
   document.body.classList.toggle('light', !state.isDark);
@@ -141,53 +171,55 @@ function setMedium(m) {
 
 function renderBreadcrumb() {
   const bc = document.getElementById('breadcrumb');
-  bc.innerHTML = `<span>🏠 All Utilities • Module 9 (Board Exam Strategy & Blueprint)</span>`;
+  bc.innerHTML = `<span>🏠 All Utilities • Module 10 (Interactive Formula Practice Hub)</span>`;
 }
-
-const STRATEGIES = [
-  {
-    titleEn: "Paper Attempt Strategy (3-Hour Rule)",
-    titleHi: "पेपर हल करने की रणनीति (3-घंटे का नियम)",
-    descEn: "Start with 2-mark and 3-mark questions first when your mind is fresh. Leave 15 minutes at the end for revision and checking calculations.",
-    descHi: "दिमाग तरोताजा होने पर सबसे पहले 2-अंक और 3-अंक वाले प्रश्न हल करें। अंत में 15 मिनट रिवीजन और कैलकुलेशन जाँच के लिए जरूर बचाएँ।"
-  },
-  {
-    titleEn: "Presentation & Step Marking",
-    titleHi: "उत्तर प्रस्तुति और स्टेप मार्किंग",
-    descEn: "Always draw a neat margin on the answer sheet. Write given values, formula, substitution, and final answer with correct SI units for step marks.",
-    descHi: "उत्तर पुस्तिका में हमेशा हाशिया (Margin) खींचें। स्टेप मार्किंग पाने के लिए दिया गया मान, सूत्र, मान रखना और सही मात्रक के साथ अंतिम उत्तर लिखें।"
-  },
-  {
-    titleEn: "Diagram & Graph Precision",
-    titleHi: "चित्र और ग्राफ की सटीकता",
-    descEn: "Use a sharp HB pencil for all science diagrams (ray optics, biology life processes) and math constructions/graphs. Label every important part clearly.",
-    descHi: "विज्ञान के चित्रों (किरण आरेख, जैव प्रक्रम) और गणित की रचनाओं व ग्राफ के लिए हमेशा तेज धार वाली HB पेंसिल का उपयोग करें।"
-  },
-  {
-    titleEn: "Handling Difficult Numerical Questions",
-    titleHi: "कठिन न्यूमेरिकल प्रश्नों को हल करने का तरीका",
-    descEn: "If stuck in a numerical, write down all known variables (Given:) and the relevant formula. Even partial steps fetch 50% marks in board exams.",
-    descHi: "यदि किसी न्यूमेरिकल में अटक जाएँ, तो कम से कम 'Given:' (दिया गया है) और संबंधित सूत्र जरूर लिख आएं। बोर्ड परीक्षा में आधे नंबर मिल जाते हैं।"
-  }
-];
 
 function render() {
   renderBreadcrumb();
   const app = document.getElementById('app');
 
+  if (state.qIndex >= PRACTICE_ITEMS.length) {
+    app.innerHTML = `
+      <div class="card" style="text-align:center; padding:30px;">
+        <h2 style="margin:0 0 10px; color:#34d399;">🌟 Formula Practice Completed!</h2>
+        <p style="font-size:1.05rem; margin-bottom:16px;">आपने सभी फॉर्मूलों का अभ्यास सफलतापूर्वक पूरा कर लिया है।</p>
+        <button class="btn" onclick="state.qIndex=0; state.feedback=''; render();">🔄 दोबारा अभ्यास करें (Restart Practice)</button>
+      </div>
+    `;
+    return;
+  }
+
+  const item = PRACTICE_ITEMS[state.qIndex];
+
   app.innerHTML = `
     <div class="card">
-      <h2 style="margin:0 0 8px; font-size:1.15rem;">🎯 CBSE & HBSE Board Exam Master Strategy (Topper Blueprint)</h2>
-      <p style="margin:0 0 14px; font-size:0.85rem; color:var(--muted);">बोर्ड परीक्षा में 80/80 अंक पक्के करने के लिए अचूक समय प्रबंधन और परीक्षा हॉल टिप्स।</p>
-      
-      ${STRATEGIES.map(s => `
-        <div class="tip-box">
-          <div class="tip-title">📌 ${state.medium === 'hi' ? s.titleHi : s.titleEn}</div>
-          <div style="font-size:0.88rem; color:var(--text); margin-top:4px;">${state.medium === 'hi' ? s.descHi : s.descEn}</div>
-        </div>
-      `).join('')}
+      <div style="font-size:0.78rem; font-weight:700; color:var(--muted); margin-bottom:6px;">Practice Item ${state.qIndex + 1} of ${PRACTICE_ITEMS.length}</div>
+      <h3 style="margin:0 0 12px; font-size:1.05rem;">${state.medium === 'hi' ? item.promptHi : item.promptEn}</h3>
+      <input type="text" class="practice-input" id="ansInput" placeholder="अपना उत्तर यहाँ लिखें..." value="${state.userAnswer}" oninput="state.userAnswer=this.value">
+      <button class="btn" style="margin-top:12px; width:100%; justify-content:center;" onclick="checkAnswer()">✔️ उत्तर की जाँच करें (Verify Answer)</button>
+      <div id="practiceFeedback" style="margin-top:12px; font-weight:700;">${state.feedback}</div>
     </div>
   `;
+}
+
+function checkAnswer() {
+  const item = PRACTICE_ITEMS[state.qIndex];
+  const user = state.userAnswer.trim().toLowerCase().replace(/\s+/g, '');
+  const correct = item.ans.trim().toLowerCase().replace(/\s+/g, '');
+
+  if (user === correct) {
+    state.feedback = `<span style="color:#34d399;">✅ बिल्कुल सही जवाब! (Correct Answer)</span>`;
+    render();
+    setTimeout(() => {
+      state.qIndex++;
+      state.userAnswer = '';
+      state.feedback = '';
+      render();
+    }, 1200);
+  } else {
+    state.feedback = `<span style="color:#ef4444;">❌ गलत उत्तर। सही सूत्र: <b>${item.ans}</b></span>`;
+    render();
+  }
 }
 
 applyTheme();
