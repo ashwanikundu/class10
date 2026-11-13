@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#0f172a">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#090d16">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <title>Class 10 Master Portal — Next-Gen Pro EdTech Edition</title>
@@ -79,7 +80,7 @@
   header {
     background: linear-gradient(135deg, #090d16 0%, #1e1b4b 55%, #312e81 100%);
     color: #fff;
-    padding: 14px 16px 12px;
+    padding: calc(env(safe-area-inset-top, 0px) + 12px) 14px 12px;
     position: sticky; top: 0; z-index: 100;
     box-shadow: 0 8px 30px rgba(9, 13, 22, 0.35);
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
@@ -373,6 +374,17 @@
   button:active, .subj-card:active, .lesson-item:active, .mode-card:active, .opt-btn:active {
     transform: scale(0.98) !important;
     transition: transform 0.06s ease !important;
+  }
+
+
+  @media (max-width: 480px) {
+    header { padding: calc(env(safe-area-inset-top, 0px) + 10px) 12px 10px; }
+    .brand-logo { width: 36px; height: 36px; font-size: 1.15rem; border-radius: 10px; }
+    .brand-text h1 { font-size: 0.98rem; }
+    .brand-text p { font-size: 0.68rem; }
+    .controls-bar { width: 100%; justify-content: space-between; margin-top: 4px; }
+    .quick-nav { margin-top: 8px; gap: 6px; }
+    .qnav-btn { padding: 5px 11px; font-size: 0.74rem; }
   }
 
 </style>
