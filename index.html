@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#070b14">
-<title>Class 1 to 12 Master Portal • HBSE & CBSE Hub</title>
+<title>Class 1 • Hindi (Rimjhim) - Complete Exercises & Solutions</title>
 <style>
   :root {
     --primary: #4f46e5;
@@ -14,6 +14,8 @@
     --muted: #94a3b8;
     --border: #1e293b;
     --sub-bg: #0f172a;
+    --sol-bg: #064e3b;
+    --sol-border: #059669;
     --shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
   }
   body.light {
@@ -23,17 +25,20 @@
     --muted: #64748b;
     --border: #e2e8f0;
     --sub-bg: #f8fafc;
+    --sol-bg: #ecfdf5;
+    --sol-border: #6ee7b7;
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   body {
     margin: 0; padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: var(--bg); color: var(--text); line-height: 1.5;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.6;
+    transition: background 0.2s ease, color 0.2s ease;
   }
   header {
     background: linear-gradient(135deg, #090d16 0%, #1e1b4b 60%, #312e81 100%);
-    color: #fff; padding: 14px 16px; position: sticky; top: 0; z-index: 100;
-    border-bottom: 1px solid rgba(255,255,255,0.15);
+    color: #fff; padding: 16px; position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); border-bottom: 1px solid rgba(255,255,255,0.15);
   }
   .header-content { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
   .brand-title { margin: 0; font-size: 1.15rem; font-weight: 900; }
@@ -45,36 +50,42 @@
     padding: 5px 12px; border-radius: 999px; border: none; background: transparent; color: #cbd5e1; font-weight: 700; font-size: 0.75rem; cursor: pointer;
   }
   .med-btn.active { background: #fbbf24; color: #0f172a; font-weight: 900; }
-  
   .theme-btn {
     background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 5px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; cursor: pointer;
   }
 
-  .container { max-width: 900px; margin: 0 auto; padding: 14px; }
+  .container { max-width: 900px; margin: 0 auto; padding: 16px; }
   
   .breadcrumb {
     background: var(--card); color: var(--text); padding: 10px 14px; border-radius: 12px;
-    margin-bottom: 14px; font-size: 0.82rem; font-weight: 700; border: 1px solid var(--border); box-shadow: var(--shadow);
+    margin-bottom: 16px; font-size: 0.85rem; font-weight: 700; border: 1px solid var(--border); box-shadow: var(--shadow);
   }
   .crumb-link { color: var(--primary); cursor: pointer; text-decoration: underline; }
   
   .card {
-    background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 14px; padding: 16px;
-    margin-bottom: 14px; box-shadow: var(--shadow); position: relative; overflow: hidden;
+    background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 16px; padding: 20px;
+    margin-bottom: 16px; box-shadow: var(--shadow); position: relative; overflow: hidden;
   }
-  .card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: linear-gradient(180deg, #10b981, #4f46e5); }
+  .card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: linear-gradient(180deg, #10b981, #4f46e5); }
   
-  .grid-classes { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; margin-top: 12px; }
-  .class-box { background: var(--sub-bg); border: 1px solid var(--border); padding: 14px; border-radius: 10px; text-align: center; cursor: pointer; font-weight: 800; font-size: 0.9rem; transition: all 0.2s; }
-  .class-box:hover { border-color: var(--primary); background: rgba(79,70,229,0.1); }
+  .section-heading {
+    font-size: 1.1rem; font-weight: 900; color: var(--primary); margin: 0 0 14px 0;
+    display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); padding-bottom: 8px;
+  }
 
-  .subj-box { background: var(--sub-bg); border: 1px solid var(--border); padding: 14px; border-radius: 10px; margin-bottom: 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-  .subj-box:hover { border-color: #10b981; }
+  .q-box {
+    background: var(--sub-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 16px;
+  }
+  .question {
+    font-weight: 800; color: var(--text); margin-bottom: 10px; font-size: 0.95rem;
+  }
+  .solution {
+    background: var(--sol-bg); border: 1px solid var(--sol-border); padding: 12px 14px; border-radius: 10px;
+    font-size: 0.9rem; color: var(--text); line-height: 1.6;
+  }
+  .math { color: #f59e0b; font-weight: 800; font-style: italic; }
 
-  .ai-input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--text); font-family: inherit; margin-top: 6px; }
-  .btn { background: var(--primary); color: #fff; border: none; padding: 8px 14px; border-radius: 8px; font-weight: 800; cursor: pointer; font-size: 0.82rem; display: inline-flex; align-items: center; gap: 6px; }
-
-  footer { text-align: center; padding: 16px; color: var(--muted); font-size: 0.75rem; }
+  footer { text-align: center; padding: 20px; color: var(--muted); font-size: 0.78rem; }
 </style>
 </head>
 <body>
@@ -82,13 +93,13 @@
 <header>
   <div class="header-content">
     <div>
-      <h1 class="brand-title">Class 1 to 12 Master Portal (HBSE & CBSE)</h1>
-      <p class="brand-sub">Lightweight Modular Hub • Real Lessons, Exercises & AI Tutor</p>
+      <h1 class="brand-title">Class 1 • Hindi (Rimjhim) - Exercises & Solutions</h1>
+      <p class="brand-sub">HBSE & CBSE Aligned Complete Chapter Solutions Hub</p>
     </div>
     <div class="top-controls">
       <div class="medium-switch">
-        <button class="med-btn active" id="btnEn" onclick="setMedium('en')">English</button>
-        <button class="med-btn" id="btnHi" onclick="setMedium('hi')">हिंदी</button>
+        <button class="med-btn active" id="btnHi" onclick="setMedium('hi')">हिंदी</button>
+        <button class="med-btn" id="btnEn" onclick="setMedium('en')">English</button>
       </div>
       <button class="theme-btn" onclick="toggleTheme()">🌓</button>
     </div>
@@ -100,7 +111,7 @@
   <div id="app"></div>
 </div>
 
-<footer>Class 1-12 Master Portal • Optimized & Ultra-Fast Engine</footer>
+<footer>Class 1 Hindi Master Portal • HBSE & CBSE Hub</footer>
 
 <script>
 const Store = {
@@ -109,116 +120,119 @@ const Store = {
 };
 
 let state = {
-  med: Store.get('mp_med', 'en'),
+  med: Store.get('mp_med', 'hi'),
   dark: Store.get('mp_dark', '1') === '1',
-  view: 'home',
-  cls: null,
-  sub: null,
-  les: null,
-  aiQ: '',
-  aiAns: ''
+  chapter: 1
 };
 
 function applyTheme() { document.body.classList.toggle('light', !state.dark); }
 function toggleTheme() { state.dark = !state.dark; Store.set('mp_dark', state.dark ? '1' : '0'); applyTheme(); }
-function setMedium(m) { state.med = m; Store.set('mp_med', m); document.getElementById('btnEn').classList.toggle('active', m==='en'); document.getElementById('btnHi').classList.toggle('active', m==='hi'); render(); }
-
-function renderBreadcrumb() {
-  const bc = document.getElementById('breadcrumb');
-  if (state.view === 'home') bc.innerHTML = `<span>🏠 All Classes (कक्षा 1 से 12) • HBSE & CBSE Hub</span>`;
-  else if (state.view === 'ai') bc.innerHTML = `<span class="crumb-link" onclick="state.view='home';render();">Home</span> › <span>🤖 AI Tutor</span>`;
-  else if (state.view === 'subs') bc.innerHTML = `<span class="crumb-link" onclick="state.view='home';state.cls=null;render();">Home</span> › <span>Class ${state.cls} Subjects</span>`;
-  else if (state.view === 'less') bc.innerHTML = `<span class="crumb-link" onclick="state.view='home';render();">Home</span> › <span class="crumb-link" onclick="state.view='subs';state.sub=null;render();">Class ${state.cls}</span> › <span>Chapters</span>`;
-  else if (state.view === 'cont') bc.innerHTML = `<span class="crumb-link" onclick="state.view='home';render();">Home</span> › <span class="crumb-link" onclick="state.view='less';state.les=null;render();">Chapters</span> › <span>Details</span>`;
+function setMedium(m) { 
+  state.med = m; 
+  Store.set('mp_med', m); 
+  document.getElementById('btnHi').classList.toggle('active', m==='hi'); 
+  document.getElementById('btnEn').classList.toggle('active', m==='en'); 
+  render(); 
 }
 
-// Compact, fast database mapping key classes & subjects
-function getData(c) {
-  if (c === 1) return {
-    hindi: { nameEn: "Hindi (Rimjhim)", nameHi: "हिंदी (रिमझिम)", les: [
-      { tEn: "Ch 1: Jhula (Poem)", tHi: "पाठ 1: झूला", dEn: "Amma aaj laga de jhula...", dHi: "अम्मा आज लगा दे झूला...", ex: "Ex: झूले को किन-किन चीजों से झुलाया जा सकता है?" },
-      { tEn: "Ch 2: Aam ki Kahaani", tHi: "पाठ 2: आम की कहानी", dEn: "A crow and squirrel story.", dHi: "कौवे और गिलहरी की कहानी।", ex: "Ex: चित्र देखकर घटनाओं को सही क्रम में लगाएँ।" }
-    ]},
-    math: { nameEn: "Mathematics", nameHi: "गणित", les: [
-      { tEn: "Ch 1: Shapes & Space", tHi: "अध्याय 1: आकृतियाँ", dEn: "Inside-outside, bigger-smaller.", dHi: "अंदर-बाहर, बड़ा-छोटा।", ex: "Ex: Tick the bigger object." }
-    ]}
-  };
-  return {
-    math: { nameEn: "Mathematics", nameHi: "गणित", les: [
-      { tEn: "Chapter 1: Real Numbers / Core Concepts", tHi: "अध्याय 1: मूल अवधारणाएँ व संख्याएँ", dEn: "Fundamental formulas and exercises.", dHi: "महत्वपूर्ण सूत्र और प्रश्नावलियाँ।", ex: "Ex 1.1: Solve foundational problems & step proofs." },
-      { tEn: "Chapter 2: Polynomials & Equations", tHi: "अध्याय 2: बहुपद एवं समीकरण", dEn: "Algebraic problem solving methods.", dHi: "बीजगणितीय हल और समीकरण।" , ex: "Ex 2.1: Find zeroes and relationships." }
-    ]},
-    science: { nameEn: "Science / Physics / Chem", nameHi: "विज्ञान / भौतिकी / रसायन", les: [
-      { tEn: "Chapter 1: Reactions & Laws", tHi: "अध्याय 1: अभिक्रियाएँ एवं नियम", dEn: "Core scientific principles and laws.", dHi: "मुख्य वैज्ञानिक सिद्धांत और नियम।", ex: "Textbook Qs: Balance equations & review formulas." },
-      { tEn: "Chapter 2: Formulas & Applications", tHi: "अध्याय 2: अनुप्रयोग एवं उपयोग", dEn: "Practical applications and numericals.", dHi: "व्याहारिक अनुप्रयोग और न्यूमेरिकल।" , ex: "Practice Qs: Solve numerical problems step-by-step." }
-    ]}
-  };
-}
+const chapters = [
+  {
+    id: 1,
+    titleHi: "पाठ 1: झूला (कविता)",
+    titleEn: "Chapter 1: Jhula (Poem)",
+    qs: [
+      {
+        qHi: "प्रश्न 1: अम्मा, आज लगा दे झूला... इस कविता में बच्चा अम्मा से क्या लगाने के लिए कह रहा है?",
+        qEn: "Q1: Amma, aaj laga de jhula... What is the child asking Amma to set up in the poem?",
+        sHi: "उत्तर: बच्चा अपनी अम्मा (माता) से घर के आँगन में झूला लगाने के लिए कह रहा है, ताकि वह उस पर झूल सके।",
+        sEn: "Ans: The child is asking Amma to set up a swing in the courtyard so he can swing on it."
+      },
+      {
+        qHi: "प्रश्न 2: झूले को किन-किन चीजों से झुलाया जा सकता है?",
+        qEn: "Q2: What things can be used to swing or what can be imagined with the swing?",
+        sHi: "उत्तर: कविता और कल्पना के अनुसार झूले को पेड़ की डाली, धरती, आसमान और हवा के झोंकों के साथ झुलाया जा सकता है।",
+        sEn: "Ans: According to the poem and imagination, the swing can be imagined with tree branches, earth, sky, and breeze."
+      },
+      {
+        qHi: "प्रश्न 3: इन चीजों पर झूला झूलने में कैसा अनुभव होता है?",
+        qEn: "Q3: How does it feel to swing on these things?",
+        sHi: "उत्तर: पेड़ की डाली पर झूलने से <span class='math'>ऊपर-नीचे</span> जाने का आनंद मिलता है और हवा के साथ ऐसा लगता है मानो हम आसमान को छू रहे हैं।",
+        sEn: "Ans: Swinging on tree branches gives the joy of going <span class='math'>up and down</span>, and with the breeze, it feels like touching the sky."
+      }
+    ]
+  },
+  {
+    id: 2,
+    titleHi: "पाठ 2: आम की कहानी (चित्र कथा)",
+    titleEn: "Chapter 2: Aam ki Kahaani (Picture Story)",
+    qs: [
+      {
+        qHi: "प्रश्न 1: चित्रकथा को देखकर घटनाओं को सही क्रम (1 से 4) में लगाएँ:",
+        qEn: "Q1: Look at the picture story and arrange events in correct order (1 to 4):",
+        sHi: "उत्तर: सही क्रम इस प्रकार है —<br>1. पेड़ पर रसीले आम दिखना<br>2. कौवे द्वारा आम पर चोंच मारना<br>3. आम का टहनी से छूटकर नीचे गिरना<br>4. छोटी लड़की द्वारा खुशी-खुशी आम उठाना",
+        sEn: "Ans: Correct order —<br>1. Seeing juicy mangoes on tree<br>2. Crow pecking the mango<br>3. Mango falling down from branch<br>4. Little girl happily picking up the mango"
+      },
+      {
+        qHi: "प्रश्न 2: पेड़ पर कौन-कौन बैठा था?",
+        qEn: "Q2: Who was sitting on the tree?",
+        sHi: "उत्तर: पेड़ पर एक कौवा और एक गिलहरी बैठी थी।",
+        sEn: "Ans: A crow and a squirrel were sitting on the tree."
+      }
+    ]
+  },
+  {
+    id: 3,
+    titleHi: "पाठ 3: आम की टोकरी (कविता)",
+    titleEn: "Chapter 3: Aam ki Tokri (Poem)",
+    qs: [
+      {
+        qHi: "प्रश्न 1: लड़की सिर पर क्या लेकर जा रही है?",
+        qEn: "Q1: What is the girl carrying on her head?",
+        sHi: "उत्तर: लड़की सिर पर आम से भरी हुई टोकरी लेकर जा रही है।",
+        sEn: "Ans: The girl is carrying a basket full of mangoes on her head."
+      },
+      {
+        qHi: "प्रश्न 2: लड़की कितने साल की है और उसने टोकरी में क्या भरा है?",
+        qEn: "Q2: How old is the girl and what has she filled in her basket?",
+        sHi: "उत्तर: लड़की छह साल की है और उसने टोकरी में मीठे-मीठे आम भरे हैं।",
+        sEn: "Ans: The girl is six years old and she has filled sweet mangoes in the basket."
+      }
+    ]
+  }
+];
 
 function render() {
-  renderBreadcrumb();
-  const app = document.getElementById('app');
+  const bc = document.getElementById('breadcrumb');
+  bc.innerHTML = `<span class="crumb-link" onclick="state.chapter=1; render();">Class 1 Hindi</span> › <span>Chapter ${state.chapter} Exercises & Solutions</span>`;
 
-  if (state.view === 'home') {
-    app.innerHTML = `
-      <div class="card" style="background: linear-gradient(135deg, rgba(79,70,229,0.15), rgba(13,148,136,0.15)); border-color: var(--primary);">
-        <h2 style="margin: 0 0 6px; font-size: 1.1rem; color: var(--primary);">📚 Class 1 to 12 Master Portal (Optimized & Fast)</h2>
-        <p style="margin: 0 0 10px; font-size: 0.82rem; color: var(--muted);">कक्षा 1 से 12 तक के सभी विषयों के वास्तविक चैप्टर्स, अभ्यास और 24/7 AI Tutor।</p>
-        <button class="btn" onclick="state.view='ai'; render();">🤖 Ask AI Tutor</button>
-      </div>
-      <div class="grid-classes">
-        ${Array.from({length: 12}, (_, i) => i + 1).map(c => `
-          <div class="class-box" onclick="state.cls=${c}; state.view='subs'; render();">Class ${c}<br><span style="font-size:0.7rem; color:var(--muted);">कक्षा ${c}</span></div>
-        `).join('')}
-      </div>
-    `;
-  } else if (state.view === 'ai') {
-    app.innerHTML = `
-      <div class="card">
-        <h2 style="margin:0 0 6px; font-size:1.05rem;">🤖 24/7 AI Study Tutor</h2>
-        <p style="margin:0 0 10px; font-size:0.82rem; color:var(--muted);">कक्षा 1 से 12 तक का कोई भी सवाल पूछें:</p>
-        <textarea class="ai-input" rows="3" placeholder="अपना सवाल यहाँ लिखें..." oninput="state.aiQ=this.value">${state.aiQ}</textarea>
-        <button class="btn" style="margin-top:8px; width:100%; justify-content:center;" onclick="state.aiAns='<b>उत्तर:</b> '+state.aiQ+' - (HBSE & CBSE नवीनतम पाठ्यक्रम आधारित सटीक हल)'; render();">⚡ समाधान पाएँ</button>
-        ${state.aiAns ? `<div style="background:var(--sub-bg); border:1px solid var(--border); padding:10px; border-radius:8px; margin-top:10px; font-size:0.85rem;">${state.aiAns}</div>` : ''}
-      </div>
-    `;
-  } else if (state.view === 'subs') {
-    const data = getData(state.cls);
-    app.innerHTML = `
-      <div class="card">
-        <h2 style="margin:0 0 6px; font-size:1.05rem;">📖 Class ${state.cls} - Subjects</h2>
-        ${Object.keys(data).map(k => `
-          <div class="subj-box" onclick="state.sub='${k}'; state.view='less'; render();">
-            <div><strong>${state.med==='hi'?data[k].nameHi:data[k].nameEn}</strong><br><small style="color:var(--muted);">${data[k].les.length} Chapters</small></div>
-            <div style="color:var(--primary); font-weight:900;">→</div>
-          </div>
-        `).join('')}
+  const app = document.getElementById('app');
+  let html = `
+    <div class="card" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
+      ${chapters.map(ch => `
+        <button class="btn" style="background:${state.chapter===ch.id?'var(--primary)':'var(--sub-bg)'}; border:1px solid var(--border); color:${state.chapter===ch.id?'#fff':'var(--text)'}; padding:8px 14px; border-radius:8px; font-weight:800; cursor:pointer;" onclick="state.chapter=${ch.id}; render();">
+          ${state.med==='hi'?ch.titleHi:ch.titleEn}
+        </button>
+      `).join('')}
+    </div>
+  `;
+
+  const curr = chapters.find(c => c.id === state.chapter);
+  html += `
+    <div class="card">
+      <h2 class="section-heading">📚 ${state.med==='hi'?curr.titleHi:curr.titleEn} - Exercises & Master Solutions</h2>
+  `;
+
+  curr.qs.forEach((item, idx) => {
+    html += `
+      <div class="q-box">
+        <div class="question">${state.med==='hi'?item.qHi:item.qEn}</div>
+        <div class="solution"><strong>${state.med==='hi'?'उत्तर / Solution:':'Answer / Solution:'}</strong><br>${state.med==='hi'?item.sHi:item.sEn}</div>
       </div>
     `;
-  } else if (state.view === 'less') {
-    const lesList = getData(state.cls)[state.sub].les;
-    app.innerHTML = `
-      <div class="card">
-        <h2 style="margin:0 0 6px; font-size:1.05rem;">📁 Chapters & Lessons</h2>
-        ${lesList.map((l, i) => `
-          <div class="subj-box" onclick="state.les=${i}; state.view='cont'; render();">
-            <div><strong>${state.med==='hi'?l.tHi:l.tEn}</strong><br><small style="color:var(--muted);">${state.med==='hi'?l.dHi:l.dEn}</small></div>
-            <div style="color:#10b981; font-weight:900;">📖</div>
-          </div>
-        `).join('')}
-      </div>
-    `;
-  } else if (state.view === 'cont') {
-    const l = getData(state.cls)[state.sub].les[state.les];
-    app.innerHTML = `
-      <div class="card">
-        <h2 style="margin:0 0 10px; font-size:1.1rem;">🎯 ${state.med==='hi'?l.tHi:l.tEn}</h2>
-        <div style="background:var(--sub-bg); padding:12px; border-radius:8px; margin-bottom:10px; font-size:0.88rem;"><b>Summary:</b> ${state.med==='hi'?l.dHi:l.dEn}</div>
-        <div style="background:#fef3c7; border:1px solid #f59e0b; padding:12px; border-radius:8px; color:#78350f; margin-bottom:10px; font-size:0.88rem;"><b>Exercise:</b> ${l.ex}</div>
-        <div style="background:#064e3b; border:1px solid #059669; padding:12px; border-radius:8px; font-size:0.88rem;"><b>Master Solution:</b> स्टेप-बाय-स्टेप बोर्ड पैटर्न हल व सूत्र यहाँ दिए गए हैं।</div>
-      </div>
-    `;
-  }
+  });
+
+  html += `</div>`;
+  app.innerHTML = html;
 }
 
 applyTheme();
