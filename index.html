@@ -1272,6 +1272,59 @@
             color: #04130e;
         }
 
+    
+        .season-pills {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+        }
+
+        .season-pill-btn {
+            background: rgba(11, 18, 33, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--text-secondary);
+            padding: 7px 4px;
+            border-radius: 9px;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .season-pill-btn.active {
+            background: linear-gradient(135deg, #059669, #0284c7);
+            color: #ffffff;
+            border-color: #6ee7b7;
+            box-shadow: 0 3px 10px rgba(16, 185, 129, 0.35);
+        }
+
+        .crop-meta-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            align-items: center;
+            font-size: 10.5px;
+        }
+
+        .meta-tag-season {
+            background: rgba(245, 158, 11, 0.2);
+            border: 1px solid rgba(245, 158, 11, 0.45);
+            color: #fde68a;
+            padding: 2px 7px;
+            border-radius: 6px;
+            font-weight: 800;
+        }
+
+        .meta-tag-state {
+            background: rgba(56, 189, 248, 0.16);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            color: #7dd3fc;
+            padding: 2px 7px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+
     </style>
 </head>
 <body>
@@ -1723,34 +1776,79 @@
 
 
     <!-- ================================================= -->
-    <!-- PANEL 3: FASAL MASTER (GROWTH STAGES & DOSES)     -->
+    <!-- PANEL 3: FASAL MASTER (HR • PB • RJ • UP ALL RITU)-->
     <!-- ================================================= -->
     <div id="panel-fasal" class="view-panel">
 
-        <!-- Crop, Variety, Acres & Sowing Setup -->
+        <!-- Hyper-AI Real-Time Fasal Doctor & Stress Guard -->
+        <section class="consensus-card" style="background: linear-gradient(135deg, rgba(5, 150, 105, 0.25), rgba(2, 132, 199, 0.2)); border: 1px solid rgba(16, 185, 129, 0.45);">
+            <div class="cons-top">
+                <div class="cons-title">🧠 Hyper-AI फसल डॉक्टर & ज़मीनी गार्ड</div>
+                <div class="conf-badge" id="fasal-ai-score-badge">99% सटीक सलाह</div>
+            </div>
+            <div style="font-size:11.8px; line-height:1.45; color:#e2e8f0; background: rgba(7, 13, 25, 0.65); padding: 9px 11px; border-radius: 9px; border-left: 3px solid #10b981;" id="fasal-ai-expert-box">
+                खेत की ज़मीनी गवाही (6h नहर पानी व जिप्सम) और 5-App मौसम सिंक के आधार पर आपकी फसल के लिए अगले 48 घंटों की विशेष कार्ययोजना तैयार की जा रही है...
+            </div>
+            <div class="god-sub-strip">
+                <div class="god-mini-card">
+                    <span>💧 पानी की गुणवत्ता (Canal/Tube)</span>
+                    <strong style="color:#38bdf8;">6h नहर + मीठा ट्यूबवेल (उत्तम)</strong>
+                </div>
+                <div class="god-mini-card">
+                    <span>🛡️ फफूंद व कीट थ्रेशोल्ड</span>
+                    <strong style="color:#6ee7b7;" id="fasal-pest-risk-lbl">नमी सामान्य (जोखिम कम)</strong>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Season, State, Crop, Variety, Acres & Sowing Setup -->
         <section class="fasal-setup-card">
             <div class="fasal-top-row">
-                <h3>🌱 फसल चक्र एवं चरण मास्टर</h3>
+                <h3>🌱 संपूर्ण फसल मास्टर (HR • PB • RJ • UP)</h3>
                 <button class="wa-share-btn" onclick="shareFasalScheduleWA()">📲 शेड्यूल भेजें</button>
             </div>
 
+            <!-- Season (Ritu) Selector -->
+            <div class="season-pills" id="fasal-season-pills">
+                <button class="season-pill-btn active" data-season="all" onclick="setFasalSeason('all', this)">🌍 सभी ऋतुएं</button>
+                <button class="season-pill-btn" data-season="rabi" onclick="setFasalSeason('rabi', this)">❄️ रबी</button>
+                <button class="season-pill-btn" data-season="kharif" onclick="setFasalSeason('kharif', this)">🌧️ खरीफ</button>
+                <button class="season-pill-btn" data-season="zaid" onclick="setFasalSeason('zaid', this)">☀️ जायद</button>
+            </div>
+
+            <!-- State Filter + Quick Search -->
             <div class="fasal-grid-2">
                 <div class="fasal-input-grp">
-                    <label>फसल चुनें (Crop)</label>
-                    <select class="calc-field" id="fasal-crop-sel" onchange="onFasalCropChange()">
-                        <option value="wheat">🌾 गेहूं (Wheat)</option>
-                        <option value="paddy">🌱 धान (Paddy)</option>
-                        <option value="mustard">🌼 सरसों (Mustard)</option>
-                        <option value="barseem">🌿 बरसीम (हरा चारा)</option>
-                        <option value="cotton">☁️ कपास / नरमा</option>
-                        <option value="sugarcane">🎋 गन्ना (Sugarcane)</option>
+                    <label>राज्य चुनें (State)</label>
+                    <select class="calc-field" id="fasal-state-sel" onchange="filterFasalDropdown()">
+                        <option value="all">🇮🇳 सभी (HR, PB, RJ, UP)</option>
+                        <option value="HR">हरियाणा (Haryana)</option>
+                        <option value="PB">पंजाब (Punjab)</option>
+                        <option value="RJ">राजस्थान (Rajasthan)</option>
+                        <option value="UP">उत्तर प्रदेश (UP)</option>
                     </select>
                 </div>
                 <div class="fasal-input-grp">
-                    <label>किस्म (Variety)</label>
+                    <label>फसल खोजें (Search)</label>
+                    <input type="text" class="calc-field" id="fasal-search-input" placeholder="🔍 गेहूं, सरसों, जीरा, गन्ना..." oninput="filterFasalDropdown()">
+                </div>
+            </div>
+
+            <!-- Filtered Crop & Variety -->
+            <div class="fasal-grid-2">
+                <div class="fasal-input-grp">
+                    <label id="fasal-crop-count-lbl">फसल चुनें (27 फसलें)</label>
+                    <select class="calc-field" id="fasal-crop-sel" onchange="onFasalCropChange()"></select>
+                </div>
+                <div class="fasal-input-grp">
+                    <label>उन्नत किस्म (Variety)</label>
                     <select class="calc-field" id="fasal-variety-sel" onchange="renderFasalTimeline()"></select>
                 </div>
             </div>
+
+            <!-- Season & State Badges for Selected Crop -->
+            <div class="crop-meta-strip" id="fasal-crop-meta-strip"></div>
 
             <div class="fasal-grid-2">
                 <div class="fasal-input-grp">
@@ -1783,7 +1881,7 @@
         <section class="fasal-dose-card">
             <div style="display:flex; justify-content:space-between; align-items:center;">
                 <span style="font-size:12.5px; font-weight:800; color:#fbbf24;" id="fasal-dose-header">🧮 5 एकड़ के लिए कुल खाद-बीज हिसाब</span>
-                <span style="font-size:10px; color:var(--text-secondary);">ICAR / HAU मानक</span>
+                <span style="font-size:10px; color:var(--text-secondary);">HAU • PAU • RARI • ICAR</span>
             </div>
             <div class="dose-grid-4" id="fasal-dose-grid">
                 <!-- Populated by JS -->
@@ -3005,292 +3103,445 @@ _Sent via Bahubali Legend v20_`;
 
 
     // =========================================================
-    // FASAL MASTER ENGINE (DAY 0 TO HARVEST TIMELINE & DOSES)
+    // FASAL MASTER ENGINE (HR • PB • RJ • UP — RABI, KHARIF, ZAID)
     // =========================================================
     const FASAL_ACRES_KEY = "bahubali_fasal_acres_v20";
     const FASAL_DONE_KEY = "bahubali_fasal_done_v20";
+    let currentFasalSeason = "all";
 
     const fasalDatabase = {
+        // ================= RABI CROPS (रबी ऋतु: अक्टूबर – अप्रैल) =================
         wheat: {
-            name: "गेहूं (Wheat)",
-            varieties: ["DBW 327 (करण शिवानी)", "DBW 187 (करण वंदना)", "HD 2967", "HD 3086"],
-            seedPerAcreKg: 40,
-            dapBagsPerAcre: 1.1,
-            ureaBagsPerAcre: 2.5,
-            mopBagsPerAcre: 0.5,
-            extraNote: "जिंक 5kg + सल्फर/जिप्सम",
+            name: "🌾 गेहूं (Wheat)",
+            season: "rabi",
+            seasonLabel: "❄️ रबी ऋतु (अक्टू–अप्रैल)",
+            states: ["HR", "PB", "RJ", "UP"],
+            stateLabel: "हरियाणा • पंजाब • राजस्थान • UP",
+            defaultSow: "2026-11-05",
+            varieties: ["DBW 327 (करण शिवानी)", "DBW 187 (करण वंदना)", "PBW 826 (पंजाब)", "HD 2967 / HD 3086", "Raj 4079 (राजस्थान)"],
+            seedPerAcreKg: 40, dapBagsPerAcre: 1.1, ureaBagsPerAcre: 2.5, mopBagsPerAcre: 0.5,
             estCostPerAcre: 5400,
             stages: [
-                {
-                    id: "w_d0", startDay: 0, endDay: 2, dayLabel: "Day 0 (बिजाई समय)",
-                    title: "भूमि तैयारी, बीज उपचार व बेसल खाद",
-                    perAcreDose: "40 kg बीज + 55 kg DAP (1.1 बैग) + 25 kg पोटाश (MOP)",
-                    calcFn: (ac) => `${Math.round(40*ac)} kg बीज • ${(1.1*ac).toFixed(1)} बैग DAP • ${(0.5*ac).toFixed(1)} बैग पोटाश`,
-                    desc: "सबसॉइलर व जिप्सम सुधारी भूमि में रोटावेटर चलाकर 40 kg/एकड़ बीज से बिजाई करें। दीमक से बचाव हेतु क्लोरपायरीफॉस या फिप्रोनिल से बीज उपचार करें।"
-                },
-                {
-                    id: "w_d21", startDay: 20, endDay: 26, dayLabel: "Day 21–25 (CRI अवस्था)",
-                    title: "पहली सिंचाई व कल्ले फुटाव खुराक",
-                    perAcreDose: "45 kg यूरिया (1 बैग) + 5 kg जिंक सल्फेट (33%)",
-                    calcFn: (ac) => `${(1*ac).toFixed(1)} बैग यूरिया (${Math.round(45*ac)} kg) + ${Math.round(5*ac)} kg जिंक`,
-                    desc: "जड़ जमाव (CRI) पर 6h नहर या मीठे ट्यूबवेल से पहली हल्की सिंचाई करें। सिंचाई से ठीक पहले यूरिया व जिंक मिलाकर बिखेरें।"
-                },
-                {
-                    id: "w_d32", startDay: 30, endDay: 38, dayLabel: "Day 30–35 (खरपतवार नियंत्रण)",
-                    title: "मंडूसी (गिल्ली डंडा) व चौड़ी पत्ती स्प्रे",
-                    perAcreDose: "Topik (Clodinafop) 160g या Leader (Sulfosulfuron) 13.5g",
-                    calcFn: (ac) => `Topik ${Math.round(160*ac)}g या Leader ${(13.5*ac).toFixed(1)}g (150L पानी/एकड़)`,
-                    desc: "गुल्ली-डंडा 2-3 पत्ती का होने पर कट-नोज़ल से साफ धूप में स्प्रे करें। चौड़ी पत्ती के लिए Metsulfuron (Algrip) 8g/एकड़ मिलाएं।"
-                },
-                {
-                    id: "w_d45", startDay: 42, endDay: 52, dayLabel: "Day 45–50 (दूसरी सिंचाई व यूरिया)",
-                    title: "अधिकतम फुटाव (Tillering) पोषण",
-                    perAcreDose: "45–55 kg यूरिया + 2 kg सागरिका / ह्यूमिक ग्रैन्यूल",
-                    calcFn: (ac) => `${(1.1*ac).toFixed(1)} बैग यूरिया (${Math.round(50*ac)} kg) + ${Math.round(2*ac)} kg ग्रोथ बूस्टर`,
-                    desc: "दूसरी सिंचाई के साथ बची हुई यूरिया की अंतिम खुराक पूरी करें। 50 दिन के बाद यूरिया न डालें ताकि फसल गिरे नहीं।"
-                },
-                {
-                    id: "w_d75", startDay: 72, endDay: 85, dayLabel: "Day 75–85 (गाभ व बाली अवस्था)",
-                    title: "पीला रतुआ सुरक्षा व बाली पोषण स्प्रे",
-                    perAcreDose: "NPK 0:52:34 (1 kg) + बोरॉन 100g + Propiconazole 200ml",
-                    calcFn: (ac) => `NPK 0:52:34 ${ac} kg + Propiconazole ${Math.round(200*ac)} ml`,
-                    desc: "गाभ अवस्था में पोटाश व बोरॉन के स्प्रे से बालियां लंबी व दाने भरपूर बनते हैं। पत्तियों पर पीली धारियां दिखने पर तुरंत Propiconazole करें।"
-                },
-                {
-                    id: "w_d105", startDay: 100, endDay: 115, dayLabel: "Day 100–112 (दूधिया अवस्था)",
-                    title: "दाना भराव व लू/गर्मी से बचाव (Terminal Heat)",
-                    perAcreDose: "NPK 13:0:45 (1 kg/एकड़) + हल्की सिंचाई (हवा शांत होने पर)",
-                    calcFn: (ac) => `NPK 13:0:45 (${ac} kg) + शाम को हल्की सिंचाई`,
-                    desc: "फरवरी-मार्च में तापमान 30°C से ऊपर जाने पर दाना पिचकने से बचाने के लिए NPK 13:0:45 का स्प्रे करें। तेज हवा में पानी न लगाएं।"
-                },
-                {
-                    id: "w_d140", startDay: 135, endDay: 150, dayLabel: "Day 138–145 (कटाई व मंडी)",
-                    title: "कटाई व पिल्लूखेड़ा मंडी बिक्री",
-                    perAcreDose: "दाना नमी 12% से कम होने पर कंबाइन कटाई",
-                    calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(23*ac)} से ${Math.round(26*ac)} क्विंटल`,
-                    desc: "दाने सख्त व सुनहरे होने पर कटाई करें। पिल्लूखेड़ा या जींद मंडी में सरकारी MSP ₹2,610/क्विं. पर बिक्री हेतु नमी 12% रखें।"
-                }
-            ]
-        },
-        paddy: {
-            name: "धान (Paddy)",
-            varieties: ["PR 126 (कम अवधि)", "PB 1847 (बासमती)", "VNR 2222 (हाइब्रिड)", "PB 1718"],
-            seedPerAcreKg: 6,
-            dapBagsPerAcre: 1.0,
-            ureaBagsPerAcre: 2.5,
-            mopBagsPerAcre: 0.5,
-            extraNote: "जिंक 10kg + फेरस सल्फेट",
-            estCostPerAcre: 6200,
-            stages: [
-                {
-                    id: "p_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (रोपाई समय)",
-                    title: "कद्दू (Puddling), रोपाई व बेसल खाद",
-                    perAcreDose: "50 kg DAP (1 बैग) + 25 kg पोटाश + Pretilachlor खरपतवारनाशी",
-                    calcFn: (ac) => `${(1*ac).toFixed(1)} बैग DAP + ${(0.5*ac).toFixed(1)} बैग पोटाश + ${Math.round(600*ac)}ml Pretilachlor`,
-                    desc: "रोपाई के 2–3 दिन के अंदर रेत में मिलाकर Pretilachlor छिड़कें ताकि सांवक व मोथा न उगे। 2–3 सेमी पानी बनाए रखें।"
-                },
-                {
-                    id: "p_d15", startDay: 14, endDay: 20, dayLabel: "Day 15–18 (पहली यूरिया व जिंक)",
-                    title: "जड़ विकास व शुरुआती कल्ले",
-                    perAcreDose: "45 kg यूरिया (1 बैग) + 10 kg जिंक सल्फेट (21%)",
-                    calcFn: (ac) => `${(1*ac).toFixed(1)} बैग यूरिया + ${Math.round(10*ac)} kg जिंक सल्फेट`,
-                    desc: "खैरा रोग (पत्तियों पर कत्थई धब्बे) से बचाव के लिए यूरिया के साथ जिंक सल्फेट अवश्य दें।"
-                },
-                {
-                    id: "p_d25", startDay: 22, endDay: 30, dayLabel: "Day 22–28 (खरपतवार व फुटाव)",
-                    title: "बचे हुए खरपतवार नियंत्रण (Nominee Gold)",
-                    perAcreDose: "Bispyribac Sodium (Nominee Gold) 80–100 ml/एकड़",
-                    calcFn: (ac) => `Nominee Gold ${Math.round(90*ac)} ml (खेत से पानी निकालकर स्प्रे)`,
-                    desc: "स्प्रे से एक दिन पहले खेत का पानी निकाल दें और स्प्रे के 24 घंटे बाद दोबारा हल्का पानी भरें।"
-                },
-                {
-                    id: "p_d42", startDay: 38, endDay: 48, dayLabel: "Day 40–45 (अंतिम यूरिया व पत्ता लपेट)",
-                    title: "अधिकतम कल्ले व कीट सुरक्षा",
-                    perAcreDose: "45 kg यूरिया + Cartap Hydrochloride 7.5 kg (जरूरत पर)",
-                    calcFn: (ac) => `${(1*ac).toFixed(1)} बैग यूरिया + Cartap ${(7.5*ac).toFixed(1)} kg`,
-                    desc: "45 दिन के बाद यूरिया बंद कर दें। पत्ता लपेट सुंडी या तना छेदक दिखने पर दानेदार दवा का प्रयोग करें।"
-                },
-                {
-                    id: "p_d65", startDay: 60, endDay: 72, dayLabel: "Day 62–70 (गोभ अवस्था / Booting)",
-                    title: "बाली निकलने व शीथ ब्लाइट सुरक्षा",
-                    perAcreDose: "Azoxystrobin + Tebuconazole 200ml + NPK 0:52:34 (1 kg)",
-                    calcFn: (ac) => `फफूंदनाशक ${Math.round(200*ac)} ml + NPK 0:52:34 (${ac} kg)`,
-                    desc: "गर्दन तोड़ (Neck Blast) व शीथ ब्लाइट से बचाव के लिए बाली निकलने से ठीक पहले फफूंदनाशक का स्प्रे करें।"
-                },
-                {
-                    id: "p_d110", startDay: 105, endDay: 125, dayLabel: "Day 105–120 (कटाई व मंडी)",
-                    title: "कटाई व e-NAM मंडी बिक्री",
-                    perAcreDose: "85% बालियां पकने पर कटाई (नमी < 17%)",
-                    calcFn: (ac) => `अनुमानित पैदावार: PR126 ~${Math.round(30*ac)} क्विं. / बासमती ~${Math.round(21*ac)} क्विं.`,
-                    desc: "कटाई से 10 दिन पहले सिंचाई बंद कर दें। पिल्लूखेड़ा या सफीदों मंडी में ले जाने से पहले ओस सूखने दें।"
-                }
+                { id: "w_d0", startDay: 0, endDay: 2, dayLabel: "Day 0 (बिजाई समय)", title: "भूमि तैयारी, बीज उपचार व बेसल खाद", perAcreDose: "40 kg बीज + 55 kg DAP (1.1 बैग) + 25 kg पोटाश", calcFn: (ac) => `${Math.round(40*ac)} kg बीज • ${(1.1*ac).toFixed(1)} बैग DAP • ${(0.5*ac).toFixed(1)} बैग पोटाश`, desc: "सबसॉइलर व जिप्सम सुधारी भूमि में 40 kg/एकड़ बीज से बिजाई करें। दीमक हेतु क्लोरपायरीफॉस या फिप्रोनिल से बीज उपचार करें।" },
+                { id: "w_d21", startDay: 20, endDay: 26, dayLabel: "Day 21–25 (CRI अवस्था)", title: "पहली सिंचाई व कल्ले फुटाव खुराक", perAcreDose: "45 kg यूरिया (1 बैग) + 5 kg जिंक सल्फेट (33%)", calcFn: (ac) => `${(1*ac).toFixed(1)} बैग यूरिया (${Math.round(45*ac)} kg) + ${Math.round(5*ac)} kg जिंक`, desc: "जड़ जमाव (CRI) पर नहर या मीठे ट्यूबवेल से पहली हल्की सिंचाई करें। सिंचाई से ठीक पहले यूरिया व जिंक मिलाकर बिखेरें।" },
+                { id: "w_d32", startDay: 30, endDay: 38, dayLabel: "Day 30–35 (खरपतवार नियंत्रण)", title: "मंडूसी (गिल्ली डंडा) व चौड़ी पत्ती स्प्रे", perAcreDose: "Topik (Clodinafop) 160g या Leader 13.5g + Algrip 8g", calcFn: (ac) => `Topik ${Math.round(160*ac)}g या Leader ${(13.5*ac).toFixed(1)}g (150L पानी/एकड़)`, desc: "गुल्ली-डंडा 2–3 पत्ती का होने पर कट-नोज़ल से साफ धूप में स्प्रे करें।" },
+                { id: "w_d45", startDay: 42, endDay: 52, dayLabel: "Day 45–50 (दूसरी सिंचाई व यूरिया)", title: "अधिकतम फुटाव (Tillering) पोषण", perAcreDose: "45–55 kg यूरिया + 2 kg सागरिका / ह्यूमिक", calcFn: (ac) => `${(1.1*ac).toFixed(1)} बैग यूरिया (${Math.round(50*ac)} kg) + ${Math.round(2*ac)} kg बूस्टर`, desc: "दूसरी सिंचाई के साथ बची हुई यूरिया की अंतिम खुराक पूरी करें। 50 दिन के बाद यूरिया न डालें।" },
+                { id: "w_d75", startDay: 72, endDay: 85, dayLabel: "Day 75–85 (गाभ व बाली अवस्था)", title: "पीला रतुआ सुरक्षा व बाली पोषण स्प्रे", perAcreDose: "NPK 0:52:34 (1 kg) + Propiconazole 200ml", calcFn: (ac) => `NPK 0:52:34 ${ac} kg + Propiconazole ${Math.round(200*ac)} ml`, desc: "गाभ अवस्था में पोटाश के स्प्रे से बालियां लंबी बनती हैं। पीली धारियां दिखते ही Propiconazole स्प्रे करें।" },
+                { id: "w_d105", startDay: 100, endDay: 115, dayLabel: "Day 100–112 (दूधिया अवस्था)", title: "दाना भराव व लू/गर्मी से बचाव", perAcreDose: "NPK 13:0:45 (1 kg/एकड़) + शाम को हल्की सिंचाई", calcFn: (ac) => `NPK 13:0:45 (${ac} kg) + शाम को हल्की सिंचाई`, desc: "तापमान 30°C पार होने पर दाना पिचकने से बचाने हेतु NPK 13:0:45 का स्प्रे करें।" },
+                { id: "w_d140", startDay: 135, endDay: 150, dayLabel: "Day 138–145 (कटाई व मंडी)", title: "कंबाइन कटाई व MSP मंडी बिक्री", perAcreDose: "दाना नमी 12% से कम होने पर कटाई", calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(23*ac)} से ${Math.round(26*ac)} क्विंटल`, desc: "दाने सख्त व सुनहरे होने पर कटाई करें और ₹2,610/क्विं. MSP पर बिक्री करें।" }
             ]
         },
         mustard: {
-            name: "सरसों (Mustard)",
-            varieties: ["RH 725 (उच्च तेल)", "Pioneer 45S46", "RH 749", "RH 1424"],
-            seedPerAcreKg: 1.5,
-            dapBagsPerAcre: 0.8,
-            ureaBagsPerAcre: 1.5,
-            mopBagsPerAcre: 0.3,
-            extraNote: "बेंटोनाइट सल्फर 10kg/एकड़",
+            name: "🌼 सरसों / राया (Mustard)",
+            season: "rabi",
+            seasonLabel: "❄️ रबी ऋतु (अक्टू–मार्च)",
+            states: ["HR", "RJ", "UP", "PB"],
+            stateLabel: "राजस्थान • हरियाणा • UP • पंजाब",
+            defaultSow: "2026-10-18",
+            varieties: ["RH 725 (हरियाणा/राजस्थान)", "Giriraj DRMRIJ 31", "Pioneer 45S46", "RH 749", "Pusa Mustard 30"],
+            seedPerAcreKg: 1.5, dapBagsPerAcre: 0.8, ureaBagsPerAcre: 1.5, mopBagsPerAcre: 0.3,
             estCostPerAcre: 3600,
             stages: [
-                {
-                    id: "m_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (बिजाई समय)",
-                    title: "बिजाई, सल्फर व बेसल खाद",
-                    perAcreDose: "1.5 kg बीज + 40 kg DAP + 10 kg बेंटोनाइट सल्फर",
-                    calcFn: (ac) => `${(1.5*ac).toFixed(1)} kg बीज • ${(0.8*ac).toFixed(1)} बैग DAP • ${Math.round(10*ac)} kg सल्फर`,
-                    desc: "सरसों में तेल की मात्रा बढ़ाने के लिए सल्फर (गंधक) अनिवार्य है। कतार से कतार की दूरी 45 सेमी रखें।"
-                },
-                {
-                    id: "m_d20", startDay: 18, endDay: 24, dayLabel: "Day 18–22 (छंटाई / Thinning)",
-                    title: "पौधों की विरलीकरण (छंटाई)",
-                    perAcreDose: "पौधे से पौधे की दूरी 15 सेमी रखें",
-                    calcFn: (ac) => `${ac} एकड़ में घने पौधे निकालें`,
-                    desc: "घने पौधे निकालने से मुख्य तना मोटा होता है और नीचे से ज्यादा शाखाएं फूटती हैं।"
-                },
-                {
-                    id: "m_d32", startDay: 30, endDay: 38, dayLabel: "Day 30–35 (पहली सिंचाई)",
-                    title: "फूल आने से पहले पहली सिंचाई व यूरिया",
-                    perAcreDose: "35–40 kg यूरिया + हल्की सिंचाई",
-                    calcFn: (ac) => `${Math.round(35*ac)} kg यूरिया + हल्का पानी`,
-                    desc: "बिजाई के 30–35 दिन बाद हल्की सिंचाई करें। सरसों में पानी खड़ा न होने दें वरना जड़ गलन हो सकती है।"
-                },
-                {
-                    id: "m_d60", startDay: 55, endDay: 70, dayLabel: "Day 55–68 (फूल व फली बनना)",
-                    title: "सफेद रतुआ (White Rust) व चेपा निगरानी",
-                    perAcreDose: "Mancozeb 400g + बोरॉन 100g (जरूरत पर Thiamethoxam 40g)",
-                    calcFn: (ac) => `Mancozeb ${Math.round(400*ac)}g + बोरॉन ${Math.round(100*ac)}g`,
-                    desc: "बादल व नमी रहने पर सफेद रतुआ और चेपा (Aphid) की जाँच करें। बोरॉन स्प्रे से फलियों में दाने पूरे भरते हैं।"
-                },
-                {
-                    id: "m_d125", startDay: 120, endDay: 135, dayLabel: "Day 122–132 (कटाई)",
-                    title: "75% फलियां पीली पड़ने पर कटाई",
-                    perAcreDose: "सुबह ओस में कटाई करें ताकि फलियां न चटकें",
-                    calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(9*ac)} से ${Math.round(11*ac)} क्विंटल`,
-                    desc: "कटाई के बाद 4–5 दिन सुखाकर थ्रेशिंग करें और ₹6,613/क्विं. MSP पर बिक्री करें।"
-                }
+                { id: "m_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (बिजाई समय)", title: "बिजाई, सल्फर व बेसल खाद", perAcreDose: "1.5 kg बीज + 40 kg DAP + 10 kg बेंटोनाइट सल्फर", calcFn: (ac) => `${(1.5*ac).toFixed(1)} kg बीज • ${(0.8*ac).toFixed(1)} बैग DAP • ${Math.round(10*ac)} kg सल्फर`, desc: "तेल की मात्रा बढ़ाने के लिए सल्फर (गंधक) अनिवार्य है। कतार दूरी 45 सेमी रखें।" },
+                { id: "m_d20", startDay: 18, endDay: 24, dayLabel: "Day 18–22 (छंटाई)", title: "पौधों की छंटाई (Thinning)", perAcreDose: "पौधे से पौधे की दूरी 15 सेमी रखें", calcFn: (ac) => `${ac} एकड़ में घने पौधे निकालें`, desc: "घने पौधे निकालने से मुख्य तना मोटा होता है और अधिक शाखाएं फूटती हैं।" },
+                { id: "m_d32", startDay: 30, endDay: 38, dayLabel: "Day 30–35 (पहली सिंचाई)", title: "फूल आने से पहले सिंचाई व यूरिया", perAcreDose: "35–40 kg यूरिया + हल्की सिंचाई", calcFn: (ac) => `${Math.round(35*ac)} kg यूरिया + हल्का पानी`, desc: "फूल आने से पहले हल्की सिंचाई करें। खेत में जलभराव न होने दें।" },
+                { id: "m_d60", startDay: 55, endDay: 70, dayLabel: "Day 55–68 (फूल व फली)", title: "सफेद रतुआ व चेपा (Aphid) सुरक्षा", perAcreDose: "Mancozeb 400g + बोरॉन 100g (चेपा पर Thiamethoxam 40g)", calcFn: (ac) => `Mancozeb ${Math.round(400*ac)}g + बोरॉन ${Math.round(100*ac)}g`, desc: "बादल व नमी रहने पर सफेद रतुआ और चेपा की निगरानी रखें।" },
+                { id: "m_d125", startDay: 120, endDay: 135, dayLabel: "Day 122–132 (कटाई)", title: "75% फलियां पीली पड़ने पर कटाई", perAcreDose: "सुबह ओस में कटाई करें (MSP ₹6,613/क्विं.)", calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(9*ac)} से ${Math.round(11*ac)} क्विंटल`, desc: "कटाई के बाद 4–5 दिन सुखाकर थ्रेशिंग करें और मंडी में बेचें।" }
             ]
         },
         barseem: {
-            name: "बरसीम (हरा चारा)",
-            varieties: ["BL 42 (अधिक कटाई)", "Mescavi", "BL 10"],
-            seedPerAcreKg: 10,
-            dapBagsPerAcre: 1.0,
-            ureaBagsPerAcre: 1.5,
-            mopBagsPerAcre: 0.0,
-            extraNote: "राइजोबियम कल्चर + सरसों 500g",
+            name: "🌿 बरसीम (हरा चारा)",
+            season: "rabi",
+            seasonLabel: "❄️ रबी चारा (अक्टू–अप्रैल)",
+            states: ["HR", "PB", "UP"],
+            stateLabel: "हरियाणा • पंजाब • उत्तर प्रदेश",
+            defaultSow: "2026-10-15",
+            varieties: ["BL 42 (अधिक कटाई)", "Mescavi", "BL 10", "Wardan"],
+            seedPerAcreKg: 10, dapBagsPerAcre: 1.0, ureaBagsPerAcre: 1.5, mopBagsPerAcre: 0.0,
             estCostPerAcre: 3400,
             stages: [
-                {
-                    id: "b_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (बिजाई)",
-                    title: "खड़े पानी में छिड़काव बिजाई",
-                    perAcreDose: "10 kg बरसीम बीज + 500g सरसों + 50 kg DAP",
-                    calcFn: (ac) => `${Math.round(10*ac)} kg बरसीम बीज + ${(1*ac).toFixed(1)} बैग DAP`,
-                    desc: "कश्नी के बीज निकालकर पानी में भिगोएं, राइजोबियम टीका लगाकर शाम को खड़े पानी में छींटा दें।"
-                },
-                {
-                    id: "b_d45", startDay: 42, endDay: 50, dayLabel: "Day 45–48 (पहली कटाई)",
-                    title: "पहली कटाई व फुटाव बूस्टर खुराक",
-                    perAcreDose: "कटाई के बाद 15–20 kg यूरिया + सिंचाई",
-                    calcFn: (ac) => `${Math.round(18*ac)} kg यूरिया + हल्की सिंचाई`,
-                    desc: "जमीन से 4–5 सेमी ऊपर कटाई करें ताकि नीचे से नए कल्ले तेजी से निकलें।"
-                },
-                {
-                    id: "b_d75", startDay: 70, endDay: 80, dayLabel: "Day 72–76 (दूसरी कटाई)",
-                    title: "दूसरी कटाई व जिंक-ह्यूमिक स्प्रे",
-                    perAcreDose: "15 kg यूरिया + सिंचाई (हर 15 दिन में पानी)",
-                    calcFn: (ac) => `${Math.round(15*ac)} kg यूरिया + सिंचाई`,
-                    desc: "पशुओं के लिए पौष्टिक व मुलायम चारे हेतु 25–28 दिन के अंतराल पर कटाई जारी रखें।"
-                },
-                {
-                    id: "b_d105", startDay: 98, endDay: 112, dayLabel: "Day 100–105 (तीसरी/चौथी कटाई)",
-                    title: "निरंतर चारा उत्पादन चक्र",
-                    perAcreDose: "15 kg यूरिया + NPK 19:19:19 (1 kg स्प्रे)",
-                    calcFn: (ac) => `${Math.round(15*ac)} kg यूरिया + ${ac} kg NPK 19:19:19`,
-                    desc: "गर्मी बढ़ने पर हर 10–12 दिन में हल्की सिंचाई करें।"
-                }
+                { id: "b_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (बिजाई)", title: "खड़े पानी में छिड़काव बिजाई", perAcreDose: "10 kg बरसीम बीज + 500g सरसों + 50 kg DAP", calcFn: (ac) => `${Math.round(10*ac)} kg बरसीम बीज + ${(1*ac).toFixed(1)} बैग DAP`, desc: "राइजोबियम टीका लगाकर शाम को खड़े पानी में छींटा दें।" },
+                { id: "b_d45", startDay: 42, endDay: 50, dayLabel: "Day 45–48 (पहली कटाई)", title: "पहली कटाई व फुटाव बूस्टर खुराक", perAcreDose: "कटाई के बाद 15–20 kg यूरिया + सिंचाई", calcFn: (ac) => `${Math.round(18*ac)} kg यूरिया + हल्की सिंचाई`, desc: "जमीन से 4–5 सेमी ऊपर कटाई करें ताकि नए कल्ले तेजी से निकलें।" },
+                { id: "b_d75", startDay: 70, endDay: 80, dayLabel: "Day 72–76 (दूसरी कटाई)", title: "दूसरी कटाई व हर 15 दिन में सिंचाई", perAcreDose: "15 kg यूरिया + सिंचाई", calcFn: (ac) => `${Math.round(15*ac)} kg यूरिया + सिंचाई`, desc: "25–28 दिन के अंतराल पर पौष्टिक चारे की कटाई जारी रखें।" },
+                { id: "b_d105", startDay: 98, endDay: 112, dayLabel: "Day 100–105 (तीसरी/चौथी कटाई)", title: "निरंतर चारा उत्पादन चक्र", perAcreDose: "15 kg यूरिया + NPK 19:19:19 (1 kg स्प्रे)", calcFn: (ac) => `${Math.round(15*ac)} kg यूरिया + ${ac} kg NPK 19:19:19`, desc: "गर्मी बढ़ने पर हर 10–12 दिन में हल्की सिंचाई करें।" }
+            ]
+        },
+        barley: {
+            name: "🌾 जौ (Barley)",
+            season: "rabi",
+            seasonLabel: "❄️ रबी ऋतु (नवं–अप्रैल)",
+            states: ["RJ", "HR", "UP", "PB"],
+            stateLabel: "राजस्थान • हरियाणा • UP • पंजाब",
+            defaultSow: "2026-11-10",
+            varieties: ["BH 946 (हरियाणा)", "RD 2786 (राजस्थान)", "DWRB 137 (माल्ट)", "PL 807 (पंजाब)"],
+            seedPerAcreKg: 35, dapBagsPerAcre: 0.7, ureaBagsPerAcre: 1.5, mopBagsPerAcre: 0.3,
+            estCostPerAcre: 3800,
+            stages: [
+                { id: "br_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (बिजाई)", title: "कम पानी व लवणीय भूमि में जौ बिजाई", perAcreDose: "35 kg बीज + 35 kg DAP + 15 kg पोटाश", calcFn: (ac) => `${Math.round(35*ac)} kg बीज • ${(0.7*ac).toFixed(1)} बैग DAP`, desc: "कल्लर व कम सिंचाई वाली भूमि के लिए जौ सर्वोत्तम फसल है। Vitavax से बीज उपचार करें।" },
+                { id: "br_d28", startDay: 25, endDay: 32, dayLabel: "Day 25–30 (पहली सिंचाई)", title: "कल्ले फूटने पर पहली सिंचाई व यूरिया", perAcreDose: "35 kg यूरिया + हल्की सिंचाई", calcFn: (ac) => `${Math.round(35*ac)} kg यूरिया + हल्की सिंचाई`, desc: "बिजाई के 25–30 दिन बाद पहली सिंचाई और यूरिया की टॉप ड्रेसिंग करें।" },
+                { id: "br_d65", startDay: 60, endDay: 72, dayLabel: "Day 62–70 (बाली अवस्था)", title: "दूसरी सिंचाई व चेपा (Aphid) निगरानी", perAcreDose: "हल्की सिंचाई (चेपा दिखने पर Imidacloprid 60ml)", calcFn: (ac) => `हल्की सिंचाई • Imidacloprid ${Math.round(60*ac)}ml`, desc: "बाली निकलते समय नमी बनाए रखें ताकि दाने मोटे व चमकदार बनें।" },
+                { id: "br_d125", startDay: 120, endDay: 132, dayLabel: "Day 122–130 (कटाई)", title: "जौ कटाई व मंडी बिक्री", perAcreDose: "बालियां झुकने व सूखने पर कटाई", calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(18*ac)} से ${Math.round(22*ac)} क्विंटल`, desc: "समय पर कटाई करें ताकि बालियां टूटकर जमीन पर न गिरें।" }
+            ]
+        },
+        gram: {
+            name: "🫘 चना (Chickpea / Gram)",
+            season: "rabi",
+            seasonLabel: "❄️ रबी ऋतु (अक्टू–मार्च)",
+            states: ["RJ", "HR", "UP", "PB"],
+            stateLabel: "राजस्थान • हरियाणा • UP • पंजाब",
+            defaultSow: "2026-10-20",
+            varieties: ["GNG 2144 (राजस्थान)", "HC 5 (हरियाणा)", "PBG 7 (पंजाब)", "Avrodhi / JG 16 (UP)"],
+            seedPerAcreKg: 25, dapBagsPerAcre: 0.8, ureaBagsPerAcre: 0.0, mopBagsPerAcre: 0.3,
+            estCostPerAcre: 3900,
+            stages: [
+                { id: "gr_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (बिजाई)", title: "राइजोबियम व ट्राइकोडर्मा उपचारित बिजाई", perAcreDose: "25 kg बीज + 40 kg DAP + 8 kg सल्फर", calcFn: (ac) => `${Math.round(25*ac)} kg बीज • ${(0.8*ac).toFixed(1)} बैग DAP`, desc: "उखटा रोग (Wilt) से बचाव हेतु ट्राइकोडर्मा 5g/kg बीज से उपचार अवश्य करें।" },
+                { id: "gr_d35", startDay: 30, endDay: 40, dayLabel: "Day 32–38 (खुटाई / Nipping)", title: "ऊपरी कोपल तोड़ना (Nipping) व शाखा वृद्धि", perAcreDose: "फूल आने से पहले ऊपरी 2 इंच कोपल तोड़ें", calcFn: (ac) => `${ac} एकड़ में कोपल तुड़ाई (Nipping)`, desc: "कोपल तोड़ने से पौधे की ऊंचाई रुकती है और नीचे से दोगुनी शाखाएं व घेंटियां बनती हैं।" },
+                { id: "gr_d65", startDay: 60, endDay: 75, dayLabel: "Day 62–72 (फूल व घेंटी बनना)", title: "फली छेदक सुंडी (Pod Borer) नियंत्रण", perAcreDose: "Emamectin Benzoate 80g या Coragen 60ml + NPK 0:52:34", calcFn: (ac) => `Emamectin ${Math.round(80*ac)}g + NPK 0:52:34 (${ac} kg)`, desc: "फूल आने पर सिंचाई न करें। घेंटी बनते समय सुंडी दिखे तो तुरंत स्प्रे करें।" },
+                { id: "gr_d130", startDay: 125, endDay: 140, dayLabel: "Day 128–138 (कटाई)", title: "चना कटाई व MSP बिक्री", perAcreDose: "पत्तियां पीली व घेंटियां भूरी होने पर कटाई", calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(8*ac)} से ${Math.round(10*ac)} क्विंटल`, desc: "सुबह के समय कटाई करें ताकि घेंटियां न झड़ें।" }
+            ]
+        },
+        potato: {
+            name: "🥔 आलू (Potato)",
+            season: "rabi",
+            seasonLabel: "❄️ रबी ऋतु (अक्टू–फरवरी)",
+            states: ["UP", "PB", "HR"],
+            stateLabel: "उत्तर प्रदेश • पंजाब • हरियाणा",
+            defaultSow: "2026-10-15",
+            varieties: ["Kufri Pukhraj (अगेती)", "Kufri Bahar (3797 - UP)", "Kufri Jyoti (पंजाब)", "Kufri Chipsona-1"],
+            seedPerAcreKg: 1000, dapBagsPerAcre: 2.0, ureaBagsPerAcre: 2.5, mopBagsPerAcre: 1.5,
+            estCostPerAcre: 18500,
+            stages: [
+                { id: "pt_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (बिजाई)", title: "मेड़ों पर आलू बिजाई व बेसल खाद", perAcreDose: "10 क्विं. बीज कंद + 100 kg DAP + 75 kg पोटाश", calcFn: (ac) => `${Math.round(10*ac)} क्विं. बीज • ${(2*ac).toFixed(1)} बैग DAP • ${(1.5*ac).toFixed(1)} बैग पोटाश`, desc: "कंदों को Mancozeb घोल से उपचारित करके मेड़ों पर बिजाई करें।" },
+                { id: "pt_d25", startDay: 22, endDay: 30, dayLabel: "Day 24–28 (मिट्टी चढ़ाना)", title: "यूरिया टॉप ड्रेसिंग व मिट्टी चढ़ाना", perAcreDose: "55 kg यूरिया + मेड़ों पर मिट्टी चढ़ाना", calcFn: (ac) => `${(1.2*ac).toFixed(1)} बैग यूरिया + मिट्टी चढ़ाना`, desc: "कंदों को हरा होने से बचाने के लिए अच्छी तरह मिट्टी चढ़ाएं।" },
+                { id: "pt_d45", startDay: 40, endDay: 55, dayLabel: "Day 42–52 (झुलसा रोग सुरक्षा)", title: "अगेती व पिछेती झुलसा (Late Blight) स्प्रे", perAcreDose: "Cymoxanil + Mancozeb (Curzate) 600g + NPK 0:52:34", calcFn: (ac) => `Curzate ${Math.round(600*ac)}g + NPK 0:52:34 (${ac} kg)`, desc: "कोहरा व बादल होने पर पिछेती झुलसा से बचाने के लिए सुरक्षात्मक स्प्रे अवश्य करें।" },
+                { id: "pt_d85", startDay: 80, endDay: 100, dayLabel: "Day 85–95 (खुदाई)", title: "आलू खुदाई व कोल्ड स्टोर / मंडी", perAcreDose: "खुदाई से 10 दिन पहले बेल काट दें", calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(110*ac)} से ${Math.round(135*ac)} क्विंटल`, desc: "छिलका सख्त होने पर खुदाई करें ताकि भंडारण में खराब न हो।" }
+            ]
+        },
+        pea: {
+            name: "🟢 मटर (Pea)",
+            season: "rabi",
+            seasonLabel: "❄️ रबी ऋतु (अक्टू–फरवरी)",
+            states: ["UP", "PB", "HR", "RJ"],
+            stateLabel: "UP • पंजाब • हरियाणा • राजस्थान",
+            defaultSow: "2026-10-20",
+            varieties: ["Arkel (अगेती)", "Azad P-1 (कानपुर/UP)", "Punjab 89", "AP-3"],
+            seedPerAcreKg: 35, dapBagsPerAcre: 1.0, ureaBagsPerAcre: 0.5, mopBagsPerAcre: 0.4,
+            estCostPerAcre: 6500,
+            stages: [
+                { id: "pe_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (बिजाई)", title: "मटर बिजाई व बेसल खाद", perAcreDose: "35 kg बीज + 50 kg DAP + 20 kg पोटाश", calcFn: (ac) => `${Math.round(35*ac)} kg बीज • ${(1*ac).toFixed(1)} बैग DAP`, desc: "राइजोबियम कल्चर से उपचारित बीज की सीड ड्रिल से बिजाई करें।" },
+                { id: "pe_d30", startDay: 28, endDay: 35, dayLabel: "Day 30–34 (पहली सिंचाई)", title: "फूल आने से पहले हल्की सिंचाई", perAcreDose: "20 kg यूरिया + हल्की सिंचाई", calcFn: (ac) => `${Math.round(20*ac)} kg यूरिया + हल्का पानी`, desc: "फूल आने की अवस्था पर हल्की सिंचाई करें, पानी खड़ा न होने दें।" },
+                { id: "pe_d48", startDay: 45, endDay: 55, dayLabel: "Day 46–52 (चूर्णी आसिता सुरक्षा)", title: "Powdery Mildew व फली भराव स्प्रे", perAcreDose: "Wettable Sulphur 600g + बोरॉन 100g", calcFn: (ac) => `Sulphur ${Math.round(600*ac)}g + बोरॉन ${Math.round(100*ac)}g`, desc: "पत्तियों पर सफेद पाउडर दिखने पर सल्फर या Dinocap का स्प्रे करें।" },
+                { id: "pe_d68", startDay: 65, endDay: 85, dayLabel: "Day 65–80 (हरी फली तुड़ाई)", title: "हरी मटर फली तुड़ाई व मंडी बिक्री", perAcreDose: "2 से 3 चरणों में हरी फलियों की तुड़ाई", calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(35*ac)} से ${Math.round(45*ac)} क्विंटल हरी फली`, desc: "दाने पूरे भरने पर तुड़ाई करके नजदीकी सब्जी मंडी में बेचें।" }
+            ]
+        },
+        cumin: {
+            name: "🌿 जीरा व ईसबगोल (Cumin/Isabgol)",
+            season: "rabi",
+            seasonLabel: "❄️ रबी मसाला (नवं–मार्च)",
+            states: ["RJ"],
+            stateLabel: "राजस्थान स्पेशल (जोधपुर • बाड़मेर • नागौर)",
+            defaultSow: "2026-11-12",
+            varieties: ["GC 4 (उखटा रोधी जीरा)", "RZ 209 (राजस्थान जीरा)", "GI 2 / RI 89 (ईसबगोल)"],
+            seedPerAcreKg: 5, dapBagsPerAcre: 0.6, ureaBagsPerAcre: 0.8, mopBagsPerAcre: 0.2,
+            estCostPerAcre: 4800,
+            stages: [
+                { id: "cm_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (बिजाई)", title: "हल्की सिंचाई व जीरा/ईसबगोल बिजाई", perAcreDose: "5 kg जीरा बीज (या 3 kg ईसबगोल) + 30 kg DAP", calcFn: (ac) => `${Math.round(5*ac)} kg बीज • ${(0.6*ac).toFixed(1)} बैग DAP`, desc: "बीज को 1.5 सेमी से अधिक गहरा न बोएं। अंकुरण हेतु 7–8 दिन बाद एक हल्की सिंचाई और करें।" },
+                { id: "cm_d32", startDay: 30, endDay: 38, dayLabel: "Day 32–36 (खरपतवार व यूरिया)", title: "निराई-गुड़ाई व हल्की नाइट्रोजन खुराक", perAcreDose: "18 kg यूरिया + हल्की सिंचाई", calcFn: (ac) => `${Math.round(18*ac)} kg यूरिया + हल्की सिंचाई`, desc: "जीरे में खरपतवार नियंत्रण समय पर करें ताकि फसल को पूरी धूप मिले।" },
+                { id: "cm_d55", startDay: 50, endDay: 65, dayLabel: "Day 52–62 (झुलसा / Blight सुरक्षा)", title: "बादल व ओस में झुलसा रोग बचाव", perAcreDose: "Mancozeb 500g या Azoxystrobin 200ml/एकड़", calcFn: (ac) => `Mancozeb ${Math.round(500*ac)}g + चेपा पर Thiamethoxam 40g`, desc: "आसमान में बादल छाने पर जीरे में झुलसा (Blight) तेजी से आता है, तुरंत सुरक्षात्मक स्प्रे करें।" },
+                { id: "cm_d110", startDay: 105, endDay: 120, dayLabel: "Day 108–118 (कटाई)", title: "दाने पकने पर सुबह कटाई", perAcreDose: "सुबह ओस में कटाई करें ताकि दाने न झड़ें", calcFn: (ac) => `अनुमानित पैदावार: ~${(3.5*ac).toFixed(1)} से ${(4.5*ac).toFixed(1)} क्विंटल`, desc: "धूप में सुखाकर साफ जीरा नागौर/जोधपुर/ऊंझा मंडी भाव पर बेचें।" }
+            ]
+        },
+        oats: {
+            name: "🌾 जई (Oats हरा चारा)",
+            season: "rabi",
+            seasonLabel: "❄️ रबी चारा (अक्टू–मार्च)",
+            states: ["HR", "PB", "UP", "RJ"],
+            stateLabel: "हरियाणा • पंजाब • UP • राजस्थान",
+            defaultSow: "2026-10-25",
+            varieties: ["Kent", "HJ 8 (हिसार)", "OL 10 (लुधियाना)", "UPO 212"],
+            seedPerAcreKg: 35, dapBagsPerAcre: 0.8, ureaBagsPerAcre: 1.5, mopBagsPerAcre: 0.0,
+            estCostPerAcre: 3200,
+            stages: [
+                { id: "oa_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (बिजाई)", title: "जई बिजाई व बेसल खाद", perAcreDose: "35 kg बीज + 40 kg DAP", calcFn: (ac) => `${Math.round(35*ac)} kg बीज • ${(0.8*ac).toFixed(1)} बैग DAP`, desc: "कम पानी में अधिक हरा चारा लेने के लिए जई श्रेष्ठ है।" },
+                { id: "oa_d30", startDay: 28, endDay: 35, dayLabel: "Day 30 (पहली सिंचाई)", title: "पहली सिंचाई व यूरिया", perAcreDose: "35 kg यूरिया + सिंचाई", calcFn: (ac) => `${Math.round(35*ac)} kg यूरिया + सिंचाई`, desc: "तेज बढ़वार के लिए पहली सिंचाई पर यूरिया दें।" },
+                { id: "oa_d60", startDay: 55, endDay: 65, dayLabel: "Day 58–62 (पहली कटाई)", title: "पहली कटाई व दोबारा फुटाव खुराक", perAcreDose: "कटाई के बाद 30 kg यूरिया + सिंचाई", calcFn: (ac) => `${Math.round(30*ac)} kg यूरिया + सिंचाई`, desc: "8–10 सेमी ऊपर से कटाई करें ताकि दूसरी कटाई भी भरपूर मिले।" }
+            ]
+        },
+
+        // ================= KHARIF CROPS (खरीफ ऋतु: जून – अक्टूबर) =================
+        paddy: {
+            name: "🌱 धान - परमल/हाइब्रिड (Paddy)",
+            season: "kharif",
+            seasonLabel: "🌧️ खरीफ ऋतु (जून–अक्टूबर)",
+            states: ["HR", "PB", "UP"],
+            stateLabel: "हरियाणा • पंजाब • उत्तर प्रदेश",
+            defaultSow: "2026-06-25",
+            varieties: ["PR 126 (कम अवधि)", "VNR 2222 (हाइब्रिड)", "PR 131 (पंजाब)", "Arize 6444 Gold (UP)"],
+            seedPerAcreKg: 6, dapBagsPerAcre: 1.0, ureaBagsPerAcre: 2.5, mopBagsPerAcre: 0.5,
+            estCostPerAcre: 6200,
+            stages: [
+                { id: "p_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (रोपाई समय)", title: "कद्दू, रोपाई व खरपतवार नियंत्रण", perAcreDose: "50 kg DAP + 25 kg पोटाश + Pretilachlor 600ml", calcFn: (ac) => `${(1*ac).toFixed(1)} बैग DAP + ${(0.5*ac).toFixed(1)} बैग पोटाश + ${Math.round(600*ac)}ml Pretilachlor`, desc: "रोपाई के 2–3 दिन में रेत में मिलाकर Pretilachlor छिड़कें ताकि सांवक न उगे।" },
+                { id: "p_d15", startDay: 14, endDay: 20, dayLabel: "Day 15–18 (यूरिया व जिंक)", title: "जड़ विकास व खैरा रोग बचाव", perAcreDose: "45 kg यूरिया + 10 kg जिंक सल्फेट (21%)", calcFn: (ac) => `${(1*ac).toFixed(1)} बैग यूरिया + ${Math.round(10*ac)} kg जिंक`, desc: "खैरा रोग से बचाव हेतु यूरिया के साथ जिंक अवश्य दें।" },
+                { id: "p_d25", startDay: 22, endDay: 30, dayLabel: "Day 22–28 (खरपतवार स्प्रे)", title: "बचे खरपतवार नियंत्रण (Nominee Gold)", perAcreDose: "Bispyribac Sodium 90ml/एकड़", calcFn: (ac) => `Nominee Gold ${Math.round(90*ac)} ml`, desc: "खेत से पानी निकालकर स्प्रे करें और 24 घंटे बाद पानी भरें।" },
+                { id: "p_d42", startDay: 38, endDay: 48, dayLabel: "Day 40–45 (अंतिम यूरिया)", title: "अधिकतम कल्ले व पत्ता लपेट सुरक्षा", perAcreDose: "45 kg यूरिया + Cartap 7.5 kg (जरूरत पर)", calcFn: (ac) => `${(1*ac).toFixed(1)} बैग यूरिया + Cartap ${(7.5*ac).toFixed(1)} kg`, desc: "45 दिन के बाद यूरिया बंद कर दें।" },
+                { id: "p_d65", startDay: 60, endDay: 72, dayLabel: "Day 62–70 (गोभ अवस्था)", title: "शीथ ब्लाइट व गर्दन तोड़ सुरक्षा", perAcreDose: "Azoxystrobin + Tebuconazole 200ml + NPK 0:52:34", calcFn: (ac) => `फफूंदनाशक ${Math.round(200*ac)} ml + NPK 0:52:34 (${ac} kg)`, desc: "बाली निकलने से ठीक पहले स्प्रे करने से दाने पूरे भरते हैं।" },
+                { id: "p_d110", startDay: 105, endDay: 120, dayLabel: "Day 105–115 (कटाई)", title: "कटाई व MSP मंडी बिक्री", perAcreDose: "85% बालियां पकने पर कटाई (MSP ₹2,461)", calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(30*ac)} से ${Math.round(34*ac)} क्विंटल`, desc: "कटाई से 10 दिन पहले पानी बंद कर दें।" }
+            ]
+        },
+        basmati: {
+            name: "🍚 बासमती धान (Basmati)",
+            season: "kharif",
+            seasonLabel: "🌧️ खरीफ निर्यात (जुलाई–नवंबर)",
+            states: ["HR", "PB", "UP"],
+            stateLabel: "हरियाणा • पंजाब • पश्चिमी UP",
+            defaultSow: "2026-07-08",
+            varieties: ["PB 1847 (झोंका रोधी)", "PB 1718 (पिल्लूखेड़ा/सफीदों टॉप)", "PB 1121", "CSR 30 (तरावड़ी)"],
+            seedPerAcreKg: 5, dapBagsPerAcre: 0.8, ureaBagsPerAcre: 1.5, mopBagsPerAcre: 0.5,
+            estCostPerAcre: 5800,
+            stages: [
+                { id: "bm_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (रोपाई)", title: "बासमती रोपाई व संतुलित खाद", perAcreDose: "40 kg DAP + 25 kg पोटाश + Pretilachlor 600ml", calcFn: (ac) => `${(0.8*ac).toFixed(1)} बैग DAP + ${(0.5*ac).toFixed(1)} बैग पोटाश`, desc: "बासमती में अधिक नाइट्रोजन न डालें वरना फसल गिरने व झोंका रोग का खतरा बढ़ता है।" },
+                { id: "bm_d20", startDay: 18, endDay: 24, dayLabel: "Day 20 (पहली यूरिया व जिंक)", title: "फुटाव व जिंक पोषण", perAcreDose: "35 kg यूरिया + 10 kg जिंक सल्फेट", calcFn: (ac) => `${Math.round(35*ac)} kg यूरिया + ${Math.round(10*ac)} kg जिंक`, desc: "हल्की यूरिया और जिंक से जड़ों का विकास तेज होता है।" },
+                { id: "bm_d40", startDay: 36, endDay: 44, dayLabel: "Day 38–42 (अंतिम यूरिया व बकानी जांच)", title: "झंडा रोग (Bakanae) व अंतिम यूरिया", perAcreDose: "30 kg यूरिया (ऊंचे पीले पौधे उखाड़ें)", calcFn: (ac) => `${Math.round(30*ac)} kg यूरिया (अंतिम खुराक)`, desc: "खेत में सामान्य से ऊंचे व पतले पौधे दिखें तो उन्हें जड़ से उखाड़कर नष्ट करें।" },
+                { id: "bm_d75", startDay: 70, endDay: 82, dayLabel: "Day 72–80 (गोभ अवस्था)", title: "गर्दन तोड़ (Neck Blast) व चमक स्प्रे", perAcreDose: "Tricyclazole 120g + Propiconazole 200ml + NPK 0:52:34", calcFn: (ac) => `Tricyclazole ${Math.round(120*ac)}g + NPK 0:52:34 (${ac} kg)`, desc: "निर्यात क्वालिटी के लंबे व चमकदार चावल के लिए गोभ अवस्था पर यह स्प्रे सबसे जरूरी है।" },
+                { id: "bm_d120", startDay: 115, endDay: 130, dayLabel: "Day 118–128 (कटाई व बोली)", title: "कटाई व सफीदों/पिल्लूखेड़ा बोली", perAcreDose: "नमी 14% से कम होने पर मंडी ले जाएं", calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(20*ac)} से ${Math.round(24*ac)} क्विंटल`, desc: "दाना टूटने से बचाने के लिए समय पर कटाई करें।" }
             ]
         },
         cotton: {
-            name: "कपास / नरमा",
-            varieties: ["RCH 773 BG-II", "US 51", "RCH 650 BG-II"],
-            seedPerAcreKg: 1.0,
-            dapBagsPerAcre: 1.0,
-            ureaBagsPerAcre: 2.0,
-            mopBagsPerAcre: 0.5,
-            extraNote: "मैग्नीशियम सल्फेट 10kg",
+            name: "☁️ कपास / नरमा (Cotton)",
+            season: "kharif",
+            seasonLabel: "🌧️ खरीफ ऋतु (मई–नवंबर)",
+            states: ["HR", "PB", "RJ"],
+            stateLabel: "हरियाणा • पंजाब • राजस्थान",
+            defaultSow: "2026-05-10",
+            varieties: ["RCH 773 BG-II", "US 51", "RCH 650 BG-II", "Bioseed 6588"],
+            seedPerAcreKg: 1.0, dapBagsPerAcre: 1.0, ureaBagsPerAcre: 2.0, mopBagsPerAcre: 0.5,
             estCostPerAcre: 5800,
             stages: [
-                {
-                    id: "c_d0", startDay: 0, endDay: 4, dayLabel: "Day 0 (बिजाई)",
-                    title: "पलेवा के बाद सीड ड्रिल बिजाई",
-                    perAcreDose: "2 पैकेट (950g) BG-II बीज + 50 kg DAP + 25 kg पोटाश",
-                    calcFn: (ac) => `${Math.round(2*ac)} पैकेट बीज + ${(1*ac).toFixed(1)} बैग DAP`,
-                    desc: "गहरी जुताई के बाद पलेवा करके सुबह-शाम के समय बिजाई करें।"
-                },
-                {
-                    id: "c_d40", startDay: 35, endDay: 48, dayLabel: "Day 38–45 (पहली सिंचाई व गुड़ाई)",
-                    title: "पहली सिंचाई, यूरिया व रसचूसक कीट नियंत्रण",
-                    perAcreDose: "45 kg यूरिया + सफेद मक्खी/हरा तेला निगरानी",
-                    calcFn: (ac) => `${(1*ac).toFixed(1)} बैग यूरिया + पीले चिपचिपे कार्ड`,
-                    desc: "पहली सिंचाई यथासंभव 40–45 दिन तक रोककर करें ताकि जड़ें गहरी जाएं।"
-                },
-                {
-                    id: "c_d75", startDay: 70, endDay: 85, dayLabel: "Day 72–82 (फूल व टिंडे बनना)",
-                    title: "टिंडा भराव व गुलाबी सुंडी सुरक्षा",
-                    perAcreDose: "NPK 13:0:45 (1 kg) + मैग्नीशियम सल्फेट 1 kg स्प्रे",
-                    calcFn: (ac) => `NPK 13:0:45 (${ac} kg) + MgSO4 (${ac} kg)`,
-                    desc: "लाल पत्ती रोग व फूल झड़ने से रोकने के लिए पोटाश व मैग्नीशियम का छिड़काव करें।"
-                },
-                {
-                    id: "c_d140", startDay: 135, endDay: 165, dayLabel: "Day 140–160 (चुगाई)",
-                    title: "साफ व सूखी रुई की चुगाई",
-                    perAcreDose: "ओस सूखने के बाद चुगाई (MSP ₹8,110/क्विं.)",
-                    calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(9*ac)} से ${Math.round(12*ac)} क्विंटल`,
-                    desc: "चुगाई के बाद नरमे को सूखे फर्श पर रखें और जींद मंडी में बिक्री करें।"
-                }
+                { id: "c_d0", startDay: 0, endDay: 4, dayLabel: "Day 0 (बिजाई)", title: "पलेवा के बाद सीड ड्रिल बिजाई", perAcreDose: "2 पैकेट BG-II बीज + 50 kg DAP + 25 kg पोटाश", calcFn: (ac) => `${Math.round(2*ac)} पैकेट बीज + ${(1*ac).toFixed(1)} बैग DAP`, desc: "गहरी जुताई के बाद पलेवा करके सुबह-शाम बिजाई करें।" },
+                { id: "c_d40", startDay: 35, endDay: 48, dayLabel: "Day 38–45 (पहली सिंचाई)", title: "पहली सिंचाई, यूरिया व सफेद मक्खी निगरानी", perAcreDose: "45 kg यूरिया + पीले चिपचिपे कार्ड", calcFn: (ac) => `${(1*ac).toFixed(1)} बैग यूरिया + पीले कार्ड`, desc: "पहली सिंचाई 40–45 दिन तक रोककर करें ताकि जड़ें गहरी जाएं।" },
+                { id: "c_d75", startDay: 70, endDay: 85, dayLabel: "Day 72–82 (फूल व टिंडे)", title: "टिंडा भराव व गुलाबी सुंडी सुरक्षा", perAcreDose: "NPK 13:0:45 (1 kg) + मैग्नीशियम सल्फेट 1 kg", calcFn: (ac) => `NPK 13:0:45 (${ac} kg) + MgSO4 (${ac} kg)`, desc: "लाल पत्ती रोग व फूल झड़ने से रोकने के लिए पोटाश व मैग्नीशियम स्प्रे करें।" },
+                { id: "c_d140", startDay: 135, endDay: 165, dayLabel: "Day 140–160 (चुगाई)", title: "साफ व सूखी रुई की चुगाई", perAcreDose: "ओस सूखने के बाद चुगाई (MSP ₹8,110)", calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(9*ac)} से ${Math.round(12*ac)} क्विंटल`, desc: "चुगाई के बाद सूखे फर्श पर रखें।" }
             ]
         },
+        bajra: {
+            name: "🌾 बाजरा (Pearl Millet)",
+            season: "kharif",
+            seasonLabel: "🌧️ खरीफ ऋतु (जुलाई–अक्टूबर)",
+            states: ["RJ", "HR", "UP"],
+            stateLabel: "राजस्थान • हरियाणा • उत्तर प्रदेश",
+            defaultSow: "2026-07-05",
+            varieties: ["HHB 67 Improved (अगेती)", "Pioneer 86M86", "RHB 177 (राजस्थान)", "Proagro 9444"],
+            seedPerAcreKg: 1.5, dapBagsPerAcre: 0.7, ureaBagsPerAcre: 1.2, mopBagsPerAcre: 0.0,
+            estCostPerAcre: 2900,
+            stages: [
+                { id: "bj_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (बिजाई)", title: "मानसून पहली बारिश पर बाजरा बिजाई", perAcreDose: "1.5 kg बीज + 35 kg DAP", calcFn: (ac) => `${(1.5*ac).toFixed(1)} kg बीज • ${(0.7*ac).toFixed(1)} बैग DAP`, desc: "जोगिया रोग से बचाव हेतु Metalaxyl (Apron) से उपचारित बीज बोएं।" },
+                { id: "bj_d22", startDay: 20, endDay: 28, dayLabel: "Day 22–26 (निराई व यूरिया)", title: "छंटाई, निराई व यूरिया खुराक", perAcreDose: "30 kg यूरिया (नमी होने पर)", calcFn: (ac) => `${Math.round(30*ac)} kg यूरिया`, desc: "घने पौधे निकालें और बारिश की नमी में यूरिया दें।" },
+                { id: "bj_d50", startDay: 45, endDay: 58, dayLabel: "Day 48–55 (सिट्टा निकलना)", title: "दाना भराव व कातरा/सुंडी निगरानी", perAcreDose: "सूखा पड़ने पर 1 जीवन रक्षक सिंचाई", calcFn: (ac) => `1 जीवन रक्षक सिंचाई (आवश्यकता पर)`, desc: "सिट्टे निकलते समय नमी रहने से दाने मोटे व वजनदार बनते हैं।" },
+                { id: "bj_d82", startDay: 78, endDay: 90, dayLabel: "Day 80–88 (कटाई)", title: "बाजरा कटाई व MSP ₹2,900 बिक्री", perAcreDose: "सिट्टे सूखने पर कटाई", calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(11*ac)} से ${Math.round(14*ac)} क्विंटल`, desc: "कटाई के बाद सुखाकर थ्रेशिंग करें।" }
+            ]
+        },
+        maize: {
+            name: "🌽 मक्का (Maize)",
+            season: "kharif",
+            seasonLabel: "🌧️ खरीफ / बसंत (जून–अक्टूबर)",
+            states: ["PB", "UP", "RJ", "HR"],
+            stateLabel: "पंजाब • UP • राजस्थान • हरियाणा",
+            defaultSow: "2026-06-28",
+            varieties: ["PMH 1 (पंजाब)", "DKC 9108", "Pioneer 3396", "HQPM 1 (प्रोटीन मक्का)"],
+            seedPerAcreKg: 8, dapBagsPerAcre: 1.2, ureaBagsPerAcre: 2.2, mopBagsPerAcre: 0.5,
+            estCostPerAcre: 5200,
+            stages: [
+                { id: "mz_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (बिजाई)", title: "मेड़ों पर मक्का बिजाई व खरपतवारनाशी", perAcreDose: "8 kg बीज + 60 kg DAP + 25 kg पोटाश + Atrazine 500g", calcFn: (ac) => `${Math.round(8*ac)} kg बीज • ${(1.2*ac).toFixed(1)} बैग DAP • Atrazine ${Math.round(500*ac)}g`, desc: "जलभराव से बचाने हेतु मेड़ों के किनारे मक्का बोएं।" },
+                { id: "mz_d22", startDay: 20, endDay: 28, dayLabel: "Day 22–26 (फॉल आर्मीवर्म सुरक्षा)", title: "पहली यूरिया व सैनिक कीट (FAW) निगरानी", perAcreDose: "45 kg यूरिया + Emamectin 80g या Spinetoram 90ml", calcFn: (ac) => `${(1*ac).toFixed(1)} बैग यूरिया + FAW कीट स्प्रे`, desc: "पत्तों की गोभ में सुंडी का बुरादा दिखते ही गोभ के अंदर स्प्रे करें।" },
+                { id: "mz_d45", startDay: 42, endDay: 52, dayLabel: "Day 45 (नर मंजरी / Tasseling)", title: "अंतिम यूरिया व सिंचाई", perAcreDose: "45 kg यूरिया + नमी बनाए रखें", calcFn: (ac) => `${(1*ac).toFixed(1)} बैग यूरिया + सिंचाई`, desc: "भुट्टे बनते समय खेत में नमी की कमी न होने दें।" },
+                { id: "mz_d95", startDay: 90, endDay: 105, dayLabel: "Day 92–102 (कटाई)", title: "भुट्टे पकने पर कटाई व सुखाई", perAcreDose: "नमी 14% तक सुखाकर मंडी बेचें", calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(22*ac)} से ${Math.round(28*ac)} क्विंटल`, desc: "छिलका सूखने पर भुट्टे तोड़कर दाने निकालें।" }
+            ]
+        },
+        guar: {
+            name: "🌱 ग्वार (Cluster Bean / Guar)",
+            season: "kharif",
+            seasonLabel: "🌧️ खरीफ बारानी (जुलाई–नवंबर)",
+            states: ["RJ", "HR"],
+            stateLabel: "राजस्थान • दक्षिण-पश्चिम हरियाणा",
+            defaultSow: "2026-07-10",
+            varieties: ["HG 2-20 (हरियाणा)", "RGC 1038 (राजस्थान)", "HG 365", "RGC 1066"],
+            seedPerAcreKg: 6, dapBagsPerAcre: 0.5, ureaBagsPerAcre: 0.2, mopBagsPerAcre: 0.0,
+            estCostPerAcre: 2400,
+            stages: [
+                { id: "gu_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (बिजाई)", title: "रेतीली भूमि में ग्वार बिजाई", perAcreDose: "6 kg बीज + 25 kg DAP", calcFn: (ac) => `${Math.round(6*ac)} kg बीज • ${(0.5*ac).toFixed(1)} बैग DAP`, desc: "Streptocycline 1g + Carbendazim 2g/kg से बीज उपचार करें।" },
+                { id: "gu_d28", startDay: 25, endDay: 32, dayLabel: "Day 25–30 (खरपतवार नियंत्रण)", title: "निराई-गुड़ाई या इमाजेथापायर स्प्रे", perAcreDose: "Imazethapyr (Pursuit) 300ml/एकड़", calcFn: (ac) => `Imazethapyr ${Math.round(300*ac)} ml`, desc: "खरपतवार 2–3 पत्ती होने पर साफ मौसम में स्प्रे करें।" },
+                { id: "gu_d55", startDay: 50, endDay: 65, dayLabel: "Day 52–60 (फली व गम विकास)", title: "जीवाणु अंगमारी (BLB) बचाव", perAcreDose: "Copper Oxychloride 500g + Streptocycline 6g", calcFn: (ac) => `COC ${Math.round(500*ac)}g + Streptocycline ${Math.round(6*ac)}g`, desc: "बरसात के बाद पत्तों पर काले धब्बे दिखें तो तुरंत स्प्रे करें।" },
+                { id: "gu_d100", startDay: 95, endDay: 110, dayLabel: "Day 98–108 (कटाई)", title: "फलियां सूखने पर ग्वार कटाई", perAcreDose: "कटाई व थ्रेशिंग", calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(6*ac)} से ${Math.round(8*ac)} क्विंटल`, desc: "सूखने पर थ्रेशिंग करके ग्वार मंडी भाव पर बेचें।" }
+            ]
+        },
+        groundnut: {
+            name: "🥜 मूंगफली (Groundnut)",
+            season: "kharif",
+            seasonLabel: "🌧️ खरीफ ऋतु (जून–अक्टूबर)",
+            states: ["RJ", "UP", "PB"],
+            stateLabel: "राजस्थान (बीकानेर) • UP • पंजाब",
+            defaultSow: "2026-06-20",
+            varieties: ["HNG 10 (राजस्थान)", "TG 37A", "SG 99 (पंजाब)", "Chandra (UP)"],
+            seedPerAcreKg: 40, dapBagsPerAcre: 0.8, ureaBagsPerAcre: 0.3, mopBagsPerAcre: 0.4,
+            estCostPerAcre: 6800,
+            stages: [
+                { id: "gn_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (बिजाई)", title: "मूंगफली गिरी उपचार व बिजाई", perAcreDose: "40 kg गिरी + 40 kg DAP + 20 kg पोटाश", calcFn: (ac) => `${Math.round(40*ac)} kg गिरी • ${(0.8*ac).toFixed(1)} बैग DAP`, desc: "कॉलर रॉट से बचाव हेतु Thiram या Carbendazim से उपचारित गिरी बोएं।" },
+                { id: "gn_d35", startDay: 32, endDay: 42, dayLabel: "Day 35–40 (जिप्सम खुराक)", title: "फूल व सुइयां (Pegging) बनते समय जिप्सम", perAcreDose: "100 kg जिप्सम + हल्की गुड़ाई", calcFn: (ac) => `${Math.round(100*ac)} kg जिप्सम (2 बैग/एकड़)`, desc: "जिप्सम देने से मूंगफली के छिलके मजबूत व दाने तेल से भरपूर बनते हैं।" },
+                { id: "gn_d65", startDay: 60, endDay: 75, dayLabel: "Day 62–72 (टिक्का रोग सुरक्षा)", title: "टिक्का रोग व सफेद लट नियंत्रण", perAcreDose: "Carbendazim + Mancozeb 400g स्प्रे", calcFn: (ac) => `Saaf ${Math.round(400*ac)}g स्प्रे`, desc: "फली भराव के समय खेत में हल्की नमी बनाए रखें।" },
+                { id: "gn_d115", startDay: 110, endDay: 125, dayLabel: "Day 112–122 (खुदाई)", title: "मूंगफली खुदाई व सुखाई", perAcreDose: "75% फलियां अंदर से काली पड़ने पर खुदाई", calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(11*ac)} से ${Math.round(14*ac)} क्विंटल`, desc: "अच्छी तरह सुखाकर मंडी में बेचें।" }
+            ]
+        },
+        soybean: {
+            name: "🫘 सोयाबीन (Soybean)",
+            season: "kharif",
+            seasonLabel: "🌧️ खरीफ ऋतु (जुलाई–अक्टूबर)",
+            states: ["RJ", "UP"],
+            stateLabel: "राजस्थान (कोटा/हाड़ौती) • बुंदेलखंड UP",
+            defaultSow: "2026-07-02",
+            varieties: ["JS 95-60 (अगेती)", "RKS 24 (राजस्थान)", "PS 1347 (UP)", "NRC 138"],
+            seedPerAcreKg: 30, dapBagsPerAcre: 1.0, ureaBagsPerAcre: 0.0, mopBagsPerAcre: 0.4,
+            estCostPerAcre: 4400,
+            stages: [
+                { id: "sb_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (बिजाई)", title: "सोयाबीन बिजाई व सल्फर खाद", perAcreDose: "30 kg बीज + 50 kg DAP + 10 kg सल्फर", calcFn: (ac) => `${Math.round(30*ac)} kg बीज • ${(1*ac).toFixed(1)} बैग DAP • ${Math.round(10*ac)} kg सल्फर`, desc: "राइजोबियम जैपोनिकम कल्चर से बीज उपचार करके बिजाई करें।" },
+                { id: "sb_d22", startDay: 20, endDay: 26, dayLabel: "Day 20–25 (खरपतवार नियंत्रण)", title: "खरपतवारनाशी स्प्रे", perAcreDose: "Imazethapyr 300ml या Quizalofop 400ml/एकड़", calcFn: (ac) => `Imazethapyr ${Math.round(300*ac)} ml`, desc: "20–25 दिन की अवस्था पर खरपतवार नियंत्रण कर लें।" },
+                { id: "sb_d50", startDay: 45, endDay: 60, dayLabel: "Day 48–58 (फली व सुंडी सुरक्षा)", title: "सेमीलूपर व गर्डल बीटल नियंत्रण", perAcreDose: "Profenofos 400ml या Chlorantraniliprole 60ml", calcFn: (ac) => `Coragen ${Math.round(60*ac)} ml स्प्रे`, desc: "फूल व फली बनते समय पत्ती खाने वाली सुंडी से फसल को बचाएं।" },
+                { id: "sb_d95", startDay: 90, endDay: 105, dayLabel: "Day 92–100 (कटाई)", title: "फलियां पीली पड़ने पर तुरंत कटाई", perAcreDose: "देरी न करें वरना फलियां चटक सकती हैं", calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(8*ac)} से ${Math.round(10*ac)} क्विंटल`, desc: "कटाई करके सूखे खलिहान में थ्रेशिंग करें।" }
+            ]
+        },
+        arhar: {
+            name: "🫘 अरहर / तुअर (Pigeon Pea)",
+            season: "kharif",
+            seasonLabel: "🌧️ खरीफ ऋतु (जून–दिसंबर)",
+            states: ["UP", "HR", "RJ"],
+            stateLabel: "उत्तर प्रदेश • हरियाणा • राजस्थान",
+            defaultSow: "2026-06-18",
+            varieties: ["UPAS 120 (अगेती)", "Paras (हरियाणा)", "Pusa 992", "Narendra Arhar 1 (UP)"],
+            seedPerAcreKg: 6, dapBagsPerAcre: 0.8, ureaBagsPerAcre: 0.0, mopBagsPerAcre: 0.3,
+            estCostPerAcre: 3500,
+            stages: [
+                { id: "ar_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (बिजाई)", title: "मेड़ों पर अगेती अरहर बिजाई", perAcreDose: "6 kg बीज + 40 kg DAP + 8 kg सल्फर", calcFn: (ac) => `${Math.round(6*ac)} kg बीज • ${(0.8*ac).toFixed(1)} बैग DAP`, desc: "जलभराव से बचाने हेतु ऊंचे खेत या मेड़ों पर बिजाई करें।" },
+                { id: "ar_d40", startDay: 35, endDay: 45, dayLabel: "Day 38–44 (निराई व शाखा वृद्धि)", title: "खरपतवार नियंत्रण व जल निकासी", perAcreDose: "निराई-गुड़ाई करें", calcFn: (ac) => `${ac} एकड़ में निराई-गुड़ाई`, desc: "खेत में बारिश का पानी जमा न होने दें।" },
+                { id: "ar_d90", startDay: 85, endDay: 105, dayLabel: "Day 88–100 (फूल व फली सुरक्षा)", title: "फली मक्खी व फली छेदक नियंत्रण", perAcreDose: "Indoxacarb 200ml या Emamectin 80g/एकड़", calcFn: (ac) => `Emamectin ${Math.round(80*ac)}g स्प्रे`, desc: "फलियों में दाने बनते समय कीट सुरक्षा से पैदावार 25% तक बढ़ती है।" },
+                { id: "ar_d145", startDay: 140, endDay: 160, dayLabel: "Day 142–155 (कटाई)", title: "80% फलियां पकने पर कटाई", perAcreDose: "कटाई के बाद गेहूं की बिजाई संभव", calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(7*ac)} से ${Math.round(9*ac)} क्विंटल`, desc: "अगेती किस्म कटने के बाद उसी खेत में गेहूं बोया जा सकता है।" }
+            ]
+        },
+
+        // ================= ZAID CROPS (जायद ऋतु: मार्च – जून) =================
         sugarcane: {
-            name: "गन्ना (Sugarcane)",
-            varieties: ["Co 0238", "Co 15023", "CoH 160"],
-            seedPerAcreKg: 2800,
-            dapBagsPerAcre: 1.5,
-            ureaBagsPerAcre: 3.0,
-            mopBagsPerAcre: 0.8,
-            extraNote: "फिप्रोनिल / क्लोरपायरीफॉस (दीमक व कंसुआ)",
+            name: "🎋 गन्ना (Sugarcane)",
+            season: "zaid",
+            seasonLabel: "☀️ जायद / बसंत (फरवरी–दिसंबर)",
+            states: ["UP", "HR", "PB"],
+            stateLabel: "उत्तर प्रदेश • हरियाणा • पंजाब",
+            defaultSow: "2026-03-10",
+            varieties: ["Co 0238", "Co 15023 (नई अगेती)", "CoH 160 (हरियाणा)", "CoLk 14201 (UP)"],
+            seedPerAcreKg: 2800, dapBagsPerAcre: 1.5, ureaBagsPerAcre: 3.0, mopBagsPerAcre: 0.8,
             estCostPerAcre: 9500,
             stages: [
-                {
-                    id: "s_d0", startDay: 0, endDay: 5, dayLabel: "Day 0 (बिजाई)",
-                    title: "ट्रेंच विधि से गन्ना बिजाई व बीज उपचार",
-                    perAcreDose: "28 क्विं. 2-आंख के टुकड़े + 75 kg DAP + 40 kg पोटाश",
-                    calcFn: (ac) => `${Math.round(28*ac)} क्विं. बीज + ${(1.5*ac).toFixed(1)} बैग DAP`,
-                    desc: "बीज टुकड़ों को Carbendazim घोल में डुबोकर ट्रेंच में बोएं।"
-                },
-                {
-                    id: "s_d45", startDay: 40, endDay: 55, dayLabel: "Day 45–50 (कल्ले व कंसुआ नियंत्रण)",
-                    title: "पहली यूरिया व अर्ली शूट बोरर सुरक्षा",
-                    perAcreDose: "65 kg यूरिया + Coragen 150ml ड्रेंचिंग (जरूरत पर)",
-                    calcFn: (ac) => `${(1.5*ac).toFixed(1)} बैग यूरिया + Coragen ${Math.round(150*ac)} ml`,
-                    desc: "कल्ले फूटने की अवस्था पर यूरिया देकर हल्की सिंचाई व गुड़ाई करें।"
-                },
-                {
-                    id: "s_d110", startDay: 100, endDay: 125, dayLabel: "Day 105–120 (मिट्टी चढ़ाना व बंधाई)",
-                    title: "अंतिम खाद, मिट्टी चढ़ाना (Earthing Up)",
-                    perAcreDose: "65 kg यूरिया + 10 kg फेरस/जिंक + मिट्टी चढ़ाना",
-                    calcFn: (ac) => `${(1.5*ac).toFixed(1)} बैग यूरिया + मिट्टी चढ़ाना`,
-                    desc: "मानसून से पहले गन्ने की जड़ों पर मिट्टी चढ़ाएं और बंधाई करें ताकि तेज हवा में फसल न गिरे।"
-                },
-                {
-                    id: "s_d270", startDay: 260, endDay: 310, dayLabel: "Day 270–300 (कटाई व मिल आपूर्ति)",
-                    title: "गन्ना कटाई व शुगर मिल सप्लाई",
-                    perAcreDose: "हरियाणा सरकारी SAP ₹400/क्विंटल",
-                    calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(360*ac)} से ${Math.round(420*ac)} क्विंटल`,
-                    desc: "आगौला काटकर साफ गन्ना मिल पर्ची के अनुसार सप्लाई करें।"
-                }
+                { id: "s_d0", startDay: 0, endDay: 5, dayLabel: "Day 0 (बिजाई)", title: "ट्रेंच विधि से गन्ना बिजाई व बीज उपचार", perAcreDose: "28 क्विं. 2-आंख टुकड़े + 75 kg DAP + 40 kg पोटाश", calcFn: (ac) => `${Math.round(28*ac)} क्विं. बीज + ${(1.5*ac).toFixed(1)} बैग DAP`, desc: "बीज टुकड़ों को Carbendazim घोल में डुबोकर ट्रेंच में बोएं।" },
+                { id: "s_d45", startDay: 40, endDay: 55, dayLabel: "Day 45–50 (कल्ले व कंसुआ नियंत्रण)", title: "पहली यूरिया व अर्ली शूट बोरर सुरक्षा", perAcreDose: "65 kg यूरिया + Coragen 150ml ड्रेंचिंग", calcFn: (ac) => `${(1.5*ac).toFixed(1)} बैग यूरिया + Coragen ${Math.round(150*ac)} ml`, desc: "कल्ले फूटने की अवस्था पर यूरिया देकर सिंचाई व गुड़ाई करें।" },
+                { id: "s_d110", startDay: 100, endDay: 125, dayLabel: "Day 105–120 (मिट्टी चढ़ाना व बंधाई)", title: "अंतिम खाद, मिट्टी चढ़ाना (Earthing Up)", perAcreDose: "65 kg यूरिया + 10 kg फेरस/जिंक + मिट्टी चढ़ाना", calcFn: (ac) => `${(1.5*ac).toFixed(1)} बैग यूरिया + मिट्टी चढ़ाना`, desc: "मानसून से पहले गन्ने की जड़ों पर मिट्टी चढ़ाएं और बंधाई करें।" },
+                { id: "s_d270", startDay: 260, endDay: 310, dayLabel: "Day 270–300 (कटाई व मिल)", title: "गन्ना कटाई व शुगर मिल सप्लाई", perAcreDose: "सरकारी SAP ₹400/क्विंटल", calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(360*ac)} से ${Math.round(420*ac)} क्विंटल`, desc: "आगौला काटकर साफ गन्ना मिल पर्ची पर सप्लाई करें।" }
+            ]
+        },
+        moong: {
+            name: "🟢 जायद मूंग (Summer Moong)",
+            season: "zaid",
+            seasonLabel: "☀️ जायद ऋतु (मार्च–जून)",
+            states: ["HR", "PB", "RJ", "UP"],
+            stateLabel: "हरियाणा • पंजाब • राजस्थान • UP",
+            defaultSow: "2026-03-25",
+            varieties: ["MH 421 (हरियाणा)", "SML 668 (पंजाब)", "IPM 2-3 (UP)", "GM 4 (राजस्थान)"],
+            seedPerAcreKg: 10, dapBagsPerAcre: 0.7, ureaBagsPerAcre: 0.2, mopBagsPerAcre: 0.0,
+            estCostPerAcre: 3400,
+            stages: [
+                { id: "mg_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (बिजाई)", title: "गेहूं/सरसों कटाई के तुरंत बाद मूंग बिजाई", perAcreDose: "10 kg बीज + 35 kg DAP", calcFn: (ac) => `${Math.round(10*ac)} kg बीज • ${(0.7*ac).toFixed(1)} बैग DAP`, desc: "राइजोबियम टीका लगाकर पलेवा किए खेत में बिजाई करें।" },
+                { id: "mg_d22", startDay: 20, endDay: 26, dayLabel: "Day 22–25 (पहली सिंचाई व सफेद मक्खी)", title: "पहली सिंचाई व पीला मोज़ेक बचाव", perAcreDose: "हल्की सिंचाई + Thiamethoxam 40g स्प्रे", calcFn: (ac) => `Thiamethoxam ${Math.round(40*ac)}g + हल्की सिंचाई`, desc: "सफेद मक्खी को नियंत्रित रखने से पीला मोज़ेक वायरस नहीं आता।" },
+                { id: "mg_d42", startDay: 38, endDay: 48, dayLabel: "Day 40–45 (फूल व फली भराव)", title: "दूसरी सिंचाई व NPK 0:52:34 स्प्रे", perAcreDose: "NPK 0:52:34 (1 kg/एकड़) + हल्का पानी", calcFn: (ac) => `NPK 0:52:34 (${ac} kg) स्प्रे`, desc: "60–65 दिन की इस फसल में फली बनते समय नमी बनाए रखें।" },
+                { id: "mg_d62", startDay: 60, endDay: 68, dayLabel: "Day 62–66 (कटाई)", title: "80% फलियां काली पड़ने पर कटाई", perAcreDose: "कटाई के बाद खेत में हरी खाद के रूप में पलटें", calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(5*ac)} से ${Math.round(7*ac)} क्विंटल`, desc: "मूंग की फलियां तोड़कर पौधों को खेत में जोतने से धान में 1 बैग यूरिया की बचत होती है।" }
+            ]
+        },
+        urad: {
+            name: "⚫ जायद उड़द (Black Gram)",
+            season: "zaid",
+            seasonLabel: "☀️ जायद / खरीफ (मार्च–जून)",
+            states: ["UP", "RJ", "HR", "PB"],
+            stateLabel: "UP • राजस्थान • हरियाणा • पंजाब",
+            defaultSow: "2026-03-20",
+            varieties: ["PU 31 (पंत उड़द)", "Mash 114 (पंजाब)", "T-9 (UP)", "Krishna (राजस्थान)"],
+            seedPerAcreKg: 8, dapBagsPerAcre: 0.7, ureaBagsPerAcre: 0.2, mopBagsPerAcre: 0.0,
+            estCostPerAcre: 3300,
+            stages: [
+                { id: "ur_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (बिजाई)", title: "उड़द बिजाई व बेसल खाद", perAcreDose: "8 kg बीज + 35 kg DAP", calcFn: (ac) => `${Math.round(8*ac)} kg बीज • ${(0.7*ac).toFixed(1)} बैग DAP`, desc: "बीज उपचार करके कतारों में बिजाई करें।" },
+                { id: "ur_d25", startDay: 22, endDay: 28, dayLabel: "Day 24–27 (सिंचाई व कीट सुरक्षा)", title: "पहली सिंचाई व रसचूसक कीट स्प्रे", perAcreDose: "हल्की सिंचाई + Imidacloprid 60ml", calcFn: (ac) => `Imidacloprid ${Math.round(60*ac)}ml + सिंचाई`, desc: "गर्मी में हर 12–15 दिन पर हल्का पानी दें।" },
+                { id: "ur_d65", startDay: 62, endDay: 72, dayLabel: "Day 65–70 (कटाई)", title: "उड़द कटाई व थ्रेशिंग", perAcreDose: "फलियां पकने पर कटाई", calcFn: (ac) => `अनुमानित पैदावार: ~${(4.5*ac).toFixed(1)} से ${Math.round(6*ac)} क्विंटल`, desc: "सुखाकर थ्रेशिंग करें और मंडी भाव पर बेचें।" }
+            ]
+        },
+        sunflower: {
+            name: "🌻 सूरजमुखी (Sunflower)",
+            season: "zaid",
+            seasonLabel: "☀️ जायद / बसंत (फरवरी–मई)",
+            states: ["HR", "PB", "UP"],
+            stateLabel: "हरियाणा (कुरुक्षेत्र/अंबाला/जींद) • पंजाब • UP",
+            defaultSow: "2026-02-15",
+            varieties: ["PSH 1962 (पंजाब)", "Pioneer 64A57", "KBSH 44", "DK 3849"],
+            seedPerAcreKg: 2.5, dapBagsPerAcre: 1.0, ureaBagsPerAcre: 1.5, mopBagsPerAcre: 0.4,
+            estCostPerAcre: 4600,
+            stages: [
+                { id: "sf_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (बिजाई)", title: "मेड़ों पर सूरजमुखी बिजाई", perAcreDose: "2.5 kg बीज + 50 kg DAP + 20 kg पोटाश + 10 kg सल्फर", calcFn: (ac) => `${(2.5*ac).toFixed(1)} kg बीज • ${(1*ac).toFixed(1)} बैग DAP • ${Math.round(10*ac)} kg सल्फर`, desc: "तेल की मात्रा बढ़ाने के लिए सल्फर अवश्य डालें।" },
+                { id: "sf_d30", startDay: 28, endDay: 35, dayLabel: "Day 30 (यूरिया व मिट्टी चढ़ाना)", title: "यूरिया टॉप ड्रेसिंग व मिट्टी चढ़ाना", perAcreDose: "45 kg यूरिया + जड़ों पर मिट्टी चढ़ाना", calcFn: (ac) => `${(1*ac).toFixed(1)} बैग यूरिया + मिट्टी चढ़ाना`, desc: "पौधों को तेज हवा में गिरने से बचाने के लिए मिट्टी चढ़ाएं।" },
+                { id: "sf_d55", startDay: 50, endDay: 65, dayLabel: "Day 52–62 (फूल व बीज भराव)", title: "बोरॉन स्प्रे व सिंचाई", perAcreDose: "बोरॉन 150g + हल्की सिंचाई (हवा शांत होने पर)", calcFn: (ac) => `बोरॉन ${Math.round(150*ac)}g स्प्रे`, desc: "बोरॉन के छिड़काव से फूल के बीच के दाने भी पूरे भरते हैं।" },
+                { id: "sf_d95", startDay: 90, endDay: 105, dayLabel: "Day 92–100 (कटाई)", title: "फूल का पिछला हिस्सा पीला पड़ने पर कटाई", perAcreDose: "कटाई के बाद 3 दिन धूप में सुखाएं", calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(8*ac)} से ${Math.round(10*ac)} क्विंटल`, desc: "सुखाकर थ्रेशिंग करें और MSP पर बेचें।" }
+            ]
+        },
+        watermelon: {
+            name: "🍉 तरबूज व खरबूजा (Melons)",
+            season: "zaid",
+            seasonLabel: "☀️ जायद बेल वाली (फरवरी–मई)",
+            states: ["UP", "HR", "PB", "RJ"],
+            stateLabel: "UP • हरियाणा • पंजाब • राजस्थान",
+            defaultSow: "2026-02-20",
+            varieties: ["Sugar Baby / Saraswati (तरबूज)", "Pusa Madhuras / Bobby (खरबूजा)", "Hara Madhu"],
+            seedPerAcreKg: 0.8, dapBagsPerAcre: 1.2, ureaBagsPerAcre: 1.5, mopBagsPerAcre: 0.8,
+            estCostPerAcre: 8500,
+            stages: [
+                { id: "wm_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (बिजाई)", title: "नाली व बेड विधि से बिजाई", perAcreDose: "800g बीज + 60 kg DAP + 40 kg पोटाश", calcFn: (ac) => `${Math.round(800*ac)}g बीज • ${(1.2*ac).toFixed(1)} बैग DAP`, desc: "नाली की मेड़ पर 2–3 बीज प्रति स्थान बोएं।" },
+                { id: "wm_d25", startDay: 22, endDay: 30, dayLabel: "Day 24–28 (बेल वृद्धि व रेड पम्पकिन बीटल)", title: "यूरिया व लाल कीड़ा सुरक्षा", perAcreDose: "35 kg यूरिया + Cypermethrin 150ml", calcFn: (ac) => `${Math.round(35*ac)} kg यूरिया + कीट स्प्रे`, desc: "बेलें फैलते समय नालियों में हल्की सिंचाई करें।" },
+                { id: "wm_d45", startDay: 42, endDay: 55, dayLabel: "Day 45–52 (फल बनना व मिठास)", title: "फल मक्खी जाल व पोटाश-बोरॉन स्प्रे", perAcreDose: "NPK 0:0:50 (1 kg) + बोरॉन 100g + फल मक्खी ट्रैप", calcFn: (ac) => `NPK 0:0:50 (${ac} kg) + बोरॉन ${Math.round(100*ac)}g`, desc: "पोटाश व बोरॉन से फल फटते नहीं हैं और मिठास बढ़ जाती है।" },
+                { id: "wm_d75", startDay: 70, endDay: 85, dayLabel: "Day 72–82 (तुड़ाई)", title: "पके हुए तरबूज/खरबूजे की तुड़ाई", perAcreDose: "बेल का तंतु (Tendril) सूखने पर तुड़ाई", calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(90*ac)} से ${Math.round(120*ac)} क्विंटल`, desc: "तुड़ाई से 5 दिन पहले पानी बंद कर दें ताकि मिठास बनी रहे।" }
+            ]
+        },
+        mentha: {
+            name: "🌿 मेंथा / पिपरमिंट (Mentha)",
+            season: "zaid",
+            seasonLabel: "☀️ जायद तेल फसल (फरवरी–जून)",
+            states: ["UP", "PB", "HR"],
+            stateLabel: "उत्तर प्रदेश स्पेशल • पंजाब • हरियाणा",
+            defaultSow: "2026-02-15",
+            varieties: ["Kosi (सर्वाधिक तेल)", "Cim-Kranti", "Kushal", "Sambhav"],
+            seedPerAcreKg: 160, dapBagsPerAcre: 1.0, ureaBagsPerAcre: 2.0, mopBagsPerAcre: 0.5,
+            estCostPerAcre: 7200,
+            stages: [
+                { id: "mn_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (जड़ रोपाई)", title: "मेंथा जड़ों (Suckers) की रोपाई", perAcreDose: "1.6 क्विं. जड़ें + 50 kg DAP + 25 kg पोटाश + 10 kg सल्फर", calcFn: (ac) => `${(1.6*ac).toFixed(1)} क्विं. जड़ें • ${(1*ac).toFixed(1)} बैग DAP`, desc: "जड़ों को Carbendazim घोल में डुबोकर 45 सेमी कतारों में रोपें और तुरंत सिंचाई करें।" },
+                { id: "mn_d35", startDay: 30, endDay: 40, dayLabel: "Day 32–38 (पहली यूरिया व निराई)", title: "वानस्पतिक वृद्धि व यूरिया खुराक", perAcreDose: "45 kg यूरिया + हर 10 दिन में सिंचाई", calcFn: (ac) => `${(1*ac).toFixed(1)} बैग यूरिया + सिंचाई`, desc: "गर्मी में मेंथा को नियमित हल्की सिंचाई की जरूरत होती है।" },
+                { id: "mn_d65", startDay: 60, endDay: 72, dayLabel: "Day 62–70 (दूसरी यूरिया व सुंडी सुरक्षा)", title: "तेल निर्माण व पत्ती सुरक्षा", perAcreDose: "45 kg यूरिया + Zinc/Sulphur फोलियर स्प्रे", calcFn: (ac) => `${(1*ac).toFixed(1)} बैग यूरिया`, desc: "पत्तियां घनी होने पर सुंडी की निगरानी रखें।" },
+                { id: "mn_d105", startDay: 100, endDay: 115, dayLabel: "Day 102–112 (कटाई व आसवन)", title: "कटाई व टंकी से मेंथा ऑयल निकालना", perAcreDose: "कटाई से 7 दिन पहले सिंचाई बंद करें", calcFn: (ac) => `अनुमानित तेल: ~${Math.round(55*ac)} से ${Math.round(65*ac)} kg मेंथा ऑयल`, desc: "धूप वाले दिन कटाई करके 3–4 घंटे मुरझाने के बाद आसवन टंकी में तेल निकालें।" }
+            ]
+        },
+        summer_fodder: {
+            name: "🌾 मक्का/ज्वार चारा (Summer Fodder)",
+            season: "zaid",
+            seasonLabel: "☀️ जायद हरा चारा (मार्च–जुलाई)",
+            states: ["HR", "PB", "RJ", "UP"],
+            stateLabel: "हरियाणा • पंजाब • राजस्थान • UP",
+            defaultSow: "2026-04-05",
+            varieties: ["J 1006 (मक्का चारा)", "HJ 541 / SSG 59-3 (ज्वार चरी)", "Super Napier"],
+            seedPerAcreKg: 25, dapBagsPerAcre: 0.8, ureaBagsPerAcre: 1.5, mopBagsPerAcre: 0.0,
+            estCostPerAcre: 3100,
+            stages: [
+                { id: "sfod_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (बिजाई)", title: "गर्मी के हरे चारे की बिजाई", perAcreDose: "25 kg चारा बीज + 40 kg DAP", calcFn: (ac) => `${Math.round(25*ac)} kg बीज • ${(0.8*ac).toFixed(1)} बैग DAP`, desc: "पलेवा करके बिजाई करें ताकि मई-जून की लू में पशुओं को भरपूर हरा चारा मिले।" },
+                { id: "sfod_d25", startDay: 22, endDay: 28, dayLabel: "Day 24–26 (सिंचाई व यूरिया)", title: "पहली यूरिया व हर 10 दिन में सिंचाई", perAcreDose: "35 kg यूरिया + सिंचाई", calcFn: (ac) => `${Math.round(35*ac)} kg यूरिया + सिंचाई`, desc: "ज्वार चरी में 45 दिन से पहले और बिना सिंचाई के चारा न काटें (HCN से बचाव)।" },
+                { id: "sfod_d55", startDay: 50, endDay: 65, dayLabel: "Day 52–60 (कटाई)", title: "पौष्टिक हरे चारे की कटाई", perAcreDose: "50% फूल आने पर कटाई श्रेष्ठ", calcFn: (ac) => `अनुमानित हरा चारा: ~${Math.round(160*ac)} से ${Math.round(200*ac)} क्विंटल`, desc: "कटाई के बाद यूरिया व पानी देने से चरी की दूसरी कटाई भी तैयार हो जाती है।" }
             ]
         }
     };
@@ -3321,24 +3572,61 @@ _Sent via Bahubali Legend v20_`;
         renderFasalTimeline();
     }
 
+    function setFasalSeason(seasonKey, btnEl) {
+        currentFasalSeason = seasonKey;
+        document.querySelectorAll(".season-pill-btn").forEach(b => b.classList.remove("active"));
+        if (btnEl) btnEl.classList.add("active");
+        filterFasalDropdown();
+    }
+
+    function filterFasalDropdown() {
+        const stateFilter = document.getElementById("fasal-state-sel").value;
+        const query = (document.getElementById("fasal-search-input").value || "").trim().toLowerCase();
+        const cropSel = document.getElementById("fasal-crop-sel");
+        const prevCrop = cropSel.value;
+
+        const keys = Object.keys(fasalDatabase).filter(k => {
+            const item = fasalDatabase[k];
+            const matchSeason = currentFasalSeason === "all" || item.season === currentFasalSeason;
+            const matchState = stateFilter === "all" || item.states.includes(stateFilter);
+            const matchQuery = !query || item.name.toLowerCase().includes(query) || item.stateLabel.toLowerCase().includes(query) || item.varieties.some(v => v.toLowerCase().includes(query));
+            return matchSeason && matchState && matchQuery;
+        });
+
+        document.getElementById("fasal-crop-count-lbl").innerText = `फसल चुनें (${keys.length} फसलें उपलब्ध)`;
+
+        if (keys.length === 0) {
+            cropSel.innerHTML = `<option value="wheat">कोई फसल नहीं मिली (सभी दिखाएं)</option>`;
+            return;
+        }
+
+        cropSel.innerHTML = keys.map(k => `<option value="${k}">${fasalDatabase[k].name}</option>`).join("");
+        if (keys.includes(prevCrop)) {
+            cropSel.value = prevCrop;
+        } else {
+            cropSel.value = keys[0];
+        }
+        onFasalCropChange();
+    }
+
     function syncFasalFromGlobal() {
-        // Sync acres
         try {
             const savedAc = localStorage.getItem(FASAL_ACRES_KEY);
             if (savedAc) document.getElementById("fasal-acres-input").value = savedAc;
         } catch (e) {}
 
-        // Sync crop with AI Brain selector
+        filterFasalDropdown();
+
         const globalCrop = document.getElementById("ai-crop-select").value;
         const fasalCropSel = document.getElementById("fasal-crop-sel");
-        if (fasalCropSel && fasalDatabase[globalCrop]) {
+        if (fasalCropSel && Array.from(fasalCropSel.options).some(o => o.value === globalCrop)) {
             fasalCropSel.value = globalCrop;
         }
-        populateFasalVarieties(globalCrop);
+        const activeKey = fasalCropSel.value || "wheat";
+        populateFasalVarieties(activeKey);
 
-        // Sync sowing date
         const globalDate = document.getElementById("sowing-date-input").value;
-        if (globalDate) {
+        if (globalDate && fasalDatabase[activeKey]) {
             document.getElementById("fasal-sowing-input").value = globalDate;
         }
     }
@@ -3353,27 +3641,48 @@ _Sent via Bahubali Legend v20_`;
 
     function onFasalCropChange() {
         const cropKey = document.getElementById("fasal-crop-sel").value;
+        const cropObj = fasalDatabase[cropKey] || fasalDatabase.wheat;
         populateFasalVarieties(cropKey);
 
-        // Sync back to AI Brain selector so both tabs stay unified
+        // Load saved sowing date for this specific crop or use its seasonal default
+        let savedMap = {};
+        try {
+            const raw = localStorage.getItem(SOWING_STORAGE_KEY);
+            if (raw) savedMap = JSON.parse(raw);
+        } catch (e) {}
+        const sowDate = savedMap[cropKey] || cropObj.defaultSow || "2026-11-05";
+        document.getElementById("fasal-sowing-input").value = sowDate;
+
+        // Sync back to Tab 1 AI Brain if present in its dropdown
         const aiSel = document.getElementById("ai-crop-select");
-        if (aiSel) {
+        if (aiSel && Array.from(aiSel.options).some(o => o.value === cropKey)) {
             aiSel.value = cropKey;
             updateGDDThermalClock();
             runAIDecisionBrain();
         }
-        const syncedDate = document.getElementById("sowing-date-input").value;
-        if (syncedDate) document.getElementById("fasal-sowing-input").value = syncedDate;
 
         renderFasalTimeline();
     }
 
     function onFasalSowingChange() {
+        const cropKey = document.getElementById("fasal-crop-sel").value;
         const dVal = document.getElementById("fasal-sowing-input").value;
         if (!dVal) return;
-        document.getElementById("sowing-date-input").value = dVal;
-        saveSowingDate();
+
+        try {
+            const raw = localStorage.getItem(SOWING_STORAGE_KEY);
+            const map = raw ? JSON.parse(raw) : {};
+            map[cropKey] = dVal;
+            localStorage.setItem(SOWING_STORAGE_KEY, JSON.stringify(map));
+        } catch (e) {}
+
+        const aiSel = document.getElementById("ai-crop-select");
+        if (aiSel && aiSel.value === cropKey) {
+            document.getElementById("sowing-date-input").value = dVal;
+            updateGDDThermalClock();
+        }
         renderFasalTimeline();
+        showToast("📅 बुआई तारीख और फसल चरण कैलेंडर अपडेट!");
     }
 
     function addDaysFormatted(baseDateStr, daysToAdd) {
@@ -3387,17 +3696,49 @@ _Sent via Bahubali Legend v20_`;
     }
 
     function renderFasalTimeline() {
+        // Hyper-AI Fasal Doctor dynamic update
+        const cSel = document.getElementById("ai-crop-select").value;
+        const expertBox = document.getElementById("fasal-ai-expert-box");
+        const riskLbl = document.getElementById("fasal-pest-risk-lbl");
+        
+        let docAdvice = "";
+        if (cSel === "wheat") {
+            docAdvice = `गेहूं (DBW 327/187): आपके 5 एकड़ खेत में 6 घंटे की नहर और जिप्सम-सुधारी मिट्टी होने से जड़ें गहरी हैं। यदि तापमान ${sharedState.temp}°C और नमी ${sharedState.humidity}% है, तो पहली CRI सिंचाई के बाद ही यूरिया दें।`;
+            if (sharedState.humidity >= 75) {
+                riskLbl.innerText = "पीला रतुआ हाई रिस्क ⚠️";
+                riskLbl.style.color = "#fca5a5";
+            } else {
+                riskLbl.innerText = "रतुआ जोखिम कम ✅";
+                riskLbl.style.color = "#6ee7b7";
+            }
+        } else if (cSel === "mustard") {
+            docAdvice = `सरसों: फूल आने की अवस्था पर सल्फर (गंधक) और हल्की सिंचाई का विशेष ध्यान रखें। मौसम साफ रहने पर माहू (चेपा) की निगरानी रखें।`;
+            riskLbl.innerText = "चेपा निगरानी रखें 🔍";
+            riskLbl.style.color = "#fde68a";
+        } else {
+            docAdvice = `${fasalDatabase[document.getElementById("fasal-crop-sel").value]?.name || 'फसल'}: वर्तमान जड़ नमी ${sharedState.rootZoneMoisture}% और वाष्पीकरण ${sharedState.et0}mm के अनुसार खाद प्रबंधन सुनिश्चित करें।`;
+            riskLbl.innerText = "फसल सुरक्षित ✅";
+            riskLbl.style.color = "#6ee7b7";
+        }
+        if (expertBox) expertBox.innerText = docAdvice;
+
         const cropKey = document.getElementById("fasal-crop-sel").value;
         const cropObj = fasalDatabase[cropKey] || fasalDatabase.wheat;
         const acres = Math.max(0.5, parseFloat(document.getElementById("fasal-acres-input").value) || 5);
-        const sowStr = document.getElementById("fasal-sowing-input").value || "2026-11-05";
+        const sowStr = document.getElementById("fasal-sowing-input").value || cropObj.defaultSow || "2026-11-05";
+
+        // Update Season & State Meta Badges
+        document.getElementById("fasal-crop-meta-strip").innerHTML = `
+            <span class="meta-tag-season">${cropObj.seasonLabel}</span>
+            <span class="meta-tag-state">📍 प्रमुख राज्य: ${cropObj.stateLabel}</span>
+        `;
 
         const sowTime = new Date(sowStr).getTime();
         const ageDays = Math.max(0, Math.floor((Date.now() - sowTime) / (1000 * 60 * 60 * 24)));
 
         // 1. Update Dose Calculator for Selected Acres
         document.getElementById("fasal-dose-header").innerText = `🧮 ${acres} एकड़ (${cropObj.name}) कुल खाद-बीज हिसाब`;
-        const totalSeed = Math.round(cropObj.seedPerAcreKg * acres);
+        const totalSeed = (cropObj.seedPerAcreKg * acres) % 1 === 0 ? Math.round(cropObj.seedPerAcreKg * acres) : (cropObj.seedPerAcreKg * acres).toFixed(1);
         const totalDap = (cropObj.dapBagsPerAcre * acres).toFixed(1);
         const totalUrea = (cropObj.ureaBagsPerAcre * acres).toFixed(1);
         const totalMop = (cropObj.mopBagsPerAcre * acres).toFixed(1);
@@ -3413,11 +3754,11 @@ _Sent via Bahubali Legend v20_`;
         // 2. Weather-Synced Field Guard
         const guardEl = document.getElementById("fasal-weather-guard");
         if (sharedState.rainProb >= 40) {
-            guardEl.innerHTML = `🌧️ <strong>मौसम गार्ड अलर्ट:</strong> बारिश की ${sharedState.rainProb}% संभावना है — आज किसी भी चरण का स्प्रे या नहर/ट्यूबवेल सिंचाई न करें।`;
+            guardEl.innerHTML = `🌧️ <strong>मौसम गार्ड अलर्ट:</strong> बारिश की ${sharedState.rainProb}% संभावना है — आज किसी भी चरण का स्प्रे या सिंचाई न करें।`;
         } else if (sharedState.windSpeed > 15) {
             guardEl.innerHTML = `💨 <strong>हवा गार्ड अलर्ट:</strong> हवा की गति ${sharedState.windSpeed} km/h तेज है — खरपतवारनाशी या फफूंदनाशक स्प्रे शाम को हवा शांत होने पर करें।`;
         } else {
-            guardEl.innerHTML = `✅ <strong>लाइव मौसम अनुकूल:</strong> हवा शांत (${sharedState.windSpeed} km/h) और जड़ नमी ${sharedState.rootZoneMoisture}% है — सक्रिय चरण के खाद व स्प्रे कार्य बेझिझक करें।`;
+            guardEl.innerHTML = `✅ <strong>लाइव मौसम अनुकूल:</strong> हवा शांत (${sharedState.windSpeed} km/h) और जड़ नमी ${sharedState.rootZoneMoisture}% है — सक्रिय चरण के कार्य बेझिझक करें।`;
         }
 
         // 3. Render Stage-by-Stage Timeline
@@ -3464,7 +3805,7 @@ _Sent via Bahubali Legend v20_`;
                     </div>
                     <div class="st-desc">${st.desc}</div>
                     <div class="st-actions">
-                        <span style="font-size:10.5px; color:#94a3b8;">खड़क गगर / जींद कृषि शेड्यूल</span>
+                        <span style="font-size:10.5px; color:#94a3b8;">${cropObj.stateLabel}</span>
                         <button class="st-done-btn ${isDone ? 'is-done' : ''}" onclick="toggleStageDone('${st.id}')">
                             ${isDone ? '✓ पूर्ण हो गया' : '○ पूर्ण मार्क करें'}
                         </button>
@@ -3487,12 +3828,13 @@ _Sent via Bahubali Legend v20_`;
         const cropObj = fasalDatabase[cropKey] || fasalDatabase.wheat;
         const variety = document.getElementById("fasal-variety-sel").value;
         const acres = document.getElementById("fasal-acres-input").value || 5;
-        const sowStr = document.getElementById("fasal-sowing-input").value || "2026-11-05";
+        const sowStr = document.getElementById("fasal-sowing-input").value || cropObj.defaultSow || "2026-11-05";
 
         const lines = cropObj.stages.map(s => `• *${s.dayLabel}* (${addDaysFormatted(sowStr, s.startDay)}): ${s.title} — _${s.calcFn(acres)}_`).join("\n");
         const msg =
 `🌱 *BAHUBALI फसल चरण शेड्यूल*
 🚜 *फसल:* ${cropObj.name} (${variety})
+🌦️ *ऋतु:* ${cropObj.seasonLabel} | 📍 ${cropObj.stateLabel}
 📐 *रकबा:* ${acres} एकड़ | 📅 *बुआई:* ${addDaysFormatted(sowStr, 0)}
 
 ${lines}
