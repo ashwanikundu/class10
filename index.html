@@ -364,6 +364,17 @@
   footer {
     text-align: center; padding: 24px 16px; color: var(--muted); font-size: 0.8rem;
   }
+
+  button, .subj-card, .lesson-item, .mode-card, .opt-btn, .pill, .qnav-btn, .crumb-btn {
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  button:active, .subj-card:active, .lesson-item:active, .mode-card:active, .opt-btn:active {
+    transform: scale(0.98) !important;
+    transition: transform 0.06s ease !important;
+  }
+
 </style>
 </head>
 <body>
@@ -408,33 +419,44 @@
 </footer>
 
 <script>
-// Register inline Service Worker for 100% Offline Support
-if ('serviceWorker' in navigator) {
-  const swCode = `
-    const CACHE = 'c10-master-v1';
-    self.addEventListener('install', e => { self.skipWaiting(); });
-    self.addEventListener('fetch', e => {
-      e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
-    });
-  `;
-  const blob = new Blob([swCode], { type: 'application/javascript' });
-  navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
-}
+// Safe Storage Wrapper (prevents crashes on restricted Android WebViews / Incognito)
+const SafeStore = {
+  get(key, fallback) {
+    try {
+      const v = localStorage.getItem(key);
+      return v !== null ? v : fallback;
+    } catch (e) { return fallback; }
+  },
+  set(key, val) {
+    try { localStorage.setItem(key, val); } catch (e) {}
+  },
+  getJSON(key, fallback) {
+    try {
+      const v = localStorage.getItem(key);
+      return v ? JSON.parse(v) : fallback;
+    } catch (e) { return fallback; }
+  }
+};
+
+// Global Error Guard so UI never goes blank even on unexpected edge cases
+window.addEventListener('error', function(e) {
+  console.warn('Handled UI Error:', e.message);
+});
 
 let state = {
   view: 'home',
-  medium: localStorage.getItem('c10_medium') || 'en',
-  dark: localStorage.getItem('c10_dark') === '1',
-  fontSize: parseInt(localStorage.getItem('c10_font') || '16', 10),
+  medium: SafeStore.get('c10_medium', 'en'),
+  dark: SafeStore.get('c10_dark', '0') === '1',
+  fontSize: parseInt(SafeStore.get('c10_font', '16'), 10),
   subjectId: null,
   lessonId: null,
   mode: 'book',
   diff: 'All',
   marks: 'All',
   search: '',
-  answered: JSON.parse(localStorage.getItem('c10_answered') || '{}'),
-  saved: JSON.parse(localStorage.getItem('c10_saved') || '[]'),
-  mistakes: JSON.parse(localStorage.getItem('c10_mistakes') || '[]'),
+  answered: SafeStore.getJSON('c10_answered', {}),
+  saved: SafeStore.getJSON('c10_saved', []),
+  mistakes: SafeStore.getJSON('c10_mistakes', []),
   mockActive: false,
   mockSubj: 'all',
   mockSeconds: 10800,
@@ -455,19 +477,19 @@ function applyPrefs() {
 
 function toggleTheme() {
   state.dark = !state.dark;
-  localStorage.setItem('c10_dark', state.dark ? '1' : '0');
+  SafeStore.set('c10_dark', state.dark ? '1' : '0');
   applyPrefs();
 }
 
 function changeFont(delta) {
   state.fontSize = Math.min(21, Math.max(13, state.fontSize + delta));
-  localStorage.setItem('c10_font', state.fontSize);
+  SafeStore.set('c10_font', state.fontSize);
   applyPrefs();
 }
 
 function setMedium(m) {
   state.medium = m;
-  localStorage.setItem('c10_medium', m);
+  SafeStore.set('c10_medium', m);
   applyPrefs();
   render();
 }
@@ -479,16 +501,25 @@ function updateCounters() {
   if (mc) mc.textContent = state.mistakes.length;
 }
 
-function toggleBookmark(id, title, qEn, qHi, solEn, solHi) {
+const ITEM_REGISTRY = {};
+function regItem(id, data) {
+  ITEM_REGISTRY[id] = data;
+  return id;
+}
+function toggleBookmarkById(id) {
   const idx = state.saved.findIndex(x => x.id === id);
   if (idx >= 0) {
     state.saved.splice(idx, 1);
-  } else {
-    state.saved.push({ id, title, qEn, qHi, solEn, solHi });
+  } else if (ITEM_REGISTRY[id]) {
+    state.saved.push({ id, ...ITEM_REGISTRY[id] });
   }
-  localStorage.setItem('c10_saved', JSON.stringify(state.saved));
+  SafeStore.set('c10_saved', JSON.stringify(state.saved));
   updateCounters();
   render();
+}
+function checkMCQById(qid, optIdx, correctIdx) {
+  const qObj = ITEM_REGISTRY[qid] || null;
+  checkMCQ(qid, optIdx, correctIdx, qObj);
 }
 
 function switchView(v) {
@@ -3867,15 +3898,15 @@ function setMarks(mk) { state.marks = mk; render(); }
 
 function checkMCQ(qid, optIdx, correctIdx, qObj) {
   state.answered[qid] = { chosen: optIdx, correct: correctIdx };
-  localStorage.setItem('c10_answered', JSON.stringify(state.answered));
+  SafeStore.set('c10_answered', JSON.stringify(state.answered));
   if (optIdx !== correctIdx && qObj) {
     if (!state.mistakes.some(m => m.id === qid)) {
       state.mistakes.push({ id: qid, ...qObj });
-      localStorage.setItem('c10_mistakes', JSON.stringify(state.mistakes));
+      SafeStore.set('c10_mistakes', JSON.stringify(state.mistakes));
     }
   } else if (optIdx === correctIdx) {
     state.mistakes = state.mistakes.filter(m => m.id !== qid);
-    localStorage.setItem('c10_mistakes', JSON.stringify(state.mistakes));
+    SafeStore.set('c10_mistakes', JSON.stringify(state.mistakes));
   }
   updateCounters();
   render();
@@ -4180,7 +4211,7 @@ function render() {
       <div class="q-card">
         <div class="q-meta">
           <span class="tag-marks">⭐ ${item.title}</span>
-          <button class="bookmark-btn saved" onclick="toggleBookmark('${item.id}')">Remove ✕</button>
+          <button class="bookmark-btn saved" onclick="toggleBookmarkById('${item.id}')">Remove ✕</button>
         </div>
         <div class="q-text">${item.qEn}</div>
         ${state.medium === 'hi' && item.qHi ? `<div class="hi-sub">${item.qHi}</div>` : ''}
@@ -4206,6 +4237,7 @@ function render() {
       ${state.mistakes.map((q) => {
         const opts = state.medium === 'hi' ? q.optsHi : q.optsEn;
         const ansState = state.answered[q.id];
+        regItem(q.id, q);
         return `
           <div class="q-card">
             <div class="q-meta"><span class="tag-marks">${q.subjName || 'MCQ Practice'}</span></div>
@@ -4218,7 +4250,7 @@ function render() {
                   if (oIdx === q.ans) cls += ' correct';
                   else if (oIdx === ansState.chosen) cls += ' wrong';
                 }
-                return `<button class="${cls}" onclick='checkMCQ("${q.id}", ${oIdx}, ${q.ans}, ${JSON.stringify(q).replace(/'/g, "&apos;")})'>${String.fromCharCode(65 + oIdx)}. ${opt}</button>`;
+                return `<button class="${cls}" onclick="checkMCQById('${q.id}', ${oIdx}, ${q.ans})">${String.fromCharCode(65 + oIdx)}. ${opt}</button>`;
               }).join('')}
             </div>
           </div>
@@ -4310,12 +4342,13 @@ function render() {
   if (state.mode === 'book') {
     let bookHtml = les.book.map((item, idx) => {
       const bid = `${les.id}_b_${idx}`;
+      regItem(bid, { title: `${les.num} • Ex #${idx+1}`, qEn: item.qEn, qHi: item.qHi, solEn: item.solEn, solHi: item.solHi });
       const isSaved = state.saved.some(x => x.id === bid);
       return `
         <div class="q-card">
           <div class="q-meta">
             <span class="tag-marks">Original Textbook Exercise #${idx + 1}</span>
-            <button class="bookmark-btn ${isSaved ? 'saved' : ''}" onclick='toggleBookmark("${bid}", "${les.num} • Ex #${idx+1}", ${JSON.stringify(item.qEn)}, ${JSON.stringify(item.qHi)}, ${JSON.stringify(item.solEn)}, ${JSON.stringify(item.solHi)})'>${isSaved ? '⭐ Saved' : '☆ Save'}</button>
+            <button class="bookmark-btn ${isSaved ? 'saved' : ''}" onclick="toggleBookmarkById('${bid}')">${isSaved ? '⭐ Saved' : '☆ Save'}</button>
           </div>
           <div class="q-text">${item.qEn}</div>
           ${state.medium === 'hi' ? `<div class="hi-sub">${item.qHi}</div>` : ''}
@@ -4354,14 +4387,15 @@ function render() {
           if (q.marks === 1) {
             const ansState = state.answered[qid];
             const opts = state.medium === 'hi' ? q.optsHi : q.optsEn;
-            const qPayload = { subjName: subj.titleEn + ' (' + les.num + ')', qEn: q.qEn, qHi: q.qHi, optsEn: q.optsEn, optsHi: q.optsHi, ans: q.ans };
+            const qPayload = { title: `${les.num} • 1M MCQ`, subjName: subj.titleEn + ' (' + les.num + ')', qEn: q.qEn, qHi: q.qHi, optsEn: q.optsEn, optsHi: q.optsHi, ans: q.ans, solEn: "Correct Answer: " + q.optsEn[q.ans], solHi: "सही उत्तर: " + q.optsHi[q.ans] };
+            regItem(qid, qPayload);
             return `
               <div class="q-card">
                 <div class="q-meta">
                   <span class="tag-marks">1 Mark • MCQ (Only Green/Red)</span>
                   <div>
                     <span class="tag-diff tag-${q.diff}">${q.diff}</span>
-                    <button class="bookmark-btn ${isSaved ? 'saved' : ''}" onclick='toggleBookmark("${qid}", "${les.num} • 1M MCQ", ${JSON.stringify(q.qEn)}, ${JSON.stringify(q.qHi)}, ${JSON.stringify("Correct Answer: " + q.optsEn[q.ans])}, ${JSON.stringify("सही उत्तर: " + q.optsHi[q.ans])})'>${isSaved ? '⭐ Saved' : '☆ Save'}</button>
+                    <button class="bookmark-btn ${isSaved ? 'saved' : ''}" onclick="toggleBookmarkById('${qid}')">${isSaved ? '⭐ Saved' : '☆ Save'}</button>
                   </div>
                 </div>
                 <div class="q-text">${q.qEn}</div>
@@ -4373,19 +4407,20 @@ function render() {
                       if (oIdx === q.ans) cls += ' correct';
                       else if (oIdx === ansState.chosen) cls += ' wrong';
                     }
-                    return `<button class="${cls}" onclick='checkMCQ("${qid}", ${oIdx}, ${q.ans}, ${JSON.stringify(qPayload).replace(/'/g, "&apos;")})'>${String.fromCharCode(65 + oIdx)}. ${opt}</button>`;
+                    return `<button class="${cls}" onclick="checkMCQById('${qid}', ${oIdx}, ${q.ans})">${String.fromCharCode(65 + oIdx)}. ${opt}</button>`;
                   }).join('')}
                 </div>
               </div>
             `;
           } else {
+            regItem(qid, { title: `${les.num} • ${q.marks}M`, qEn: q.qEn, qHi: q.qHi, solEn: q.solEn, solHi: q.solHi });
             return `
               <div class="q-card">
                 <div class="q-meta">
                   <span class="tag-marks">${q.marks} Marks • Direct Answer</span>
                   <div>
                     <span class="tag-diff tag-${q.diff}">${q.diff}</span>
-                    <button class="bookmark-btn ${isSaved ? 'saved' : ''}" onclick='toggleBookmark("${qid}", "${les.num} • ${q.marks}M", ${JSON.stringify(q.qEn)}, ${JSON.stringify(q.qHi)}, ${JSON.stringify(q.solEn)}, ${JSON.stringify(q.solHi)})'>${isSaved ? '⭐ Saved' : '☆ Save'}</button>
+                    <button class="bookmark-btn ${isSaved ? 'saved' : ''}" onclick="toggleBookmarkById('${qid}')">${isSaved ? '⭐ Saved' : '☆ Save'}</button>
                   </div>
                 </div>
                 <div class="q-text">${q.qEn}</div>
