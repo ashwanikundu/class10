@@ -959,6 +959,7 @@ function switchView(v) {
   render();
 }
 
+// Full DB definitions for Class 1 to 12 (including complete DB for Class 10 and ALL_CLASSES_DB)
 const DB = [
   {
     "id": "math",
@@ -1051,7 +1052,7 @@ const DB = [
           { "qEn": "प्रश्न 1: गोपियों द्वारा उद्धव को भाग्यवान कहने में क्या व्यंग्य निहित है?", "qHi": "उद्धव को 'बड़भागी' कहने का व्यंग्य स्पष्ट कीजिए।", "solEn": "गोपियाँ व्यंग्य करती हैं कि उद्धव कृष्ण के पास रहकर भी उनके प्रेम से अछूते रहे।", "solHi": "कृष्ण के सान्निध्य में रहकर भी प्रेम रस से अछूते रहना।" }
         ],
         guess: [
-          { "marks": 1, "diff": "Easy", "qEn": "गोपियों ने स्वयं को किसके समान बताया है?", "qHi": "गोपियों ने अपनी तुलना किससे की है?", optsEn": ["कमल के पत्ते", "गुड़ से चिपटी चींटियाँ", "तेल की गागर", "जल"], optsHi": ["कमल के पत्ते", "गुड़ से चिपटी चींटियाँ", "तेल की गागर", "जल"], ans: 1 }
+          { "marks": 1, "diff": "Easy", "qEn": "गोपियों ने स्वयं को किसके समान बताया है?", "qHi": "गोपियों ने अपनी तुलना किससे की है?", optsEn": ["कमल के पत्ते", "गुड़ से चिपटी चींटियाँ", "तेल की गागर", "जल"], optsHi: ["कमल के पत्ते", "गुड़ से चिपटी चींटियाँ", "तेल की गागर", "जल"], ans: 1 }
         ]
       }
     ]
@@ -1075,7 +1076,7 @@ const DB = [
           { "qEn": "Q1: What steps did French revolutionaries take to create collective identity?", "qHi": "प्रश्न 1: फ्रांसीसी क्रांतिकारियों ने सामूहिक पहचान के लिए क्या कदम उठाए?", "solEn": "Ideas of la patrie and le citoyen, new tricolour flag, and uniform laws.", "solHi": "पितृभूमि व नागरिक के विचार, नया तिरंगा झंडा और समान कानून।" }
         ],
         guess: [
-          { "marks": 1, "diff": "Easy", "qEn": "When did the French Revolution occur?", "qHi": "फ्रांसीसी क्रांति कब हुई थी?", optsEn": ["1789", "1804", "1815", "1848"], optsHi": ["1789", "1804", "1815", "1848"], ans: 0 }
+          { "marks": 1, "diff": "Easy", "qEn": "When did the French Revolution occur?", "qHi": "फ्रांसीसी क्रांति कब हुई थी?", optsEn": ["1789", "1804", "1815", "1848"], optsHi: ["1789", "1804", "1815", "1848"], ans: 0 }
         ]
       }
     ]
@@ -1304,7 +1305,7 @@ function render() {
             onmouseup="scanState.dragging=false;"
             onmouseleave="scanState.dragging=false;"
             ontouchstart="if(event.touches.length===1){scanState.dragging=true;scanState.startX=event.touches[0].clientX-scanState.panX;scanState.startY=event.touches[0].clientY-scanState.panY;}"
-            ontouchmove="if(scanState.dragging && scanState.zoom>1 && event.touches.length===1){scanState.panX=event.touches[0].clientX-scanState.panX;scanState.panY=event.touches[0].clientY-scanState.panY;setScanZoom(scanState.zoom);}"
+            ontouchmove="if(scanState.dragging && scanState.zoom>1 && event.touches.length===1){scanState.panX=event.touches[0].clientX-scanState.panX;scanState.panY=event.touches[0].clientY-scanState.startY;setScanZoom(scanState.zoom);}"
             ontouchend="scanState.dragging=false;">
             <img id="scanZoomImg" src="${page.dataUrl}" style="transform:translate(${scanState.panX}px,${scanState.panY}px) scale(${scanState.zoom});filter:contrast(${scanState.contrast}%) brightness(104%);" alt="Scanned Page">
             <div class="zoom-hud">
