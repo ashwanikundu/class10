@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#070b14">
-<title>Class 10 Master Portal • Module 10 (Interactive Formula Practice & Test Hub)</title>
+<title>Class 10 Master Portal • Module 11 (Interactive Progress Tracker & Milestone Hub)</title>
 <style>
   :root {
     --primary: #4f46e5;
@@ -74,14 +74,15 @@
     background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 16px; padding: 20px;
     margin-bottom: 16px; box-shadow: var(--shadow); position: relative; overflow: hidden;
   }
-  .card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: linear-gradient(180deg, #10b981, #3b82f6); }
+  .card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: linear-gradient(180deg, #f59e0b, #10b981); }
   
   .btn {
-    background: linear-gradient(135deg, #10b981, #047857); color: #fff; border: none;
+    background: linear-gradient(135deg, #f59e0b, #d97706); color: #090d16; border: none;
     padding: 10px 18px; border-radius: 10px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem;
   }
   
-  .practice-input { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--sub-bg); color: var(--text); margin-top: 10px; font-family: inherit; }
+  .check-item { display: flex; align-items: center; gap: 12px; background: var(--sub-bg); border: 1px solid var(--border); padding: 12px 16px; border-radius: 10px; margin-top: 10px; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
+  .check-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: #fbbf24; cursor: pointer; }
 
   footer { text-align: center; padding: 20px; color: var(--muted); font-size: 0.78rem; }
 </style>
@@ -93,7 +94,7 @@
     <div class="brand-row">
       <div>
         <h1 class="brand-title">Class 10 Master Portal (CBSE & HBSE)</h1>
-        <p class="brand-sub">Module 10: Interactive Formula Practice & Test Hub</p>
+        <p class="brand-sub">Module 11: Interactive Progress Tracker & Milestone Hub</p>
       </div>
       <div class="top-controls">
         <div class="medium-switch">
@@ -112,7 +113,7 @@
 </div>
 
 <footer>
-  Class 10 Master Portal • Module 10 (Practice Hub) • Zero Data Loss Engine
+  Class 10 Master Portal • Module 11 (Progress Hub) • Zero Data Loss Engine
 </footer>
 
 <script>
@@ -124,32 +125,21 @@ const SafeStore = {
 let state = {
   medium: SafeStore.get('mp_med', 'en'),
   isDark: SafeStore.get('mp_dark', '1') === '1',
-  qIndex: 0,
-  userAnswer: '',
-  feedback: ''
+  progress: JSON.parse(SafeStore.get('mp_prog', '{}'))
 };
 
-const PRACTICE_ITEMS = [
-  {
-    promptEn: "Type the formula for Discriminant (D) of quadratic equation:",
-    promptHi: "द्विघात समीकरण के विविक्तकर (Discriminant / D) का सूत्र टाइप करें:",
-    ans: "b^2 - 4ac"
-  },
-  {
-    promptEn: "Type Ohm's Law relation between V, I and R:",
-    promptHi: "V, I और R के बीच ओह्म का नियम टाइप करें:",
-    ans: "ir"
-  },
-  {
-    promptEn: "Type the formula for Sum of zeroes (α + β) for quadratic polynomial:",
-    promptHi: "द्विघात बहुपद के शून्यकों के योग (α + β) का सूत्र टाइप करें:",
-    ans: "-b/a"
-  },
-  {
-    promptEn: "Type the Lens Formula (1/v - 1/u = 1/f):",
-    promptHi: "लेंस सूत्र टाइप करें (1/v - 1/u = 1/f):",
-    ans: "1/v - 1/u = 1/f"
-  }
+const MODULES_LIST = [
+  { id: 'mod1', titleEn: 'Module 1: Core Architecture & Navigation', titleHi: 'मॉड्यूल 1: कोर आर्किटेक्चर और नेविगेशन' },
+  { id: 'mod2', titleEn: 'Module 2: Mathematics (All 14 Chapters)', titleHi: 'मॉड्यूल 2: गणित (सभी 14 अध्याय)' },
+  { id: 'mod3', titleEn: 'Module 3: Science (All 13 Chapters)', titleHi: 'मॉड्यूल 3: विज्ञान (सभी 13 अध्याय)' },
+  { id: 'mod4', titleEn: 'Module 4: AI Utilities & Voice Assistant', titleHi: 'मॉड्यूल 4: एआई स्कैनर और वॉइस असिस्टेंट' },
+  { id: 'mod5', titleEn: 'Module 5: PDF Generator & Heatmap', titleHi: 'मॉड्यूल 5: पीडीएफ जनरेटर और हीटमैट' },
+  { id: 'mod6', titleEn: 'Module 6: Diagnostics & Cache Manager', titleHi: 'मॉड्यूल 6: डायग्नोस्टिक्स और कैशे मैनेजर' },
+  { id: 'mod7', titleEn: 'Module 7: Interactive Self-Assessment Quiz', titleHi: 'मॉड्यूल 7: इंटरैक्टिव क्विज़ इंजन' },
+  { id: 'mod8', titleEn: 'Module 8: Formula & Theorem Bank', titleHi: 'मॉड्यूल 8: फॉर्मूला और थ्योरम बैंक' },
+  { id: 'mod9', titleEn: 'Module 9: Board Exam Strategy Hub', titleHi: 'मॉड्यूल 9: बोर्ड परीक्षा रणनीति हब' },
+  { id: 'mod10', titleEn: 'Module 10: Formula Practice Hub', titleHi: 'मॉड्यूल 10: फॉर्मूला प्रैक्टिस हब' },
+  { id: 'mod11', titleEn: 'Module 11: Progress Tracker & Milestones', titleHi: 'मॉड्यूल 11: प्रगति ट्रैकर और माइलस्टोन' }
 ];
 
 function applyTheme() {
@@ -171,55 +161,47 @@ function setMedium(m) {
 
 function renderBreadcrumb() {
   const bc = document.getElementById('breadcrumb');
-  bc.innerHTML = `<span>🏠 All Utilities • Module 10 (Interactive Formula Practice Hub)</span>`;
+  bc.innerHTML = `<span>🏠 All Utilities • Module 11 (Interactive Progress Tracker)</span>`;
 }
 
 function render() {
   renderBreadcrumb();
   const app = document.getElementById('app');
 
-  if (state.qIndex >= PRACTICE_ITEMS.length) {
-    app.innerHTML = `
-      <div class="card" style="text-align:center; padding:30px;">
-        <h2 style="margin:0 0 10px; color:#34d399;">🌟 Formula Practice Completed!</h2>
-        <p style="font-size:1.05rem; margin-bottom:16px;">आपने सभी फॉर्मूलों का अभ्यास सफलतापूर्वक पूरा कर लिया है।</p>
-        <button class="btn" onclick="state.qIndex=0; state.feedback=''; render();">🔄 दोबारा अभ्यास करें (Restart Practice)</button>
-      </div>
-    `;
-    return;
-  }
-
-  const item = PRACTICE_ITEMS[state.qIndex];
+  const completedCount = MODULES_LIST.filter(m => state.progress[m.id]).length;
+  const percent = Math.round((completedCount / MODULES_LIST.length) * 100);
 
   app.innerHTML = `
     <div class="card">
-      <div style="font-size:0.78rem; font-weight:700; color:var(--muted); margin-bottom:6px;">Practice Item ${state.qIndex + 1} of ${PRACTICE_ITEMS.length}</div>
-      <h3 style="margin:0 0 12px; font-size:1.05rem;">${state.medium === 'hi' ? item.promptHi : item.promptEn}</h3>
-      <input type="text" class="practice-input" id="ansInput" placeholder="अपना उत्तर यहाँ लिखें..." value="${state.userAnswer}" oninput="state.userAnswer=this.value">
-      <button class="btn" style="margin-top:12px; width:100%; justify-content:center;" onclick="checkAnswer()">✔️ उत्तर की जाँच करें (Verify Answer)</button>
-      <div id="practiceFeedback" style="margin-top:12px; font-weight:700;">${state.feedback}</div>
+      <h2 style="margin:0 0 8px; font-size:1.15rem;">📈 Portal Completion Progress Tracker</h2>
+      <p style="margin:0 0 14px; font-size:0.85rem; color:var(--muted);">पोर्टल के मॉड्यूल्स की प्रगति को ट्रैक करें और अपनी तैयारी का आकलन करें।</p>
+      
+      <div style="background:var(--sub-bg); border:1px solid var(--border); padding:14px; border-radius:12px; margin-bottom:14px;">
+        <div style="display:flex; justify-content:space-between; font-weight:800; font-size:0.9rem; margin-bottom:6px;">
+          <span>Overall Progress:</span>
+          <span style="color:#34d399;">${percent}% Completed (${completedCount}/${MODULES_LIST.length} Modules)</span>
+        </div>
+        <div style="width:100%; height:10px; background:var(--border); border-radius:999px; overflow:hidden;">
+          <div style="width:${percent}%; height:100%; background:linear-gradient(90deg, #f59e0b, #10b981); transition: width 0.3s ease;"></div>
+        </div>
+      </div>
+
+      <div>
+        ${MODULES_LIST.map(m => `
+          <label class="check-item">
+            <input type="checkbox" ${state.progress[m.id] ? 'checked' : ''} onchange="toggleProgress('${m.id}')">
+            <span>${state.medium === 'hi' ? m.titleHi : m.titleEn}</span>
+          </label>
+        `).join('')}
+      </div>
     </div>
   `;
 }
 
-function checkAnswer() {
-  const item = PRACTICE_ITEMS[state.qIndex];
-  const user = state.userAnswer.trim().toLowerCase().replace(/\s+/g, '');
-  const correct = item.ans.trim().toLowerCase().replace(/\s+/g, '');
-
-  if (user === correct) {
-    state.feedback = `<span style="color:#34d399;">✅ बिल्कुल सही जवाब! (Correct Answer)</span>`;
-    render();
-    setTimeout(() => {
-      state.qIndex++;
-      state.userAnswer = '';
-      state.feedback = '';
-      render();
-    }, 1200);
-  } else {
-    state.feedback = `<span style="color:#ef4444;">❌ गलत उत्तर। सही सूत्र: <b>${item.ans}</b></span>`;
-    render();
-  }
+function toggleProgress(id) {
+  state.progress[id] = !state.progress[id];
+  SafeStore.set('mp_prog', JSON.stringify(state.progress));
+  render();
 }
 
 applyTheme();
