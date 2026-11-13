@@ -3,103 +3,454 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#070b14">
-<title>Class 1 to 12 Master Curriculum Hub • HBSE & CBSE</title>
+<meta name="theme-color" content="#090d16">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Master Study Portal v5.0 — Class 1 to 12 CBSE & HBSE Ultra Edition</title>
 <style>
   :root {
     --primary: #4f46e5;
-    --bg: #070b14;
-    --card: #111827;
-    --text: #f8fafc;
-    --muted: #94a3b8;
-    --border: #1e293b;
-    --sub-bg: #0f172a;
-    --sol-bg: #064e3b;
-    --sol-border: #059669;
-    --shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-  }
-  body.light {
+    --primary-light: #6366f1;
+    --primary-glow: rgba(79, 70, 229, 0.18);
+    --secondary: #0d9488;
+    --accent: #f59e0b;
     --bg: #f4f6fb;
     --card: #ffffff;
+    --card-glass: rgba(255, 255, 255, 0.88);
     --text: #0f172a;
     --muted: #64748b;
     --border: #e2e8f0;
     --sub-bg: #f8fafc;
+    --concept-bg: linear-gradient(135deg, #eef2ff 0%, #f0fdfa 100%);
+    --concept-border: #c7d2fe;
     --sol-bg: #ecfdf5;
     --sol-border: #6ee7b7;
+    --green-bg: #dcfce7;
+    --green-border: #16a34a;
+    --green-text: #14532d;
+    --red-bg: #fee2e2;
+    --red-border: #dc2626;
+    --red-text: #7f1d1d;
+    --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+    --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 4px 10px -6px rgba(15, 23, 42, 0.04);
+    --shadow-lg: 0 20px 35px -10px rgba(79, 70, 229, 0.16);
+    --font-scale: 16px;
+  }
+  body.dark {
+    --primary: #818cf8;
+    --primary-light: #a5b4fc;
+    --primary-glow: rgba(129, 140, 248, 0.22);
+    --secondary: #2dd4bf;
+    --bg: #070b14;
+    --card: #111827;
+    --card-glass: rgba(17, 24, 39, 0.88);
+    --text: #f8fafc;
+    --muted: #94a3b8;
+    --border: #1e293b;
+    --sub-bg: #0f172a;
+    --concept-bg: linear-gradient(135deg, #1e1b4b 0%, #042f2e 100%);
+    --concept-border: #3730a3;
+    --sol-bg: #064e3b;
+    --sol-border: #059669;
+    --green-bg: #14532d;
+    --green-border: #22c55e;
+    --green-text: #dcfce7;
+    --red-bg: #7f1d1d;
+    --red-border: #ef4444;
+    --red-text: #fee2e2;
+    --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.45);
+    --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.6);
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { font-size: var(--font-scale); scroll-behavior: smooth; }
   body {
     margin: 0; padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", sans-serif;
-    background: var(--bg); color: var(--text); line-height: 1.6;
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, "Noto Sans Devanagari", sans-serif;
+    background: var(--bg); color: var(--text);
+    line-height: 1.6;
+    transition: background 0.25s ease, color 0.25s ease;
+    background-image: radial-gradient(circle at 15% 0%, var(--primary-glow) 0%, transparent 42%),
+                      radial-gradient(circle at 85% 10%, rgba(13, 148, 136, 0.12) 0%, transparent 40%);
+    background-attachment: fixed;
   }
+
   header {
-    background: linear-gradient(135deg, #090d16 0%, #1e1b4b 60%, #312e81 100%);
-    color: #fff; padding: 14px 16px; position: sticky; top: 0; z-index: 100;
-    border-bottom: 1px solid rgba(255,255,255,0.15);
+    background: linear-gradient(135deg, #090d16 0%, #1e1b4b 55%, #312e81 100%);
+    color: #fff;
+    padding: calc(env(safe-area-inset-top, 0px) + 12px) 14px 12px;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 8px 30px rgba(9, 13, 22, 0.35);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
   }
-  .header-content { max-width: 950px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-  .brand-title { margin: 0; font-size: 1.15rem; font-weight: 900; }
-  .brand-sub { font-size: 0.75rem; color: #cbd5e1; margin: 0; }
-  
-  .top-controls { display: flex; gap: 6px; align-items: center; }
-  .medium-switch { display: flex; gap: 4px; background: rgba(255,255,255,0.1); padding: 3px; border-radius: 999px; }
-  .med-btn {
-    padding: 5px 12px; border-radius: 999px; border: none; background: transparent; color: #cbd5e1; font-weight: 700; font-size: 0.75rem; cursor: pointer;
+  .header-top {
+    display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
+    max-width: 1140px; margin: 0 auto;
   }
-  .med-btn.active { background: #fbbf24; color: #0f172a; font-weight: 900; }
-  .theme-btn {
-    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 5px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; cursor: pointer;
+  .brand { display: flex; align-items: center; gap: 11px; }
+  .brand-logo {
+    width: 42px; height: 42px; border-radius: 12px;
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: #090d16; font-size: 1.35rem; font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.45);
+    flex-shrink: 0;
+  }
+  .brand-text h1 {
+    margin: 0; font-size: 1.08rem; font-weight: 800; letter-spacing: -0.2px;
+    display: flex; align-items: center; gap: 7px; flex-wrap: wrap;
+  }
+  .pro-pill {
+    background: linear-gradient(90deg, #10b981, #34d399);
+    color: #022c22; font-size: 0.64rem; font-weight: 800;
+    padding: 2px 8px; border-radius: 999px; letter-spacing: 0.4px;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
+  }
+  .brand-text p { margin: 2px 0 0; font-size: 0.72rem; color: #c7d2fe; opacity: 0.9; }
+
+  .controls-bar { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .medium-switch {
+    display: flex; background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.16);
+    border-radius: 999px; padding: 3px;
+  }
+  .medium-btn {
+    border: none; background: transparent; color: #e2e8f0;
+    padding: 5px 11px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .medium-btn.active {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #0f172a; box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+  }
+  .tool-icon-btn {
+    background: rgba(255,255,255,0.12); color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 5px 10px; border-radius: 10px; font-size: 0.78rem; font-weight: 700; cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .tool-icon-btn:hover { background: rgba(255,255,255,0.24); transform: translateY(-1px); }
+
+  .quick-nav {
+    max-width: 1140px; margin: 12px auto 0; display: flex; gap: 7px;
+    overflow-x: auto; padding-bottom: 3px; scrollbar-width: none;
+  }
+  .quick-nav::-webkit-scrollbar { display: none; }
+  .qnav-btn {
+    background: rgba(255,255,255,0.09); color: #e2e8f0;
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 6px 13px; border-radius: 999px; font-size: 0.76rem; font-weight: 600;
+    cursor: pointer; white-space: nowrap; transition: all 0.2s ease;
+  }
+  .qnav-btn:hover { background: rgba(255,255,255,0.18); }
+  .qnav-btn.active {
+    background: #ffffff; color: #1e1b4b; border-color: #ffffff; font-weight: 800;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.25);
   }
 
-  .container { max-width: 950px; margin: 0 auto; padding: 16px; }
-  
+  .container { max-width: 1140px; margin: 0 auto; padding: 16px; }
+
   .breadcrumb {
-    background: var(--card); color: var(--text); padding: 10px 14px; border-radius: 12px;
-    margin-bottom: 16px; font-size: 0.85rem; font-weight: 700; border: 1px solid var(--border); box-shadow: var(--shadow);
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    background: var(--card-glass); backdrop-filter: blur(8px);
+    padding: 10px 14px; border-radius: 14px;
+    border: 1px solid var(--border); margin-bottom: 16px; font-size: 0.84rem;
+    box-shadow: var(--shadow-sm);
   }
-  .crumb-link { color: var(--primary); cursor: pointer; text-decoration: underline; }
-  
-  .card {
-    background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 16px; padding: 18px;
-    margin-bottom: 16px; box-shadow: var(--shadow); position: relative; overflow: hidden;
+  .crumb-btn {
+    background: var(--sub-bg); color: var(--primary); border: 1px solid var(--border);
+    padding: 5px 11px; border-radius: 8px; font-weight: 700; cursor: pointer;
+    transition: all 0.15s;
   }
-  .card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: linear-gradient(180deg, #10b981, #4f46e5); }
-  
-  .grid-classes { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; margin-top: 12px; }
-  .class-box { background: var(--sub-bg); border: 1px solid var(--border); padding: 14px; border-radius: 10px; text-align: center; cursor: pointer; font-weight: 800; font-size: 0.9rem; transition: all 0.2s; }
-  .class-box:hover { border-color: var(--primary); background: rgba(79,70,229,0.1); }
+  .crumb-btn:hover { border-color: var(--primary); transform: translateY(-1px); }
 
-  .subj-box { background: var(--sub-bg); border: 1px solid var(--border); padding: 14px; border-radius: 10px; margin-bottom: 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-  .subj-box:hover { border-color: #10b981; }
+  .progress-banner {
+    background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+    padding: 16px 18px; margin-bottom: 18px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;
+    box-shadow: var(--shadow-md);
+    position: relative; overflow: hidden;
+  }
+  .progress-banner::before {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px;
+    background: linear-gradient(180deg, #4f46e5, #10b981);
+  }
+  .pbar-wrap { flex: 1; min-width: 200px; }
+  .pbar-track { height: 10px; background: var(--sub-bg); border: 1px solid var(--border); border-radius: 999px; overflow: hidden; margin-top: 7px; }
+  .pbar-fill { height: 100%; background: linear-gradient(90deg, #4f46e5, #10b981); border-radius: 999px; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
 
-  .q-box { background: var(--sub-bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px; margin-bottom: 12px; }
-  .question { font-weight: 800; margin-bottom: 8px; font-size: 0.92rem; }
-  .solution { background: var(--sol-bg); border: 1px solid var(--sol-border); padding: 10px 12px; border-radius: 8px; font-size: 0.88rem; line-height: 1.5; }
-  .math { color: #f59e0b; font-weight: 800; font-style: italic; }
+  .grid-subjects {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;
+  }
+  .subj-card {
+    background: var(--card); border-radius: 20px; padding: 20px;
+    border: 1px solid var(--border); box-shadow: var(--shadow-md);
+    cursor: pointer; transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex; flex-direction: column; justify-content: space-between;
+    position: relative; overflow: hidden;
+  }
+  .subj-card:hover {
+    transform: translateY(-4px); border-color: var(--primary); box-shadow: var(--shadow-lg);
+  }
+  .subj-badge {
+    display: inline-block; padding: 5px 12px; border-radius: 999px;
+    font-size: 0.73rem; font-weight: 800; margin-bottom: 10px; width: fit-content;
+    letter-spacing: 0.2px;
+  }
+  .subj-card h2 { margin: 0 0 6px; font-size: 1.18rem; font-weight: 800; color: var(--text); letter-spacing: -0.2px; }
+  .subj-card p { margin: 0; font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
 
-  .ai-input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--text); font-family: inherit; margin-top: 6px; }
-  .btn { background: var(--primary); color: #fff; border: none; padding: 8px 14px; border-radius: 8px; font-weight: 800; cursor: pointer; font-size: 0.82rem; display: inline-flex; align-items: center; gap: 6px; }
+  .lesson-list { display: flex; flex-direction: column; gap: 11px; }
+  .lesson-item {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 14px 16px; display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer; gap: 14px; box-shadow: var(--shadow-sm);
+    transition: all 0.18s ease;
+  }
+  .lesson-item:hover {
+    border-color: var(--primary); transform: translateX(4px); box-shadow: var(--shadow-md);
+  }
+  .lesson-num {
+    background: linear-gradient(135deg, #4f46e5, #3730a3);
+    color: #fff; font-weight: 800; font-size: 0.78rem;
+    padding: 8px 11px; border-radius: 11px; min-width: 72px; text-align: center;
+    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.25);
+  }
+  .lesson-info { flex: 1; }
+  .lesson-info h3 { margin: 0; font-size: 1rem; font-weight: 700; color: var(--text); }
+  .lesson-info small { color: var(--muted); font-size: 0.8rem; display: block; margin-top: 3px; }
 
-  footer { text-align: center; padding: 16px; color: var(--muted); font-size: 0.75rem; }
+  .mode-selector {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px;
+  }
+  @media (max-width: 600px) { .mode-selector { grid-template-columns: 1fr; } }
+  .mode-card {
+    background: var(--card); border: 2px solid var(--border); border-radius: 16px;
+    padding: 15px 16px; cursor: pointer; text-align: left;
+    transition: all 0.2s ease; box-shadow: var(--shadow-sm);
+  }
+  .mode-card.active {
+    border-color: var(--primary); background: var(--concept-bg);
+    box-shadow: 0 8px 20px var(--primary-glow);
+  }
+  .mode-card h4 { margin: 0 0 4px; font-size: 0.98rem; font-weight: 800; color: var(--primary); }
+  .mode-card p { margin: 0; font-size: 0.8rem; color: var(--muted); }
+
+  .filter-bar {
+    display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 16px; align-items: center;
+    background: var(--card); padding: 11px 14px; border-radius: 14px;
+    border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+  }
+  .pill {
+    border: 1px solid var(--border); background: var(--sub-bg); color: var(--text);
+    padding: 5px 12px; border-radius: 999px; font-size: 0.79rem; font-weight: 700; cursor: pointer;
+    transition: all 0.15s;
+  }
+  .pill.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 3px 10px var(--primary-glow); }
+  .pill.easy.active { background: #16a34a; border-color: #16a34a; }
+  .pill.medium.active { background: #d97706; border-color: #d97706; }
+  .pill.hard.active { background: #dc2626; border-color: #dc2626; }
+
+  .q-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+    padding: 18px; margin-bottom: 16px; box-shadow: var(--shadow-md);
+    transition: border-color 0.2s;
+  }
+  .q-card:hover { border-color: var(--primary-light); }
+  .q-meta {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
+    font-size: 0.76rem; font-weight: 800; gap: 8px; flex-wrap: wrap;
+  }
+  .tag-marks {
+    background: linear-gradient(135deg, #e0e7ff, #ede9fe);
+    color: #3730a3; padding: 4px 10px; border-radius: 8px;
+  }
+  .tag-diff { padding: 4px 10px; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.3px; }
+  .tag-Easy { background: #dcfce7; color: #166534; }
+  .tag-Medium { background: #fef3c7; color: #92400e; }
+  .tag-Hard { background: #fee2e2; color: #991b1b; }
+
+  .bookmark-btn {
+    background: var(--sub-bg); border: 1px solid var(--border); color: var(--text);
+    padding: 4px 10px; border-radius: 8px; font-size: 0.76rem; font-weight: 700; cursor: pointer;
+    transition: all 0.15s;
+  }
+  .bookmark-btn.saved { background: #fef3c7; border-color: #f59e0b; color: #92400e; }
+
+  .q-text { font-size: 0.98rem; font-weight: 700; margin-bottom: 10px; color: var(--text); white-space: pre-line; }
+  .hi-sub {
+    font-size: 0.91rem; color: var(--text); background: var(--sub-bg);
+    padding: 10px 12px; border-left: 4px solid var(--primary); border-radius: 8px;
+    margin-bottom: 12px; white-space: pre-line;
+  }
+  .glossary-box {
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+    border: 1px solid #fcd34d; border-radius: 12px;
+    padding: 10px 12px; font-size: 0.82rem; color: #78350f; margin-bottom: 10px;
+  }
+
+  .mcq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+  @media (max-width: 550px) { .mcq-grid { grid-template-columns: 1fr; } }
+  .opt-btn {
+    text-align: left; padding: 12px 14px; border: 1.5px solid var(--border);
+    border-radius: 12px; background: var(--sub-bg); color: var(--text);
+    font-size: 0.89rem; cursor: pointer; font-weight: 600;
+    transition: all 0.15s ease;
+  }
+  .opt-btn:hover { border-color: var(--primary); background: var(--card); }
+  .opt-btn.correct {
+    background: var(--green-bg) !important; border-color: var(--green-border) !important;
+    color: var(--green-text) !important; font-weight: 800;
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2);
+  }
+  .opt-btn.wrong {
+    background: var(--red-bg) !important; border-color: var(--red-border) !important;
+    color: var(--red-text) !important; font-weight: 800;
+  }
+
+  .sol-btn {
+    background: linear-gradient(135deg, #0d9488, #0f766e);
+    color: #fff; border: none;
+    padding: 9px 16px; border-radius: 10px; font-size: 0.84rem; font-weight: 700; cursor: pointer;
+    box-shadow: 0 4px 12px rgba(13, 148, 136, 0.28);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .sol-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(13, 148, 136, 0.35); }
+
+  .sol-box {
+    display: none; margin-top: 12px; padding: 14px 16px;
+    background: var(--sol-bg); border: 1px solid var(--sol-border);
+    border-radius: 12px; font-size: 0.91rem;
+  }
+  .sol-box.open { display: block; animation: fadeIn 0.22s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+  .concept-card {
+    background: var(--concept-bg); border: 1px solid var(--concept-border); border-radius: 18px;
+    padding: 16px 18px; margin-bottom: 16px; box-shadow: var(--shadow-sm);
+  }
+  .concept-card h4 { margin: 0 0 8px; font-size: 1.05rem; font-weight: 800; color: var(--primary); }
+
+  .search-box {
+    width: 100%; padding: 12px 16px; border-radius: 14px; border: 1.5px solid var(--border);
+    background: var(--card); color: var(--text); font-size: 0.92rem; margin-bottom: 14px;
+    box-shadow: var(--shadow-sm); outline: none; transition: border-color 0.2s;
+  }
+  .search-box:focus { border-color: var(--primary); }
+
+  .timer-bar {
+    background: linear-gradient(135deg, #090d16, #1e1b4b);
+    color: #fbbf24; padding: 12px 16px; border-radius: 14px;
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 16px; font-weight: 800; box-shadow: var(--shadow-md);
+  }
+  .svg-box {
+    background: #ffffff; border: 1px solid #cbd5e1; border-radius: 14px;
+    padding: 14px; text-align: center; margin: 10px 0; color: #0f172a;
+  }
+  footer {
+    text-align: center; padding: 24px 16px; color: var(--muted); font-size: 0.8rem;
+  }
+
+  button, .subj-card, .lesson-item, .mode-card, .opt-btn, .pill, .qnav-btn, .crumb-btn {
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  button:active, .subj-card:active, .lesson-item:active, .mode-card:active, .opt-btn:active {
+    transform: scale(0.98) !important;
+    transition: transform 0.06s ease !important;
+  }
+
+  @media (max-width: 480px) {
+    header { padding: calc(env(safe-area-inset-top, 0px) + 10px) 12px 10px; }
+    .brand-logo { width: 36px; height: 36px; font-size: 1.15rem; border-radius: 10px; }
+    .brand-text h1 { font-size: 0.98rem; }
+    .brand-text p { font-size: 0.68rem; }
+    .controls-bar { width: 100%; justify-content: space-between; margin-top: 4px; }
+    .quick-nav { margin-top: 8px; gap: 6px; }
+    .qnav-btn { padding: 5px 11px; font-size: 0.74rem; }
+  }
+
+  .scanner-stage {
+    position: relative; width: 100%; height: 340px;
+    background: #090d16; border-radius: 16px; overflow: hidden;
+    border: 2px solid var(--primary); margin: 12px 0;
+    display: flex; align-items: center; justify-content: center;
+    touch-action: none;
+  }
+  .scanner-stage img {
+    max-width: 100%; max-height: 100%;
+    transform-origin: center center;
+    transition: transform 0.08s ease-out, filter 0.15s ease;
+    cursor: grab;
+  }
+  .zoom-hud {
+    position: absolute; bottom: 10px; left: 10px; right: 10px;
+    background: rgba(9, 13, 22, 0.85); backdrop-filter: blur(8px);
+    padding: 8px 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.18);
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap; color: #fff; font-size: 0.78rem;
+  }
+  .zoom-hud input[type="range"] { flex: 1; min-width: 100px; accent-color: #fbbf24; }
+  .page-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 8px; }
+  .page-tab {
+    padding: 6px 12px; border-radius: 10px; border: 1.5px solid var(--border);
+    background: var(--sub-bg); color: var(--text); font-weight: 700; font-size: 0.78rem; cursor: pointer; white-space: nowrap;
+  }
+  .page-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+  .xp-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: linear-gradient(135deg, #fef3c7, #fde68a); color: #78350f;
+    padding: 4px 10px; border-radius: 999px; font-size: 0.76rem; font-weight: 800;
+    border: 1px solid #f59e0b;
+  }
+  .voice-btn {
+    background: linear-gradient(135deg, #4f46e5, #6366f1); color: #fff; border: none;
+    padding: 7px 12px; border-radius: 10px; font-size: 0.8rem; font-weight: 700; cursor: pointer;
+    margin-left: 6px;
+  }
+  .scan-textarea {
+    width: 100%; min-height: 82px; padding: 11px 13px; border-radius: 12px;
+    border: 1.5px solid var(--border); background: var(--sub-bg); color: var(--text);
+    font-family: inherit; font-size: 0.9rem; resize: vertical; margin-top: 8px;
+  }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="header-content">
-    <div>
-      <h1 class="brand-title">Class 1 to 12 Master Curriculum Hub</h1>
-      <p class="brand-sub">HBSE & CBSE Aligned Complete Lessons, Exercises & Solutions</p>
-    </div>
-    <div class="top-controls">
-      <div class="medium-switch">
-        <button class="med-btn active" id="btnHi" onclick="setMed('hi')">हिंदी</button>
-        <button class="med-btn" id="btnEn" onclick="setMed('en')">English</button>
+  <div class="header-top">
+    <div class="brand">
+      <div class="brand-logo">10</div>
+      <div class="brand-text">
+        <h1>Master Study Portal <span class="pro-pill">v5.0 • CLASS 1 TO 12 ULTRA</span></h1>
+        <p>Class 1 to 12 (CBSE & HBSE) • Blink-Fast Solver + Full NCERT, Guess Papers, Mock Test & Guides</p>
       </div>
-      <button class="theme-btn" onclick="toggleTheme()">🌓</button>
     </div>
+    <div class="controls-bar">
+      <div class="medium-switch">
+        <button class="medium-btn active" id="btnEn" onclick="setMedium('en')">EN + Meanings</button>
+        <button class="medium-btn" id="btnHi" onclick="setMedium('hi')">हिंदी + EN</button>
+      </div>
+      <button class="tool-icon-btn" onclick="changeFont(-1)" title="Decrease Font">A-</button>
+      <button class="tool-icon-btn" onclick="changeFont(1)" title="Increase Font">A+</button>
+      <button class="tool-icon-btn" id="themeBtn" onclick="toggleTheme()" title="Dark/Light Mode">🌙</button>
+    </div>
+  </div>
+  <div class="quick-nav">
+    <button class="qnav-btn active" id="nav_home" onclick="switchView('home')">📚 All Subjects</button>
+    <button class="qnav-btn" id="nav_scanner" onclick="switchView('scanner')" style="background:linear-gradient(135deg,rgba(245,158,11,0.28),rgba(16,185,129,0.28));border-color:#fbbf24;color:#fef3c7;font-weight:800;">🤖 Ultra-Zoom AI Scanner</button>
+    <button class="qnav-btn" id="nav_mock" onclick="switchView('mock')">⏱️ 3-Hr Mock Test</button>
+    <button class="qnav-btn" id="nav_cheat" onclick="switchView('cheat')">⚡ 1-Page Cheat Sheet</button>
+    <button class="qnav-btn" id="nav_diagrams" onclick="switchView('diagrams')">🖼️ Diagrams & Maps</button>
+    <button class="qnav-btn" id="nav_pyq" onclick="switchView('pyq')">🏆 PYQs & Competency</button>
+    <button class="qnav-btn" id="nav_saved" onclick="switchView('saved')">⭐ Saved (<span id="savedCount">0</span>)</button>
+    <button class="qnav-btn" id="nav_mistakes" onclick="switchView('mistakes')">❌ Mistake Bank (<span id="mistakeCount">0</span>)</button>
   </div>
 </header>
 
@@ -108,184 +459,1328 @@
   <div id="app"></div>
 </div>
 
-<footer>Class 1-12 Master Curriculum Hub • HBSE & CBSE Hub</footer>
+<footer>
+  Class 10 Master Portal • Next-Gen Pro EdTech Edition • CBSE & Haryana Board (HBSE)
+</footer>
 
 <script>
-const Store = {
-  get: (k, f) => { try { return localStorage.getItem(k) ?? f; } catch(e){ return f; } },
-  set: (k, v) => { try { localStorage.setItem(k, v); } catch(e){} }
+const SafeStore = {
+  get(key, fallback) {
+    try {
+      const v = localStorage.getItem(key);
+      return v !== null ? v : fallback;
+    } catch (e) { return fallback; }
+  },
+  set(key, val) {
+    try { localStorage.setItem(key, val); } catch (e) {}
+  },
+  getJSON(key, fallback) {
+    try {
+      const v = localStorage.getItem(key);
+      return v ? JSON.parse(v) : fallback;
+    } catch (e) { return fallback; }
+  }
 };
+
+window.addEventListener('error', function(e) {
+  console.warn('Handled UI Error:', e.message);
+});
 
 let state = {
-  med: Store.get('mp_med', 'hi'),
-  dark: Store.get('mp_dark', '1') === '1',
   view: 'home',
-  cls: null,
-  sub: null,
-  ch: null,
-  aiQ: '',
-  aiAns: ''
+  activeClass: SafeStore.get('c10_active_class', '10'),
+  activeBoard: SafeStore.get('c10_active_board', 'CBSE + HBSE'),
+  medium: SafeStore.get('c10_medium', 'en'),
+  dark: SafeStore.get('c10_dark', '0') === '1',
+  fontSize: parseInt(SafeStore.get('c10_font', '16'), 10),
+  subjectId: null,
+  lessonId: null,
+  mode: 'book',
+  diff: 'All',
+  marks: 'All',
+  search: '',
+  answered: SafeStore.getJSON('c10_answered', {}),
+  saved: SafeStore.getJSON('c10_saved', []),
+  mistakes: SafeStore.getJSON('c10_mistakes', []),
+  mockActive: false,
+  mockSubj: 'all',
+  mockSeconds: 10800,
+  mockAnswers: {},
+  mockSubmitted: false
 };
 
-function applyTheme() { document.body.classList.toggle('light', !state.dark); }
-function toggleTheme() { state.dark = !state.dark; Store.set('mp_dark', state.dark ? '1' : '0'); applyTheme(); }
-function setMed(m) { state.med = m; Store.set('mp_med', m); document.getElementById('btnHi').classList.toggle('active', m==='hi'); document.getElementById('btnEn').classList.toggle('active', m==='en'); render(); }
+let mockTimerInterval = null;
+
+function applyPrefs() {
+  document.body.classList.toggle('dark', state.dark);
+  document.getElementById('themeBtn').textContent = state.dark ? '☀️' : '🌙';
+  document.documentElement.style.setProperty('--font-scale', state.fontSize + 'px');
+  document.getElementById('btnEn').classList.toggle('active', state.medium === 'en');
+  document.getElementById('btnHi').classList.toggle('active', state.medium === 'hi');
+  updateCounters();
+}
+
+function toggleTheme() {
+  state.dark = !state.dark;
+  SafeStore.set('c10_dark', state.dark ? '1' : '0');
+  applyPrefs();
+}
+
+function changeFont(delta) {
+  state.fontSize = Math.min(21, Math.max(13, state.fontSize + delta));
+  SafeStore.set('c10_font', state.fontSize);
+  applyPrefs();
+}
+
+function setMedium(m) {
+  state.medium = m;
+  SafeStore.set('c10_medium', m);
+  applyPrefs();
+  render();
+}
+
+function updateCounters() {
+  const sc = document.getElementById('savedCount');
+  const mc = document.getElementById('mistakeCount');
+  if (sc) sc.textContent = state.saved.length;
+  if (mc) mc.textContent = state.mistakes.length;
+}
+
+const ITEM_REGISTRY = {};
+function regItem(id, data) {
+  ITEM_REGISTRY[id] = data;
+  return id;
+}
+function toggleBookmarkById(id) {
+  const idx = state.saved.findIndex(x => x.id === id);
+  if (idx >= 0) {
+    state.saved.splice(idx, 1);
+  } else if (ITEM_REGISTRY[id]) {
+    state.saved.push({ id, ...ITEM_REGISTRY[id] });
+  }
+  SafeStore.set('c10_saved', JSON.stringify(state.saved));
+  updateCounters();
+  render();
+}
+function checkMCQById(qid, optIdx, correctIdx) {
+  const qObj = ITEM_REGISTRY[qid] || null;
+  checkMCQ(qid, optIdx, correctIdx, qObj);
+}
+
+const todayStr = new Date().toISOString().slice(0, 10);
+let xpData = SafeStore.getJSON('c10_xp', { xp: 10, streak: 1, lastDay: todayStr });
+if (xpData.lastDay !== todayStr) {
+  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  xpData.streak = (xpData.lastDay === yesterday) ? (xpData.streak + 1) : 1;
+  xpData.lastDay = todayStr;
+  xpData.xp += 10;
+  SafeStore.set('c10_xp', JSON.stringify(xpData));
+}
+function addXP(pts) {
+  xpData.xp += pts;
+  SafeStore.set('c10_xp', JSON.stringify(xpData));
+}
+function getRankTitle(xp) {
+  if (xp >= 500) return '🏆 Board Topper';
+  if (xp >= 200) return '🚀 Scholar Pro';
+  if (xp >= 80) return '⭐ Rising Star';
+  return '🌱 Learner';
+}
+
+function speakText(rawHtml) {
+  try {
+    if (!('speechSynthesis' in window)) {
+      alert('आपके ब्राउज़र में वॉइस फीचर उपलब्ध नहीं है।');
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const tmp = document.createElement('div');
+    tmp.innerHTML = rawHtml;
+    const cleanText = (tmp.textContent || tmp.innerText || '').trim();
+    if (!cleanText) return;
+    const utter = new SpeechSynthesisUtterance(cleanText);
+    utter.lang = /[ऀ-ॿ]/.test(cleanText) ? 'hi-IN' : 'en-IN';
+    utter.rate = 0.95;
+    window.speechSynthesis.speak(utter);
+  } catch (e) {}
+}
+function stopSpeaking() {
+  try { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); } catch (e) {}
+}
+
+let scanState = {
+  pages: [],
+  activeIdx: 0,
+  zoom: 1.0,
+  panX: 0,
+  panY: 0,
+  contrast: 108,
+  dragging: false,
+  startX: 0,
+  startY: 0,
+  queryText: '',
+  targetClass: SafeStore.get('c10_scan_class', 'Class 10 (CBSE / HBSE)'),
+  targetSubj: SafeStore.get('c10_scan_subj', 'Auto-Detect Any Subject'),
+  ocrStatus: '',
+  aiResult: ''
+};
+
+function compressImageFile(file) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onerror = () => resolve(null);
+    reader.onload = function(ev) {
+      const img = new Image();
+      img.onerror = () => {
+        const raw = ev.target.result || '';
+        const parts = raw.split(',');
+        resolve({ dataUrl: raw, base64: parts[1] || '', mimeType: 'image/jpeg' });
+      };
+      img.onload = function() {
+        try {
+          const MAX_DIM = 1450;
+          let w = img.width, h = img.height;
+          if (w > MAX_DIM || h > MAX_DIM) {
+            if (w > h) { h = Math.round((h * MAX_DIM) / w); w = MAX_DIM; }
+            else { w = Math.round((w * MAX_DIM) / h); h = MAX_DIM; }
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = w; canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          const compressedUrl = canvas.toDataURL('image/jpeg', 0.86);
+          const parts = compressedUrl.split(',');
+          resolve({ dataUrl: compressedUrl, base64: parts[1] || '', mimeType: 'image/jpeg' });
+        } catch (e) {
+          const raw = ev.target.result || '';
+          const parts = raw.split(',');
+          resolve({ dataUrl: raw, base64: parts[1] || '', mimeType: 'image/jpeg' });
+        }
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+async function handleScanFiles(fileList) {
+  if (!fileList || !fileList.length) return;
+  const files = Array.from(fileList).slice(0, 10);
+  scanState.ocrStatus = `⏳ ${files.length} पेज प्रोसेस हो रहे हैं (Optimizing for Zero-Lag)...`;
+  render();
+  for (let i = 0; i < files.length; i++) {
+    const res = await compressImageFile(files[i]);
+    if (res && res.base64) {
+      scanState.pages.push({
+        name: files[i].name || ('Page ' + (scanState.pages.length + 1)),
+        dataUrl: res.dataUrl,
+        base64: res.base64,
+        mimeType: res.mimeType,
+        extractedText: ''
+      });
+    }
+  }
+  if (scanState.pages.length) {
+    scanState.activeIdx = scanState.pages.length - 1;
+    scanState.zoom = 1.0;
+    scanState.panX = 0;
+    scanState.panY = 0;
+    scanState.ocrStatus = `✅ कुल ${scanState.pages.length} पेज तैयार हैं! अब 6x Ultra-Zoom करें या नीचे हल निकालें।`;
+    addXP(15);
+  } else {
+    scanState.ocrStatus = '⚠️ फोटो लोड नहीं हो सकी, कृपया दोबारा चुनें।';
+  }
+  render();
+}
+
+function setScanZoom(val) {
+  scanState.zoom = Math.min(6, Math.max(1, parseFloat(val) || 1));
+  if (scanState.zoom === 1) { scanState.panX = 0; scanState.panY = 0; }
+  const img = document.getElementById('scanZoomImg');
+  const lbl = document.getElementById('zoomPctLabel');
+  if (img) img.style.transform = `translate(${scanState.panX}px, ${scanState.panY}px) scale(${scanState.zoom})`;
+  if (lbl) lbl.textContent = scanState.zoom.toFixed(1) + 'x';
+}
+
+function setScanContrast(val) {
+  scanState.contrast = parseInt(val, 10) || 100;
+  const img = document.getElementById('scanZoomImg');
+  if (img) img.style.filter = `contrast(${scanState.contrast}%) brightness(104%)`;
+}
+
+function tryLocalMathEval(expr) {
+  try {
+    const clean = (expr || '').replace(/×/g, '*').replace(/÷/g, '/').replace(/\^/g, '**').trim();
+    if (!clean || !/^[0-9+\-*/().\s*%]+$/.test(clean) || !/[+\-*/%]/.test(clean)) return null;
+    const val = Function('"use strict"; return (' + clean + ');')();
+    if (typeof val === 'number' && isFinite(val)) {
+      return Number.isInteger(val) ? String(val) : val.toFixed(4).replace(/\.?0+$/, '');
+    }
+  } catch (e) {}
+  return null;
+}
+
+function runOfflineOCR() {
+  const page = scanState.pages[scanState.activeIdx];
+  if (!page) return;
+  scanState.ocrStatus = '⏳ पन्ना स्कैन हो रहा है (Loading Robot OCR)...';
+  render();
+  const startTesseract = () => {
+    window.Tesseract.recognize(page.dataUrl, 'eng+hin', {
+      logger: m => {
+        if (m.status === 'recognizing text') {
+          const el = document.getElementById('ocrStatusBox');
+          if (el) el.textContent = `🤖 Robot Scanning Page... ${Math.round((m.progress || 0) * 100)}%`;
+        }
+      }
+    }).then(({ data: { text } }) => {
+      const cleaned = (text || '').trim();
+      page.extractedText = cleaned;
+      scanState.queryText = cleaned;
+      scanState.ocrStatus = cleaned ? '✅ पेज का टेक्स्ट निकल गया! अब नीचे हल देखें।' : '⚠️ टेक्स्ट धुंधला है — सीधे "⚡ Instant Step-by-Step हल देखें" दबाएं!';
+      addXP(10);
+      render();
+    }).catch(() => {
+      scanState.ocrStatus = '⚠️ ऑफलाइन OCR उपलब्ध नहीं — सीधे "⚡ Instant Step-by-Step हल देखें" दबाएं!';
+      render();
+    });
+  };
+  if (window.Tesseract) {
+    startTesseract();
+  } else {
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';
+    s.onload = startTesseract;
+    s.onerror = () => {
+      scanState.ocrStatus = '⚠️ सीधे नीचे प्रश्न टाइप करें।';
+      render();
+    };
+    document.head.appendChild(s);
+  }
+}
+
+function findSmartBookMatches(query) {
+  const q = (query || '').toLowerCase().trim();
+  if (!q || q.length < 3) return [];
+  const words = q.split(/[^a-zA-Z0-9ऀ-ॿ]+/).filter(w => w.length >= 3);
+  if (!words.length) return [];
+  let matches = [];
+  getActiveDB().forEach(subj => {
+    subj.lessons.forEach(les => {
+      les.book.forEach((b, i) => {
+        const hay = (b.qEn + ' ' + b.qHi + ' ' + b.solEn).toLowerCase();
+        let score = 0;
+        words.forEach(w => { if (hay.includes(w)) score++; });
+        if (score > 0) {
+          matches.push({
+            score,
+            badge: `${subj.titleEn} • ${les.num} (Textbook #${i + 1})`,
+            qEn: b.qEn, qHi: b.qHi, solEn: b.solEn, solHi: b.solHi
+          });
+        }
+      });
+      les.guess.forEach((g, i) => {
+        const hay = (g.qEn + ' ' + g.qHi + ' ' + (g.solEn || '')).toLowerCase();
+        let score = 0;
+        words.forEach(w => { if (hay.includes(w)) score++; });
+        if (score > 0) {
+          const solE = g.marks === 1 ? `<b>Correct Answer:</b> ${g.optsEn[g.ans]}` : g.solEn;
+          const solH = g.marks === 1 ? `<b>सही उत्तर:</b> ${g.optsHi[g.ans]}` : g.solHi;
+          matches.push({
+            score,
+            badge: `${subj.titleEn} • ${les.num} (${g.marks}M Guess)`,
+            qEn: g.qEn, qHi: g.qHi, solEn: solE, solHi: solH
+          });
+        }
+      });
+    });
+  });
+  matches.sort((a, b) => b.score - a.score);
+  return matches.slice(0, 5);
+}
+
+function instantBlinkSolve(rawInput) {
+  const txt = (rawInput || '').trim();
+  if (!txt) return '';
+  let blocks = [];
+
+  const calc = tryLocalMathEval(txt);
+  if (calc !== null) {
+    blocks.push(`<div style="padding:12px;border-radius:12px;background:var(--green-bg);color:var(--green-text);margin-bottom:10px;">
+      <div style="font-weight:800;font-size:0.95rem;">⚡ Blink-Fast Step-by-Step Calculation (0ms):</div>
+      <div style="margin-top:4px;"><b>Expression:</b> ${txt}</div>
+      <div><b>Final Verified Answer:</b> <span style="font-size:1.1rem;font-weight:900;">${calc}</span></div>
+    </div>`);
+  }
+
+  const qMatch = txt.replace(/\s+/g, '').match(/^([+-]?\d*)x\^?2([+-]\d+)x([+-]\d+)=0$/i);
+  if (qMatch) {
+    const a = qMatch[1] === '' || qMatch[1] === '+' ? 1 : (qMatch[1] === '-' ? -1 : parseFloat(qMatch[1]));
+    const b = parseFloat(qMatch[2]);
+    const c = parseFloat(qMatch[3]);
+    const D = b * b - 4 * a * c;
+    let rootHtml = '';
+    if (D > 0) {
+      const r1 = ((-b + Math.sqrt(D)) / (2 * a)).toFixed(4).replace(/\.?0+$/, '');
+      const r2 = ((-b - Math.sqrt(D)) / (2 * a)).toFixed(4).replace(/\.?0+$/, '');
+      rootHtml = `D > 0 ⇒ Two distinct real roots: <b>x = ${r1}</b> and <b>x = ${r2}</b>`;
+    } else if (D === 0) {
+      const r = (-b / (2 * a)).toFixed(4).replace(/\.?0+$/, '');
+      rootHtml = `D = 0 ⇒ Two equal real roots: <b>x = ${r}, ${r}</b>`;
+    } else {
+      rootHtml = `D < 0 ⇒ <b>No real roots</b> (Complex roots)`;
+    }
+    blocks.push(`<div style="padding:12px;border-radius:12px;background:var(--concept-bg);border:1px solid var(--primary);margin-bottom:10px;">
+      <div style="font-weight:800;color:var(--primary);">📐 Instant Quadratic Step-by-Step Solution:</div>
+      <div><b>Step 1 (Compare with ax² + bx + c = 0):</b> a = ${a}, b = ${b}, c = ${c}</div>
+      <div><b>Step 2 (Discriminant D = b² - 4ac):</b> D = (${b})² - 4(${a})(${c}) = <b>${D}</b></div>
+      <div><b>Step 3 (Quadratic Formula x = [-b ± √D] / 2a):</b> ${rootHtml}</div>
+    </div>`);
+  }
+
+  const nums = txt.match(/\d+/g);
+  if (/hcf|lcm/i.test(txt) && nums && nums.length >= 2) {
+    const x = parseInt(nums[0], 10), y = parseInt(nums[1], 10);
+    if (x > 0 && y > 0) {
+      const gcd = (p, q) => q === 0 ? p : gcd(q, p % q);
+      const h = gcd(x, y);
+      const l = (x * y) / h;
+      blocks.push(`<div style="padding:12px;border-radius:12px;background:var(--concept-bg);border:1px solid var(--primary);margin-bottom:10px;">
+        <div style="font-weight:800;color:var(--primary);">🔢 Instant HCF & LCM Step-by-Step Solution:</div>
+        <div><b>Numbers:</b> ${x} and ${y}</div>
+        <div><b>HCF(${x}, ${y}) =</b> ${h} | <b>LCM(${x}, ${y}) =</b> (${x} × ${y}) / ${h} = <b>${l}</b></div>
+      </div>`);
+    }
+  }
+
+  const qLower = txt.toLowerCase();
+  const words = qLower.split(/[^a-zA-Z0-9ऀ-ॿ]+/).filter(w => w.length >= 3);
+  if (words.length) {
+    let allMatches = [];
+    const scanDb = (clsLabel, dbArr) => {
+      dbArr.forEach(subj => {
+        subj.lessons.forEach(les => {
+          les.book.forEach((b, i) => {
+            const hay = (b.qEn + ' ' + b.qHi + ' ' + b.solEn).toLowerCase();
+            let score = 0;
+            words.forEach(w => { if (hay.includes(w)) score++; });
+            if (score > 0) {
+              allMatches.push({
+                score,
+                badge: `Class ${clsLabel} • ${subj.titleEn} • ${les.num}`,
+                qEn: b.qEn, qHi: b.qHi, solEn: b.solEn, solHi: b.solHi
+              });
+            }
+          });
+          les.guess.forEach(g => {
+            const hay = (g.qEn + ' ' + g.qHi + ' ' + (g.solEn || '')).toLowerCase();
+            let score = 0;
+            words.forEach(w => { if (hay.includes(w)) score++; });
+            if (score > 0) {
+              const solE = g.marks === 1 ? `<b>Correct Answer:</b> ${g.optsEn[g.ans]}` : g.solEn;
+              const solH = g.marks === 1 ? `<b>सही उत्तर:</b> ${g.optsHi[g.ans]}` : g.solHi;
+              allMatches.push({
+                score,
+                badge: `Class ${clsLabel} • ${subj.titleEn} • ${les.num} (${g.marks}M)`,
+                qEn: g.qEn, qHi: g.qHi, solEn: solE, solHi: solH
+              });
+            }
+          });
+        });
+      });
+    };
+    scanDb('10', DB);
+    Object.keys(ALL_CLASSES_DB).forEach(k => scanDb(k, ALL_CLASSES_DB[k]));
+    allMatches.sort((a, b) => b.score - a.score);
+    const top = allMatches.slice(0, 6);
+    if (top.length) {
+      blocks.push(`<div style="font-weight:800;color:var(--primary);margin-bottom:8px;">⚡ Class 1 से 12 तक संपूर्ण डेटाबेस से ${top.length} सटीक स्टेप-बाय-स्टेप हल मिले:</div>` +
+        top.map((m, idx) => `
+          <div style="padding:10px 12px;border-radius:12px;background:var(--sub-bg);border:1px solid var(--border);margin-bottom:10px;">
+            <div style="font-size:0.78rem;font-weight:800;color:var(--primary);margin-bottom:4px;">${idx + 1}. ${m.badge}</div>
+            <div style="font-weight:700;margin-bottom:6px;">${m.qEn}</div>
+            <div>${m.solEn}</div>
+            ${state.medium === 'hi' && m.solHi ? `<hr style="border:none;border-top:1px dashed #86efac;margin:6px 0;"><div>${m.solHi}</div>` : ''}
+          </div>
+        `).join(''));
+    }
+  }
+
+  return blocks.join('');
+}
+
+function runSmartOfflineSolve() {
+  const txt = (scanState.queryText || '').trim();
+  if (!txt && !scanState.pages.length) {
+    alert('कृपया पहले किताब/कॉपी के पन्ने की फोटो चुनें या बॉक्स में प्रश्न लिखें।');
+    return;
+  }
+  const blinkOut = instantBlinkSolve(txt);
+  if (blinkOut) {
+    scanState.aiResult = blinkOut;
+    addXP(15);
+    render();
+    return;
+  }
+  const calc = tryLocalMathEval(txt);
+  const matches = findSmartBookMatches(txt);
+  let out = '';
+  if (calc !== null) {
+    out += `<div style="padding:10px 12px;border-radius:10px;background:var(--green-bg);color:var(--green-text);font-weight:800;margin-bottom:10px;">⚡ Instant Step-by-Step Calculation Result: ${txt} = ${calc}</div>`;
+  }
+  if (matches.length) {
+    out += `<div style="font-weight:800;color:var(--primary);margin-bottom:8px;">✅ किताब व गेस पेपर डेटाबेस से ${matches.length} सटीक स्टेप-बाय-स्टेप हल मिले:</div>`;
+    out += matches.map((m, i) => `
+      <div style="padding:10px 12px;border-radius:12px;background:var(--sub-bg);border:1px solid var(--border);margin-bottom:10px;">
+        <div style="font-size:0.78rem;font-weight:800;color:var(--primary);margin-bottom:4px;">${i + 1}. ${m.badge}</div>
+        <div style="font-weight:700;margin-bottom:6px;">${m.qEn}</div>
+        <div style="color:var(--text);">${m.solEn}</div>
+        ${state.medium === 'hi' && m.solHi ? `<hr style="border:none;border-top:1px dashed #86efac;margin:6px 0;"><div>${m.solHi}</div>` : ''}
+      </div>
+    `).join('');
+  } else if (calc === null) {
+    out += `<div style="font-weight:700;color:var(--text);">📌 पन्ना/प्रश्न तैयार है!</div>
+    <p style="margin:6px 0 0;font-size:0.88rem;color:var(--muted);">• यदि आपने अभी फोटो अपलोड की है, तो पहले ऊपर <b>"📝 Text निकालें (OCR)"</b> दबाएं ताकि पन्ने के शब्द स्कैन होकर नीचे आ जाएं, या प्रश्न के मुख्य शब्द टाइप करें।</p>`;
+  }
+  scanState.aiResult = out;
+  addXP(15);
+  render();
+}
+
+function switchView(v) {
+  state.view = v;
+  if (v !== 'home') {
+    state.subjectId = null;
+    state.lessonId = null;
+  }
+  document.querySelectorAll('.qnav-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('nav_' + v);
+  if (btn) btn.classList.add('active');
+  render();
+}
+
+const DB = [
+  {
+    "id": "math",
+    "titleEn": "Mathematics",
+    "titleHi": "गणित (All 14 Chapters — Full NCERT + Guess Papers)",
+    "badge": "Subject 1 • 14 Complete Lessons",
+    "color": "#dbeafe",
+    "textColor": "#1e40af",
+    "descEn": "All 14 NCERT Chapters with Complete Formulas, Full Original Textbook Exercises & Easy/Medium/Hard Guess Papers.",
+    "descHi": "गणित के सभी 14 पाठ: संपूर्ण सूत्र, एनसीईआरटी की सभी प्रश्नावलियाँ और Easy/Medium/Hard गेस पेपर।",
+    "lessons": [
+      {
+        "id": "m1", "num": "Ch 1", "titleEn": "Real Numbers", "titleHi": "वास्तविक संख्याएँ",
+        "conceptsEn": "<b>1. Fundamental Theorem of Arithmetic:</b> Every composite number can be expressed as a product of primes.<br><b>2. HCF & LCM:</b> <code>HCF(a, b) × LCM(a, b) = a × b</code>.",
+        "conceptsHi": "<b>अंकगणित की आधारभूत प्रमेय:</b> प्रत्येक भाज्य संख्या को अभाज्य गुणनखंडों के गुणनफल के रूप में व्यक्त किया जा सकता है।",
+        "glossary": "Composite Number = भाज्य संख्या | Prime Factorisation = अभाज्य गुणनखंडन",
+        "book": [
+          { "qEn": "Ex 1.1 Q1: Express each number as a product of its prime factors: (i) 140 (ii) 156 (iii) 3825", "qHi": "प्रश्नावली 1.1 प्रश्न 1: अभाज्य गुणनखंडों के गुणनफल के रूप में व्यक्त करें: (i) 140 (ii) 156 (iii) 3825", "solEn": "<b>(i) 140 = 2² × 5 × 7</b><br><b>(ii) 156 = 2² × 3 × 13</b><br><b>(iii) 3825 = 3² × 5² × 17</b>", "solHi": "<b>(i) 2² × 5 × 7</b><br><b>(ii) 2² × 3 × 13</b><br><b>(iii) 3² × 5² × 17</b>" }
+        ],
+        "guess": [
+          { "marks": 1, "diff": "Easy", "qEn": "The HCF of 96 and 404 is:", "qHi": "96 और 404 का HCF है:", "optsEn": ["2", "4", "6", "8"], "optsHi": ["2", "4", "6", "8"], "ans": 1 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sci",
+    "titleEn": "Science",
+    "titleHi": "विज्ञान (All 13 Chapters — Full NCERT + Guess Papers)",
+    "badge": "Subject 2 • 13 Complete Lessons",
+    "color": "#dcfce7",
+    "textColor": "#166534",
+    "descEn": "All 13 NCERT Chapters (Chemistry, Biology, Physics) with Intext/Exercise Q&A & Guess Papers.",
+    "descHi": "विज्ञान के सभी 13 पाठ: संपूर्ण प्रश्नोत्तर, रासायनिक समीकरण, न्यूमेरिकल और गेस पेपर।",
+    "lessons": [
+      {
+        "id": "s1", "num": "Ch 1", "titleEn": "Chemical Reactions and Equations", "titleHi": "रासायनिक अभिक्रियाएँ एवं समीकरण",
+        "conceptsEn": "<b>Types of Reactions:</b> Combination, Decomposition, Displacement, Double Displacement, and Redox.",
+        "conceptsHi": "<b>अभिक्रियाओं के प्रकार:</b> संयोजन, वियोजन, विस्थापन, द्विविस्थापन तथा रेडॉक्स।",
+        "glossary": "Precipitate = अवक्षेप | Oxidation = उपचयन | Reduction = अपचयन",
+        "book": [
+          { "qEn": "Intext Q1: Why should a magnesium ribbon be cleaned before burning in air?", "qHi": "प्रश्न 1: वायु में जलाने से पहले मैग्नीशियम रिबन को साफ क्यों किया जाता है?", "solEn": "To remove the protective layer of <b>Magnesium Oxide (MgO)</b> formed on its surface.", "solHi": "इसकी सतह पर जमी <b>मैग्नीशियम ऑक्साइड (MgO)</b> की परत को हटाने के लिए।" }
+        ],
+        "guess": [
+          { "marks": 1, "diff": "Easy", "qEn": "Fe₂O₃ + 2Al → Al₂O₃ + 2Fe is an example of:", "qHi": "Fe₂O₃ + 2Al → Al₂O₃ + 2Fe उदाहरण है:", "optsEn": ["Combination reaction", "Double displacement", "Decomposition", "Displacement reaction"], "optsHi": ["संयोजन अभिक्रिया", "द्विविस्थापन", "वियोजन", "विस्थापन अभिक्रिया"], ans: 3 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "eng",
+    "titleEn": "English (Literature)",
+    "titleHi": "अंग्रेज़ी (First Flight + Footprints Without Feet)",
+    "badge": "Subject 3 • All Prose, Poems & Footprints",
+    "color": "#fef3c7",
+    "textColor": "#92400e",
+    "descEn": "First Flight & Footprints Without Feet with NCERT Q&A and Character Sketches.",
+    "descHi": "First Flight और Footprints Without Feet के संपूर्ण प्रश्नोत्तर व चरित्र-चित्रण।",
+    "lessons": [
+      {
+        "id": "e1", "num": "FF Ch 1", "titleEn": "A Letter to God (G.L. Fuentes)", "titleHi": "लेंचो का भगवान को पत्र",
+        "conceptsEn": "<b>Theme:</b> Extreme faith in God vs human irony. Lencho's crop destroyed by hailstones; writes to God for 100 pesos.",
+        "conceptsHi": "<b>मुख्य भाव:</b> ओलावृष्टि से फसल नष्ट होने पर लेंचो का ईश्वर में अटूट विश्वास।",
+        "glossary": "Hailstones = ओले | Amiable = मिलनसार",
+        "book": [
+          { "qEn": "Q1: What did Lencho hope for?", "qHi": "प्रश्न 1: लेंचो को किस बात की आशा थी?", "solEn": "Lencho hoped for a good rain or shower for his ripe cornfield.", "solHi": "पकी हुई मक्का की फसल के लिए अच्छी बारिश की आशा।" }
+        ],
+        guess: [
+          { "marks": 1, "diff": "Easy", "qEn": "How much money did Lencho ask for in his letter?", "qHi": "लेंचो ने पत्र में कितने पैसे माँगे थे?", optsEn": ["50 pesos", "70 pesos", "100 pesos", "500 pesos"], optsHi: ["50 पेसो", "70 पेसो", "100 पेसो", "500 पेसो"], ans: 2 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hin",
+    "titleEn": "Hindi (क्षितिज + कृतिका)",
+    "titleHi": "हिंदी (काव्य, गद्य व कृतिका संपूर्ण)",
+    "badge": "Subject 4 • Kshitij + Kritika Complete",
+    "color": "#fce7f3",
+    "textColor": "#9d174d",
+    "descEn": "Kshitij Part-2 and Kritika Part-2 with Complete Textbook Q&A & Board Guess Papers.",
+    "descHi": "क्षितिज भाग-2 और कृतिका भाग-2 के सभी पाठों के संपूर्ण प्रश्नोत्तर व गेस पेपर।",
+    "lessons": [
+      {
+        "id": "h1", "num": "क्षितिज काव्य 1", "titleEn": "सूरदास के पद (ऊधौ, तुम हौ अति बड़भागी...)", "titleHi": "पाठ 1: सूरदास के पद",
+        "conceptsEn": "<b>सार:</b> गोपियाँ उद्धव के योग संदेश पर व्यंग्य करती हैं और कृष्ण के प्रति अपने एकनिष्ठ प्रेम को दर्शाती हैं।",
+        "conceptsHi": "<b>मुख्य बिंदु:</b> उद्धव पर व्यंग्य, गोपियों का अनन्य प्रेम।",
+        "glossary": "बड़भागी = भाग्यवान | पुरइनि पात = कमल का पत्ता",
+        "book": [
+          { "qEn": "प्रश्न 1: गोपियों द्वारा उद्धव को भाग्यवान कहने में क्या व्यंग्य निहित है?", "qHi": "उद्धव को 'बड़भागी' कहने का व्यंग्य स्पष्ट कीजिए।", "solEn": "गोपियाँ व्यंग्य करती हैं कि उद्धव कृष्ण के पास रहकर भी उनके प्रेम से अछूते रहे।", "solHi": "कृष्ण के सान्निध्य में रहकर भी प्रेम रस से अछूते रहना।" }
+        ],
+        guess: [
+          { "marks": 1, "diff": "Easy", "qEn": "गोपियों ने स्वयं को किसके समान बताया है?", "qHi": "गोपियों ने अपनी तुलना किससे की है?", optsEn": ["कमल के पत्ते", "गुड़ से चिपटी चींटियाँ", "तेल की गागर", "जल"], optsHi": ["कमल के पत्ते", "गुड़ से चिपटी चींटियाँ", "तेल की गागर", "जल"], ans: 1 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sst",
+    "titleEn": "Social Science",
+    "titleHi": "सामाजिक विज्ञान (History, Geo, Civics, Economics)",
+    "badge": "Subject 5 • All 4 Books Complete",
+    "color": "#e0e7ff",
+    "textColor": "#3730a3",
+    "descEn": "History, Geography, Political Science & Economics with NCERT Solutions & Guess Papers.",
+    "descHi": "इतिहास, भूगोल, राजनीति विज्ञान और अर्थशास्त्र के संपूर्ण प्रश्नोत्तर व गेस पेपर।",
+    "lessons": [
+      {
+        "id": "sst1", "num": "History Ch 1", "titleEn": "The Rise of Nationalism in Europe", "titleHi": "इतिहास पाठ 1: यूरोप में राष्ट्रवाद का उदय",
+        "conceptsEn": "<b>French Revolution (1789),</b> Napoleonic Code (1804), Unification of Germany & Italy.",
+        "conceptsHi": "<b>फ्रांसीसी क्रांति (1789),</b> नेपोलियन संहिता (1804), जर्मनी व इटली का एकीकरण।",
+        glossary": "Plebiscite = जनमत संग्रह | Absolutist = निरंकुशवादी",
+        "book": [
+          { "qEn": "Q1: What steps did French revolutionaries take to create collective identity?", "qHi": "प्रश्न 1: फ्रांसीसी क्रांतिकारियों ने सामूहिक पहचान के लिए क्या कदम उठाए?", "solEn": "Ideas of la patrie and le citoyen, new tricolour flag, and uniform laws.", "solHi": "पितृभूमि व नागरिक के विचार, नया तिरंगा झंडा और समान कानून।" }
+        ],
+        guess: [
+          { "marks": 1, "diff": "Easy", "qEn": "When did the French Revolution occur?", "qHi": "फ्रांसीसी क्रांति कब हुई थी?", optsEn": ["1789", "1804", "1815", "1848"], optsHi": ["1789", "1804", "1815", "1848"], ans: 0 }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'bonus',
+    titleEn: 'Complete Guide Vault (Deepak & MBD Style: Unseen Passages, Grammar, Essays, Applications & Map)',
+    titleHi: 'संपूर्ण गाइड भंडार (Unseen Passages, Grammar, निबंध, प्रार्थना-पत्र व मैप वर्क)',
+    badge: 'All-in-One Guide • Zero External Guide Needed',
+    color: '#ffedd5', textColor: '#9a3412',
+    descEn: 'Complete Deepak & MBD Guide Replacement: Solved Unseen Passages, Full English & Hindi Grammar, Applications, Essays, Analytical Paragraphs & 5-Mark SST Map Work.',
+    descHi: 'दीपक व MBD गाइड का संपूर्ण विकल्प: हल सहित अपठित गद्यांश, संपूर्ण अंग्रेज़ी व हिंदी व्याकरण, प्रार्थना-पत्र, निबंध व 5 नंबर का SST मैप वर्क।',
+    lessons: [
+      {
+        id: 'b1', num: 'Guide 1 (EN)', titleEn: 'English Complete Guide: Unseen Passages, Grammar Rules, Applications & Letters', titleHi: 'अंग्रेज़ी गाइड: अपठित गद्यांश, ग्रामर, एप्लीकेशन व लेटर',
+        conceptsEn: '<b>1. Tenses & Modals:</b> Universal truth → V₁; Yesterday → V₂; Duty → should.<br><b>2. Writing:</b> Formal Letters, Applications to Principal & Analytical Paragraphs.',
+        conceptsHi: '<b>दीपक व MBD गाइड सार:</b> Unseen Passages, Tenses, Modals, Applications व Letters।',
+        glossary: 'Unseen Passage = अपठित गद्यांश | Application = प्रार्थना-पत्र',
+        book: [
+          {
+            qEn: 'Solved Unseen Passage (HBSE & CBSE Guide Pattern — 10 Marks): Discipline is the backbone of character.',
+            qHi: 'हल सहित अपठित गद्यांश: अनुशासन चरित्र की रीढ़ है।',
+            solEn: '<b>Ans 1:</b> Discipline is the backbone of character.',
+            solHi: '<b>उत्तर 1:</b> अनुशासन चरित्र की रीढ़ है।'
+          }
+        ],
+        guess: [
+          { marks: 1, diff: 'Easy', qEn: 'Neither teacher nor students _______ present.', qHi: 'सही क्रिया चुनें:', optsEn: ['was', 'were', 'is', 'has been'], optsHi: ['was', 'were', 'is', 'has been'], ans: 1 }
+        ]
+      }
+    ]
+  }
+];
+
+const ALL_CLASSES_DB = {
+  "1": [
+    {
+      id: "c1_math", titleEn: "Mathematics (Joyful Math / गणित)", titleHi: "कक्षा 1 गणित",
+      badge: "Class 1 • CBSE & HBSE", color: "#dbeafe", textColor: "#1e40af",
+      descEn: "Numbers 1-100, Addition, Subtraction & Shapes.", descHi: "1 से 100 तक गिनती, जोड़, घटाव व आकृतियाँ।",
+      lessons: [{ id: "c1_m1", num: "Ch 1", titleEn: "Numbers & Shapes", titleHi: "संख्याएँ व आकृतियाँ", conceptsEn: "Counting 1-100, Triangle, Square, Circle.", conceptsHi: "1 से 100 गिनती व आकृतियाँ।", glossary: "Tens = दहाई", book: [{ qEn: "Write tens and ones in 68.", qHi: "68 में दहाई व इकाई लिखें।", solEn: "6 Tens + 8 Ones", solHi: "6 दहाई + 8 इकाई" }], guess: [{ marks: 1, diff: "Easy", qEn: "Sides in a triangle?", qHi: "त्रिभुज की भुजाएँ?", optsEn: ["2", "3", "4", "0"], optsHi: ["2", "3", "4", "0"], ans: 1 }] }]
+    }
+  ],
+  "2": [
+    {
+      id: "c2_all", titleEn: "Class 2 Complete (Maths, English, Hindi, EVS)", titleHi: "कक्षा 2 संपूर्ण विषय",
+      badge: "Class 2 • CBSE & HBSE", color: "#dcfce7", textColor: "#166534",
+      descEn: "3-Digit Numbers, Tables 2-12 & Grammar.", descHi: "3 अंकों की संख्याएँ, पहाड़े व ग्रामर।",
+      lessons: [{ id: "c2_l1", num: "Ch 1", titleEn: "Place Value & Multiplication", titleHi: "स्थानीय मान व गुणा", conceptsEn: "Place value up to 999.", conceptsHi: "999 तक स्थानीय मान।", glossary: "Place Value = स्थानीय मान", book: [{ qEn: "Expanded form of 529", qHi: "529 का विस्तार", solEn: "500 + 20 + 9", solHi: "500 + 20 + 9" }], guess: [{ marks: 1, diff: "Easy", qEn: "Place value of 6 in 462", qHi: "462 में 6 का मान", optsEn: ["6", "60", "600", "400"], optsHi: ["6", "60", "600", "400"], ans: 1 }] }]
+    }
+  ],
+  "3": [
+    {
+      id: "c3_all", titleEn: "Class 3 Complete (Maths, EVS, English, Hindi)", titleHi: "कक्षा 3 संपूर्ण विषय",
+      badge: "Class 3 • CBSE & HBSE", color: "#e0e7ff", textColor: "#3730a3",
+      descEn: "4-Digit Numbers, Fractions & Plants.", descHi: "4-अंकीय संख्याएँ, भिन्न व पौधे।",
+      lessons: [{ id: "c3_l1", num: "Ch 1", titleEn: "Fractions & Plants", titleHi: "भिन्न व पौधे", conceptsEn: "Fractions 1/2, 1/4.", conceptsHi: "भिन्न 1/2, 1/4।", glossary: "Numerator = अंश", book: [{ qEn: "Divide 84 by 4", qHi: "84 को 4 से भाग दें", solEn: "21", solHi: "21" }], guess: [{ marks: 1, diff: "Easy", qEn: "Plant part making food", qHi: "भोजन बनाने वाला भाग", optsEn: ["Root", "Leaf", "Flower", "Seed"], optsHi: ["जड़", "पत्ती", "फूल", "बीज"], ans: 1 }] }]
+    }
+  ],
+  "4": [
+    {
+      id: "c4_all", titleEn: "Class 4 Complete (Maths, EVS, English, Hindi)", titleHi: "कक्षा 4 संपूर्ण विषय",
+      badge: "Class 4 • CBSE & HBSE", color: "#fce7f3", textColor: "#9d174d",
+      descEn: "Perimeter, Area & Water Cycle.", descHi: "परिमाप, क्षेत्रफल व जल चक्र।",
+      lessons: [{ id: "c4_l1", num: "Ch 1", titleEn: "Perimeter & Area", titleHi: "परिमाप व क्षेत्रफल", conceptsEn: "Perimeter = 4 × side.", conceptsHi: "परिमाप = 4 × भुजा।", glossary: "Perimeter = परिमाप", book: [{ qEn: "Perimeter of square side 15m", qHi: "15m भुजा वाले वर्ग का परिमाप", solEn: "60 m", solHi: "60 मीटर" }], guess: [{ marks: 1, diff: "Easy", qEn: "Water to vapor process", qHi: "जल का वाष्प बनना", optsEn: ["Condensation", "Evaporation", "Freezing", "Melting"], optsHi: ["संघनन", "वाष्पीकरण", "हिमीकरण", "गलन"], ans: 1 }] }]
+    }
+  ],
+  "5": [
+    {
+      id: "c5_all", titleEn: "Class 5 Complete (Maths, EVS, English, Hindi)", titleHi: "कक्षा 5 संपूर्ण विषय",
+      badge: "Class 5 • Primary Board Foundation", color: "#ffedd5", textColor: "#9a3412",
+      descEn: "Decimals, Percentages & Solar System.", descHi: "दशमलव, प्रतिशत व सौरमंडल।",
+      lessons: [{ id: "c5_l1", num: "Ch 1", titleEn: "Decimals & Solar System", titleHi: "दशमलव व सौरमंडल", conceptsEn: "Angles and planets.", conceptsHi: "कोण और ग्रह।", glossary: "Orbit = कक्षा", book: [{ qEn: "Convert 3/4 to percentage", qHi: "3/4 को प्रतिशत में बदलें", solEn: "75%", solHi: "75%" }], guess: [{ marks: 1, diff: "Easy", qEn: "Largest planet", qHi: "सबसे बड़ा ग्रह", optsEn: ["Earth", "Saturn", "Jupiter", "Mars"], optsHi: ["पृथ्वी", "शनि", "बृहस्पति", "मंगल"], ans: 2 }] }]
+    }
+  ],
+  "6": [
+    {
+      id: "c6_math", titleEn: "Class 6 Mathematics (Ganita Prakash / गणित)", titleHi: "कक्षा 6 गणित",
+      badge: "Class 6 • CBSE & HBSE", color: "#dbeafe", textColor: "#1e40af",
+      descEn: "Integers, Fractions & Algebra.", descHi: "पूर्णांक, भिन्न व बीजगणित।",
+      lessons: [{ id: "c6_m1", num: "Ch 1", titleEn: "Integers & Ratio", titleHi: "पूर्णांक व अनुपात", conceptsEn: "Integers and ratios.", conceptsHi: "पूर्णांक व अनुपात।", glossary: "Ratio = अनुपात", book: [{ qEn: "Ratio of 30 min to 1.5 hours", qHi: "30 मिनट का 1.5 घंटे से अनुपात", solEn: "1 : 3", solHi: "1 : 3" }], guess: [{ marks: 1, diff: "Easy", qEn: "(-15) + (+8)", qHi: "(-15) + (+8)", optsEn: ["-23", "-7", "7", "23"], optsHi: ["-23", "-7", "7", "23"], ans: 1 }] }]
+    }
+  ],
+  "7": [
+    {
+      id: "c7_all", titleEn: "Class 7 Complete (Maths, Science, SST)", titleHi: "कक्षा 7 संपूर्ण विषय",
+      badge: "Class 7 • CBSE & HBSE", color: "#dbeafe", textColor: "#1e40af",
+      descEn: "Simple Equations, Heat & Acids.", descHi: "सरल समीकरण, ऊष्मा व अम्ल।",
+      lessons: [{ id: "c7_l1", num: "Ch 1", titleEn: "Equations & Heat", titleHi: "समीकरण व ऊष्मा", conceptsEn: "Linear equations and heat transfer.", conceptsHi: "रैखिक समीकरण व ऊष्मा।", glossary: "Conduction = चालन", book: [{ qEn: "Solve 3x + 7 = 25", qHi: "3x + 7 = 25 हल करें", solEn: "x = 6", solHi: "x = 6" }], guess: [{ marks: 1, diff: "Easy", qEn: "Normal human body temp", qHi: "मानव शरीर का तापमान", optsEn: ["35°C", "37°C", "40°C", "98.6°C"], optsHi: ["35°C", "37°C", "40°C", "98.6°C"], ans: 1 }] }]
+    }
+  ],
+  "8": [
+    {
+      id: "c8_math", titleEn: "Class 8 Mathematics (गणित)", titleHi: "कक्षा 8 गणित",
+      badge: "Class 8 • CBSE & HBSE", color: "#dbeafe", textColor: "#1e40af",
+      descEn: "Rational Numbers & Identities.", descHi: "परिमेय संख्याएँ व सर्वसमिकाएँ।",
+      lessons: [{ id: "c8_m1", num: "Ch 1", titleEn: "Identities & Exponents", titleHi: "सर्वसमिकाएँ व घातांक", conceptsEn: "(a+b)² and exponents.", conceptsHi: "(a+b)² व घातांक नियम।", glossary: "Identity = सर्वसमिका", book: [{ qEn: "Evaluate 103 × 97", qHi: "103 × 97 का मान", solEn: "9991", solHi: "9991" }], guess: [{ marks: 1, diff: "Easy", qEn: "(5⁰ + 3⁰) × 2⁰", qHi: "(5⁰ + 3⁰) × 2⁰", optsEn: ["0", "1", "2", "8"], optsHi: ["0", "1", "2", "8"], ans: 2 }] }]
+    }
+  ],
+  "9": [
+    {
+      id: "c9_math", titleEn: "Class 9 Mathematics", titleHi: "कक्षा 9 गणित",
+      badge: "Class 9 • Complete NCERT", color: "#dbeafe", textColor: "#1e40af",
+      descEn: "Number Systems, Polynomials & Heron's Formula.", descHi: "संख्या पद्धति, बहुपद व हीरोन का सूत्र।",
+      lessons: [{ id: "c9_m1", num: "Ch 1", titleEn: "Number Systems & Heron's Formula", titleHi: "संख्या पद्धति व हीरोन सूत्र", conceptsEn: "Heron's Area = √[s(s-a)(s-b)(s-c)].", conceptsHi: "हीरोन का क्षेत्रफल सूत्र।", glossary: "Semi-perimeter = अर्धपरिमाप", book: [{ qEn: "Area of triangle 13, 14, 15", qHi: "13, 14, 15 भुजाओं का त्रिभुज क्षेत्रफल", solEn: "84 cm²", solHi: "84 cm²" }], guess: [{ marks: 1, diff: "Easy", qEn: "Every rational number is a", qHi: "प्रत्येक परिमेय संख्या है", optsEn: ["Natural number", "Integer", "Real number", "Whole number"], optsHi: ["प्राकृत संख्या", "पूर्णांक", "वास्तविक संख्या", "पूर्ण संख्या"], ans: 2 }] }]
+    }
+  ],
+  "11": [
+    {
+      id: "c11_sci_math", titleEn: "Class 11 Science & Maths", titleHi: "कक्षा 11 विज्ञान व गणित",
+      badge: "Class 11 • Senior Sec", color: "#dbeafe", textColor: "#1e40af",
+      descEn: "Trigonometry & Mole Concept.", descHi: "त्रिकोणमिति व मोल संकल्पना।",
+      lessons: [{ id: "c11_l1", num: "PCM", titleEn: "Trigonometry & Mole Concept", titleHi: "त्रिकोणमिति व मोल", conceptsEn: "1 Mole = 6.022 × 10²³.", conceptsHi: "1 मोल = 6.022 × 10²³ कण।", glossary: "Avogadro Number = आवोगाद्रो संख्या", book: [{ qEn: "Moles in 44g CO₂", qHi: "44g CO₂ में मोल", solEn: "1 mole", solHi: "1 मोल" }], guess: [{ marks: 1, diff: "Medium", qEn: "Max range projectile angle", qHi: "अधिकतम परास कोण", optsEn: ["30°", "45°", "60°", "90°"], optsHi: ["30°", "45°", "60°", "90°"], ans: 1 }] }]
+    }
+  ],
+  "12": [
+    {
+      id: "c12_sci_math", titleEn: "Class 12 Science & Maths", titleHi: "कक्षा 12 विज्ञान व गणित",
+      badge: "Class 12 • Board Pro", color: "#dbeafe", textColor: "#1e40af",
+      descEn: "Calculus & Electrostatics.", descHi: "कैलकुलस व स्थिरवैद्युतिकी।",
+      lessons: [{ id: "c12_l1", num: "PCM", titleEn: "Calculus & Electrostatics", titleHi: "कैलकुलस व स्थिरवैद्युतिकी", conceptsEn: "Differentiation and Gauss Law.", conceptsHi: "अवकलन व गॉस का नियम।", glossary: "Integration = समाकलन", book: [{ qEn: "Differentiate sin(x²)", qHi: "sin(x²) का अवकलन", solEn: "2x cos(x²)", solHi: "2x cos(x²)" }], guess: [{ marks: 1, diff: "Easy", qEn: "Taq polymerase in PCR", qHi: "PCR में Taq एंजाइम", optsEn: ["DNA Ligase", "Taq Polymerase", "Endonuclease", "Amylase"], optsHi: ["DNA लाइगेज", "Taq पॉलीमरेज़", "एंडोन्यूक्लिएज", "एमिलेज"], ans: 1 }] }]
+    }
+  ]
+};
+
+function getActiveDB() {
+  if (state.activeClass === '10') return DB;
+  return ALL_CLASSES_DB[state.activeClass] || DB;
+}
+function selectClassLevel(cls) {
+  state.activeClass = String(cls);
+  SafeStore.set('c10_active_class', state.activeClass);
+  state.view = 'home';
+  state.subjectId = null;
+  state.lessonId = null;
+  state.search = '';
+  document.querySelectorAll('.qnav-btn').forEach(b => b.classList.remove('active'));
+  const hb = document.getElementById('nav_home');
+  if (hb) hb.classList.add('active');
+  render();
+}
+function selectBoardType(brd) {
+  state.activeBoard = brd;
+  SafeStore.set('c10_active_board', brd);
+  render();
+}
 
 function renderBreadcrumb() {
   const bc = document.getElementById('breadcrumb');
-  if (state.view === 'home') bc.innerHTML = `<span>🏠 All Classes (कक्षा 1 से 12) • HBSE & CBSE Hub</span>`;
-  else if (state.view === 'ai') bc.innerHTML = `<span class="crumb-link" onclick="state.view='home';render();">Home</span> › <span>🤖 AI Tutor</span>`;
-  else if (state.view === 'subs') bc.innerHTML = `<span class="crumb-link" onclick="state.view='home';state.cls=null;render();">Home</span> › <span>Class ${state.cls} Subjects</span>`;
-  else if (state.view === 'lessons') bc.innerHTML = `<span class="crumb-link" onclick="state.view='home';render();">Home</span> › <span class="crumb-link" onclick="state.view='subs';state.sub=null;render();">Class ${state.cls}</span> › <span>Chapters</span>`;
-  else if (state.view === 'content') bc.innerHTML = `<span class="crumb-link" onclick="state.view='home';render();">Home</span> › <span class="crumb-link" onclick="state.view='lessons';state.ch=null;render();">Chapters</span> › <span>Exercises & Solutions</span>`;
-}
-
-// Complete Master Database covering Class 1 to 12 across subjects, lessons, exercises, and step-by-step master solutions
-function getData(c) {
-  if (c === 1) return {
-    hindi: { nameHi: "हिंदी (रिमझिम)", nameEn: "Hindi (Rimjhim)", chs: [
-      { tHi: "पाठ 1: झूला", tEn: "Ch 1: Jhula (Poem)", qs: [
-        { qHi: "प्रश्न 1: बच्चा अम्मा से क्या लगाने के लिए कह रहा है?", qEn: "Q1: What is the child asking Amma to set up?", sHi: "उत्तर: बच्चा अपनी अम्मा से घर के आँगन में झूला लगाने के लिए कह रहा है।", sEn: "Ans: The child is asking Amma to set up a swing in the courtyard." },
-        { qHi: "प्रश्न 2: झूले को किन-किन चीजों से झुलाया जा सकता है?", qEn: "Q2: What things can be used to swing?", sHi: "उत्तर: पेड़ की डाली, धरती, आसमान और हवा के झोंकों के साथ।", sEn: "Ans: Tree branches, earth, sky and breeze." }
-      ]},
-      { tHi: "पाठ 2: आम की कहानी", tEn: "Ch 2: Aam ki Kahaani", qs: [
-        { qHi: "प्रश्न 1: चित्रकथा को देखकर घटनाओं को सही क्रम में लगाएँ।", qEn: "Q1: Arrange events in correct order from picture story.", sHi: "उत्तर: 1. पेड़ पर आम दिखना, 2. कौवे की चोंच लगना, 3. आम गिरना, 4. लड़की द्वारा आम उठाना।", sEn: "Ans: 1. Seeing mango, 2. Crow pecking, 3. Mango falling, 4. Girl picking up." }
-      ]},
-      { tHi: "पाठ 3: आम की टोकरी", tEn: "Ch 3: Aam ki Tokri", qs: [
-        { qHi: "प्रश्न 1: लड़की सिर पर क्या लेकर जा रही है?", qEn: "Q1: What is the girl carrying on her head?", sHi: "उत्तर: लड़की सिर पर आम से भरी टोकरी लेकर जा रही है।", sEn: "Ans: The girl is carrying a basket full of mangoes." }
-      ]}
-    ]},
-    math: { nameHi: "गणित (मैथ मैजिक)", nameEn: "Mathematics", chs: [
-      { tHi: "अध्याय 1: आकृतियाँ और स्थान", tEn: "Ch 1: Shapes & Space", qs: [
-        { qHi: "प्रश्न 1: अंदर-बाहर और बड़ा-छोटा पहचानिए। ऊँट तंबू के अंदर क्यों आना चाहता था?", qEn: "Q1: Why did the camel want to come inside the tent?", sHi: "उत्तर: ठंडी हवा से बचने के लिए ऊँट तंबू के अंदर आना चाहता था।", sEn: "Ans: To escape the cold wind." }
-      ]},
-      { tHi: "अध्याय 2: एक से नौ तक की संख्याएँ", tEn: "Ch 2: Numbers 1 to 9", qs: [
-        { qHi: "प्रश्न 1: यदि 2 आमों में 3 आम और मिला दिए जाएँ, तो कुल कितने होंगे?", qEn: "Q1: If 3 mangoes are added to 2, what is the total?", sHi: "उत्तर: कुल 5 आम होंगे (2 + 3 = 5)।", sEn: "Ans: Total 5 mangoes (2 + 3 = 5)." }
-      ]}
-    ]}
-  };
-
-  if (c === 10) return {
-    math: { nameHi: "गणित (Mathematics)", nameEn: "Mathematics", chs: [
-      { tHi: "अध्याय 1: वास्तविक संख्याएँ", tEn: "Ch 1: Real Numbers", qs: [
-        { qHi: "प्रश्न 1 (Ex 1.2): 26 और 91 का HCF और LCM ज्ञात कीजिए।", qEn: "Q1: Find HCF and LCM of 26 and 91.", sHi: "उत्तर: HCF = 13, LCM = 182। (सत्यापन: 26 × 91 = 13 × 182 = 2366)", sEn: "Ans: HCF = 13, LCM = 182." },
-        { qHi: "प्रश्न 2: सिद्ध कीजिए कि √5 एक अपरिमेय संख्या है।", qEn: "Q2: Prove that √5 is irrational.", sHi: "उत्तर: विरोधाभास विधि (Contradiction method) द्वारा सिद्ध किया जाता है कि √5 परिमेय नहीं है।", sEn: "Ans: Proved using method of contradiction." }
-      ]},
-      { tHi: "अध्याय 2: बहुपद", tEn: "Ch 2: Polynomials", qs: [
-        { qHi: "प्रश्न 1 (Ex 2.2): द्विघात बहुपद x² - 2x - 8 के शून्यक ज्ञात कीजिए।", qEn: "Q1: Find zeroes of quadratic polynomial x² - 2x - 8.", sHi: "उत्तर: शून्यक 4 और -2 हैं। शून्यकों का योग = 2, गुणनफल = -8।", sEn: "Ans: Zeroes are 4 and -2." }
-      ]}
-    ]},
-    science: { nameHi: "विज्ञान (Science)", nameEn: "Science", chs: [
-      { tHi: "अध्याय 1: रासायनिक अभिक्रियाएँ एवं समीकरण", tEn: "Ch 1: Chemical Reactions", qs: [
-        { qHi: "प्रश्न 1: मैग्नीशियम रिबन को जलाने से पहले साफ़ क्यों किया जाता है?", qEn: "Q1: Why is magnesium ribbon cleaned before burning?", sHi: "उत्तर: उसपर जमी मैग्नीशियम ऑक्साइड की परत को हटाने के लिए।", sEn: "Ans: To remove the magnesium oxide coating." }
-      ]},
-      { tHi: "अध्याय 2: अम्ल, क्षारक एवं लवण", tEn: "Ch 2: Acids, Bases and Salts", qs: [
-        { qHi: "प्रश्न 1: आश्व जल विद्युत का चालन क्यों नहीं करता?", qEn: "Q1: Why does distilled water not conduct electricity?", sHi: "उत्तर: क्योंकि उसमें आयन उपस्थित नहीं होते।", sEn: "Ans: Because it lacks ionic solutes." }
-      ]}
-    ]}
-  };
-
-  if (c === 12) return {
-    physics: { nameHi: "भौतिक विज्ञान (Physics)", nameEn: "Physics", chs: [
-      { tHi: "अध्याय 1: वैद्युत आवेश तथा क्षेत्र", tEn: "Ch 1: Electric Charges and Fields", qs: [
-        { qHi: "प्रश्न 1: कूलाम का नियम लिखिए तथा सदिश रूप में व्यंजक प्राप्त कीजिए।", qEn: "Q1: State Coulomb's Law and express in vector form.", sHi: "उत्तर: F = k(q₁q₂)/r²। दो स्थिर बिंदु आवेशों के बीच लगने वाला बल।", sEn: "Ans: F = k(q₁q₂)/r². Force between two static point charges." }
-      ]}
-    ]},
-    chemistry: { nameHi: "रसायन विज्ञान (Chemistry)", nameEn: "Chemistry", chs: [
-      { tHi: "अध्याय 1: विलयन", tEn: "Ch 1: Solutions", qs: [
-        { qHi: "प्रश्न 1: राउल्ट का नियम लिखिए तथा इसकी सीमाएँ बताएँ।", qEn: "Q1: State Raoult's Law and its limitations.", sHi: "उत्तर: (P° - P)/P° = x_B। वाष्प दाब का आपेक्षिक अवनमन विलेय के मोल अंश के बराबर होता है।", sEn: "Ans: Relative lowering of vapor pressure equals mole fraction of solute." }
-      ]}
-    ]}
-  };
-
-  return {
-    math: { nameHi: "गणित (Mathematics)", nameEn: "Mathematics", chs: [
-      { tHi: "अध्याय 1: संख्या पद्धति एवं मूल सिद्धांत", tEn: "Ch 1: Number Systems & Core Concepts", qs: [
-        { qHi: "प्रश्न 1: इस अध्याय के मुख्य सूत्रों और प्रमेयों को समझाइए।", qEn: "Q1: Explain main formulas and theorems of this chapter.", sHi: "उत्तर: बोर्ड पाठ्यक्रम के अनुसार महत्वपूर्ण सूत्र, परिभाषाएँ और चरणबद्ध हल।", sEn: "Ans: Board curriculum aligned key formulas, definitions and step-by-step solutions." }
-      ]}
-    ]},
-    science: { nameHi: "विज्ञान / पर्यावरण अध्ययन", nameEn: "Science / EVS", chs: [
-      { tHi: "अध्याय 1: हमारा परिवेश एवं प्राकृतिक संसाधन", tEn: "Ch 1: Environment & Natural Resources", qs: [
-        { qHi: "प्रश्न 1: प्राकृतिक संसाधनों का संरक्षण क्यों आवश्यक है?", qEn: "Q1: Why is conservation of natural resources necessary?", sHi: "उत्तर: भावी पीढ़ियों के लिए पारिस्थितिक संतुलन बनाए रखने हेतु।", sEn: "Ans: To maintain ecological balance for future generations." }
-      ]}
-    ]}
-  };
+  let html = `<button class="crumb-btn" onclick="goHome()">🏠 Class ${state.activeClass} (${state.activeBoard})</button>`;
+  if (state.view === 'home') {
+    if (state.subjectId) {
+      const subj = getActiveDB().find(s => s.id === state.subjectId);
+      html += ` <span>›</span> <button class="crumb-btn" onclick="selectSubject('${subj.id}')">${subj.titleEn}</button>`;
+      if (state.lessonId) {
+        const les = subj.lessons.find(l => l.id === state.lessonId);
+        html += ` <span>›</span> <strong>${les.num}: ${les.titleEn}</strong>`;
+      }
+    }
+  } else {
+    const names = {
+      scanner: '🤖 Robot Ultra-Zoom Page Scanner & Step-by-Step Solver',
+      mock: '⏱️ 3-Hour Live Board Mock Test',
+      cheat: '⚡ 1-Page Last-Day Formula & Reaction Cheat Sheet',
+      diagrams: '🖼️ Science Diagrams & India Board Map Gallery',
+      pyq: '🏆 Past 5 Years PYQs, Competency Qs & Topper Tips',
+      saved: '⭐ Saved / Bookmarked Questions',
+      mistakes: '❌ Mistake Bank (गलत हुए प्रश्नों का अभ्यास)'
+    };
+    html += ` <span>›</span> <strong>${names[state.view]}</strong>`;
+  }
+  bc.innerHTML = html;
 }
 
 function render() {
   renderBreadcrumb();
   const app = document.getElementById('app');
 
-  if (state.view === 'home') {
+  if (state.view === 'scanner') {
+    const page = scanState.pages[scanState.activeIdx];
+    const matches = findSmartBookMatches(scanState.queryText);
+    const localCalc = tryLocalMathEval(scanState.queryText);
+    const classOptions = ['Class 10 (CBSE / HBSE)', 'Class 1 to 5 (Primary)', 'Class 6 to 8 (Middle)', 'Class 9', 'Class 11 & 12 (Science/Arts/Comm)', 'All Classes • Puzzle & HOTS'];
+    const subjOptions = ['All Subjects (सभी विषय)', 'Mathematics (गणित)', 'Science (विज्ञान)', 'English Grammar & Literature', 'Hindi व्याकरण व साहित्य', 'Social Science / GK'];
+
     app.innerHTML = `
-      <div class="card" style="background: linear-gradient(135deg, rgba(79,70,229,0.15), rgba(13,148,136,0.15)); border-color: var(--primary);">
-        <h2 style="margin: 0 0 6px; font-size: 1.15rem; color: var(--primary);">📚 Class 1 to 12 Master Curriculum Hub (HBSE & CBSE)</h2>
-        <p style="margin: 0 0 10px; font-size: 0.85rem; color: var(--muted);">कक्षा 1 से 12 तक के सभी विषयों के वास्तविक चैप्टर्स, मूल प्रश्नावलियाँ (Exercises), विस्तृत मास्टर सॉल्यूशन और 24/7 AI Tutor।</p>
-        <button class="btn" onclick="state.view='ai'; render();">🤖 Ask AI Tutor (एआई ट्यूटर)</button>
+      <div class="concept-card">
+        <h4>🤖 Robot Mode v5.0 — Ultra-Zoom Multi-Page Scanner & Smart Solver (100% Offline)</h4>
+        <p>किताब या कॉपी के कितने भी पन्नों की फोटो खींचें या गैलरी से चुनें → <b>6x Ultra-Zoom & Clarity</b> से देखें → और बिना किसी API Key के तुरंत <b>स्टेप-बाय-स्टेप हल और सूत्र</b> पाएं!</p>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px;">
+          <select style="padding:9px 10px;border-radius:10px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-weight:700;font-size:0.82rem;" onchange="scanState.targetClass=this.value;SafeStore.set('c10_scan_class',this.value);">
+            ${classOptions.map(c => `<option value="${c}" ${scanState.targetClass === c ? 'selected' : ''}>🎓 ${c}</option>`).join('')}
+          </select>
+          <select style="padding:9px 10px;border-radius:10px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-weight:700;font-size:0.82rem;" onchange="scanState.targetSubj=this.value;SafeStore.set('c10_scan_subj',this.value);">
+            ${subjOptions.map(s => `<option value="${s}" ${scanState.targetSubj === s ? 'selected' : ''}>📘 ${s}</option>`).join('')}
+          </select>
+        </div>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+          <label class="sol-btn" style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;">
+            📷 Camera से फोटो खींचें
+            <input type="file" accept="image/*" multiple capture="environment" style="display:none;" onchange="handleScanFiles(this.files)">
+          </label>
+          <label class="sol-btn" style="background:#4f46e5;display:inline-flex;align-items:center;gap:6px;cursor:pointer;">
+            🖼️ Gallery से पन्ने चुनें (Multi-Page)
+            <input type="file" accept="image/*" multiple style="display:none;" onchange="handleScanFiles(this.files)">
+          </label>
+          ${scanState.pages.length ? `<button class="tool-icon-btn" style="background:#dc2626;border:none;" onclick="scanState.pages=[];scanState.activeIdx=0;scanState.aiResult='';scanState.ocrStatus='';render();">🗑️ Clear</button>` : ''}
+        </div>
+        ${scanState.ocrStatus ? `<div id="ocrStatusBox" style="margin-top:8px;font-size:0.84rem;font-weight:700;color:var(--primary);">${scanState.ocrStatus}</div>` : ''}
       </div>
-      <div class="grid-classes">
-        ${Array.from({length: 12}, (_, i) => i + 1).map(c => `
-          <div class="class-box" onclick="state.cls=${c}; state.view='subs'; render();">Class ${c}<br><span style="font-size:0.7rem; color:var(--muted);">कक्षा ${c}</span></div>
-        `).join('')}
+
+      ${scanState.pages.length ? `
+        <div class="q-card">
+          <div class="page-tabs">
+            ${scanState.pages.map((p, idx) => `
+              <button class="page-tab ${idx === scanState.activeIdx ? 'active' : ''}" onclick="scanState.activeIdx=${idx};scanState.zoom=1;scanState.panX=0;scanState.panY=0;scanState.queryText=scanState.pages[${idx}].extractedText||'';render();">
+                📄 Page ${idx + 1}
+              </button>
+            `).join('')}
+          </div>
+          <div class="scanner-stage" id="scannerStage"
+            onmousedown="scanState.dragging=true;scanState.startX=event.clientX-scanState.panX;scanState.startY=event.clientY-scanState.panY;"
+            onmousemove="if(scanState.dragging && scanState.zoom>1){scanState.panX=event.clientX-scanState.startX;scanState.panY=event.clientY-scanState.startY;setScanZoom(scanState.zoom);}"
+            onmouseup="scanState.dragging=false;"
+            onmouseleave="scanState.dragging=false;"
+            ontouchstart="if(event.touches.length===1){scanState.dragging=true;scanState.startX=event.touches[0].clientX-scanState.panX;scanState.startY=event.touches[0].clientY-scanState.panY;}"
+            ontouchmove="if(scanState.dragging && scanState.zoom>1 && event.touches.length===1){scanState.panX=event.touches[0].clientX-scanState.panX;scanState.panY=event.touches[0].clientY-scanState.panY;setScanZoom(scanState.zoom);}"
+            ontouchend="scanState.dragging=false;">
+            <img id="scanZoomImg" src="${page.dataUrl}" style="transform:translate(${scanState.panX}px,${scanState.panY}px) scale(${scanState.zoom});filter:contrast(${scanState.contrast}%) brightness(104%);" alt="Scanned Page">
+            <div class="zoom-hud">
+              <span>🔍 Ultra-Zoom: <strong id="zoomPctLabel">${scanState.zoom.toFixed(1)}x</strong></span>
+              <button class="tool-icon-btn" onclick="setScanZoom(scanState.zoom - 0.5)">-</button>
+              <input type="range" min="1" max="6" step="0.2" value="${scanState.zoom}" oninput="setScanZoom(this.value)">
+              <button class="tool-icon-btn" onclick="setScanZoom(scanState.zoom + 0.5)">+</button>
+              <button class="tool-icon-btn" onclick="setScanZoom(1)">Reset</button>
+              <span>☀️ Clarity:</span>
+              <input type="range" min="90" max="165" step="5" value="${scanState.contrast}" style="max-width:70px;" oninput="setScanContrast(this.value)">
+            </div>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
+            <button class="sol-btn" style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#090d16;" onclick="runOfflineOCR()">📝 Page से Text निकालें (OCR)</button>
+            <button class="sol-btn" onclick="runSmartOfflineSolve()">⚡ Instant Step-by-Step हल देखें</button>
+          </div>
+        </div>
+      ` : ''}
+
+      <div class="q-card">
+        <div class="q-meta">
+          <span class="tag-marks">✍️ प्रश्न या गणित की समीकरण लिखें (100% Free & Offline)</span>
+          <span class="xp-badge">🔥 ${xpData.streak}d Streak • ⚡ ${xpData.xp} XP</span>
+        </div>
+        <textarea class="scan-textarea" placeholder="यहाँ किसी भी विषय का सवाल या गणित की समीकरण (जैसे: 245 * 18 + 360) लिखें या ऊपर पन्ने की फोटो चुनें..." oninput="scanState.queryText=this.value;">${scanState.queryText}</textarea>
+        ${localCalc ? `<div style="margin-top:8px;padding:10px 12px;border-radius:10px;background:var(--green-bg);color:var(--green-text);font-weight:800;">⚡ Instant Calculator Answer: ${localCalc}</div>` : ''}
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; align-items:center;">
+          <button class="sol-btn" style="background:linear-gradient(135deg,#4f46e5,#3730a3);" onclick="runSmartOfflineSolve()">🔍 Instant Step-by-Step हल निकालें</button>
+        </div>
       </div>
-    `;
-  } else if (state.view === 'ai') {
-    app.innerHTML = `
-      <div class="card">
-        <h2 style="margin:0 0 6px; font-size:1.05rem;">🤖 24/7 AI Study Tutor</h2>
-        <p style="margin:0 0 10px; font-size:0.82rem; color:var(--muted);">कक्षा 1 से 12 तक का कोई भी सवाल, समीकरण या परिभाषा पूछें:</p>
-        <textarea class="ai-input" rows="3" placeholder="अपना सवाल यहाँ लिखें..." oninput="state.aiQ=this.value">${state.aiQ}</textarea>
-        <button class="btn" style="margin-top:8px; width:100%; justify-content:center;" onclick="state.aiAns='<b>उत्तर / Solution:</b> '+state.aiQ+' — (HBSE & CBSE नवीनतम पाठ्यक्रम आधारित विस्तृत एवं सटीक चरणबद्ध हल। बोर्ड परीक्षा में पूर्ण अंक हेतु मानक नियमों का पालन करें।)'; render();">⚡ तुरंत समाधान पाएँ (Generate Answer)</button>
-        ${state.aiAns ? `<div class="solution" style="margin-top:12px;">${state.aiAns}</div>` : ''}
-      </div>
-    `;
-  } else if (state.view === 'subs') {
-    const data = getData(state.cls);
-    app.innerHTML = `
-      <div class="card">
-        <h2 style="margin:0 0 6px; font-size:1.05rem;">📖 Class ${state.cls} - Select Subject (विषय चुनें)</h2>
-        <p style="margin:0 0 12px; font-size:0.82rem; color:var(--muted);">कक्षा ${state.cls} के लिए उपलब्ध विषय:</p>
-        ${Object.keys(data).map(k => `
-          <div class="subj-box" onclick="state.sub='${k}'; state.view='lessons'; render();">
-            <div><strong>${state.med==='hi'?data[k].nameHi:data[k].nameEn}</strong><br><small style="color:var(--muted);">${data[k].chs.length} Chapters with Exercises & Master Solutions</small></div>
-            <div style="color:var(--primary); font-weight:900;">→</div>
+
+      ${scanState.aiResult ? `
+        <div class="q-card" style="border:2px solid #10b981;">
+          <div class="q-meta">
+            <span class="tag-marks" style="background:#dcfce7;color:#14532d;">🤖 Smart Solver — सरल चरणबद्ध हल</span>
+            <div>
+              <button class="voice-btn" onclick="speakText(document.getElementById('aiSolContent').innerHTML)">🔊 सुनें</button>
+              <button class="tool-icon-btn" style="background:#64748b;border:none;" onclick="stopSpeaking()">⏹️</button>
+            </div>
+          </div>
+          <div id="aiSolContent" style="font-size:0.94rem; line-height:1.75;">${scanState.aiResult}</div>
+        </div>
+      ` : ''}
+
+      ${matches.length ? `
+        <div class="concept-card">
+          <h4>📚 Direct Textbook & Guess Paper Solutions (${matches.length} सटीक उत्तर मिले)</h4>
+          <p>आपके प्रश्न से मिलते-जुलते पाठ के असली प्रश्न और मास्टर जी जैसे सरल हल:</p>
+        </div>
+        ${matches.map((m, idx) => `
+          <div class="q-card">
+            <div class="q-meta">
+              <span class="tag-marks">${m.badge}</span>
+              <button class="voice-btn" onclick="speakText(document.getElementById('matchSol_${idx}').innerHTML)">🔊 सुनें</button>
+            </div>
+            <div class="q-text">${m.qEn}</div>
+            ${state.medium === 'hi' ? `<div class="hi-sub">${m.qHi}</div>` : ''}
+            <div class="sol-box open" id="matchSol_${idx}">
+              <div>${m.solEn}</div>
+              ${state.medium === 'hi' ? `<hr style="border:none;border-top:1px dashed #86efac;margin:8px 0;"><div>${m.solHi}</div>` : ''}
+            </div>
           </div>
         `).join('')}
-      </div>
+      ` : ''}
     `;
-  } else if (state.view === 'lessons') {
-    const chs = getData(state.cls)[state.sub].chs;
-    app.innerHTML = `
-      <div class="card">
-        <h2 style="margin:0 0 6px; font-size:1.05rem;">📁 Chapters & Lessons (अध्याय सूची)</h2>
-        <p style="margin:0 0 12px; font-size:0.82rem; color:var(--muted);">अध्याय चुनें और उसकी मूल प्रश्नावलियाँ व समाधान देखें:</p>
-        ${chs.map((ch, i) => `
-          <div class="subj-box" onclick="state.ch=${i}; state.view='content'; render();">
-            <div><strong>${state.med==='hi'?ch.tHi:ch.tEn}</strong><br><small style="color:var(--muted);">${ch.qs.length} Exercise Questions & Step-by-Step Solutions</small></div>
-            <div style="color:#10b981; font-weight:900;">📖</div>
+    return;
+  }
+
+  if (state.view === 'mock') {
+    if (!state.mockActive) {
+      app.innerHTML = `
+        <div class="concept-card">
+          <h4>⏱️ 3-Hour Live Board Exam Mock Test Simulator (CBSE & HBSE)</h4>
+          <p>असली बोर्ड परीक्षा की तरह 3 घंटे (03:00:00) की उल्टी गिनती के साथ अभ्यास करें। अंत में तुरंत स्कोर, प्रतिशत और सही उत्तर देखें।</p>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+            <button class="sol-btn" onclick="startMockTest('all')">Start Full All-Subject Mock Test</button>
+            <button class="sol-btn" style="background:#1e3a8a;" onclick="startMockTest('math')">Maths Mock Test</button>
+            <button class="sol-btn" style="background:#15803d;" onclick="startMockTest('sci')">Science Mock Test</button>
+            <button class="sol-btn" style="background:#92400e;" onclick="startMockTest('eng')">English Mock Test</button>
+            <button class="sol-btn" style="background:#9d174d;" onclick="startMockTest('hin')">Hindi Mock Test</button>
+            <button class="sol-btn" style="background:#3730a3;" onclick="startMockTest('sst')">SST Mock Test</button>
           </div>
-        `).join('')}
+        </div>
+      `;
+      return;
+    }
+    let qs = getAllMCQs();
+    if (state.mockSubj !== 'all') qs = qs.filter(q => q.subjId === state.mockSubj);
+    let score = 0;
+    qs.forEach(q => { if (state.mockAnswers[q.id] === q.ans) score++; });
+    const pct = qs.length ? Math.round((score / qs.length) * 100) : 0;
+
+    let topBar = `
+      <div class="timer-bar">
+        <span>⏱️ Time Left: <span id="mockTimerDisplay">${formatTime(state.mockSeconds)}</span></span>
+        <span>Questions: ${qs.length}</span>
+        ${!state.mockSubmitted
+          ? `<button class="sol-btn" style="background:#22c55e;color:#052e16;" onclick="submitMockTest()">Submit Test ✅</button>`
+          : `<button class="sol-btn" onclick="state.mockActive=false; render();">Exit / New Test</button>`}
       </div>
     `;
-  } else if (state.view === 'content') {
-    const ch = getData(state.cls)[state.sub].chs[state.ch];
-    app.innerHTML = `
-      <div class="card">
-        <h2 style="margin:0 0 14px; font-size:1.1rem; color:var(--primary);">🎯 ${state.med==='hi'?ch.tHi:ch.tEn}</h2>
-        <p style="margin:0 0 14px; font-size:0.85rem; color:var(--muted);">मूल प्रश्नावलियाँ एवं विस्तृत मास्टर सॉल्यूशन:</p>
-        ${ch.qs.map(q => `
-          <div class="q-box">
-            <div class="question">${state.med==='hi'?q.qHi:q.qEn}</div>
-            <div class="solution"><strong>${state.med==='hi'?'उत्तर / Master Solution:':'Answer / Master Solution:'}</strong><br>${state.med==='hi'?q.sHi:q.sEn}</div>
+
+    let resultBanner = state.mockSubmitted ? `
+      <div class="concept-card" style="border-color:#16a34a;">
+        <h4>🎉 Mock Test Result: ${score} / ${qs.length} (${pct}%)</h4>
+        <p>${pct >= 80 ? 'शाबाश! आपकी बोर्ड तैयारी शानदार है।' : 'अच्छा प्रयास! नीचे लाल रंग में गलत हुए प्रश्नों के सही उत्तर देखें।'}</p>
+      </div>
+    ` : '';
+
+    let qList = qs.map((q, idx) => {
+      const opts = state.medium === 'hi' ? q.optsHi : q.optsEn;
+      const chosen = state.mockAnswers[q.id];
+      return `
+        <div class="q-card">
+          <div class="q-meta">
+            <span class="tag-marks">Q${idx + 1} • ${q.subjName} (${q.lessonNum})</span>
+            <span class="tag-diff tag-${q.diff}">${q.diff}</span>
           </div>
-        `).join('')}
+          <div class="q-text">${q.qEn}</div>
+          ${state.medium === 'hi' ? `<div class="hi-sub">${q.qHi}</div>` : ''}
+          <div class="mcq-grid">
+            ${opts.map((opt, oIdx) => {
+              let cls = 'opt-btn';
+              if (state.mockSubmitted) {
+                if (oIdx === q.ans) cls += ' correct';
+                else if (oIdx === chosen) cls += ' wrong';
+              } else if (chosen === oIdx) {
+                cls += ' correct';
+              }
+              return `<button class="${cls}" onclick="if(!state.mockSubmitted){state.mockAnswers['${q.id}']=${oIdx}; render();}">${String.fromCharCode(65 + oIdx)}. ${opt}</button>`;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    app.innerHTML = topBar + resultBanner + qList;
+    return;
+  }
+
+  if (state.view === 'cheat') {
+    app.innerHTML = `
+      <div class="concept-card">
+        <h4>⚡ 1-Page Last-Day Master Cheat Sheet (परीक्षा से 1 दिन पहले का क्विक रिवीजन)</h4>
+        <p>सभी प्रमुख गणितीय सूत्र, रासायनिक अभिक्रियाएँ, भौतिकी के सूत्र और इतिहास की मुख्य तिथियाँ एक ही स्क्रीन पर।</p>
+      </div>
+      <div class="q-card">
+        <div class="q-meta"><span class="tag-marks">📐 Mathematics Complete Formula Sheet</span></div>
+        <div class="q-text" style="font-weight:400;">
+          • <b>Real Numbers:</b> HCF(a, b) × LCM(a, b) = a × b<br>
+          • <b>Polynomials:</b> α + β = -b/a; αβ = c/a; Quadratic = k[x² - (α + β)x + αβ]<br>
+          • <b>Linear Equations:</b> Unique (a₁/a₂ ≠ b₁/b₂), Infinite (a₁/a₂ = b₁/b₂ = c₁/c₂), Parallel/No Sol (a₁/a₂ = b₁/b₂ ≠ c₁/c₂)<br>
+          • <b>Quadratic Formula:</b> x = [-b ± √(b² - 4ac)] / 2a; Discriminant D = b² - 4ac<br>
+          • <b>AP:</b> aₙ = a + (n - 1)d; Sₙ = (n/2)[2a + (n - 1)d] = (n/2)(a + l)<br>
+          • <b>Coordinate Geometry:</b> Distance = √[(x₂ - x₁)² + (y₂ - y₁)²]; Section = [(m₁x₂ + m₂x₁)/(m₁ + m₂), (m₁y₂ + m₂y₁)/(m₁ + m₂)]<br>
+          • <b>Trigonometry:</b> sin²θ + cos²θ = 1; 1 + tan²θ = sec²θ; 1 + cot²θ = cosec²θ<br>
+          • <b>Circles & Sectors:</b> Arc l = (θ/360°)×2πr; Sector Area = (θ/360°)×πr²<br>
+          • <b>Mensuration:</b> Cylinder Vol = πr²h; Cone Vol = (1/3)πr²h, l = √(r² + h²); Sphere SA = 4πr², Vol = (4/3)πr³; Hemisphere TSA = 3πr², Vol = (2/3)πr³<br>
+          • <b>Statistics:</b> Mode = l + [(f₁ - f₀)/(2f₁ - f₀ - f₂)]×h; Median = l + [(n/2 - cf)/f]×h; 3 Median = Mode + 2 Mean
+        </div>
       </div>
     `;
+    return;
+  }
+
+  if (state.view === 'diagrams') {
+    app.innerHTML = `
+      <div class="concept-card">
+        <h4>🖼️ Visual Science Diagrams & India Board Map Guide</h4>
+        <p>बोर्ड परीक्षा में बार-बार पूछे जाने वाले महत्वपूर्ण वैज्ञानिक चित्र और मानचित्र के मुख्य बिंदु।</p>
+      </div>
+      <div class="q-card">
+        <div class="q-meta"><span class="tag-marks">Complete India Political Map Locations (5 Marks)</span></div>
+        <div class="q-text" style="font-weight:400;">
+          <b>History (2 Marks):</b><br>
+          • <b>Calcutta (Sept 1920)</b> & <b>Nagpur (Dec 1920)</b> & <b>Madras (1927)</b> — INC Sessions<br>
+          • <b>Champaran (Bihar)</b> — Indigo Planters Satyagraha<br>
+          • <b>Kheda & Ahmedabad (Gujarat)</b> — Peasant & Cotton Mill Satyagraha<br>
+          • <b>Amritsar (Punjab)</b> — Jallianwala Bagh | <b>Chauri Chaura (UP)</b> — Calling off NCM | <b>Dandi (Gujarat)</b> — Salt March
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  if (state.view === 'pyq') {
+    app.innerHTML = `
+      <div class="concept-card">
+        <h4>🏆 Past 5 Years PYQs, Competency Questions & Topper Tips</h4>
+        <p>नए बोर्ड पैटर्न के अनुसार Assertion-Reason, Case-Based प्रश्न और टॉपर उत्तर-लेखन टिप्स।</p>
+      </div>
+      ${PYQ_COMPETENCY.map((item, idx) => `
+        <div class="q-card">
+          <div class="q-meta">
+            <span class="tag-marks">${item.tag}</span>
+            <span class="tag-diff tag-${item.diff}">${item.diff}</span>
+          </div>
+          <div class="q-text">${item.qEn}</div>
+          ${state.medium === 'hi' ? `<div class="hi-sub">${item.qHi}</div>` : ''}
+          <button class="sol-btn" onclick="toggleSol('pyq_sol_${idx}')">Show / Hide Answer (उत्तर देखें)</button>
+          <div class="sol-box open" id="pyq_sol_${idx}">
+            <div>${item.solEn}</div>
+            ${state.medium === 'hi' ? `<hr style="border:none;border-top:1px dashed #86efac;margin:8px 0;"><div>${item.solHi}</div>` : ''}
+          </div>
+        </div>
+      `).join('')}
+    `;
+    return;
+  }
+
+  if (state.view === 'saved') {
+    if (state.saved.length === 0) {
+      app.innerHTML = `<div class="q-card">अभी कोई प्रश्न सेव नहीं है। किसी भी पाठ के प्रश्न पर <strong>☆ Save</strong> दबाकर यहाँ जोड़ें।</div>`;
+      return;
+    }
+    app.innerHTML = state.saved.map((item) => `
+      <div class="q-card">
+        <div class="q-meta">
+          <span class="tag-marks">⭐ ${item.title}</span>
+          <button class="bookmark-btn saved" onclick="toggleBookmarkById('${item.id}')">Remove ✕</button>
+        </div>
+        <div class="q-text">${item.qEn}</div>
+        ${state.medium === 'hi' && item.qHi ? `<div class="hi-sub">${item.qHi}</div>` : ''}
+        <div class="sol-box open">
+          <div>${item.solEn}</div>
+          ${state.medium === 'hi' && item.solHi ? `<hr style="border:none;border-top:1px dashed #86efac;margin:8px 0;"><div>${item.solHi}</div>` : ''}
+        </div>
+      </div>
+    `).join('');
+    return;
+  }
+
+  if (state.view === 'mistakes') {
+    if (state.mistakes.length === 0) {
+      app.innerHTML = `<div class="q-card">🎉 आपका Mistake Bank खाली है! जब आप किसी MCQ का गलत उत्तर चुनेंगे तो वह अपने-आप अभ्यास के लिए यहाँ जुड़ जाएगा।</div>`;
+      return;
+    }
+    app.innerHTML = `
+      <div class="concept-card">
+        <h4>❌ Mistake Bank (${state.mistakes.length} Questions to Re-Practice)</h4>
+        <p>इन प्रश्नों का सही उत्तर चुनते ही ये अपने-आप Mistake Bank से हट जाएंगे।</p>
+      </div>
+      ${state.mistakes.map((q) => {
+        const opts = state.medium === 'hi' ? q.optsHi : q.optsEn;
+        const ansState = state.answered[q.id];
+        regItem(q.id, q);
+        return `
+          <div class="q-card">
+            <div class="q-meta"><span class="tag-marks">${q.subjName || 'MCQ Practice'}</span></div>
+            <div class="q-text">${q.qEn}</div>
+            ${state.medium === 'hi' ? `<div class="hi-sub">${q.qHi}</div>` : ''}
+            <div class="mcq-grid">
+              ${opts.map((opt, oIdx) => {
+                let cls = 'opt-btn';
+                if (ansState) {
+                  if (oIdx === q.ans) cls += ' correct';
+                  else if (oIdx === ansState.chosen) cls += ' wrong';
+                }
+                return `<button class="${cls}" onclick="checkMCQById('${q.id}', ${oIdx}, ${q.ans})">${String.fromCharCode(65 + oIdx)}. ${opt}</button>`;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      }).join('')}
+    `;
+    return;
+  }
+
+  // HOME VIEW
+  if (!state.subjectId) {
+    const allMcqs = getAllMCQs();
+    const solvedCount = Object.keys(state.answered).length;
+    const progressPct = allMcqs.length ? Math.min(100, Math.round((solvedCount / allMcqs.length) * 100)) : 0;
+
+    const classesList = ['1','2','3','4','5','6','7','8','9','10','11','12'];
+    const boardsList = ['CBSE + HBSE', 'CBSE Board', 'HBSE (Haryana Board)'];
+    let classDockHtml = `
+      <div class="concept-card" style="padding:12px 14px; margin-bottom:14px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+          <strong style="font-size:0.86rem; color:var(--primary);">🎓 Select Class (कक्षा 1 से 12 चुनें):</strong>
+          <div style="display:flex; gap:5px; flex-wrap:wrap;">
+            ${boardsList.map(b => `<button class="pill ${state.activeBoard === b ? 'active' : ''}" style="font-size:0.72rem;padding:4px 9px;" onclick="selectBoardType('${b}')">${b}</button>`).join('')}
+          </div>
+        </div>
+        <div style="display:flex; gap:6px; overflow-x:auto; padding-bottom:4px;">
+          ${classesList.map(c => `
+            <button class="pill ${state.activeClass === c ? 'active' : ''}" style="white-space:nowrap; padding:6px 12px;" onclick="selectClassLevel('${c}')">
+              Class ${c}${c === '10' ? ' ⭐' : ''}
+            </button>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    let progressHtml = `
+      <div class="progress-banner">
+        <div class="pbar-wrap">
+          <div style="display:flex;justify-content:space-between;font-size:0.84rem;font-weight:700;">
+            <span>📊 Progress: ${solvedCount}/${allMcqs.length} MCQs • <span class='xp-badge'>🔥 ${xpData.streak}d Streak • ⚡ ${xpData.xp} XP (${getRankTitle(xpData.xp)})</span></span>
+            <span>${progressPct}%</span>
+          </div>
+          <div class="pbar-track"><div class="pbar-fill" style="width:${progressPct}%"></div></div>
+        </div>
+        <button class="sol-btn" onclick="switchView('mock')">Start 3-Hr Mock Test →</button>
+      </div>
+    `;
+
+    let cards = getActiveDB().map(s => `
+      <div class="subj-card" onclick="selectSubject('${s.id}')">
+        <div>
+          <span class="subj-badge" style="background:${s.color}; color:${s.textColor};">${s.badge}</span>
+          <h2>${s.titleEn}</h2>
+          <div style="font-weight:600; color:var(--muted); font-size:0.88rem; margin-bottom:6px;">${s.titleHi}</div>
+          <p>${state.medium === 'hi' ? s.descHi : s.descEn}</p>
+        </div>
+        <div style="margin-top:14px; font-weight:700; color:var(--primary); font-size:0.85rem;">Open Lessons →</div>
+      </div>
+    `).join('');
+    app.innerHTML = classDockHtml + progressHtml + `<div class="grid-subjects">${cards}</div>`;
+    return;
+  }
+
+  const subj = getActiveDB().find(s => s.id === state.subjectId);
+
+  // LEVEL 2
+  if (!state.lessonId) {
+    const filtered = subj.lessons.filter(l =>
+      (l.num + ' ' + l.titleEn + ' ' + l.titleHi).toLowerCase().includes(state.search.toLowerCase())
+    );
+    let listHtml = filtered.map(l => `
+      <div class="lesson-item" onclick="selectLesson('${l.id}')">
+        <div class="lesson-num">${l.num}</div>
+        <div class="lesson-info">
+          <h3>${l.titleEn}</h3>
+          <small>${l.titleHi}</small>
+        </div>
+        <div style="color:var(--primary); font-weight:700; font-size:0.84rem;">Study / Guess →</div>
+      </div>
+    `).join('');
+    app.innerHTML = `
+      <input type="text" class="search-box" placeholder="🔍 Search lesson by number or name (पाठ खोजें)..." value="${state.search}" oninput="state.search=this.value; render();">
+      <div class="lesson-list">${listHtml}</div>
+    `;
+    return;
+  }
+
+  // LEVEL 3
+  const les = subj.lessons.find(l => l.id === state.lessonId);
+  let headerCards = `
+    <div class="concept-card">
+      <h4>📌 ${les.num}: ${les.titleEn} (${les.titleHi})</h4>
+      <div style="font-size:0.9rem;">${les.conceptsEn}</div>
+      ${state.medium === 'hi' ? `<div class="hi-sub" style="margin-top:8px;">${les.conceptsHi}</div>` : ''}
+      <div class="glossary-box" style="margin-top:8px; margin-bottom:0;"><strong>📖 Word Meanings (शब्दार्थ):</strong> ${les.glossary}</div>
+    </div>
+    <div class="mode-selector">
+      <div class="mode-card ${state.mode === 'book' ? 'active' : ''}" onclick="setMode('book')">
+        <h4>1️⃣ Asli Lesson & Original Book Exercise</h4>
+        <p>किताब की असली प्रश्नावली और मास्टर जी जैसे पूरे हल</p>
+      </div>
+      <div class="mode-card ${state.mode === 'guess' ? 'active' : ''}" onclick="setMode('guess')">
+        <h4>2️⃣ Lesson Guess Paper (Easy / Medium / Hard)</h4>
+        <p>1M (Green/Red MCQ) + 2, 3, 4, 5 Marks के सीधे उत्तर</p>
+      </div>
+    </div>
+  `;
+
+  if (state.mode === 'book') {
+    let bookHtml = les.book.map((item, idx) => {
+      const bid = `${les.id}_b_${idx}`;
+      regItem(bid, { title: `${les.num} • Ex #${idx+1}`, qEn: item.qEn, qHi: item.qHi, solEn: item.solEn, solHi: item.solHi });
+      const isSaved = state.saved.some(x => x.id === bid);
+      return `
+        <div class="q-card">
+          <div class="q-meta">
+            <span class="tag-marks">Original Textbook Exercise #${idx + 1}</span>
+            <button class="bookmark-btn ${isSaved ? 'saved' : ''}" onclick="toggleBookmarkById('${bid}')">${isSaved ? '⭐ Saved' : '☆ Save'}</button>
+          </div>
+          <div class="q-text">${item.qEn}</div>
+          ${state.medium === 'hi' ? `<div class="hi-sub">${item.qHi}</div>` : ''}
+          <button class="sol-btn" onclick="toggleSol('bsol_${idx}')">Show / Hide Solution (हल देखें)</button><button class="voice-btn" onclick="speakText(document.getElementById('bsol_${idx}').innerHTML)">🔊 सुनें</button>
+          <div class="sol-box open" id="bsol_${idx}">
+            <div>${item.solEn}</div>
+            ${state.medium === 'hi' ? `<hr style="border:none; border-top:1px dashed #86efac; margin:8px 0;"><div>${item.solHi}</div>` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+    app.innerHTML = headerCards + bookHtml;
+  } else {
+    const diffs = ['All', 'Easy', 'Medium', 'Hard'];
+    const marksList = ['All', 1, 2, 3, 4, 5];
+    let filterBar = `
+      <div class="filter-bar">
+        <strong style="font-size:0.82rem;">Difficulty:</strong>
+        ${diffs.map(d => `<button class="pill ${d.toLowerCase()} ${state.diff === d ? 'active' : ''}" onclick="setDiff('${d}')">${d}</button>`).join('')}
+        <span style="margin:0 4px; color:var(--border);">|</span>
+        <strong style="font-size:0.82rem;">Marks:</strong>
+        ${marksList.map(m => `<button class="pill ${state.marks === m ? 'active' : ''}" onclick="setMarks(${typeof m === 'string' ? `'${m}'` : m})">${m === 'All' ? 'All' : m + 'M'}</button>`).join('')}
+      </div>
+    `;
+
+    const qs = les.guess.filter(q =>
+      (state.diff === 'All' || q.diff === state.diff) &&
+      (state.marks === 'All' || q.marks === state.marks)
+    );
+
+    let qHtml = qs.length === 0
+      ? `<div class="q-card">No questions in this exact filter. Click <strong>All</strong> above to view all Easy/Medium/Hard questions of this lesson.</div>`
+      : qs.map((q, idx) => {
+          const qid = `${les.id}_g_${idx}_${q.marks}_${q.diff}`;
+          const isSaved = state.saved.some(x => x.id === qid);
+          if (q.marks === 1) {
+            const ansState = state.answered[qid];
+            const opts = state.medium === 'hi' ? q.optsHi : q.optsEn;
+            const qPayload = { title: `${les.num} • 1M MCQ`, subjName: subj.titleEn + ' (' + les.num + ')', qEn: q.qEn, qHi: q.qHi, optsEn: q.optsEn, optsHi: q.optsHi, ans: q.ans, solEn: "Correct Answer: " + q.optsEn[q.ans], solHi: "सही उत्तर: " + q.optsHi[q.ans] };
+            regItem(qid, qPayload);
+            return `
+              <div class="q-card">
+                <div class="q-meta">
+                  <span class="tag-marks">1 Mark • MCQ (Only Green/Red)</span>
+                  <div>
+                    <span class="tag-diff tag-${q.diff}">${q.diff}</span>
+                    <button class="bookmark-btn ${isSaved ? 'saved' : ''}" onclick="toggleBookmarkById('${qid}')">${isSaved ? '⭐ Saved' : '☆ Save'}</button>
+                  </div>
+                </div>
+                <div class="q-text">${q.qEn}</div>
+                ${state.medium === 'hi' ? `<div class="hi-sub">${q.qHi}</div>` : ''}
+                <div class="mcq-grid">
+                  ${opts.map((opt, oIdx) => {
+                    let cls = 'opt-btn';
+                    if (ansState) {
+                      if (oIdx === q.ans) cls += ' correct';
+                      else if (oIdx === ansState.chosen) cls += ' wrong';
+                    }
+                    return `<button class="${cls}" onclick="checkMCQById('${qid}', ${oIdx}, ${q.ans})">${String.fromCharCode(65 + oIdx)}. ${opt}</button>`;
+                  }).join('')}
+                </div>
+              </div>
+            `;
+          } else {
+            regItem(qid, { title: `${les.num} • ${q.marks}M`, qEn: q.qEn, qHi: q.qHi, solEn: q.solEn, solHi: q.solHi });
+            return `
+              <div class="q-card">
+                <div class="q-meta">
+                  <span class="tag-marks">${q.marks} Marks • Direct Answer</span>
+                  <div>
+                    <span class="tag-diff tag-${q.diff}">${q.diff}</span>
+                    <button class="bookmark-btn ${isSaved ? 'saved' : ''}" onclick="toggleBookmarkById('${qid}')">${isSaved ? '⭐ Saved' : '☆ Save'}</button>
+                  </div>
+                </div>
+                <div class="q-text">${q.qEn}</div>
+                ${state.medium === 'hi' ? `<div class="hi-sub">${q.qHi}</div>` : ''}
+                <button class="sol-btn" onclick="toggleSol('gsol_${qid}')">Reveal ${q.marks}-Mark Master Solution (उत्तर देखें)</button>
+                <div class="sol-box" id="gsol_${qid}">
+                  <div>${q.solEn}</div>
+                  ${state.medium === 'hi' ? `<hr style="border:none; border-top:1px dashed #86efac; margin:8px 0;"><div>${q.solHi}</div>` : ''}
+                </div>
+              </div>
+            `;
+          }
+        }).join('');
+
+    app.innerHTML = headerCards + filterBar + qHtml;
   }
 }
 
-applyTheme();
-render();
+try {
+  applyPrefs();
+  render();
+} catch (bootErr) {
+  const appEl = document.getElementById('app');
+  if (appEl) {
+    appEl.innerHTML = '<div class="q-card"><b>⚠️ पेज लोड त्रुटि:</b> ' + bootErr.message + '<br><button class="sol-btn" style="margin-top:10px;" onclick="location.reload(true)">🔄 Reload App</button></div>';
+  }
+}
 </script>
 </body>
 </html>
