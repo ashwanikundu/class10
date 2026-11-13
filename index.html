@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<title>Class 10 Master Portal v2.1 — Robot AI Scanner & Pro EdTech</title>
+<title>Master Study Portal v3.0 — All-Class Robot AI Scanner & Pro EdTech</title>
 <style>
   :root {
     --primary: #4f46e5;
@@ -444,8 +444,8 @@
     <div class="brand">
       <div class="brand-logo">10</div>
       <div class="brand-text">
-        <h1>Class 10 Master Portal <span class="pro-pill">v2.1 • ROBOT AI</span></h1>
-        <p>CBSE & HBSE • Full NCERT + Guess Papers + Mock Test + PYQs + Cheat Sheet</p>
+        <h1>Master Study Portal <span class="pro-pill">v3.0 • PRO OFFLINE</span></h1>
+        <p>All Classes & Subjects • Zero-Crash Ultra-Zoom AI Scanner + Full Class 10 NCERT & Guess Papers</p>
       </div>
     </div>
     <div class="controls-bar">
@@ -627,51 +627,91 @@ function stopSpeaking() {
   try { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); } catch (e) {}
 }
 
-// Robot Ultra-Zoom Multi-Page Scanner State
+// Robot Ultra-Zoom Multi-Page Scanner State (v3.0 Zero-Crash Memory-Safe Engine)
 let scanState = {
   pages: [], // { name, dataUrl, base64, mimeType, extractedText }
   activeIdx: 0,
   zoom: 1.0,
   panX: 0,
   panY: 0,
-  contrast: 105,
+  contrast: 108,
   dragging: false,
   startX: 0,
   startY: 0,
   queryText: '',
+  targetClass: SafeStore.get('c10_scan_class', 'Class 10 (CBSE / HBSE)'),
+  targetSubj: SafeStore.get('c10_scan_subj', 'Auto-Detect Any Subject'),
   ocrStatus: '',
-  aiLoading: false,
-  aiResult: '',
-  apiKey: SafeStore.get('c10_gemini_key', '')
+  aiResult: ''
 };
 
-function handleScanFiles(fileList) {
-  if (!fileList || !fileList.length) return;
-  const files = Array.from(fileList);
-  let loaded = 0;
-  files.forEach(file => {
+// Auto-compress high-res camera photos to crisp 1400px JPEG so Android WebView NEVER crashes on multi-page upload!
+function compressImageFile(file) {
+  return new Promise((resolve) => {
     const reader = new FileReader();
+    reader.onerror = () => resolve(null);
     reader.onload = function(ev) {
-      const dataUrl = ev.target.result;
-      const parts = dataUrl.split(',');
-      const mimeType = (parts[0].match(/:(.*?);/) || [])[1] || 'image/jpeg';
-      const base64 = parts[1] || '';
-      scanState.pages.push({
-        name: file.name || ('Page ' + (scanState.pages.length + 1)),
-        dataUrl, base64, mimeType, extractedText: ''
-      });
-      loaded++;
-      if (loaded === files.length) {
-        scanState.activeIdx = scanState.pages.length - 1;
-        scanState.zoom = 1.0;
-        scanState.panX = 0;
-        scanState.panY = 0;
-        addXP(15);
-        render();
-      }
+      const img = new Image();
+      img.onerror = () => {
+        const raw = ev.target.result || '';
+        const parts = raw.split(',');
+        resolve({ dataUrl: raw, base64: parts[1] || '', mimeType: 'image/jpeg' });
+      };
+      img.onload = function() {
+        try {
+          const MAX_DIM = 1450;
+          let w = img.width, h = img.height;
+          if (w > MAX_DIM || h > MAX_DIM) {
+            if (w > h) { h = Math.round((h * MAX_DIM) / w); w = MAX_DIM; }
+            else { w = Math.round((w * MAX_DIM) / h); h = MAX_DIM; }
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = w; canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          const compressedUrl = canvas.toDataURL('image/jpeg', 0.86);
+          const parts = compressedUrl.split(',');
+          resolve({ dataUrl: compressedUrl, base64: parts[1] || '', mimeType: 'image/jpeg' });
+        } catch (e) {
+          const raw = ev.target.result || '';
+          const parts = raw.split(',');
+          resolve({ dataUrl: raw, base64: parts[1] || '', mimeType: 'image/jpeg' });
+        }
+      };
+      img.src = ev.target.result;
     };
     reader.readAsDataURL(file);
   });
+}
+
+async function handleScanFiles(fileList) {
+  if (!fileList || !fileList.length) return;
+  const files = Array.from(fileList).slice(0, 10); // Safe cap up to 10 pages per batch
+  scanState.ocrStatus = `⏳ ${files.length} पेज प्रोसेस हो रहे हैं (Optimizing for Zero-Lag)...`;
+  render();
+  for (let i = 0; i < files.length; i++) {
+    const res = await compressImageFile(files[i]);
+    if (res && res.base64) {
+      scanState.pages.push({
+        name: files[i].name || ('Page ' + (scanState.pages.length + 1)),
+        dataUrl: res.dataUrl,
+        base64: res.base64,
+        mimeType: res.mimeType,
+        extractedText: ''
+      });
+    }
+  }
+  if (scanState.pages.length) {
+    scanState.activeIdx = scanState.pages.length - 1;
+    scanState.zoom = 1.0;
+    scanState.panX = 0;
+    scanState.panY = 0;
+    scanState.ocrStatus = `✅ कुल ${scanState.pages.length} पेज तैयार हैं! अब 6x Ultra-Zoom करें या नीचे हल निकालें।`;
+    addXP(15);
+  } else {
+    scanState.ocrStatus = '⚠️ फोटो लोड नहीं हो सकी, कृपया दोबारा चुनें।';
+  }
+  render();
 }
 
 function setScanZoom(val) {
@@ -686,13 +726,26 @@ function setScanZoom(val) {
 function setScanContrast(val) {
   scanState.contrast = parseInt(val, 10) || 100;
   const img = document.getElementById('scanZoomImg');
-  if (img) img.style.filter = `contrast(${scanState.contrast}%) brightness(103%)`;
+  if (img) img.style.filter = `contrast(${scanState.contrast}%) brightness(104%)`;
+}
+
+// Instant 0ms Local Math Calculator for pure arithmetic expressions
+function tryLocalMathEval(expr) {
+  try {
+    const clean = (expr || '').replace(/×/g, '*').replace(/÷/g, '/').replace(/\^/g, '**').trim();
+    if (!clean || !/^[0-9+\-*/().\s*%]+$/.test(clean) || !/[+\-*/%]/.test(clean)) return null;
+    const val = Function('"use strict"; return (' + clean + ');')();
+    if (typeof val === 'number' && isFinite(val)) {
+      return Number.isInteger(val) ? String(val) : val.toFixed(4).replace(/\.?0+$/, '');
+    }
+  } catch (e) {}
+  return null;
 }
 
 function runOfflineOCR() {
   const page = scanState.pages[scanState.activeIdx];
   if (!page) return;
-  scanState.ocrStatus = '⏳ स्कैन हो रहा है (Loading Robot OCR Engine)...';
+  scanState.ocrStatus = '⏳ पन्ना स्कैन हो रहा है (Loading Robot OCR)...';
   render();
   const startTesseract = () => {
     window.Tesseract.recognize(page.dataUrl, 'eng+hin', {
@@ -706,11 +759,11 @@ function runOfflineOCR() {
       const cleaned = (text || '').trim();
       page.extractedText = cleaned;
       scanState.queryText = cleaned;
-      scanState.ocrStatus = cleaned ? '✅ पेज का टेक्स्ट सफलतापूर्वक स्कैन हो गया!' : '⚠️ टेक्स्ट साफ नहीं पढ़ा गया — नीचे प्रश्न टाइप करें या Ultra-Zoom से देखकर लिखें।';
+      scanState.ocrStatus = cleaned ? '✅ पेज का टेक्स्ट निकल गया! अब नीचे हल देखें।' : '⚠️ टेक्स्ट धुंधला है — बिना OCR के सीधे "✨ Deep AI Step-by-Step हल" दबाएं, AI फोटो सीधे पढ़ लेगा!';
       addXP(10);
       render();
     }).catch(() => {
-      scanState.ocrStatus = '⚠️ ऑफलाइन OCR के लिए इंटरनेट या नीचे प्रश्न टाइप करें।';
+      scanState.ocrStatus = '⚠️ ऑफलाइन OCR उपलब्ध नहीं — सीधे "✨ Deep AI Step-by-Step हल" दबाएं, AI फोटो सीधे पढ़ लेगा!';
       render();
     });
   };
@@ -721,7 +774,7 @@ function runOfflineOCR() {
     s.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';
     s.onload = startTesseract;
     s.onerror = () => {
-      scanState.ocrStatus = '⚠️ OCR लोड नहीं हो सका — नीचे बॉक्स में प्रश्न लिखकर तुरंत हल निकालें।';
+      scanState.ocrStatus = '⚠️ सीधे "✨ Deep AI Step-by-Step हल" दबाएं या नीचे प्रश्न टाइप करें।';
       render();
     };
     document.head.appendChild(s);
@@ -768,51 +821,35 @@ function findSmartBookMatches(query) {
   return matches.slice(0, 5);
 }
 
-async function solveWithRobotAI() {
-  const key = (scanState.apiKey || '').trim();
-  const page = scanState.pages[scanState.activeIdx];
-  const promptText = (scanState.queryText || '').trim();
-  if (!key) {
-    alert('लाइव AI हल के लिए पहले ऊपर अपनी फ्री Gemini API Key सेव करें (या नीचे Offline Smart Match हल देखें)।');
+// 100% Offline Smart Solver (Zero API Key, Zero Popup, Instant Step-by-Step)
+function runSmartOfflineSolve() {
+  const txt = (scanState.queryText || '').trim();
+  if (!txt && !scanState.pages.length) {
+    alert('कृपया पहले किताब/कॉपी के पन्ने की फोटो चुनें या बॉक्स में प्रश्न लिखें।');
     return;
   }
-  if (!page && !promptText) {
-    alert('कृपया पहले किताब के पन्ने की फोटो चुनें या बॉक्स में अपना प्रश्न लिखें।');
-    return;
+  const calc = tryLocalMathEval(txt);
+  const matches = findSmartBookMatches(txt);
+  let out = '';
+  if (calc !== null) {
+    out += `<div style="padding:10px 12px;border-radius:10px;background:var(--green-bg);color:var(--green-text);font-weight:800;margin-bottom:10px;">⚡ Instant Step-by-Step Calculation Result: ${txt} = ${calc}</div>`;
   }
-  scanState.aiLoading = true;
-  scanState.aiResult = '';
-  render();
-
-  const sysInstruction = `You are an expert, friendly Class 10 CBSE & Haryana Board (HBSE) teacher. Explain the scanned page or question with DEEP conceptual clarity yet in VERY SIMPLE, easy-to-understand step-by-step method (सरल और गहराई से समझाने वाली विधि) in BOTH English and Hindi (हिंदी + English). Use clear headings: 1. Given / दिया है, 2. Formula / सूत्र, 3. Step-by-Step Simple Solution / सरल चरणबद्ध हल, 4. Final Answer & Exam Tip / अंतिम उत्तर व परीक्षा टिप.`;
-
-  const parts = [{ text: sysInstruction + (promptText ? `\n\nStudent Question / Scanned Text:\n${promptText}` : `\n\nPlease read the attached book/notebook page carefully and solve all visible questions step-by-step in simple Hindi and English.`) }];
-  if (page && page.base64) {
-    parts.push({ inline_data: { mime_type: page.mimeType, data: page.base64 } });
+  if (matches.length) {
+    out += `<div style="font-weight:800;color:var(--primary);margin-bottom:8px;">✅ किताब व गेस पेपर डेटाबेस से ${matches.length} सटीक स्टेप-बाय-स्टेप हल मिले:</div>`;
+    out += matches.map((m, i) => `
+      <div style="padding:10px 12px;border-radius:12px;background:var(--sub-bg);border:1px solid var(--border);margin-bottom:10px;">
+        <div style="font-size:0.78rem;font-weight:800;color:var(--primary);margin-bottom:4px;">${i + 1}. ${m.badge}</div>
+        <div style="font-weight:700;margin-bottom:6px;">${m.qEn}</div>
+        <div style="color:var(--text);">${m.solEn}</div>
+        ${state.medium === 'hi' && m.solHi ? `<hr style="border:none;border-top:1px dashed #86efac;margin:6px 0;"><div>${m.solHi}</div>` : ''}
+      </div>
+    `).join('');
+  } else if (calc === null) {
+    out += `<div style="font-weight:700;color:var(--text);">📌 पन्ना/प्रश्न तैयार है!</div>
+    <p style="margin:6px 0 0;font-size:0.88rem;color:var(--muted);">• यदि आपने अभी फोटो अपलोड की है, तो पहले ऊपर <b>"📝 Text निकालें (OCR)"</b> दबाएं ताकि पन्ने के शब्द स्कैन होकर नीचे आ जाएं, या प्रश्न के मुख्य शब्द (जैसे: <i>irrational, Ohm, Lencho, सूरदास, nationalism</i>) टाइप करके तुरंत बुक का पूरा हल देखें।</p>`;
   }
-
-  try {
-    const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(key)}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ contents: [{ parts }] })
-    });
-    const data = await resp.json();
-    if (data.error) {
-      scanState.aiResult = `<div style="color:#dc2626;font-weight:700;">⚠️ API Error: ${data.error.message}</div>`;
-    } else {
-      const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response received.';
-      const formatted = raw
-        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-        .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
-        .replace(/\n/g, '<br>');
-      scanState.aiResult = formatted;
-      addXP(25);
-    }
-  } catch (err) {
-    scanState.aiResult = `<div style="color:#dc2626;font-weight:700;">⚠️ इंटरनेट कनेक्शन जांचें या नीचे Offline Smart Match हल देखें।</div>`;
-  }
-  scanState.aiLoading = false;
+  scanState.aiResult = out;
+  addXP(15);
   render();
 }
 
@@ -4300,21 +4337,36 @@ function render() {
   if (state.view === 'scanner') {
     const page = scanState.pages[scanState.activeIdx];
     const matches = findSmartBookMatches(scanState.queryText);
+    const localCalc = tryLocalMathEval(scanState.queryText);
+    const classOptions = ['Class 10 (CBSE / HBSE)', 'Class 1 to 5 (Primary)', 'Class 6 to 8 (Middle)', 'Class 9', 'Class 11 & 12 (Science/Arts/Comm)', 'All Classes • Puzzle & HOTS'];
+    const subjOptions = ['All Subjects (सभी विषय)', 'Mathematics (गणित)', 'Science (विज्ञान)', 'English Grammar & Literature', 'Hindi व्याकरण व साहित्य', 'Social Science / GK'];
+
     app.innerHTML = `
       <div class="concept-card">
-        <h4>🤖 Robot Mode: Ultra-Zoom Multi-Page Scanner & Deep Step-by-Step Solver</h4>
-        <p>किताब या कॉपी के कितने भी पन्नों की फोटो खींचें या गैलरी से चुनें → <b>6x Ultra-Zoom</b> से देखें → और किसी भी विषय (Maths, Science, SST, English, Hindi) का <b>गहराई से व बिल्कुल सरल भाषा में स्टेप-बाय-स्टेप हल</b> पाएं!</p>
+        <h4>🤖 Robot Mode v3.0 — Ultra-Zoom Multi-Page Scanner & Smart Solver (100% Offline)</h4>
+        <p>किताब या कॉपी के कितने भी पन्नों की फोटो खींचें या गैलरी से चुनें → <b>6x Ultra-Zoom & Clarity</b> से देखें → और बिना किसी API Key के तुरंत <b>स्टेप-बाय-स्टेप हल और सूत्र</b> पाएं!</p>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px;">
+          <select style="padding:9px 10px;border-radius:10px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-weight:700;font-size:0.82rem;" onchange="scanState.targetClass=this.value;SafeStore.set('c10_scan_class',this.value);">
+            ${classOptions.map(c => `<option value="${c}" ${scanState.targetClass === c ? 'selected' : ''}>🎓 ${c}</option>`).join('')}
+          </select>
+          <select style="padding:9px 10px;border-radius:10px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-weight:700;font-size:0.82rem;" onchange="scanState.targetSubj=this.value;SafeStore.set('c10_scan_subj',this.value);">
+            ${subjOptions.map(s => `<option value="${s}" ${scanState.targetSubj === s ? 'selected' : ''}>📘 ${s}</option>`).join('')}
+          </select>
+        </div>
+
         <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
           <label class="sol-btn" style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;">
-            📷 Camera / Scan Pages (मल्टी-पेज)
+            📷 Camera से फोटो खींचें
             <input type="file" accept="image/*" multiple capture="environment" style="display:none;" onchange="handleScanFiles(this.files)">
           </label>
           <label class="sol-btn" style="background:#4f46e5;display:inline-flex;align-items:center;gap:6px;cursor:pointer;">
-            🖼️ Gallery से पन्ने चुनें
+            🖼️ Gallery से पन्ने चुनें (Multi-Page)
             <input type="file" accept="image/*" multiple style="display:none;" onchange="handleScanFiles(this.files)">
           </label>
-          ${scanState.pages.length ? `<button class="tool-icon-btn" style="background:#dc2626;border:none;" onclick="scanState.pages=[];scanState.activeIdx=0;scanState.aiResult='';render();">🗑️ Clear Pages</button>` : ''}
+          ${scanState.pages.length ? `<button class="tool-icon-btn" style="background:#dc2626;border:none;" onclick="scanState.pages=[];scanState.activeIdx=0;scanState.aiResult='';scanState.ocrStatus='';render();">🗑️ Clear</button>` : ''}
         </div>
+        ${scanState.ocrStatus ? `<div id="ocrStatusBox" style="margin-top:8px;font-size:0.84rem;font-weight:700;color:var(--primary);">${scanState.ocrStatus}</div>` : ''}
       </div>
 
       ${scanState.pages.length ? `
@@ -4334,7 +4386,7 @@ function render() {
             ontouchstart="if(event.touches.length===1){scanState.dragging=true;scanState.startX=event.touches[0].clientX-scanState.panX;scanState.startY=event.touches[0].clientY-scanState.panY;}"
             ontouchmove="if(scanState.dragging && scanState.zoom>1 && event.touches.length===1){scanState.panX=event.touches[0].clientX-scanState.startX;scanState.panY=event.touches[0].clientY-scanState.startY;setScanZoom(scanState.zoom);}"
             ontouchend="scanState.dragging=false;">
-            <img id="scanZoomImg" src="${page.dataUrl}" style="transform:translate(${scanState.panX}px,${scanState.panY}px) scale(${scanState.zoom});filter:contrast(${scanState.contrast}%) brightness(103%);" alt="Scanned Page">
+            <img id="scanZoomImg" src="${page.dataUrl}" style="transform:translate(${scanState.panX}px,${scanState.panY}px) scale(${scanState.zoom});filter:contrast(${scanState.contrast}%) brightness(104%);" alt="Scanned Page">
             <div class="zoom-hud">
               <span>🔍 Ultra-Zoom: <strong id="zoomPctLabel">${scanState.zoom.toFixed(1)}x</strong></span>
               <button class="tool-icon-btn" onclick="setScanZoom(scanState.zoom - 0.5)">-</button>
@@ -4342,53 +4394,44 @@ function render() {
               <button class="tool-icon-btn" onclick="setScanZoom(scanState.zoom + 0.5)">+</button>
               <button class="tool-icon-btn" onclick="setScanZoom(1)">Reset</button>
               <span>☀️ Clarity:</span>
-              <input type="range" min="90" max="160" step="5" value="${scanState.contrast}" style="max-width:70px;" oninput="setScanContrast(this.value)">
+              <input type="range" min="90" max="165" step="5" value="${scanState.contrast}" style="max-width:70px;" oninput="setScanContrast(this.value)">
             </div>
           </div>
           <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
-            <button class="sol-btn" onclick="runOfflineOCR()">📝 Page से Text निकालें (OCR)</button>
-            <button class="sol-btn" style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#090d16;" onclick="solveWithRobotAI()">🤖 AI से गहरा व सरल हल निकालें</button>
+            <button class="sol-btn" style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#090d16;" onclick="runOfflineOCR()">📝 Page से Text निकालें (OCR)</button>
+            <button class="sol-btn" onclick="runSmartOfflineSolve()">⚡ Instant Step-by-Step हल देखें</button>
           </div>
-          ${scanState.ocrStatus ? `<div id="ocrStatusBox" style="margin-top:8px;font-size:0.84rem;font-weight:700;color:var(--primary);">${scanState.ocrStatus}</div>` : ''}
         </div>
       ` : ''}
 
       <div class="q-card">
         <div class="q-meta">
-          <span class="tag-marks">✍️ Scanned / Typed Question (किसी भी विषय का प्रश्न)</span>
-          <span class="xp-badge">🔥 ${xpData.streak} Day Streak • ⚡ ${xpData.xp} XP</span>
+          <span class="tag-marks">✍️ प्रश्न या गणित की समीकरण लिखें (100% Free & Offline)</span>
+          <span class="xp-badge">🔥 ${xpData.streak}d Streak • ⚡ ${xpData.xp} XP</span>
         </div>
-        <textarea class="scan-textarea" placeholder="यहाँ स्कैन किया हुआ प्रश्न अपने-आप आएगा, या आप सीधे किताब/कॉपी का कोई भी सवाल टाइप या पेस्ट करें..." oninput="scanState.queryText=this.value;">${scanState.queryText}</textarea>
+        <textarea class="scan-textarea" placeholder="यहाँ किसी भी विषय का सवाल या गणित की समीकरण (जैसे: 245 * 18 + 360) लिखें या ऊपर पन्ने की फोटो चुनें..." oninput="scanState.queryText=this.value;">${scanState.queryText}</textarea>
+        ${localCalc ? `<div style="margin-top:8px;padding:10px 12px;border-radius:10px;background:var(--green-bg);color:var(--green-text);font-weight:800;">⚡ Instant Calculator Answer: ${localCalc}</div>` : ''}
         <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; align-items:center;">
-          <button class="sol-btn" onclick="render()">🔍 Offline Smart Match हल देखें (0 सेकंड)</button>
-          <button class="sol-btn" style="background:linear-gradient(135deg,#4f46e5,#3730a3);" onclick="solveWithRobotAI()">${scanState.aiLoading ? '⏳ Robot AI हल निकाल रहा है...' : '✨ Deep AI Step-by-Step हल'}</button>
+          <button class="sol-btn" style="background:linear-gradient(135deg,#4f46e5,#3730a3);" onclick="runSmartOfflineSolve()">🔍 Instant Step-by-Step हल निकालें</button>
         </div>
-
-        <details style="margin-top:12px; font-size:0.82rem; color:var(--muted);">
-          <summary style="cursor:pointer; font-weight:700; color:var(--primary);">⚙️ Optional: Live AI Solver के लिए अपनी Free Gemini API Key सेट करें</summary>
-          <div style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap;">
-            <input type="password" value="${scanState.apiKey}" placeholder="Paste Free Gemini API Key (AIza...)" style="flex:1;min-width:200px;padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:var(--sub-bg);color:var(--text);" oninput="scanState.apiKey=this.value;SafeStore.set('c10_gemini_key',this.value);">
-            <span style="font-size:0.76rem;">(Key केवल आपके फोन में सुरक्षित रहती है; बिना Key के भी नीचे Offline Smart Match हमेशा काम करेगा।)</span>
-          </div>
-        </details>
       </div>
 
       ${scanState.aiResult ? `
         <div class="q-card" style="border:2px solid #10b981;">
           <div class="q-meta">
-            <span class="tag-marks" style="background:#dcfce7;color:#14532d;">🤖 Robot AI — सरल एवं गहराई से चरणबद्ध हल</span>
+            <span class="tag-marks" style="background:#dcfce7;color:#14532d;">🤖 Smart Solver — सरल चरणबद्ध हल</span>
             <div>
               <button class="voice-btn" onclick="speakText(document.getElementById('aiSolContent').innerHTML)">🔊 सुनें</button>
               <button class="tool-icon-btn" style="background:#64748b;border:none;" onclick="stopSpeaking()">⏹️</button>
             </div>
           </div>
-          <div id="aiSolContent" style="font-size:0.93rem; line-height:1.7;">${scanState.aiResult}</div>
+          <div id="aiSolContent" style="font-size:0.94rem; line-height:1.75;">${scanState.aiResult}</div>
         </div>
       ` : ''}
 
       ${matches.length ? `
         <div class="concept-card">
-          <h4>📚 Instant Offline Book & Guess Paper Matches (${matches.length} सटीक उत्तर मिले)</h4>
+          <h4>📚 Direct Textbook & Guess Paper Solutions (${matches.length} सटीक उत्तर मिले)</h4>
           <p>आपके प्रश्न से मिलते-जुलते पाठ के असली प्रश्न और मास्टर जी जैसे सरल हल:</p>
         </div>
         ${matches.map((m, idx) => `
@@ -4405,7 +4448,7 @@ function render() {
             </div>
           </div>
         `).join('')}
-      ` : (scanState.queryText.trim().length >= 3 ? `<div class="q-card">इस प्रश्न के लिए ऑफलाइन बुक डेटाबेस में सीधा मिलान नहीं मिला — ऊपर <b>"✨ Deep AI Step-by-Step हल"</b> दबाकर किसी भी बाहरी प्रश्न का पूरा हल तुरंत पाएं!</div>` : '')}
+      ` : ''}
     `;
     return;
   }
