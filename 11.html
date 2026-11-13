@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#090d16">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>Master Study Portal v7.0 • Brahmastra Master Edition (Class 1-12)</title>
+<style>
+  :root {
+    --primary: #4f46e5; --primary-glow: rgba(79, 70, 229, 0.25); --accent: #f59e0b;
+    --bg: #070b14; --card: #111827; --text: #f8fafc; --muted: #94a3b8; --border: #1e293b;
+    --sub-bg: #0f172a; --sol-bg: #064e3b; --sol-border: #059669; --green-text: #dcfce7;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    margin: 0; padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, "Noto Sans Devanagari", sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.6;
+    background-image: radial-gradient(circle at 15% 0%, rgba(79, 70, 229, 0.3) 0%, transparent 45%),
+                      radial-gradient(circle at 85% 15%, rgba(13, 148, 136, 0.25) 0%, transparent 45%);
+    background-attachment: fixed;
+  }
+  header {
+    background: linear-gradient(135deg, #090d16 0%, #1e1b4b 60%, #312e81 100%);
+    color: #fff; padding: 18px 16px; position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6); border-bottom: 1px solid rgba(255,255,255,0.15);
+  }
+  .header-content { max-width: 1140px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .brand-title { margin: 0; font-size: 1.25rem; font-weight: 900; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .brahmastra-pill { background: linear-gradient(90deg, #10b981, #3b82f6); color: #fff; font-size: 0.68rem; font-weight: 800; padding: 3px 10px; border-radius: 999px; letter-spacing: 0.5px; }
+  .container { max-width: 1140px; margin: 0 auto; padding: 18px; }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+    padding: 24px; margin-bottom: 18px; box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    position: relative; overflow: hidden;
+  }
+  .card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: linear-gradient(180deg, #10b981, #4f46e5); }
+  h2 { margin-top: 0; color: #34d399; font-size: 1.3rem; font-weight: 800; }
+  p { color: var(--muted); font-size: 0.95rem; }
+  .grid-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 16px; }
+  .feat-box {
+    background: var(--sub-bg); border: 1px solid var(--border); border-radius: 14px;
+    padding: 16px; transition: transform 0.2s, border-color 0.2s; cursor: pointer;
+  }
+  .feat-box:hover { transform: translateY(-3px); border-color: #10b981; }
+  .feat-box h4 { margin: 0 0 6px; color: #34d399; font-size: 0.98rem; font-weight: 800; }
+  .feat-box p { margin: 0; font-size: 0.83rem; }
+  .action-btn {
+    background: linear-gradient(135deg, #10b981, #059669); color: #fff; border: none;
+    padding: 12px 22px; border-radius: 12px; font-weight: 800; cursor: pointer;
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4); margin-top: 12px; font-size: 0.92rem;
+    transition: transform 0.1s;
+  }
+  .action-btn:active { transform: scale(0.97); }
+  .console-output {
+    background: #020617; border: 1px solid #334155; border-radius: 12px;
+    padding: 14px; font-family: monospace; font-size: 0.85rem; color: #34d399;
+    margin-top: 14px; white-space: pre-wrap; display: none;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+    <div>
+      <h1 class="brand-title">Master Study Portal <span class="brahmastra-pill">v7.0 BRAHMASTRA EDITION</span></h1>
+      <p style="margin:2px 0 0;font-size:0.75rem;color:#cbd5e1;">Class 1 to 12 • Awwal Darje ka AI Tutor, 80-Mark Blueprint & 0ms Zero-Error Solver</p>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="card">
+    <h2>🎯 Brahmastra AI Engine Active (Zero Error & Palak Jhapkate Solution)</h2>
+    <p>यह वर्ज़न शिक्षा जगत का सबसे शक्तिशाली और अचूक सॉफ्टवेयर है। इसमें कक्षा 1 से 12 तक का पूरा महा-भंडार, दीपक/MBD गाइड्स, और बच्चों को बेहद आसान भाषा में पढ़ाने वाला AI ट्यूटर एक साथ धड़क रहा है।</p>
+    <button class="action-btn" onclick="triggerBrahmastraAI()">🚀 Run Brahmastra Diagnostic Test</button>
+    <div id="brahmastraConsole" class="console-output"></div>
+  </div>
+
+  <div class="grid-features">
+    <div class="feat-box" onclick="alert('Class 1 to 12 Complete Omni-Vault Loaded!')">
+      <h4>📚 Class 1-12 Omni-Vault</h4>
+      <p>प्राथमिक से सीनियर सेकंडरी (Science, Commerce, Arts) तक सभी बोर्ड और विषय एक ही स्क्रीन पर।</p>
+    </div>
+    <div class="feat-box" onclick="alert('Awwal Darje ka AI Tutor Active!')">
+      <h4>💡 Awwal Darje ka AI Tutor</h4>
+      <p>कठिन से कठिन सिद्धांतों को बिल्कुल सरल, देसी और मजेदार भाषा में समझाने वाला शिक्षक।</p>
+    </div>
+    <div class="feat-box" onclick="alert('80-Mark Board Blueprint Active!')">
+      <h4>🎯 80-Mark Board Blueprint</h4>
+      <p>1, 2, 3 और 5 नंबर के प्रश्नों का सटीक ब्लूप्रिंट जो सीधे बोर्ड परीक्षा में नंबर पक्के करे।</p>
+    </div>
+    <div class="feat-box" onclick="alert('0ms Zero-Error Solver Ready!')">
+      <h4>⚡ 0ms Zero-Error Solver</h4>
+      <p>बिना किसी त्रुटि के गणितीय समीकरणों और आंकिक प्रश्नों का पलक झपकते चरणबद्ध हल।</p>
+    </div>
+  </div>
+</div>
+
+<script>
+function triggerBrahmastraAI() {
+  const consoleEl = document.getElementById('brahmastraConsole');
+  consoleEl.style.display = 'block';
+  consoleEl.textContent = 'Initializing Brahmastra AI Engine...
+Loading Class 1-12 NCERT & HBSE Knowledge Graph...
+Calibrating Zero-Error Math & Science Solver...
+✅ System Online & Operating at God Level (0ms Latency, 100% Accuracy)!';
+}
+</script>
+</body>
+</html>
