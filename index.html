@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<title>Master Study Portal v3.0 — All-Class Robot AI Scanner & Pro EdTech</title>
+<title>Master Study Portal v5.0 — Class 1 to 12 CBSE & HBSE Ultra Edition</title>
 <style>
   :root {
     --primary: #4f46e5;
@@ -444,8 +444,8 @@
     <div class="brand">
       <div class="brand-logo">10</div>
       <div class="brand-text">
-        <h1>Master Study Portal <span class="pro-pill">v3.0 • PRO OFFLINE</span></h1>
-        <p>All Classes & Subjects • Zero-Crash Ultra-Zoom AI Scanner + Full Class 10 NCERT & Guess Papers</p>
+        <h1>Master Study Portal <span class="pro-pill">v5.0 • CLASS 1 TO 12 ULTRA</span></h1>
+        <p>Class 1 to 12 (CBSE & HBSE) • Blink-Fast Solver + Full NCERT, Guess Papers, Mock Test & Guides</p>
       </div>
     </div>
     <div class="controls-bar">
@@ -506,6 +506,8 @@ window.addEventListener('error', function(e) {
 
 let state = {
   view: 'home',
+  activeClass: SafeStore.get('c10_active_class', '10'),
+  activeBoard: SafeStore.get('c10_active_board', 'CBSE + HBSE'),
   medium: SafeStore.get('c10_medium', 'en'),
   dark: SafeStore.get('c10_dark', '0') === '1',
   fontSize: parseInt(SafeStore.get('c10_font', '16'), 10),
@@ -826,6 +828,13 @@ function runSmartOfflineSolve() {
   const txt = (scanState.queryText || '').trim();
   if (!txt && !scanState.pages.length) {
     alert('कृपया पहले किताब/कॉपी के पन्ने की फोटो चुनें या बॉक्स में प्रश्न लिखें।');
+    return;
+  }
+  const blinkOut = instantBlinkSolve(txt);
+  if (blinkOut) {
+    scanState.aiResult = blinkOut;
+    addXP(15);
+    render();
     return;
   }
   const calc = tryLocalMathEval(txt);
@@ -4054,24 +4063,41 @@ const DB = [
 },
   {
     id: 'bonus',
-    titleEn: 'Bonus: Grammar, Writing & Map Work',
-    titleHi: 'विशेष बोनस (English Grammar, हिंदी व्याकरण व SST Map)',
-    badge: 'Bonus • High-Scoring Board Booster',
+    titleEn: 'Complete Guide Vault (Deepak & MBD Style: Unseen Passages, Grammar, Essays, Applications & Map)',
+    titleHi: 'संपूर्ण गाइड भंडार (Unseen Passages, Grammar, निबंध, प्रार्थना-पत्र व मैप वर्क)',
+    badge: 'All-in-One Guide • Zero External Guide Needed',
     color: '#ffedd5', textColor: '#9a3412',
-    descEn: 'English Grammar & Letters/Analytical Paragraphs, Hindi Vyakaran & Lekhan, and SST 5-Mark Board Map Work.',
-    descHi: 'अंग्रेज़ी ग्रामर व लेटर, हिंदी व्याकरण व लेखन और सामाजिक विज्ञान का पूरा 5 नंबर का मैप वर्क।',
+    descEn: 'Complete Deepak & MBD Guide Replacement: Solved Unseen Passages, Full English & Hindi Grammar, Applications, Essays, Analytical Paragraphs & 5-Mark SST Map Work.',
+    descHi: 'दीपक व MBD गाइड का संपूर्ण विकल्प: हल सहित अपठित गद्यांश, संपूर्ण अंग्रेज़ी व हिंदी व्याकरण, प्रार्थना-पत्र, निबंध व 5 नंबर का SST मैप वर्क।',
     lessons: [
       {
-        id: 'b1', num: 'Bonus 1', titleEn: 'English Grammar & Writing (Formal Letters + Analytical Paragraph)', titleHi: 'अंग्रेज़ी ग्रामर और राइटिंग सेक्शन',
-        conceptsEn: 'Grammar: Tenses, Modals, Subject-Verb Concord, Determiners, Reported Speech. Formal Letter Format: Sender Address → Date → Receiver Address → Subject → Salutation → Body (3 paras) → Complimentary Close (Yours sincerely/truly).',
-        conceptsHi: 'अंग्रेज़ी ग्रामर के नियम और 5 अंक के औपचारिक पत्र व एनालिटिकल पैराग्राफ का बोर्ड प्रारूप।',
-        glossary: 'Concord = कर्ता-क्रिया अन्विति | Reported Speech = अप्रत्यक्ष कथन | Salutation = अभिवादन',
+        id: 'b1', num: 'Guide 1 (EN)', titleEn: 'English Complete Guide: Unseen Passages, Grammar Rules, Applications & Letters', titleHi: 'अंग्रेज़ी गाइड: अपठित गद्यांश, ग्रामर, एप्लीकेशन व लेटर',
+        conceptsEn: '<b>1. Tenses & Modals Quick Rules:</b> Universal truth/habit → V₁(s/es); Yesterday/ago → V₂; Since/For → has/have been + V₁-ing; Duty/Moral → should/ought to; Possibility → may/might.<br><b>2. Punctuation & Articles:</b> Capital letter at start & proper nouns; A (consonant sound), An (vowel sound: an honest man, an M.A., a university), The (unique/superlative).<br><b>3. HBSE & CBSE Writing Section:</b> Applications to Principal, Formal Letters, Analytical Paragraphs & Short Stories.',
+        conceptsHi: '<b>दीपक व MBD गाइड सार:</b> Unseen Passages हल करने की ट्रिक, Tenses, Modals, Articles, Punctuation, Reported Speech और सभी प्रमुख Applications व Letters।',
+        glossary: 'Unseen Passage = अपठित गद्यांश | Concord = कर्ता-क्रिया अन्विति | Punctuation = विराम चिह्न | Application = प्रार्थना-पत्र',
         book: [
+          {
+            qEn: `Solved Unseen Passage (HBSE & CBSE Guide Pattern — 10 Marks):
+Read the passage carefully: "Discipline is the backbone of character. Without discipline, nothing great can be achieved in life. A student who follows a regular timetable, respects teachers and elders, and works hard every day always succeeds. True discipline comes from within, not from fear of punishment."
+Q1: What is the backbone of character?
+Q2: Which student always succeeds?
+Q3: Where does true discipline come from?
+Q4: Find a word from the passage meaning "accomplished / attained".`, 
+            qHi: 'हल सहित अपठित गद्यांश (हरियाणा व सीबीएसई बोर्ड पैटर्न): अनुशासन चरित्र की रीढ़ है। जो विद्यार्थी नियमित समय-सारणी का पालन करता है और बड़ों का सम्मान करता है, वह सदैव सफल होता है।',
+            solEn: '<b>Ans 1:</b> Discipline is the backbone of character.<br><b>Ans 2:</b> A student who follows a regular timetable, respects teachers and elders, and works hard every day always succeeds.<br><b>Ans 3:</b> True discipline comes from within, not from fear of punishment.<br><b>Ans 4:</b> <b>Achieved</b>.',
+            solHi: '<b>उत्तर 1:</b> अनुशासन चरित्र की रीढ़ है। <b>उत्तर 2:</b> नियमित समय-सारणी व परिश्रम करने वाला विद्यार्थी। <b>उत्तर 3:</b> सच्चा अनुशासन भीतर से आता है। <b>उत्तर 4:</b> Achieved.'
+          },
+          {
+            qEn: 'HBSE & CBSE Guide Writing (5 Marks): Write an Application to the Principal of your school requesting Full Fee Concession / Issue of School Leaving Certificate (SLC).',
+            qHi: 'बोर्ड गाइड प्रारूप (5 अंक): प्रधानाचार्य को पूर्ण शुल्क मुक्ति (Full Fee Concession) हेतु प्रार्थना-पत्र लिखिए।',
+            solEn: '<b>The Principal<br>Government Senior Secondary School<br>Jind, Haryana</b><br><br>13 November 2026<br><br><b>Subject: Application for Full Fee Concession</b><br><br>Sir/Madam,<br>With due respect, I beg to state that I am a student of Class X-A in your school. My father is a poor farmer with a small monthly income and has to support a large family. He is unable to pay my school fees.<br><br>I am a hardworking and disciplined student and stood first in Class IX. Kindly grant me full fee concession so that I may continue my studies smoothly.<br><br>Thanking you.<br><br>Yours obediently,<br><b>Jaibir</b><br>Class X-A, Roll No. 12',
+            solHi: 'यह हरियाणा बोर्ड व सीबीएसई की दीपक/MBD गाइड का सटीक प्रार्थना-पत्र प्रारूप है।'
+          },
           {
             qEn: 'Board Format (5 Marks): Write a Formal Letter to the Editor of a national daily highlighting the problem of frequent power cuts and water shortage in your locality.',
             qHi: 'बोर्ड प्रारूप (5 अंक): अपने क्षेत्र में बिजली कटौती और पानी की कमी की समस्या पर समाचार-पत्र के संपादक को पत्र लिखिए।',
-            solEn: '<b>12, Model Town<br>Jind, Haryana</b><br><br>12 November 2026<br><br><b>The Editor<br>The Tribune<br>Chandigarh</b><br><br><b>Subject: Acute water shortage and erratic power supply in Model Town</b><br><br>Sir/Madam,<br>Through the columns of your esteemed newspaper, I wish to draw the attention of the concerned authorities towards the severe problem of frequent power cuts and irregular water supply in our locality for the past two months. Students preparing for board examinations are the worst sufferers.<br><br>Despite repeated complaints to the local electricity and water supply offices, no concrete action has been taken. I urge the authorities to ensure uninterrupted power and regular water supply at the earliest.<br><br>Yours sincerely,<br><b>Jaibir</b>',
-            solHi: 'यह औपचारिक संपादकीय पत्र का सटीक CBSE/HBSE बोर्ड प्रारूप है जिसमें प्रेषक का पता, दिनांक, संपादक का पता, विषय, तीन अनुच्छेदों में मुख्य विषय-वस्तु और समापन शामिल है।'
+            solEn: '<b>12, Model Town<br>Jind, Haryana</b><br><br>13 November 2026<br><br><b>The Editor<br>The Tribune<br>Chandigarh</b><br><br><b>Subject: Acute water shortage and erratic power supply in Model Town</b><br><br>Sir/Madam,<br>Through the columns of your esteemed newspaper, I wish to draw the attention of the concerned authorities towards the severe problem of frequent power cuts and irregular water supply in our locality. Students preparing for board examinations are the worst sufferers.<br><br>I urge the authorities to ensure uninterrupted power and regular water supply at the earliest.<br><br>Yours sincerely,<br><b>Jaibir</b>',
+            solHi: 'यह औपचारिक संपादकीय पत्र का सटीक बोर्ड प्रारूप है।'
           }
         ],
         guess: [
@@ -4084,26 +4110,48 @@ const DB = [
             ans: 1
           },
           {
+            marks: 1, diff: 'Easy',
+            qEn: 'Choose the correct Article: My brother is _______ M.A. in English from _______ university in Haryana.',
+            qHi: 'सही Article चुनें: My brother is _______ M.A. in English from _______ university in Haryana.',
+            optsEn: ['a, an', 'an, a', 'the, an', 'an, the'],
+            optsHi: ['a, an', 'an, a', 'the, an', 'an, the'],
+            ans: 1
+          },
+          {
             marks: 1, diff: 'Medium',
             qEn: 'Convert to Reported Speech: He said to me, "Where are you going?"',
             qHi: 'अप्रत्यक्ष कथन में बदलें: He said to me, "Where are you going?"',
             optsEn: ['He asked me where was I going.', 'He asked me where I was going.', 'He told me where I am going.', 'He asked me where are you going.'],
             optsHi: ['He asked me where was I going.', 'He asked me where I was going.', 'He told me where I am going.', 'He asked me where are you going.'],
             ans: 1
+          },
+          {
+            marks: 1, diff: 'Medium',
+            qEn: 'Choose the correct Modal: We _______ obey the traffic rules to avoid accidents.',
+            qHi: 'सही Modal चुनें: We _______ obey the traffic rules to avoid accidents.',
+            optsEn: ['may', 'might', 'must', 'could'],
+            optsHi: ['may', 'might', 'must', 'could'],
+            ans: 2
           }
         ]
       },
       {
-        id: 'b2', num: 'Bonus 2', titleEn: 'हिंदी व्याकरण एवं रचना लेखन (वाक्य, वाच्य, पद परिचय, अलंकार, पत्र/विज्ञापन)', titleHi: 'संपूर्ण हिंदी व्याकरण व लेखन प्रारूप',
-        conceptsEn: 'रचना के आधार पर वाक्य: सरल, संयुक्त, मिश्र। वाच्य: कर्तृवाच्य, कर्मवाच्य, भाववाच्य। अलंकार: श्लेष, उत्प्रेक्षा, अतिशयोक्ति, मानवीकरण। पत्र लेखन, अनुच्छेद, स्ववृत्त/ई-मेल व विज्ञापन।',
-        conceptsHi: 'बोर्ड परीक्षा में आने वाले सभी व्याकरणिक नियम व लेखन प्रारूप।',
+        id: 'b2', num: 'Guide 2 (HI)', titleEn: 'हिंदी संपूर्ण गाइड: व्याकरण, अपठित गद्यांश, निबंध, पत्र व विज्ञापन', titleHi: 'दीपक व MBD हिंदी गाइड संपूर्ण भंडार',
+        conceptsEn: '<b>1. रचना के आधार पर वाक्य:</b> सरल वाक्य (एक क्रिया), संयुक्त वाक्य (और, परंतु, इसलिए से जुड़े), मिश्र वाक्य (जो-सो, जब-तब, कि से जुड़े)।<br><b>2. वाच्य:</b> कर्तृवाच्य, कर्मवाच्य (के द्वारा + सकर्मक), भाववाच्य (मुझसे चला नहीं जाता)।<br><b>3. अलंकार:</b> श्लेष (एक शब्द के अनेक अर्थ), उत्प्रेक्षा (मानो, जनु, जानहु), अतिशयोक्ति (बढ़ा-चढ़ाकर वर्णन), मानवीकरण।',
+        conceptsHi: 'बोर्ड परीक्षा में आने वाले सभी व्याकरण नियम, निबंध लेखन (पर्यावरण प्रदूषण, विज्ञान के चमत्कार, विद्यार्थी जीवन), पत्र लेखन व विज्ञापन।',
         glossary: 'कर्तृवाच्य = कर्ता प्रधान | श्लेष = एक शब्द के अनेक अर्थ | मानवीकरण = प्रकृति पर मानवीय क्रियाओं का आरोप',
         book: [
+          {
+            qEn: 'महत्वपूर्ण बोर्ड निबंध (5 अंक): "पर्यावरण प्रदूषण : कारण और निवारण" (संकेत बिंदु: प्रस्तावना, प्रदूषण के प्रकार, दुष्प्रभाव, रोकने के उपाय, उपसंहार)',
+            qHi: 'दीपक व MBD गाइड का सबसे महत्वपूर्ण निबंध:',
+            solEn: '<b>1. प्रस्तावना:</b> आज संपूर्ण विश्व पर्यावरण प्रदूषण की गंभीर समस्या से जूझ रहा है। जल, वायु और भूमि का दूषित होना ही पर्यावरण प्रदूषण है।<br><b>2. प्रदूषण के प्रकार व कारण:</b> कारखानों का धुआँ व वाहनों से <i>वायु प्रदूषण</i>, रासायनिक कचरे से <i>जल प्रदूषण</i>, लाउडस्पीकर से <i>ध्वनि प्रदूषण</i> तथा प्लास्टिक व कीटनाशकों से <i>मृदा प्रदूषण</i> फैल रहा है। वनों की अंधाधुंध कटाई इसका मुख्य कारण है।<br><b>3. रोकने के उपाय:</b> अधिक से अधिक वृक्षारोपण करना, प्लास्टिक का बहिष्कार, सौर ऊर्जा का उपयोग और कारखानों के कचरे का उचित निस्तारण।<br><b>4. उपसंहार:</b> स्वच्छ पर्यावरण ही स्वस्थ जीवन का आधार है। "वृक्ष लगाएँ, जीवन बचाएँ।"',
+            solHi: 'बोर्ड परीक्षा में निबंध हमेशा संकेत बिंदुओं (Headings) के साथ 200-250 शब्दों में लिखना चाहिए।'
+          },
           {
             qEn: 'हिंदी लेखन प्रारूप (4 अंक): "रक्षक हेलमेट" की बिक्री बढ़ाने हेतु एक आकर्षक विज्ञापन तैयार कीजिए।',
             qHi: 'विज्ञापन लेखन का बोर्ड प्रारूप (बॉक्स के अंदर):',
             solEn: '<div style="border:2px solid #1e3a8a; padding:10px; border-radius:8px; background:#fff;"><b>🛡️ सुरक्षा आपकी, जिम्मेदारी हमारी! 🛡️<br>खरीदें — "रक्षक ISI मार्क हेलमेट"</b><br>• मजबूत फाइबर बॉडी व आरामदायक कुशन<br>• आकर्षक रंगों व सभी साइज में उपलब्ध<br>• विशेष ऑफर: पहले 100 ग्राहकों को <b>20% की भारी छूट!</b><br><i>संपर्क करें: रक्षक ऑटो पार्ट्स, मुख्य बाजार, जींद • मो. 98XXX-XXXXX</i></div>',
-            solHi: 'विज्ञापन हमेशा एक बॉक्स के अंदर, आकर्षक शीर्षक, मुख्य विशेषताओं, छूट व संपर्क विवरण के साथ संक्षिप्त शब्दों में लिखना चाहिए।'
+            solHi: 'विज्ञापन हमेशा एक बॉक्स के अंदर, आकर्षक शीर्षक, मुख्य विशेषताओं व छूट के साथ लिखना चाहिए।'
           }
         ],
         guess: [
@@ -4122,19 +4170,27 @@ const DB = [
             optsEn: ['श्लेष अलंकार', 'अतिशयोक्ति अलंकार', 'मानवीकरण अलंकार', 'उत्प्रेक्षा अलंकार'],
             optsHi: ['श्लेष अलंकार', 'अतिशयोक्ति अलंकार', 'मानवीकरण अलंकार', 'उत्प्रेक्षा अलंकार'],
             ans: 2
+          },
+          {
+            marks: 1, diff: 'Medium',
+            qEn: '"जो परिश्रम करता है, वह अवश्य सफल होता है" — रचना के आधार पर वाक्य भेद है:',
+            qHi: 'वाक्य का प्रकार बताइए:',
+            optsEn: ['सरल वाक्य', 'संयुक्त वाक्य', 'मिश्र वाक्य', 'आज्ञावाचक वाक्य'],
+            optsHi: ['सरल वाक्य', 'संयुक्त वाक्य', 'मिश्र वाक्य', 'आज्ञावाचक वाक्य'],
+            ans: 2
           }
         ]
       },
       {
-        id: 'b3', num: 'Bonus 3', titleEn: 'SST Complete Board Map Work (5 Marks: History 2M + Geography 3M)', titleHi: 'सामाजिक विज्ञान मानचित्र कार्य (पूरे 5 अंक)',
+        id: 'b3', num: 'Guide 3 (SST)', titleEn: 'SST Complete Board Map Work & 1-Mark Guide Bank (5 Marks)', titleHi: 'सामाजिक विज्ञान मानचित्र कार्य व अति-लघु प्रश्न भंडार',
         conceptsEn: 'History (2 Marks): INC Sessions — Calcutta (Sept 1920), Nagpur (Dec 1920), Madras (1927). Satyagraha — Champaran (Bihar), Kheda & Ahmedabad (Gujarat), Amritsar (Punjab), Chauri Chaura (UP), Dandi (Gujarat). Geography (3 Marks): Bhakra Nangal (HP/Punjab), Hirakud (Odisha), Tehri (Uttarakhand), Sardar Sarovar (Gujarat); Major Ports (Kandla, Mumbai, Kochi, Chennai, Visakhapatnam, Paradip, Haldia).',
-        conceptsHi: 'इतिहास (2 अंक) और भूगोल (3 अंक) के सभी निर्धारित मानचित्र स्थान राज्य सहित।',
+        conceptsHi: 'इतिहास (2 अंक) और भूगोल (3 अंक) के सभी निर्धारित मानचित्र स्थान राज्य सहित व बोर्ड के 1-अंक वाले महत्वपूर्ण प्रश्न।',
         glossary: 'INC Session = कांग्रेस अधिवेशन | Seaport = समुद्री पत्तन | Nuclear Plant = परमाणु ऊर्जा संयंत्र',
         book: [
           {
             qEn: 'Complete Board Map Master List (State-wise Memory Table for 5/5 Marks):',
             qHi: 'परीक्षा में 5 में से 5 अंक पक्के करने के लिए राज्यवार मानचित्र सूची:',
-            solEn: '<b>History (2 Marks):</b><br>• Calcutta (Sept 1920) → West Bengal<br>• Nagpur (Dec 1920) → Maharashtra<br>• Madras (1927) → Tamil Nadu<br>• Champaran (Indigo Satyagraha 1917) → Bihar<br>• Kheda (Peasant Satyagraha) & Dandi (Salt March) → Gujarat<br>• Amritsar (Jallianwala Bagh 1919) → Punjab<br>• Chauri Chaura (Calling off NCM) → Uttar Pradesh<br><br><b>Geography (3 Marks):</b><br>• Dams: Salal (J&K), Bhakra Nangal (HP), Tehri (Uttarakhand), Rana Pratap Sagar (Rajasthan), Sardar Sarovar (Gujarat), Hirakud (Odisha), Nagarjuna Sagar (Telangana), Tungabhadra (Karnataka).<br>• Nuclear Plants: Narora (UP), Kakrapara (Gujarat), Tarapur (Maharashtra), Kalpakkam (Tamil Nadu).',
+            solEn: '<b>History (2 Marks):</b><br>• Calcutta (Sept 1920) → West Bengal<br>• Nagpur (Dec 1920) → Maharashtra<br>• Madras (1927) → Tamil Nadu<br>• Champaran (Indigo Satyagraha 1917) → Bihar<br>• Kheda (Peasant Satyagraha) & Dandi (Salt March) → Gujarat<br>• Amritsar (Jallianwala Bagh 1919) → Punjab<br>• Chauri Chaura (Calling off NCM) → Uttar Pradesh<br><br><b>Geography (3 Marks):</b><br>• Dams: Salal (J&K), Bhakra Nangal (HP), Tehri (Uttarakhand), Rana Pratap Sagar (Rajasthan), Sardar Sarovar (Gujarat), Hirakud (Odisha), Nagarjuna Sagar (Telangana), Tungabhadra (Karnataka).<br>• Nuclear Plants: Narora (UP), Kakrapara (Gujarat), Tarapur (Maharashtra), Kalpakkam (Tamil Nadu).<br>• Major Seaports: Kandla (Gujarat), Mumbai (Maharashtra), Marmagao (Goa), New Mangalore (Karnataka), Kochi (Kerala), Tuticorin & Chennai (Tamil Nadu), Visakhapatnam (Andhra Pradesh), Paradip (Odisha), Haldia (West Bengal).',
             solHi: 'ऊपर दिए गए सभी ऐतिहासिक स्थल (2 अंक) और भौगोलिक बाँध, परमाणु संयंत्र व बंदरगाह (3 अंक) हर साल CBSE और HBSE बोर्ड परीक्षा में पूछे जाते हैं।'
           }
         ],
@@ -4154,12 +4210,526 @@ const DB = [
             optsEn: ['Odisha', 'Chhattisgarh', 'Jharkhand', 'West Bengal'],
             optsHi: ['ओडिशा', 'छत्तीसगढ़', 'झारखंड', 'पश्चिम बंगाल'],
             ans: 0
+          },
+          {
+            marks: 1, diff: 'Medium',
+            qEn: 'Where is the "Kalpakkam" Nuclear Power Plant located?',
+            qHi: '"कलपक्कम" परमाणु ऊर्जा संयंत्र किस राज्य में स्थित है?',
+            optsEn: ['Karnataka', 'Kerala', 'Tamil Nadu', 'Andhra Pradesh'],
+            optsHi: ['कर्नाटक', 'केरल', 'तमिलनाडु', 'आंध्र प्रदेश'],
+            ans: 2
           }
         ]
       }
     ]
   }
 ];
+
+
+const ALL_CLASSES_DB = {
+  "1": [
+    {
+      id: "c1_math", titleEn: "Mathematics (Joyful Math / गणित)", titleHi: "कक्षा 1 गणित (संख्याएँ, जोड़-घटाव, आकृतियाँ)",
+      badge: "Class 1 • CBSE & HBSE", color: "#dbeafe", textColor: "#1e40af",
+      descEn: "Numbers 1 to 100, Addition, Subtraction, Shapes, Measurement & Money.",
+      descHi: "1 से 100 तक गिनती, जोड़, घटाव, आकृतियाँ और माप।",
+      lessons: [
+        {
+          id: "c1_m1", num: "Ch 1-3", titleEn: "Numbers 1–100, Shapes & Spatial Understanding", titleHi: "संख्याएँ (1–100) और आकृतियाँ",
+          conceptsEn: "<b>Counting:</b> 1 to 100 (Tens & Ones: e.g., 45 = 4 Tens + 5 Ones).<br><b>Shapes:</b> Circle (गोल - 0 sides), Triangle (त्रिभुज - 3 sides), Square (वर्ग - 4 equal sides), Rectangle (आयत - 4 sides).",
+          conceptsHi: "<b>गिनती:</b> 1 से 100 (दहाई और इकाई: 45 = 4 दहाई + 5 इकाई)। <b>आकृतियाँ:</b> वृत्त, त्रिभुज, वर्ग और आयत।",
+          glossary: "Tens = दहाई | Ones = इकाई | Circle = वृत्त | Triangle = त्रिभुज",
+          book: [
+            { qEn: "Q1: Write tens and ones in 68, and find the number just before and after 50.", qHi: "प्रश्न 1: 68 में दहाई व इकाई लिखें, और 50 से ठीक पहले व बाद की संख्या बताएं।", solEn: "68 = <b>6 Tens + 8 Ones</b>. Before 50 = <b>49</b>, After 50 = <b>51</b>.", solHi: "68 = <b>6 दहाई + 8 इकाई</b>। 50 से पहले = <b>49</b>, बाद में = <b>51</b>।" }
+          ],
+          guess: [
+            { marks: 1, diff: "Easy", qEn: "How many sides does a triangle have?", qHi: "एक त्रिभुज की कितनी भुजाएँ होती हैं?", optsEn: ["2", "3", "4", "0"], optsHi: ["2", "3", "4", "0"], ans: 1 },
+            { marks: 1, diff: "Medium", qEn: "What is 35 + 24?", qHi: "35 + 24 कितना होता है?", optsEn: ["58", "59", "69", "49"], optsHi: ["58", "59", "69", "49"], ans: 1 }
+          ]
+        }
+      ]
+    },
+    {
+      id: "c1_eng", titleEn: "English & Hindi (Mridang / सारंगी)", titleHi: "कक्षा 1 अंग्रेज़ी और हिंदी",
+      badge: "Class 1 • Languages", color: "#fef3c7", textColor: "#92400e",
+      descEn: "Phonics, Vowels (A, E, I, O, U), Hindi Varnamala, Matras & Short Poems.",
+      descHi: "अंग्रेज़ी स्वर-व्यंजन, हिंदी वर्णमाला, मात्राएँ और कविताएँ।",
+      lessons: [
+        {
+          id: "c1_e1", num: "Unit 1", titleEn: "Vowels, Naming Words & हिंदी मात्रा ज्ञान", titleHi: "स्वर, नाम वाले शब्द व हिंदी मात्राएँ",
+          conceptsEn: "<b>English Vowels:</b> A, E, I, O, U (5 vowels, 21 consonants).<br><b>हिंदी स्वर (11):</b> अ, आ, इ, ई, उ, ऊ, ऋ, ए, ऐ, ओ, औ।",
+          conceptsHi: "अंग्रेज़ी में 5 स्वर (A, E, I, O, U) और हिंदी में 11 स्वर व 33 व्यंजन होते हैं।",
+          glossary: "Vowel = स्वर | Consonant = व्यंजन | Naming Word = संज्ञा",
+          book: [
+            { qEn: "Q1: Circle the vowels in the word EDUCATION.", qHi: "प्रश्न 1: EDUCATION शब्द में स्वर (Vowels) बताएं।", solEn: "All 5 vowels are present: <b>E, U, A, I, O</b>.", solHi: "सभी 5 स्वर मौजूद हैं: <b>E, U, A, I, O</b>।" }
+          ],
+          guess: [
+            { marks: 1, diff: "Easy", qEn: "How many vowels are there in the English alphabet?", qHi: "अंग्रेज़ी वर्णमाला में कितने स्वर होते हैं?", optsEn: ["4", "5", "6", "21"], optsHi: ["4", "5", "6", "21"], ans: 1 }
+          ]
+        }
+      ]
+    }
+  ],
+  "2": [
+    {
+      id: "c2_all", titleEn: "Class 2 Complete (Maths, English, Hindi, EVS)", titleHi: "कक्षा 2 संपूर्ण विषय (गणित, अंग्रेज़ी, हिंदी, पर्यावरण)",
+      badge: "Class 2 • CBSE & HBSE", color: "#dcfce7", textColor: "#166534",
+      descEn: "3-Digit Numbers, Tables 2–12, Grammar Basics, Our Family & Festivals.",
+      descHi: "3 अंकों की संख्याएँ, 2 से 12 तक पहाड़े, ग्रामर और हमारा परिवार।",
+      lessons: [
+        {
+          id: "c2_l1", num: "Ch 1-5", titleEn: "Hundreds-Tens-Ones, Multiplication Tables & Nouns", titleHi: "सैकड़ा-दहाई-इकाई, गुणा और संज्ञा",
+          conceptsEn: "<b>Place Value:</b> In 347 → 3 Hundreds (300) + 4 Tens (40) + 7 Ones (7).<br><b>Noun:</b> Name of a person, place, animal or thing (e.g., Ram, Jind, Cow, Book).",
+          conceptsHi: "<b>स्थानीय मान:</b> 347 = 300 + 40 + 7। <b>संज्ञा:</b> किसी व्यक्ति, वस्तु, स्थान या प्राणी के नाम को संज्ञा कहते हैं।",
+          glossary: "Place Value = स्थानीय मान | Multiplication = गुणा | Noun = संज्ञा",
+          book: [
+            { qEn: "Q1: Write the expanded form of 529 and multiply 8 × 7.", qHi: "प्रश्न 1: 529 का विस्तारित रूप लिखें और 8 × 7 ज्ञात करें।", solEn: "529 = <b>500 + 20 + 9</b>; and 8 × 7 = <b>56</b>.", solHi: "529 = <b>500 + 20 + 9</b>; तथा 8 × 7 = <b>56</b>।" }
+          ],
+          guess: [
+            { marks: 1, diff: "Easy", qEn: "What is the place value of 6 in 462?", qHi: "462 में 6 का स्थानीय मान क्या है?", optsEn: ["6", "60", "600", "400"], optsHi: ["6", "60", "600", "400"], ans: 1 }
+          ]
+        }
+      ]
+    }
+  ],
+  "3": [
+    {
+      id: "c3_all", titleEn: "Class 3 Complete (Maths, EVS, English, Hindi)", titleHi: "कक्षा 3 संपूर्ण विषय (गणित, पर्यावरण अध्ययन, अंग्रेज़ी, हिंदी)",
+      badge: "Class 3 • CBSE & HBSE", color: "#e0e7ff", textColor: "#3730a3",
+      descEn: "4-Digit Numbers, Division, Fractions, Plants & Animals, Tenses Basics.",
+      descHi: "4 अंकों की संख्याएँ, भाग, भिन्न, पौधे व जीव-जंतु और व्याकरण।",
+      lessons: [
+        {
+          id: "c3_l1", num: "Ch 1-6", titleEn: "4-Digit Numbers, Fractions & Parts of a Plant", titleHi: "4-अंकीय संख्याएँ, भिन्न और पौधे के भाग",
+          conceptsEn: "<b>Fraction:</b> Part of a whole = Numerator / Denominator (e.g., Half = 1/2, Quarter = 1/4).<br><b>Plant Parts:</b> Root (absorbs water), Stem (supports), Leaf (makes food using sunlight).",
+          conceptsHi: "<b>भिन्न:</b> अंश / हर (आधा = 1/2, चौथाई = 1/4)। <b>पौधे के भाग:</b> जड़, तना, पत्ती, फूल और फल।",
+          glossary: "Numerator = अंश | Denominator = हर | Photosynthesis = प्रकाश संश्लेषण",
+          book: [
+            { qEn: "Q1: Divide 84 by 4 and name two main functions of roots.", qHi: "प्रश्न 1: 84 को 4 से भाग दें और जड़ों के दो मुख्य कार्य लिखें।", solEn: "84 ÷ 4 = <b>21</b>. Roots fix the plant firmly in soil and absorb water & minerals.", solHi: "84 ÷ 4 = <b>21</b>। जड़ें पौधे को मिट्टी में जमाए रखती हैं और जल व खनिज सोखती हैं।" }
+          ],
+          guess: [
+            { marks: 1, diff: "Easy", qEn: "Which part of a plant makes food for the plant?", qHi: "पौधे का कौनसा भाग भोजन बनाता है?", optsEn: ["Root", "Leaf", "Flower", "Seed"], optsHi: ["जड़", "पत्ती", "फूल", "बीज"], ans: 1 }
+          ]
+        }
+      ]
+    }
+  ],
+  "4": [
+    {
+      id: "c4_all", titleEn: "Class 4 Complete (Maths, EVS, English, Hindi)", titleHi: "कक्षा 4 संपूर्ण विषय (गणित, पर्यावरण, अंग्रेज़ी, हिंदी)",
+      badge: "Class 4 • CBSE & HBSE", color: "#fce7f3", textColor: "#9d174d",
+      descEn: "Factors & Multiples, Perimeter & Area, Water Cycle, Haryana & India Geography.",
+      descHi: "गुणनखंड व गुणज, परिमाप व क्षेत्रफल, जल चक्र और भारत का भूगोल।",
+      lessons: [
+        {
+          id: "c4_l1", num: "Ch 1-7", titleEn: "Perimeter, Area, Factors & Water Cycle", titleHi: "परिमाप, क्षेत्रफल, गुणनखंड व जल चक्र",
+          conceptsEn: "<b>Perimeter of Rectangle:</b> 2 × (Length + Breadth); <b>Perimeter of Square:</b> 4 × Side.<br><b>Water Cycle:</b> Evaporation → Condensation → Precipitation (Rain).",
+          conceptsHi: "<b>आयत का परिमाप:</b> 2 × (लंबाई + चौड़ाई); <b>वर्ग का परिमाप:</b> 4 × भुजा। <b>जल चक्र:</b> वाष्पीकरण → संघनन → वर्षण।",
+          glossary: "Perimeter = परिमाप | Evaporation = वाष्पीकरण | Condensation = संघनन",
+          book: [
+            { qEn: "Q1: Find the perimeter of a square park of side 15 m.", qHi: "प्रश्न 1: 15 मीटर भुजा वाले वर्गाकार पार्क का परिमाप ज्ञात करें।", solEn: "Perimeter = 4 × Side = 4 × 15 m = <b>60 m</b>.", solHi: "परिमाप = 4 × 15 = <b>60 मीटर</b>।" }
+          ],
+          guess: [
+            { marks: 1, diff: "Easy", qEn: "The process by which water changes into water vapour on heating is called:", qHi: "गर्म करने पर जल का वाष्प में बदलना कहलाता है:", optsEn: ["Condensation", "Evaporation", "Freezing", "Melting"], optsHi: ["संघनन", "वाष्पीकरण", "हिमीकरण", "गलन"], ans: 1 }
+          ]
+        }
+      ]
+    }
+  ],
+  "5": [
+    {
+      id: "c5_all", titleEn: "Class 5 Complete (Maths, EVS, English, Hindi)", titleHi: "कक्षा 5 संपूर्ण विषय (गणित, पर्यावरण, अंग्रेज़ी, हिंदी)",
+      badge: "Class 5 • Primary Board Foundation", color: "#ffedd5", textColor: "#9a3412",
+      descEn: "Decimals, Percentages, Angles, Digestive System, Solar System & Essay Writing.",
+      descHi: "दशमलव, प्रतिशत, कोण, पाचन तंत्र, सौरमंडल और निबंध लेखन।",
+      lessons: [
+        {
+          id: "c5_l1", num: "Ch 1-8", titleEn: "Decimals, Angles, HCF/LCM Basics & Solar System", titleHi: "दशमलव, कोण, लघुत्तम-महत्तम व सौरमंडल",
+          conceptsEn: "<b>Angles:</b> Acute (< 90°), Right (= 90°), Obtuse (> 90° and < 180°), Straight (= 180°).<br><b>Solar System:</b> 8 Planets orbiting the Sun (Mercury closest, Jupiter largest).",
+          conceptsHi: "<b>कोण:</b> न्यून कोण (< 90°), समकोण (= 90°), अधिक कोण (> 90°)। <b>सौरमंडल:</b> 8 ग्रह (बुध सबसे निकट, बृहस्पति सबसे बड़ा)।",
+          glossary: "Acute Angle = न्यून कोण | Right Angle = समकोण | Orbit = कक्षा",
+          book: [
+            { qEn: "Q1: Convert 3/4 into decimal and percentage.", qHi: "प्रश्न 1: 3/4 को दशमलव और प्रतिशत में बदलें।", solEn: "Decimal = 3 ÷ 4 = <b>0.75</b>; Percentage = (3/4) × 100 = <b>75%</b>.", solHi: "दशमलव = <b>0.75</b>; प्रतिशत = <b>75%</b>।" }
+          ],
+          guess: [
+            { marks: 1, diff: "Easy", qEn: "Which is the largest planet in our Solar System?", qHi: "हमारे सौरमंडल का सबसे बड़ा ग्रह कौनसा है?", optsEn: ["Earth", "Saturn", "Jupiter", "Mars"], optsHi: ["पृथ्वी", "शनि", "बृहस्पति", "मंगल"], ans: 2 }
+          ]
+        }
+      ]
+    }
+  ],
+  "6": [
+    {
+      id: "c6_math", titleEn: "Class 6 Mathematics (Ganita Prakash / गणित)", titleHi: "कक्षा 6 गणित (पूर्णांक, भिन्न, बीजगणित, क्षेत्रमिति)",
+      badge: "Class 6 • CBSE & HBSE", color: "#dbeafe", textColor: "#1e40af",
+      descEn: "Integers, Fractions, Decimals, Ratio & Proportion, Basic Algebra & Mensuration.",
+      descHi: "पूर्णांक, भिन्न, दशमलव, अनुपात व समानुपात, बीजगणित और क्षेत्रमिति।",
+      lessons: [
+        {
+          id: "c6_m1", num: "Ch 1-10", titleEn: "Integers, Ratio & Proportion, Mensuration", titleHi: "पूर्णांक, अनुपात और क्षेत्रमिति",
+          conceptsEn: "<b>Integers:</b> ..., -3, -2, -1, 0, 1, 2, 3, ... (Negative × Negative = Positive).<br><b>Ratio:</b> Comparison of two quantities of same unit (a : b = a/b).",
+          conceptsHi: "<b>पूर्णांक:</b> ऋणात्मक, शून्य और धनात्मक संख्याएँ। <b>अनुपात:</b> समान इकाई वाली दो राशियों की तुलना।",
+          glossary: "Integer = पूर्णांक | Ratio = अनुपात | Proportion = समानुपात",
+          book: [
+            { qEn: "Q1: Find the ratio of 30 minutes to 1.5 hours.", qHi: "प्रश्न 1: 30 मिनट का 1.5 घंटे से अनुपात ज्ञात करें।", solEn: "1.5 hours = 90 minutes. Ratio = 30 : 90 = <b>1 : 3</b>.", solHi: "1.5 घंटे = 90 मिनट ⇒ अनुपात = 30 : 90 = <b>1 : 3</b>।" }
+          ],
+          guess: [
+            { marks: 1, diff: "Easy", qEn: "What is the value of (-15) + (+8)?", qHi: "(-15) + (+8) का मान क्या है?", optsEn: ["-23", "-7", "7", "23"], optsHi: ["-23", "-7", "7", "23"], ans: 1 }
+          ]
+        }
+      ]
+    },
+    {
+      id: "c6_sci", titleEn: "Class 6 Science & SST (Curiosity / विज्ञान व सामाजिक)", titleHi: "कक्षा 6 विज्ञान और सामाजिक विज्ञान",
+      badge: "Class 6 • Science + SST", color: "#dcfce7", textColor: "#166534",
+      descEn: "Components of Food, Magnets, Motion & Measurement, Harappan Civilisation & Globe.",
+      descHi: "भोजन के घटक, चुंबक, गति व मापन, हड़प्पा सभ्यता और ग्लोब।",
+      lessons: [
+        {
+          id: "c6_s1", num: "Sci + SST", titleEn: "Nutrients, Magnets & Harappan Civilisation", titleHi: "पोषक तत्व, चुंबक व हड़प्पा सभ्यता",
+          conceptsEn: "<b>Nutrients:</b> Carbohydrates & Fats (Energy-giving), Proteins (Body-building), Vitamins & Minerals (Protective).<br><b>Magnet:</b> Always aligns in North-South direction when suspended freely.",
+          conceptsHi: "<b>पोषक तत्व:</b> कार्बोहाइड्रेट व वसा (ऊर्जा), प्रोटीन (शरीर वर्धक), विटामिन व खनिज (रोगों से रक्षा)।",
+          glossary: "Balanced Diet = संतुलित आहार | Deficieny Disease = अभावजन्य रोग",
+          book: [
+            { qEn: "Q1: Name diseases caused by deficiency of Vitamin A, B1, C and D.", qHi: "प्रश्न 1: विटामिन A, B1, C और D की कमी से होने वाले रोग लिखें।", solEn: "Vit A → Night blindness; Vit B1 → Beriberi; Vit C → Scurvy; Vit D → Rickets.", solHi: "विटामिन A → रतौंधी; B1 → बेरी-बेरी; C → स्कर्वी; D → रिकेट्स।" }
+          ],
+          guess: [
+            { marks: 1, diff: "Easy", qEn: "Scurvy is caused due to deficiency of:", qHi: "स्कर्वी रोग किसकी कमी से होता है?", optsEn: ["Vitamin A", "Vitamin B", "Vitamin C", "Vitamin D"], optsHi: ["विटामिन A", "विटामिन B", "विटामिन C", "विटामिन D"], ans: 2 }
+          ]
+        }
+      ]
+    }
+  ],
+  "7": [
+    {
+      id: "c7_all", titleEn: "Class 7 Complete (Maths, Science, SST, English, Hindi)", titleHi: "कक्षा 7 संपूर्ण विषय (गणित, विज्ञान, सामाजिक, अंग्रेज़ी, हिंदी)",
+      badge: "Class 7 • CBSE & HBSE", color: "#dbeafe", textColor: "#1e40af",
+      descEn: "Simple Equations, Lines & Angles, Acids & Bases, Heat, Delhi Sultans & Mughals.",
+      descHi: "सरल समीकरण, रेखाएँ और कोण, अम्ल-क्षार, ऊष्मा और मध्यकालीन भारत।",
+      lessons: [
+        {
+          id: "c7_l1", num: "Ch 1-12", titleEn: "Simple Equations, Triangles, Heat & Acids-Bases", titleHi: "सरल समीकरण, त्रिभुज, ऊष्मा व अम्ल-क्षार",
+          conceptsEn: "<b>Angle Sum Property:</b> Sum of all three interior angles of a triangle is <b>180°</b>.<br><b>Heat Transfer:</b> Conduction (solids), Convection (liquids/gases), Radiation (no medium needed).",
+          conceptsHi: "<b>त्रिभुज कोण योग:</b> तीनों अंतःकोणों का योग <b>180°</b> होता है। <b>ऊष्मा स्थानांतरण:</b> चालन, संवहन और विकिरण।",
+          glossary: "Conduction = चालन | Convection = संवहन | Radiation = विकिरण | Supplementary = संपूरक",
+          book: [
+            { qEn: "Q1: Solve 3x + 7 = 25 and find the supplement of 115°.", qHi: "प्रश्न 1: 3x + 7 = 25 हल करें और 115° का संपूरक कोण ज्ञात करें।", solEn: "3x = 25 - 7 = 18 ⇒ <b>x = 6</b>. Supplement of 115° = 180° - 115° = <b>65°</b>.", solHi: "3x = 18 ⇒ <b>x = 6</b>। 115° का संपूरक = 180° - 115° = <b>65°</b>।" }
+          ],
+          guess: [
+            { marks: 1, diff: "Easy", qEn: "What is the normal temperature of the human body?", qHi: "मानव शरीर का सामान्य तापमान कितना होता है?", optsEn: ["35°C", "37°C", "40°C", "98.6°C"], optsHi: ["35°C", "37°C", "40°C", "98.6°C"], ans: 1 }
+          ]
+        }
+      ]
+    }
+  ],
+  "8": [
+    {
+      id: "c8_math", titleEn: "Class 8 Mathematics (गणित — CBSE & HBSE)", titleHi: "कक्षा 8 गणित (परिमेय संख्याएँ, वर्ग-घन, बीजगणित, क्षेत्रमिति)",
+      badge: "Class 8 • CBSE & HBSE", color: "#dbeafe", textColor: "#1e40af",
+      descEn: "Rational Numbers, Linear Equations, Squares & Cubes, Algebraic Identities & Mensuration.",
+      descHi: "परिमेय संख्याएँ, एक चर वाले रैखिक समीकरण, वर्ग-वर्गमूल, सर्वसमिकाएँ व क्षेत्रमिति।",
+      lessons: [
+        {
+          id: "c8_m1", num: "Ch 1-13", titleEn: "Algebraic Identities, Exponents & Mensuration", titleHi: "बीजीय सर्वसमिकाएँ, घातांक और क्षेत्रमिति",
+          conceptsEn: "<b>Identities:</b> (a + b)² = a² + 2ab + b²; (a - b)² = a² - 2ab + b²; a² - b² = (a + b)(a - b).<br><b>Exponents:</b> aᵐ × aⁿ = aᵐ⁺ⁿ; aᵐ ÷ aⁿ = aᵐ⁻ⁿ; a⁰ = 1.",
+          conceptsHi: "<b>सर्वसमिकाएँ:</b> (a + b)² = a² + 2ab + b²; a² - b² = (a + b)(a - b)। <b>घातांक:</b> a⁰ = 1।",
+          glossary: "Identity = सर्वसमिका | Exponent = घातांक | Quadrilateral = चतुर्भुज",
+          book: [
+            { qEn: "Q1: Evaluate 103 × 97 using algebraic identity, and find √1764.", qHi: "प्रश्न 1: सर्वसमिका से 103 × 97 का मान और 1764 का वर्गमूल ज्ञात करें।", solEn: "103 × 97 = (100 + 3)(100 - 3) = 100² - 3² = 10000 - 9 = <b>9991</b>. √1764 = <b>42</b>.", solHi: "100² - 3² = <b>9991</b>; √1764 = <b>42</b>।" }
+          ],
+          guess: [
+            { marks: 1, diff: "Easy", qEn: "What is the value of (5⁰ + 3⁰) × 2⁰?", qHi: "(5⁰ + 3⁰) × 2⁰ का मान क्या है?", optsEn: ["0", "1", "2", "8"], optsHi: ["0", "1", "2", "8"], ans: 2 }
+          ]
+        }
+      ]
+    },
+    {
+      id: "c8_sci", titleEn: "Class 8 Science, SST, English & Hindi", titleHi: "कक्षा 8 विज्ञान, सामाजिक विज्ञान, अंग्रेज़ी व हिंदी",
+      badge: "Class 8 • Science + SST + Lang", color: "#dcfce7", textColor: "#166534",
+      descEn: "Microorganisms, Force & Pressure, Sound, Cell/Reproduction, Revolt of 1857 & Constitution.",
+      descHi: "सूक्ष्मजीव, बल तथा दाब, ध्वनि, 1857 की क्रांति और भारतीय संविधान।",
+      lessons: [
+        {
+          id: "c8_s1", num: "Sci + SST", titleEn: "Force & Pressure, Sound & Revolt of 1857", titleHi: "बल व दाब, ध्वनि और 1857 का विद्रोह",
+          conceptsEn: "<b>Pressure:</b> Force per unit area (<code>P = F / A</code>), SI Unit = Pascal (Pa).<br><b>Audible Sound Range for Humans:</b> 20 Hz to 20,000 Hz.<br><b>1857 Revolt:</b> Started from Meerut on 10 May 1857 (Mangal Pandey, Rani Lakshmibai, Bahadur Shah Zafar).",
+          conceptsHi: "<b>दाब:</b> बल / क्षेत्रफल (मात्रक: पास्कल)। <b>श्रव्य ध्वनि:</b> 20 Hz से 20,000 Hz। <b>1857 क्रांति:</b> 10 मई 1857 मेरठ से प्रारंभ।",
+          glossary: "Frequency = आवृत्ति | Amplitude = आयाम | Constitution = संविधान",
+          book: [
+            { qEn: "Q1: Calculate pressure when a force of 200 N acts on an area of 4 m².", qHi: "प्रश्न 1: यदि 4 m² क्षेत्रफल पर 200 N बल लगता है तो दाब ज्ञात करें।", solEn: "Pressure P = F / A = 200 / 4 = <b>50 Pa (N/m²)</b>.", solHi: "दाब P = 200 / 4 = <b>50 पास्कल</b>।" }
+          ],
+          guess: [
+            { marks: 1, diff: "Easy", qEn: "What is the SI unit of frequency?", qHi: "आवृत्ति का SI मात्रक क्या है?", optsEn: ["Pascal", "Newton", "Hertz (Hz)", "Decibel"], optsHi: ["पास्कल", "न्यूटन", "हर्ट्ज़ (Hz)", "डेसिबल"], ans: 2 }
+          ]
+        }
+      ]
+    }
+  ],
+  "9": [
+    {
+      id: "c9_math", titleEn: "Class 9 Mathematics (All 12 Chapters — CBSE & HBSE)", titleHi: "कक्षा 9 गणित (संख्या पद्धति, बहुपद, रेखाएँ व कोण, त्रिभुज, हीरोन सूत्र)",
+      badge: "Class 9 • Complete NCERT + Guess", color: "#dbeafe", textColor: "#1e40af",
+      descEn: "Number Systems, Polynomials, Coordinate Geometry, Euclid, Lines & Angles, Triangles, Circles, Heron's Formula, Surface Areas & Statistics.",
+      descHi: "संख्या पद्धति, बहुपद, निर्देशांक ज्यामिति, त्रिभुज, वृत्त, हीरोन का सूत्र और पृष्ठीय क्षेत्रफल।",
+      lessons: [
+        {
+          id: "c9_m1", num: "Ch 1-12", titleEn: "Number Systems, Polynomials & Heron's Formula Master", titleHi: "संख्या पद्धति, बहुपद और हीरोन का सूत्र",
+          conceptsEn: "<b>1. Laws of Exponents:</b> aᵖ·aᵠ = aᵖ⁺ᵠ; (aᵖ)ᵠ = aᵖᵠ; a⁻ⁿ = 1/aⁿ.<br><b>2. Remainder & Factor Theorem:</b> If p(a) = 0, then (x - a) is a factor of p(x).<br><b>3. Heron's Formula:</b> Area of triangle = <code>√[s(s - a)(s - b)(s - c)]</code>, where semi-perimeter <code>s = (a + b + c)/2</code>.",
+          conceptsHi: "<b>हीरोन का सूत्र:</b> त्रिभुज का क्षेत्रफल = <code>√[s(s - a)(s - b)(s - c)]</code>, जहाँ अर्धपरिमाप <code>s = (a + b + c)/2</code>।",
+          glossary: "Rationalisation = हर का परिमेयकरण | Semi-perimeter = अर्धपरिमाप | Congruence = सर्वांगसमता",
+          book: [
+            { qEn: "Q1: Rationalise the denominator of 1/(√7 - √6), and find area of triangle with sides 13 cm, 14 cm, 15 cm.", qHi: "प्रश्न 1: 1/(√7 - √6) के हर का परिमेयकरण करें तथा 13 cm, 14 cm, 15 cm भुजाओं वाले त्रिभुज का क्षेत्रफल ज्ञात करें।", solEn: "<b>Part 1:</b> Multiply by (√7 + √6)/(√7 + √6) = (√7 + √6)/(7 - 6) = <b>√7 + √6</b>.<br><b>Part 2:</b> s = (13 + 14 + 15)/2 = 21 cm. Area = √[21 × 8 × 7 × 6] = √7056 = <b>84 cm²</b>.", solHi: "<b>भाग 1: √7 + √6</b>। <b>भाग 2:</b> s = 21 cm ⇒ क्षेत्रफल = <b>84 cm²</b>।" }
+          ],
+          guess: [
+            { marks: 1, diff: "Easy", qEn: "Every rational number is a:", qHi: "प्रत्येक परिमेय संख्या होती है एक:", optsEn: ["Natural number", "Integer", "Real number", "Whole number"], optsHi: ["प्राकृत संख्या", "पूर्णांक", "वास्तविक संख्या", "पूर्ण संख्या"], ans: 2 },
+            { marks: 3, diff: "Medium", qEn: "Find the value of k if (x - 1) is a factor of p(x) = 4x³ + 3x² - 4x + k.", qHi: "यदि (x - 1), p(x) = 4x³ + 3x² - 4x + k का गुणनखंड है, तो k ज्ञात करें।", solEn: "p(1) = 0 ⇒ 4(1)³ + 3(1)² - 4(1) + k = 0 ⇒ 4 + 3 - 4 + k = 0 ⇒ <b>k = -3</b>.", solHi: "p(1) = 0 रखने पर 3 + k = 0 ⇒ <b>k = -3</b>।" }
+          ]
+        }
+      ]
+    },
+    {
+      id: "c9_sci", titleEn: "Class 9 Science, SST, English & Hindi", titleHi: "कक्षा 9 विज्ञान, सामाजिक विज्ञान, अंग्रेज़ी व हिंदी",
+      badge: "Class 9 • Science + SST + Lang", color: "#dcfce7", textColor: "#166534",
+      descEn: "Matter, Atoms & Molecules, Cell & Tissues, Motion, Laws of Motion, Gravitation, Work & Energy, French Revolution & Democracy.",
+      descHi: "पदार्थ, परमाणु व अणु, कोशिका व ऊतक, गति, बल व गति के नियम, गुरुत्वाकर्षण, कार्य व ऊर्जा।",
+      lessons: [
+        {
+          id: "c9_s1", num: "Sci + SST", titleEn: "Equations of Motion, Newton's Laws, Cell & Gravitation", titleHi: "गति के समीकरण, न्यूटन के नियम व गुरुत्वाकर्षण",
+          conceptsEn: "<b>3 Equations of Motion:</b> (1) v = u + at, (2) s = ut + ½at², (3) v² - u² = 2as.<br><b>Newton's 2nd Law:</b> F = m × a (Unit: Newton).<br><b>Cell Organelles:</b> Mitochondria (Powerhouse), Ribosome (Protein factory), Lysosome (Suicidal bag).",
+          conceptsHi: "<b>गति के समीकरण:</b> v = u + at; s = ut + ½at²; v² - u² = 2as। <b>बल:</b> F = ma। <b>माइटोकॉन्ड्रिया:</b> कोशिका का बिजलीघर।",
+          glossary: "Inertia = जड़त्व | Momentum = संवेग | Velocity = वेग | Acceleration = त्वरण",
+          book: [
+            { qEn: "Q1: A car accelerates uniformly from 18 km/h to 36 km/h in 5 s. Calculate acceleration and distance covered.", qHi: "प्रश्न 1: एक कार 5 सेकंड में 18 km/h से 36 km/h का वेग प्राप्त करती है। त्वरण और तय दूरी ज्ञात करें।", solEn: "u = 18 × 5/18 = 5 m/s; v = 36 × 5/18 = 10 m/s; t = 5 s.<br>a = (v - u)/t = (10 - 5)/5 = <b>1 m/s²</b>.<br>s = ut + ½at² = 5(5) + ½(1)(25) = 25 + 12.5 = <b>37.5 m</b>.", solHi: "a = <b>1 m/s²</b>; तय दूरी s = <b>37.5 m</b>।" }
+          ],
+          guess: [
+            { marks: 1, diff: "Easy", qEn: "Which cell organelle is known as the 'Powerhouse of the Cell'?", qHi: "किस कोशिकांग को 'कोशिका का बिजलीघर' कहा जाता है?", optsEn: ["Ribosome", "Golgi body", "Mitochondria", "Lysosome"], optsHi: ["राइबोसोम", "गॉल्जीकाय", "माइटोकॉन्ड्रिया", "लाइसोसोम"], ans: 2 }
+          ]
+        }
+      ]
+    }
+  ],
+  "11": [
+    {
+      id: "c11_sci_math", titleEn: "Class 11 Science & Maths (Physics, Chemistry, Biology, Maths)", titleHi: "कक्षा 11 विज्ञान व गणित (भौतिकी, रसायन, जीवविज्ञान, गणित)",
+      badge: "Class 11 • CBSE & HBSE Senior Sec", color: "#dbeafe", textColor: "#1e40af",
+      descEn: "Sets & Trigonometry, Mole Concept & Atomic Structure, Kinematics, Laws of Motion, Thermodynamics & Cell Cycle.",
+      descHi: "समुच्चय व त्रिकोणमिति, मोल संकल्पना, गतिकी, ऊष्मागतिकी और कोशिका चक्र।",
+      lessons: [
+        {
+          id: "c11_l1", num: "PCM + PCB", titleEn: "Trigonometry, Mole Concept, Projectile Motion & Cell Division", titleHi: "त्रिकोणमिति, मोल संकल्पना, प्रक्षेप्य गति व कोशिका विभाजन",
+          conceptsEn: "<b>Maths:</b> sin(A ± B) = sin A cos B ± cos A sin B; cos 2x = cos²x - sin²x = 1 - 2sin²x.<br><b>Chemistry:</b> 1 Mole = 6.022 × 10²³ particles; Molarity M = moles of solute / Vol of solution (L).<br><b>Physics:</b> Projectile Range R = (u² sin 2θ)/g; Max Height H = (u² sin²θ)/(2g).",
+          conceptsHi: "<b>रसायन:</b> 1 मोल = 6.022 × 10²³ कण। <b>भौतिकी:</b> प्रक्षेप्य परास R = (u² sin 2θ)/g।",
+          glossary: "Avogadro Number = आवोगाद्रो संख्या | Enthalpy = एन्थैल्पी | Mitosis = समसूत्री विभाजन",
+          book: [
+            { qEn: "Q1: Calculate the number of moles and molecules in 44 g of CO₂ (Molar mass = 44 g/mol).", qHi: "प्रश्न 1: 44 g CO₂ में मोलों और अणुओं की संख्या ज्ञात करें।", solEn: "Moles = Given mass / Molar mass = 44 / 44 = <b>1 mole</b>.<br>Molecules = 1 × 6.022 × 10²³ = <b>6.022 × 10²³ molecules</b>.", solHi: "मोल = <b>1 मोल</b>; अणुओं की संख्या = <b>6.022 × 10²³</b>।" }
+          ],
+          guess: [
+            { marks: 1, diff: "Medium", qEn: "At what angle of projection is the horizontal range of a projectile maximum?", qHi: "प्रक्षेप्य का क्षैतिज परास किस प्रक्षेपण कोण पर अधिकतम होता है?", optsEn: ["30°", "45°", "60°", "90°"], optsHi: ["30°", "45°", "60°", "90°"], ans: 1 }
+          ]
+        }
+      ]
+    },
+    {
+      id: "c11_arts_comm", titleEn: "Class 11 Commerce, Arts, English & Hindi", titleHi: "कक्षा 11 कॉमर्स, आर्ट्स, अंग्रेज़ी व हिंदी",
+      badge: "Class 11 • Commerce & Humanities", color: "#fef3c7", textColor: "#92400e",
+      descEn: "Accountancy (Journal & Ledger), Business Studies, Micro Economics, Indian Constitution & Hornbill/Snapshots.",
+      descHi: "लेखाशास्त्र (जर्नल व खाता बही), व्यवसाय अध्ययन, व्यष्टि अर्थशास्त्र व भारतीय संविधान।",
+      lessons: [
+        {
+          id: "c11_ac1", num: "Comm + Arts", titleEn: "Golden Rules of Accounting, Elasticity of Demand & Constitution", titleHi: "लेखांकन के स्वर्णिम नियम, मांग की लोच व संविधान",
+          conceptsEn: "<b>3 Golden Rules of Accounting:</b> (1) Personal: Debit the receiver, Credit the giver. (2) Real: Debit what comes in, Credit what goes out. (3) Nominal: Debit all expenses & losses, Credit all incomes & gains.",
+          conceptsHi: "<b>लेखांकन के 3 नियम:</b> व्यक्तिगत (पाने वाला डेबिट, देने वाला क्रेडिट), वास्तविक (आने वाली वस्तु डेबिट, जाने वाली क्रेडिट), नाममात्र (व्यय/हानि डेबिट, आय/लाभ क्रेडिट)।",
+          glossary: "Debit = नामे | Credit = जमा | Depreciation = मूल्यह्रास | Fundamental Rights = मौलिक अधिकार",
+          book: [
+            { qEn: "Q1: Pass Journal Entry: Started business with cash Rs 1,00,000 and paid rent Rs 5,000.", qHi: "प्रश्न 1: जर्नल प्रविष्टि करें: 1,00,000 रुपये नकद से व्यापार प्रारंभ किया और 5,000 रुपये किराया दिया।", solEn: "1. Cash A/c Dr. 1,00,000 To Capital A/c 1,00,000.<br>2. Rent A/c Dr. 5,000 To Cash A/c 5,000.", solHi: "1. Cash A/c Dr. 1,00,000 To Capital A/c 1,00,000। 2. Rent A/c Dr. 5,000 To Cash A/c 5,000।" }
+          ],
+          guess: [
+            { marks: 1, diff: "Easy", qEn: "Which Fundamental Right was called the 'Heart and Soul of the Indian Constitution' by Dr. B.R. Ambedkar?", qHi: "डॉ. भीमराव अंबेडकर ने किस मौलिक अधिकार को 'संविधान की आत्मा' कहा था?", optsEn: ["Right to Equality", "Right to Freedom", "Right to Constitutional Remedies (Art. 32)", "Right to Education"], optsHi: ["समानता का अधिकार", "स्वतंत्रता का अधिकार", "संवैधानिक उपचारों का अधिकार (अनुच्छेद 32)", "शिक्षा का अधिकार"], ans: 2 }
+          ]
+        }
+      ]
+    }
+  ],
+  "12": [
+    {
+      id: "c12_sci_math", titleEn: "Class 12 Science & Maths (Board Exam Master — CBSE & HBSE)", titleHi: "कक्षा 12 विज्ञान व गणित (बोर्ड परीक्षा मास्टर)",
+      badge: "Class 12 • Board Exam Pro", color: "#dbeafe", textColor: "#1e40af",
+      descEn: "Matrices, Calculus (Differentiation & Integration), Electrostatics, Current Electricity, Optics, Organic Chemistry, Genetics & Biotechnology.",
+      descHi: "आव्यूह, अवकलन व समाकलन, स्थिरवैद्युतिकी, प्रकाशिकी, कार्बनिक रसायन, आनुवंशिकी व जैव प्रौद्योगिकी।",
+      lessons: [
+        {
+          id: "c12_l1", num: "PCM + PCB", titleEn: "Calculus Formulas, Electrostatics, Organic Named Reactions & DNA", titleHi: "कैलकुलस सूत्र, स्थिरवैद्युतिकी, कार्बनिक अभिक्रियाएँ व DNA",
+          conceptsEn: "<b>Calculus:</b> d/dx(xⁿ) = nxⁿ⁻¹; d/dx(sin x) = cos x; ∫xⁿ dx = xⁿ⁺¹/(n+1) + C.<br><b>Physics:</b> Coulomb's Law F = (1/4πε₀)(q₁q₂/r²); Gauss's Law Φ = q/ε₀.<br><b>Chemistry:</b> Aldol Condensation, Cannizzaro Reaction, Reimer-Tiemann Reaction.<br><b>Biology:</b> DNA Double Helix (Watson & Crick), PCR (Taq polymerase), Mendel's Disorders.",
+          conceptsHi: "<b>गणित:</b> d/dx(xⁿ) = nxⁿ⁻¹; ∫xⁿ dx = xⁿ⁺¹/(n+1) + C। <b>भौतिकी:</b> कूलॉम का नियम व गॉस प्रमेय। <b>जीवविज्ञान:</b> DNA संरचना व PCR तकनीक।",
+          glossary: "Integration = समाकलन | Differentiation = अवकलन | Permittivity = विद्युतशीलता | Transcription = अनुलेखन",
+          book: [
+            { qEn: "Q1: Differentiate y = sin(x²) + e³ˣ with respect to x, and state Gauss's Law in Electrostatics.", qHi: "प्रश्न 1: y = sin(x²) + e³ˣ का अवकलन करें तथा स्थिरवैद्युतिकी में गॉस का नियम लिखें।", solEn: "<b>Part 1:</b> dy/dx = <b>2x cos(x²) + 3e³ˣ</b>.<br><b>Part 2:</b> Total electric flux through a closed surface is equal to 1/ε₀ times the total charge enclosed: <code>Φ = ∮E·dA = q_enclosed / ε₀</code>.", solHi: "<b>भाग 1:</b> dy/dx = <b>2x cos(x²) + 3e³ˣ</b>। <b>भाग 2:</b> किसी बंद पृष्ठ से गुजरने वाला कुल विद्युत फ्लक्स उसके भीतर स्थित कुल आवेश का 1/ε₀ गुना होता है।" }
+          ],
+          guess: [
+            { marks: 1, diff: "Medium", qEn: "What is the SI unit of electric flux?", qHi: "विद्युत फ्लक्स का SI मात्रक क्या है?", optsEn: ["N·m²/C", "N/C", "C/m²", "Volt/m"], optsHi: ["N·m²/C", "N/C", "C/m²", "Volt/m"], ans: 0 },
+            { marks: 1, diff: "Easy", qEn: "Which enzyme is used in PCR (Polymerase Chain Reaction) to amplify DNA?", qHi: "DNA के प्रवर्धन (PCR) में किस एंजाइम का उपयोग होता है?", optsEn: ["DNA Ligase", "Taq Polymerase", "Restriction Endonuclease", "Amylase"], optsHi: ["DNA लाइगेज", "Taq पॉलीमरेज़", "प्रतिबंधन एंडोन्यूक्लिएज", "एमिलेज"], ans: 1 }
+          ]
+        }
+      ]
+    },
+    {
+      id: "c12_arts_comm", titleEn: "Class 12 Commerce, Arts, English & Hindi (CBSE & HBSE)", titleHi: "कक्षा 12 कॉमर्स, आर्ट्स, अंग्रेज़ी व हिंदी",
+      badge: "Class 12 • Board Exam Pro", color: "#fce7f3", textColor: "#9d174d",
+      descEn: "Partnership & Company Accounts, Macro Economics (National Income & Money/Banking), Indian History (Harappa to 1947), Polity & Flamingo/Vistas.",
+      descHi: "साझेदारी व कंपनी खाते, समष्टि अर्थशास्त्र (राष्ट्रीय आय व बैंकिंग), भारतीय इतिहास व राजनीति विज्ञान।",
+      lessons: [
+        {
+          id: "c12_ac1", num: "Comm + Arts", titleEn: "National Income, RBI Monetary Policy, Harappan Seals & Flamingo", titleHi: "राष्ट्रीय आय, मौद्रिक नीति, हड़प्पा व अंग्रेज़ी साहित्य",
+          conceptsEn: "<b>Macro Economics:</b> GDP_MP - Depreciation = NDP_MP; NDP_FC + NFIA = NNP_FC (National Income).<br><b>RBI Tools:</b> Repo Rate, Reverse Repo Rate, CRR, SLR, Open Market Operations.<br><b>History:</b> Harappan Civilisation (2600–1900 BCE), Mauryan Empire (Ashoka), Bhakti-Sufi Traditions, Mahatma Gandhi & National Movement.",
+          conceptsHi: "<b>राष्ट्रीय आय:</b> NNP_FC = NDP_FC + विदेशों से शुद्ध कारक आय (NFIA)। <b>RBI मौद्रिक नीति:</b> रेपो रेट, CRR, SLR।",
+          glossary: "Depreciation = मूल्यह्रास | Repo Rate = रेपो दर | Fiscal Policy = राजकोषीय नीति",
+          book: [
+            { qEn: "Q1: Differentiate between Repo Rate and Bank Rate, and explain 'The Last Lesson' theme.", qHi: "प्रश्न 1: रेपो दर और बैंक दर में अंतर लिखें तथा 'The Last Lesson' का मुख्य संदेश बताएं।", solEn: "<b>Repo Rate:</b> Rate at which RBI lends short-term funds to commercial banks against securities; <b>Bank Rate:</b> Long-term lending rate without collateral.<br><b>The Last Lesson (Alphonse Daudet):</b> Highlights linguistic chauvinism and the importance of one's mother tongue (French in Alsace-Lorraine).", solHi: "<b>रेपो दर:</b> अल्पकालिक ऋण दर; <b>बैंक दर:</b> दीर्घकालिक ऋण दर। <b>The Last Lesson:</b> मातृभाषा के महत्व को दर्शाता है।" }
+          ],
+          guess: [
+            { marks: 1, diff: "Easy", qEn: "Who is the author of 'The Last Lesson' in Class 12 Flamingo?", qHi: "कक्षा 12 के पाठ 'The Last Lesson' के लेखक कौन हैं?", optsEn: ["Alphonse Daudet", "Anees Jung", "William Douglas", "Selma Lagerlof"], optsHi: ["अल्फोंस डौडेट", "अनीस जंग", "विलियम डगलस", "सेल्मा लेगरलॉफ"], ans: 0 }
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+function getActiveDB() {
+  if (state.activeClass === '10') return DB;
+  return ALL_CLASSES_DB[state.activeClass] || DB;
+}
+function selectClassLevel(cls) {
+  state.activeClass = String(cls);
+  SafeStore.set('c10_active_class', state.activeClass);
+  state.view = 'home';
+  state.subjectId = null;
+  state.lessonId = null;
+  state.search = '';
+  document.querySelectorAll('.qnav-btn').forEach(b => b.classList.remove('active'));
+  const hb = document.getElementById('nav_home');
+  if (hb) hb.classList.add('active');
+  render();
+}
+function selectBoardType(brd) {
+  state.activeBoard = brd;
+  SafeStore.set('c10_active_board', brd);
+  render();
+}
+
+// Blink-of-an-Eye (0ms) Universal Step-by-Step Solver (Arithmetic + Quadratic + Percentage + LCM/HCF + All-Class Search)
+function instantBlinkSolve(rawInput) {
+  const txt = (rawInput || '').trim();
+  if (!txt) return '';
+  let blocks = [];
+
+  // 1. Direct Arithmetic / Percentage / Power Calculator
+  const calc = tryLocalMathEval(txt);
+  if (calc !== null) {
+    blocks.push(`<div style="padding:12px;border-radius:12px;background:var(--green-bg);color:var(--green-text);margin-bottom:10px;">
+      <div style="font-weight:800;font-size:0.95rem;">⚡ Blink-Fast Step-by-Step Calculation (0ms):</div>
+      <div style="margin-top:4px;"><b>Expression:</b> ${txt}</div>
+      <div><b>Final Verified Answer:</b> <span style="font-size:1.1rem;font-weight:900;">${calc}</span></div>
+    </div>`);
+  }
+
+  // 2. Instant Quadratic Equation Solver (e.g., x^2 - 5x + 6 = 0 or 2x^2 + 3x - 2 = 0)
+  const qMatch = txt.replace(/\s+/g, '').match(/^([+-]?\d*)x\^?2([+-]\d+)x([+-]\d+)=0$/i);
+  if (qMatch) {
+    const a = qMatch[1] === '' || qMatch[1] === '+' ? 1 : (qMatch[1] === '-' ? -1 : parseFloat(qMatch[1]));
+    const b = parseFloat(qMatch[2]);
+    const c = parseFloat(qMatch[3]);
+    const D = b * b - 4 * a * c;
+    let rootHtml = '';
+    if (D > 0) {
+      const r1 = ((-b + Math.sqrt(D)) / (2 * a)).toFixed(4).replace(/\.?0+$/, '');
+      const r2 = ((-b - Math.sqrt(D)) / (2 * a)).toFixed(4).replace(/\.?0+$/, '');
+      rootHtml = `D > 0 ⇒ Two distinct real roots: <b>x = ${r1}</b> and <b>x = ${r2}</b>`;
+    } else if (D === 0) {
+      const r = (-b / (2 * a)).toFixed(4).replace(/\.?0+$/, '');
+      rootHtml = `D = 0 ⇒ Two equal real roots: <b>x = ${r}, ${r}</b>`;
+    } else {
+      rootHtml = `D < 0 ⇒ <b>No real roots</b> (Complex roots)`;
+    }
+    blocks.push(`<div style="padding:12px;border-radius:12px;background:var(--concept-bg);border:1px solid var(--primary);margin-bottom:10px;">
+      <div style="font-weight:800;color:var(--primary);">📐 Instant Quadratic Step-by-Step Solution:</div>
+      <div><b>Step 1 (Compare with ax² + bx + c = 0):</b> a = ${a}, b = ${b}, c = ${c}</div>
+      <div><b>Step 2 (Discriminant D = b² - 4ac):</b> D = (${b})² - 4(${a})(${c}) = <b>${D}</b></div>
+      <div><b>Step 3 (Quadratic Formula x = [-b ± √D] / 2a):</b> ${rootHtml}</div>
+    </div>`);
+  }
+
+  // 3. Instant HCF & LCM Solver (e.g., "hcf lcm 26 91" or "lcm 12 18")
+  const nums = txt.match(/\d+/g);
+  if (/hcf|lcm/i.test(txt) && nums && nums.length >= 2) {
+    const x = parseInt(nums[0], 10), y = parseInt(nums[1], 10);
+    if (x > 0 && y > 0) {
+      const gcd = (p, q) => q === 0 ? p : gcd(q, p % q);
+      const h = gcd(x, y);
+      const l = (x * y) / h;
+      blocks.push(`<div style="padding:12px;border-radius:12px;background:var(--concept-bg);border:1px solid var(--primary);margin-bottom:10px;">
+        <div style="font-weight:800;color:var(--primary);">🔢 Instant HCF & LCM Step-by-Step Solution:</div>
+        <div><b>Numbers:</b> ${x} and ${y}</div>
+        <div><b>HCF(${x}, ${y}) =</b> ${h} | <b>LCM(${x}, ${y}) =</b> (${x} × ${y}) / ${h} = <b>${l}</b></div>
+      </div>`);
+    }
+  }
+
+  // 4. Search across ALL Classes (Class 1 to 12) + Class 10 Full DB!
+  const qLower = txt.toLowerCase();
+  const words = qLower.split(/[^a-zA-Z0-9ऀ-ॿ]+/).filter(w => w.length >= 3);
+  if (words.length) {
+    let allMatches = [];
+    const scanDb = (clsLabel, dbArr) => {
+      dbArr.forEach(subj => {
+        subj.lessons.forEach(les => {
+          les.book.forEach((b, i) => {
+            const hay = (b.qEn + ' ' + b.qHi + ' ' + b.solEn).toLowerCase();
+            let score = 0;
+            words.forEach(w => { if (hay.includes(w)) score++; });
+            if (score > 0) {
+              allMatches.push({
+                score,
+                badge: `Class ${clsLabel} • ${subj.titleEn} • ${les.num}`,
+                qEn: b.qEn, qHi: b.qHi, solEn: b.solEn, solHi: b.solHi
+              });
+            }
+          });
+          les.guess.forEach(g => {
+            const hay = (g.qEn + ' ' + g.qHi + ' ' + (g.solEn || '')).toLowerCase();
+            let score = 0;
+            words.forEach(w => { if (hay.includes(w)) score++; });
+            if (score > 0) {
+              const solE = g.marks === 1 ? `<b>Correct Answer:</b> ${g.optsEn[g.ans]}` : g.solEn;
+              const solH = g.marks === 1 ? `<b>सही उत्तर:</b> ${g.optsHi[g.ans]}` : g.solHi;
+              allMatches.push({
+                score,
+                badge: `Class ${clsLabel} • ${subj.titleEn} • ${les.num} (${g.marks}M)`,
+                qEn: g.qEn, qHi: g.qHi, solEn: solE, solHi: solH
+              });
+            }
+          });
+        });
+      });
+    };
+    scanDb('10', DB);
+    Object.keys(ALL_CLASSES_DB).forEach(k => scanDb(k, ALL_CLASSES_DB[k]));
+    allMatches.sort((a, b) => b.score - a.score);
+    const top = allMatches.slice(0, 6);
+    if (top.length) {
+      blocks.push(`<div style="font-weight:800;color:var(--primary);margin-bottom:8px;">⚡ Class 1 से 12 तक संपूर्ण डेटाबेस से ${top.length} सटीक स्टेप-बाय-स्टेप हल मिले:</div>` +
+        top.map((m, idx) => `
+          <div style="padding:10px 12px;border-radius:12px;background:var(--sub-bg);border:1px solid var(--border);margin-bottom:10px;">
+            <div style="font-size:0.78rem;font-weight:800;color:var(--primary);margin-bottom:4px;">${idx + 1}. ${m.badge}</div>
+            <div style="font-weight:700;margin-bottom:6px;">${m.qEn}</div>
+            <div>${m.solEn}</div>
+            ${state.medium === 'hi' && m.solHi ? `<hr style="border:none;border-top:1px dashed #86efac;margin:6px 0;"><div>${m.solHi}</div>` : ''}
+          </div>
+        `).join(''));
+    }
+  }
+
+  return blocks.join('');
+}
 
 const PYQ_COMPETENCY = [
   {
@@ -4250,7 +4820,7 @@ function toggleSol(id) {
 
 function getAllMCQs() {
   let list = [];
-  DB.forEach(s => {
+  getActiveDB().forEach(s => {
     s.lessons.forEach(l => {
       l.guess.forEach((q, idx) => {
         if (q.marks === 1) {
@@ -4304,10 +4874,10 @@ function formatTime(sec) {
 
 function renderBreadcrumb() {
   const bc = document.getElementById('breadcrumb');
-  let html = `<button class="crumb-btn" onclick="goHome()">🏠 Home</button>`;
+  let html = `<button class="crumb-btn" onclick="goHome()">🏠 Class ${state.activeClass} (${state.activeBoard})</button>`;
   if (state.view === 'home') {
     if (state.subjectId) {
-      const subj = DB.find(s => s.id === state.subjectId);
+      const subj = getActiveDB().find(s => s.id === state.subjectId);
       html += ` <span>›</span> <button class="crumb-btn" onclick="selectSubject('${subj.id}')">${subj.titleEn}</button>`;
       if (state.lessonId) {
         const les = subj.lessons.find(l => l.id === state.lessonId);
@@ -4718,6 +5288,27 @@ function render() {
     const solvedCount = Object.keys(state.answered).length;
     const progressPct = allMcqs.length ? Math.min(100, Math.round((solvedCount / allMcqs.length) * 100)) : 0;
 
+
+    const classesList = ['1','2','3','4','5','6','7','8','9','10','11','12'];
+    const boardsList = ['CBSE + HBSE', 'CBSE Board', 'HBSE (Haryana Board)'];
+    let classDockHtml = `
+      <div class="concept-card" style="padding:12px 14px; margin-bottom:14px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+          <strong style="font-size:0.86rem; color:var(--primary);">🎓 Select Class (कक्षा 1 से 12 चुनें):</strong>
+          <div style="display:flex; gap:5px; flex-wrap:wrap;">
+            ${boardsList.map(b => `<button class="pill ${state.activeBoard === b ? 'active' : ''}" style="font-size:0.72rem;padding:4px 9px;" onclick="selectBoardType('${b}')">${b}</button>`).join('')}
+          </div>
+        </div>
+        <div style="display:flex; gap:6px; overflow-x:auto; padding-bottom:4px;">
+          ${classesList.map(c => `
+            <button class="pill ${state.activeClass === c ? 'active' : ''}" style="white-space:nowrap; padding:6px 12px;" onclick="selectClassLevel('${c}')">
+              Class ${c}${c === '10' ? ' ⭐' : ''}
+            </button>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
     let progressHtml = `
       <div class="progress-banner">
         <div class="pbar-wrap">
@@ -4731,7 +5322,7 @@ function render() {
       </div>
     `;
 
-    let cards = DB.map(s => `
+    let cards = getActiveDB().map(s => `
       <div class="subj-card" onclick="selectSubject('${s.id}')">
         <div>
           <span class="subj-badge" style="background:${s.color}; color:${s.textColor};">${s.badge}</span>
@@ -4742,11 +5333,11 @@ function render() {
         <div style="margin-top:14px; font-weight:700; color:var(--primary); font-size:0.85rem;">Open Lessons →</div>
       </div>
     `).join('');
-    app.innerHTML = progressHtml + `<div class="grid-subjects">${cards}</div>`;
+    app.innerHTML = classDockHtml + progressHtml + `<div class="grid-subjects">${cards}</div>`;
     return;
   }
 
-  const subj = DB.find(s => s.id === state.subjectId);
+  const subj = getActiveDB().find(s => s.id === state.subjectId);
 
   // LEVEL 2
   if (!state.lessonId) {
