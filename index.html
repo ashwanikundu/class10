@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#070b14">
-<title>Class 10 Master Portal • Module 11 (Interactive Progress Tracker & Milestone Hub)</title>
+<title>Class 10 Master Portal • Module 12 (Interactive Quick Revision & Flashcards Hub)</title>
 <style>
   :root {
     --primary: #4f46e5;
@@ -74,15 +74,19 @@
     background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 16px; padding: 20px;
     margin-bottom: 16px; box-shadow: var(--shadow); position: relative; overflow: hidden;
   }
-  .card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: linear-gradient(180deg, #f59e0b, #10b981); }
+  .card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: linear-gradient(180deg, #ec4899, #3b82f6); }
   
   .btn {
-    background: linear-gradient(135deg, #f59e0b, #d97706); color: #090d16; border: none;
+    background: linear-gradient(135deg, #ec4899, #be185d); color: #fff; border: none;
     padding: 10px 18px; border-radius: 10px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem;
   }
   
-  .check-item { display: flex; align-items: center; gap: 12px; background: var(--sub-bg); border: 1px solid var(--border); padding: 12px 16px; border-radius: 10px; margin-top: 10px; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
-  .check-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: #fbbf24; cursor: pointer; }
+  .flashcard {
+    background: var(--sub-bg); border: 2px dashed var(--primary); padding: 30px 20px; border-radius: 14px;
+    text-align: center; cursor: pointer; margin-top: 12px; min-height: 160px; display: flex; flex-direction: column; justify-content: center; align-items: center;
+    transition: all 0.2s;
+  }
+  .flashcard:hover { border-color: #fbbf24; background: rgba(79,70,229,0.08); }
 
   footer { text-align: center; padding: 20px; color: var(--muted); font-size: 0.78rem; }
 </style>
@@ -94,7 +98,7 @@
     <div class="brand-row">
       <div>
         <h1 class="brand-title">Class 10 Master Portal (CBSE & HBSE)</h1>
-        <p class="brand-sub">Module 11: Interactive Progress Tracker & Milestone Hub</p>
+        <p class="brand-sub">Module 12: Interactive Quick Revision & Flashcards Hub</p>
       </div>
       <div class="top-controls">
         <div class="medium-switch">
@@ -113,7 +117,7 @@
 </div>
 
 <footer>
-  Class 10 Master Portal • Module 11 (Progress Hub) • Zero Data Loss Engine
+  Class 10 Master Portal • Module 12 (Flashcards Hub) • Zero Data Loss Engine
 </footer>
 
 <script>
@@ -125,21 +129,35 @@ const SafeStore = {
 let state = {
   medium: SafeStore.get('mp_med', 'en'),
   isDark: SafeStore.get('mp_dark', '1') === '1',
-  progress: JSON.parse(SafeStore.get('mp_prog', '{}'))
+  cardIndex: 0,
+  showAnswer: false
 };
 
-const MODULES_LIST = [
-  { id: 'mod1', titleEn: 'Module 1: Core Architecture & Navigation', titleHi: 'मॉड्यूल 1: कोर आर्किटेक्चर और नेविगेशन' },
-  { id: 'mod2', titleEn: 'Module 2: Mathematics (All 14 Chapters)', titleHi: 'मॉड्यूल 2: गणित (सभी 14 अध्याय)' },
-  { id: 'mod3', titleEn: 'Module 3: Science (All 13 Chapters)', titleHi: 'मॉड्यूल 3: विज्ञान (सभी 13 अध्याय)' },
-  { id: 'mod4', titleEn: 'Module 4: AI Utilities & Voice Assistant', titleHi: 'मॉड्यूल 4: एआई स्कैनर और वॉइस असिस्टेंट' },
-  { id: 'mod5', titleEn: 'Module 5: PDF Generator & Heatmap', titleHi: 'मॉड्यूल 5: पीडीएफ जनरेटर और हीटमैट' },
-  { id: 'mod6', titleEn: 'Module 6: Diagnostics & Cache Manager', titleHi: 'मॉड्यूल 6: डायग्नोस्टिक्स और कैशे मैनेजर' },
-  { id: 'mod7', titleEn: 'Module 7: Interactive Self-Assessment Quiz', titleHi: 'मॉड्यूल 7: इंटरैक्टिव क्विज़ इंजन' },
-  { id: 'mod8', titleEn: 'Module 8: Formula & Theorem Bank', titleHi: 'मॉड्यूल 8: फॉर्मूला और थ्योरम बैंक' },
-  { id: 'mod9', titleEn: 'Module 9: Board Exam Strategy Hub', titleHi: 'मॉड्यूल 9: बोर्ड परीक्षा रणनीति हब' },
-  { id: 'mod10', titleEn: 'Module 10: Formula Practice Hub', titleHi: 'मॉड्यूल 10: फॉर्मूला प्रैक्टिस हब' },
-  { id: 'mod11', titleEn: 'Module 11: Progress Tracker & Milestones', titleHi: 'मॉड्यूल 11: प्रगति ट्रैकर और माइलस्टोन' }
+const FLASHCARDS = [
+  {
+    termEn: "Fundamental Theorem of Arithmetic",
+    termHi: "अंकगणित की आधारभूत प्रमेय",
+    defEn: "Every composite number can be expressed as a product of primes, and this factorization is unique.",
+    defHi: "प्रत्येक भाज्य संख्या को अभाज्य संख्याओं के गुणनफल के रूप में व्यक्त किया जा सकता है और यह गुणनखंड अद्वितीय होता है।"
+  },
+  {
+    termEn: "Ohm's Law",
+    termHi: "ओह्म का नियम",
+    defEn: "At constant temperature, current flowing through a conductor is directly proportional to potential difference across its ends (V = IR).",
+    defHi: "नियत ताप पर चालक में बहने वाली धारा उसके सिरों के विभवांतर के समानुपाती होती है (V = IR)।"
+  },
+  {
+    termEn: "Thales Theorem (BPT)",
+    termHi: "थेल्स प्रमेय (आधारभूत आनुपातिकता प्रमेय)",
+    defEn: "If a line is drawn parallel to one side of a triangle to intersect other two sides, it divides them in the same ratio.",
+    defHi: "यदि किसी त्रिभुज की एक भुजा के समांतर रेखा खींची जाए, तो वह अन्य दो भुजाओं को समान अनुपात में विभाजित करती है।"
+  },
+  {
+    termEn: "Refractive Index",
+    termHi: "अपवर्तनांक",
+    defEn: "The ratio of speed of light in vacuum to speed of light in the given medium (n = c/v).",
+    defHi: "निर्वात में प्रकाश की चाल और माध्यम में प्रकाश की चाल का अनुपात (n = c/v)।"
+  }
 ];
 
 function applyTheme() {
@@ -161,46 +179,49 @@ function setMedium(m) {
 
 function renderBreadcrumb() {
   const bc = document.getElementById('breadcrumb');
-  bc.innerHTML = `<span>🏠 All Utilities • Module 11 (Interactive Progress Tracker)</span>`;
+  bc.innerHTML = `<span>🏠 All Utilities • Module 12 (Interactive Flashcards Hub)</span>`;
 }
 
 function render() {
   renderBreadcrumb();
   const app = document.getElementById('app');
 
-  const completedCount = MODULES_LIST.filter(m => state.progress[m.id]).length;
-  const percent = Math.round((completedCount / MODULES_LIST.length) * 100);
+  const card = FLASHCARDS[state.cardIndex];
 
   app.innerHTML = `
     <div class="card">
-      <h2 style="margin:0 0 8px; font-size:1.15rem;">📈 Portal Completion Progress Tracker</h2>
-      <p style="margin:0 0 14px; font-size:0.85rem; color:var(--muted);">पोर्टल के मॉड्यूल्स की प्रगति को ट्रैक करें और अपनी तैयारी का आकलन करें।</p>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <span style="font-size:0.78rem; font-weight:700; color:var(--muted);">Flashcard ${state.cardIndex + 1} of ${FLASHCARDS.length}</span>
+        <span style="font-size:0.78rem; font-weight:700; color:#fbbf24;">💡 Tap card to flip</span>
+      </div>
       
-      <div style="background:var(--sub-bg); border:1px solid var(--border); padding:14px; border-radius:12px; margin-bottom:14px;">
-        <div style="display:flex; justify-content:space-between; font-weight:800; font-size:0.9rem; margin-bottom:6px;">
-          <span>Overall Progress:</span>
-          <span style="color:#34d399;">${percent}% Completed (${completedCount}/${MODULES_LIST.length} Modules)</span>
-        </div>
-        <div style="width:100%; height:10px; background:var(--border); border-radius:999px; overflow:hidden;">
-          <div style="width:${percent}%; height:100%; background:linear-gradient(90deg, #f59e0b, #10b981); transition: width 0.3s ease;"></div>
-        </div>
+      <div class="flashcard" onclick="state.showAnswer=!state.showAnswer; render();">
+        ${!state.showAnswer ? `
+          <div style="font-size:0.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">Concept / Term</div>
+          <div style="font-size:1.2rem; font-weight:900; color:var(--text);">${state.medium === 'hi' ? card.termHi : card.termEn}</div>
+        ` : `
+          <div style="font-size:0.75rem; color:#34d399; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">Definition / Statement</div>
+          <div style="font-size:1.05rem; font-weight:700; color:#34d399; line-height:1.5;">${state.medium === 'hi' ? card.defHi : card.defEn}</div>
+        `}
       </div>
 
-      <div>
-        ${MODULES_LIST.map(m => `
-          <label class="check-item">
-            <input type="checkbox" ${state.progress[m.id] ? 'checked' : ''} onchange="toggleProgress('${m.id}')">
-            <span>${state.medium === 'hi' ? m.titleHi : m.titleEn}</span>
-          </label>
-        `).join('')}
+      <div style="display:flex; justify-content:space-between; margin-top:16px;">
+        <button class="btn" onclick="prevCard()">← Previous</button>
+        <button class="btn" onclick="nextCard()">Next →</button>
       </div>
     </div>
   `;
 }
 
-function toggleProgress(id) {
-  state.progress[id] = !state.progress[id];
-  SafeStore.set('mp_prog', JSON.stringify(state.progress));
+function nextCard() {
+  state.cardIndex = (state.cardIndex + 1) % FLASHCARDS.length;
+  state.showAnswer = false;
+  render();
+}
+
+function prevCard() {
+  state.cardIndex = (state.cardIndex - 1 + FLASHCARDS.length) % FLASHCARDS.length;
+  state.showAnswer = false;
   render();
 }
 
