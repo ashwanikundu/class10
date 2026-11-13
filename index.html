@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#070b14">
-<title>Class 10 Master Portal • Module 2 (Mathematics Chapters 1-14)</title>
+<title>Class 10 Master Portal • Module 3 (Science Complete - All 13 Chapters)</title>
 <style>
   :root {
     --primary: #4f46e5;
@@ -77,7 +77,7 @@
   }
   .card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: linear-gradient(180deg, #10b981, #4f46e5); }
   
-  .subj-badge { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 0.72rem; font-weight: 800; background: #dbeafe; color: #1e40af; margin-bottom: 8px; }
+  .subj-badge { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 0.72rem; font-weight: 800; background: #dcfce7; color: #166534; margin-bottom: 8px; }
   
   .btn-open { display: inline-block; margin-top: 14px; font-weight: 800; color: var(--primary); font-size: 0.88rem; cursor: pointer; }
   .btn-open:hover { text-decoration: underline; }
@@ -113,7 +113,7 @@
     <div class="brand-row">
       <div>
         <h1 class="brand-title">Class 10 Master Portal (CBSE & HBSE)</h1>
-        <p class="brand-sub">Module 2: Mathematics Complete (All 14 Chapters + Guess Papers)</p>
+        <p class="brand-sub">Module 3: Science Complete (All 13 Chapters + Guess Papers)</p>
       </div>
       <div class="top-controls">
         <div class="medium-switch">
@@ -132,7 +132,7 @@
 </div>
 
 <footer>
-  Class 10 Master Portal • Module 2 (Mathematics) • Zero Data Loss Engine
+  Class 10 Master Portal • Module 3 (Science) • Zero Data Loss Engine
 </footer>
 
 <script>
@@ -144,7 +144,7 @@ const SafeStore = {
 let state = {
   medium: SafeStore.get('mp_med', 'en'),
   isDark: SafeStore.get('mp_dark', '1') === '1',
-  view: 'home', // 'home', 'math_chapters', 'math_lesson'
+  view: 'home', // 'home', 'sci_chapters', 'sci_lesson'
   lessonId: null,
   activeTab: 'book'
 };
@@ -169,158 +169,171 @@ function setMedium(m) {
 function renderBreadcrumb() {
   const bc = document.getElementById('breadcrumb');
   if (state.view === 'home') {
-    bc.innerHTML = `<span>🏠 All Subjects (सभी विषय) • Module 2 Active</span>`;
-  } else if (state.view === 'math_chapters') {
-    bc.innerHTML = `<span class="crumb-link" onclick="state.view='home';render();">All Subjects</span> › <span>Mathematics (14 Chapters)</span>`;
-  } else if (state.view === 'math_lesson') {
-    const les = MATH_LESSONS.find(l => l.id === state.lessonId);
-    bc.innerHTML = `<span class="crumb-link" onclick="state.view='home';render();">All Subjects</span> › <span class="crumb-link" onclick="state.view='math_chapters';state.lessonId=null;render();">Mathematics</span> › <span>${les.num}: ${state.medium==='hi'?les.titleHi:les.titleEn}</span>`;
+    bc.innerHTML = `<span>🏠 All Subjects (सभी विषय) • Module 3 Active</span>`;
+  } else if (state.view === 'sci_chapters') {
+    bc.innerHTML = `<span class="crumb-link" onclick="state.view='home';render();">All Subjects</span> › <span>Science (13 Chapters)</span>`;
+  } else if (state.view === 'sci_lesson') {
+    const les = SCI_LESSONS.find(l => l.id === state.lessonId);
+    bc.innerHTML = `<span class="crumb-link" onclick="state.view='home';render();">All Subjects</span> › <span class="crumb-link" onclick="state.view='sci_chapters';state.lessonId=null;render();">Science</span> › <span>${les.num}: ${state.medium==='hi'?les.titleHi:les.titleEn}</span>`;
   }
 }
 
-const MATH_LESSONS = [
+const SCI_LESSONS = [
   {
-    id: 'm1', num: 'Ch 1', titleEn: 'Real Numbers', titleHi: 'वास्तविक संख्याएँ',
-    conceptEn: 'Fundamental Theorem of Arithmetic: Every composite number can be expressed uniquely as a product of primes. For any two positive integers a and b: HCF(a, b) × LCM(a, b) = a × b.',
-    conceptHi: 'अंकगणित की आधारभूत प्रमेय: प्रत्येक भाज्य संख्या को अभाज्य संख्याओं के गुणनफल के रूप में व्यक्त किया जा सकता है। HCF × LCM = a × b.',
-    wordsEn: 'Composite Number = भाज्य संख्या | Prime Factorisation = अभाज्य गुणनखंडन | Irrational = अपरिमेय',
-    wordsHi: 'Composite Number = भाज्य संख्या | Prime Factorisation = अभाज्य गुणनखंडन | Irrational = अपरिमेय',
+    id: 's1', num: 'Ch 1', titleEn: 'Chemical Reactions and Equations', titleHi: 'रासायनिक अभिक्रियाएँ एवं समीकरण',
+    conceptEn: 'Balancing chemical equations and types of reactions (Combination, Decomposition, Displacement, Double displacement, Oxidation and Reduction).',
+    conceptHi: 'रासायनिक समीकरण को संतुलित करना और अभिक्रियाओं के प्रकार (संयोजन, वियोजन, विस्थापन, द्विविस्थापन, उपचयन और अपचयन).',
+    wordsEn: 'Precipitation = अवक्षेपण | Oxidation = उपचयन | Reduction = अपचयन | Corrosion = संक्षारण',
+    wordsHi: 'Precipitation = अवक्षेपण | Oxidation = उपचयन | Reduction = अपचयन | Corrosion = संक्षारण',
     exercises: [
-      { qEn: 'Find the LCM and HCF of 26 and 91 and verify that LCM × HCF = product of the two numbers.', qHi: '26 और 91 के HCF और LCM ज्ञात कीजिए तथा जाँच कीजिए कि LCM × HCF = दोनों संख्याओं का गुणनफल है।', sol: '<b>HCF = 13, LCM = 182</b><br>Verification: 182 × 13 = 2366 = 26 × 91 (सत्यापित)।' },
-      { qEn: 'Prove that √5 is irrational.', qHi: 'सिद्ध कीजिए कि √5 एक अपरिमेय संख्या है।', sol: 'विरोधाभास विधि द्वारा: मान लीजिए √5 = a/b, वर्ग करने पर 5b² = a², जिससे सिद्ध होता है कि √5 अपरिमेय है।' }
+      { qEn: 'Why should a magnesium ribbon be cleaned before burning in air?', qHi: 'वायु में जलाने से पहले मैग्नीशियम रिबन को साफ क्यों किया जाता है?', sol: 'मैग्नीशियम रिबन पर ऑक्साइड की परत हटाने के लिए रेगमाल से साफ किया जाता है।' }
     ],
-    guess1: [{ qEn: 'Explain why 7 × 11 × 13 + 13 is a composite number.', qHi: 'समझाइए कि 7 × 11 × 13 + 13 एक भाज्य संख्या क्यों है?', sol: '13 कॉमन लेने पर 13(77 + 1) = 13 × 78, अतः यह भाज्य संख्या है।' }],
-    guess2: [{ qEn: 'Prove that 3 + 2√5 is irrational.', qHi: 'सिद्ध कीजिए कि 3 + 2√5 एक अपरिमेय संख्या है।', sol: 'मान लीजिए यह परिमेय है, समीकरण को हल करने पर √5 परिमेय प्राप्त होता है जो सत्य नहीं है। अतः यह अपरिमेय है।' }]
+    guess1: [{ qEn: 'Translate and balance: Hydrogen gas combines with nitrogen to form ammonia.', qHi: 'समीकरण लिखें और संतुलित करें: हाइड्रोजन नाइट्रोजन से मिलकर अमोनिया बनाती है।', sol: '3H₂ + N₂ → 2NH₃' }],
+    guess2: [{ qEn: 'What is a precipitation reaction? Give an example.', qHi: 'अवक्षेपण अभिक्रिया क्या है? उदाहरण दें।', sol: 'वह अभिक्रिया जिसमें अघुलनशील अवक्षेप बने। जैसे BaCl₂ + Na₂SO₄ → BaSO₄↓ + 2NaCl.' }]
   },
   {
-    id: 'm2', num: 'Ch 2', titleEn: 'Polynomials', titleHi: 'बहुपद',
-    conceptEn: 'Sum of zeroes (α + β) = -b/a, Product of zeroes (αβ) = c/a for quadratic polynomial ax² + bx + c.',
-    conceptHi: 'द्विघात बहुपद के शून्यकों का योग (α + β) = -b/a और गुणनफल (αβ) = c/a.',
-    wordsEn: 'Polynomial = बहुपद | Zeroes = शून्यक | Coefficients = गुणांक',
-    wordsHi: 'Polynomial = बहुपद | Zeroes = शून्यक | Coefficients = गुणांक',
-    exercises: [{ qEn: 'Find zeroes of x² - 2x - 8 and verify relationship.', qHi: 'x² - 2x - 8 के शून्यक ज्ञात कीजिए और संबंध की जाँच कीजिए।', sol: 'शून्यक 4 और -2 हैं। योग = 2, गुणनफल = -8।' }],
-    guess1: [{ qEn: 'Find quadratic polynomial with sum and product as -3 and 2.', qHi: 'शून्यकों का योग -3 और गुणनफल 2 वाला बहुपद ज्ञात कीजिए।', sol: 'x² + 3x + 2' }],
-    guess2: [{ qEn: 'If one zero is reciprocal of other in (a² + 9)x² + 13x + 6a, find a.', qHi: 'यदि एक शून्यक दूसरे का व्युत्क्रम हो, तो a ज्ञात कीजिए।', sol: 'गुणनफल 1 रखने पर a = 3 प्राप्त होता है।' }]
+    id: 's2', num: 'Ch 2', titleEn: 'Acids, Bases and Salts', titleHi: 'अम्ल, क्षारक एवं लवण',
+    conceptEn: 'pH scale, indicator properties, chemical properties of acids and bases, preparation and uses of salts.',
+    conceptHi: 'pH पैमाना, सूचक, अम्ल व क्षार के गुण, और लवणों के निर्माण व उपयोग।',
+    wordsEn: 'Indicator = सूचक | Neutralization = उदासीनीकरण | Antacid = प्रतिअम्ल',
+    wordsHi: 'Indicator = सूचक | Neutralization = उदासीनीकरण | Antacid = प्रतिअम्ल',
+    exercises: [
+      { qEn: 'Why does distilled water not conduct electricity, whereas rain water does?', qHi: 'आसुत जल विद्युत का चालन क्यों नहीं करता, जबकि वर्षा जल करता है?', sol: 'आसुत जल में आयन नहीं होते, वर्षा जल में अशुद्धियाँ व अम्ल होते हैं।' }
+    ],
+    guess1: [{ qEn: 'What is Plaster of Paris? How is it prepared?', qHi: 'प्लास्टर ऑफ पेरिस क्या है? इसे कैसे बनाया जाता है?', sol: 'जिप्सम को 373K पर गर्म करके बनाया जाता है: CaSO₄·2H₂O → (CaSO₄)₂·H₂O + 1½ H₂O.' }],
+    guess2: [{ qEn: 'Why does a milkman add a very small amount of baking soda to fresh milk?', qHi: 'ग्वाला ताजे दूध में बेकिंग सोडा क्यों मिलाता है?', sol: 'दूध को अम्लीय होने और फटने से बचाने के लिए।' }]
   },
   {
-    id: 'm3', num: 'Ch 3', titleEn: 'Pair of Linear Equations in Two Variables', titleHi: 'दो चरों वाले रैखिक समीकरण युग्म',
-    conceptEn: 'Graphical and algebraic methods for solving linear equations.',
-    conceptHi: 'रैखिक समीकरण युग्म को हल करने की बीजगणितीय विधियाँ।',
-    wordsEn: 'Consistent = संगत | Substitution = प्रतिस्थापन | Elimination = विलोपन',
-    wordsHi: 'Consistent = संगत | Substitution = प्रतिस्थापन | Elimination = विलोपन',
-    exercises: [{ qEn: 'Solve 2x + 3y = 11 and 2x - 4y = -24.', qHi: '2x + 3y = 11 और 2x - 4y = -24 को हल करें।', sol: 'x = -2, y = 5' }],
-    guess1: [{ qEn: '10 students took part in quiz. If girls are 4 more than boys, find count.', qHi: '10 विद्यार्थियों ने पहेली में भाग लिया। यदि लड़कियाँ लड़कों से 4 अधिक हों, तो संख्या बताएँ।', sol: 'लड़के 3, लड़कियाँ 7' }],
-    guess2: [{ qEn: 'Solve graphically: x - y = 1 and 2x + 3y = 12.', qHi: 'ग्राफ़ से हल करें: x - y = 1 और 2x + 3y = 12.', sol: 'प्रतिच्छेद बिंदु (3, 2)' }]
+    id: 's3', num: 'Ch 3', titleEn: 'Metals and Non-metals', titleHi: 'धातु एवं अधातु',
+    conceptEn: 'Physical and chemical properties of metals and non-metals, reactivity series, ionic compounds.',
+    conceptHi: 'धातु और अधातु के गुण, सक्रियता श्रेणी और आयनिक यौगिक।',
+    wordsEn: 'Malleability = आघातवर्धनीयता | Ductility = तन्यता | Ore = अयस्क | Alloy = मिश्रधातु',
+    wordsHi: 'Malleability = आघातवर्धनीयता | Ductility = तन्यता | Ore = अयस्क | Alloy = मिश्रधातु',
+    exercises: [
+      { qEn: 'Give an example of a metal which is liquid at room temperature and one cut with knife.', qHi: 'कमरे के ताप पर द्रव धातु और चाकू से कटने वाली धातु का नाम बताएँ।', sol: 'द्रव: पारा (Hg), चाकू से कटने वाली: सोडियम (Na)।' }
+    ],
+    guess1: [{ qEn: 'What are amphoteric oxides? Give two examples.', qHi: 'उभयधर्मी ऑक्साइड क्या हैं? दो उदाहरण दें।', sol: 'जो अम्ल और क्षार दोनों से क्रिया करें। जैसे Al₂O₃, ZnO.' }],
+    guess2: [{ qEn: 'Explain formation of sodium chloride with electron dot structure.', qHi: 'इलेक्ट्रॉन बिंदु संरचना द्वारा NaCl का निर्माण समझाएँ।', sol: 'Na अपना 1 इलेक्ट्रॉन Cl को देकर आयनिक बंध बनाता है।' }]
   },
   {
-    id: 'm4', num: 'Ch 4', titleEn: 'Quadratic Equations', titleHi: 'द्विघात समीकरण',
-    conceptEn: 'Quadratic formula x = (-b ± √(b² - 4ac)) / 2a. Discriminant D = b² - 4ac.',
-    conceptHi: 'द्विघात सूत्र और विविक्तकर D = b² - 4ac.',
-    wordsEn: 'Discriminant = विविक्तकर | Real Roots = वास्तविक मूल',
-    wordsHi: 'Discriminant = विविक्तकर | Real Roots = वास्तविक मूल',
-    exercises: [{ qEn: 'Find roots of 2x² - 7x + 3 = 0 by factorization.', qHi: 'गुणनखंड विधि से 2x² - 7x + 3 = 0 के मूल निकालें।', sol: 'x = 3 और x = 1/2' }],
-    guess1: [{ qEn: 'Find discriminant of 3x² - 2x + 1/3 = 0.', qHi: '3x² - 2x + 1/3 = 0 का विविक्तकर ज्ञात करें।', sol: 'D = 0 (मूल वास्तविक और समान)' }],
-    guess2: [{ qEn: 'A train travels 360 km at uniform speed. If speed was 5 km/h more, it takes 1 hour less.', qHi: 'एक रेलगाड़ी 360 किमी चलती है। चाल 5 किमी/घंटा अधिक होने पर 1 घंटा कम लेती है।', sol: 'चाल = 40 किमी/घंटा' }]
+    id: 's4', num: 'Ch 4', titleEn: 'Carbon and its Compounds', titleHi: 'कार्बन एवं उसके यौगिक',
+    conceptEn: 'Covalent bonding, versatile nature of carbon, homologous series, soaps and detergents.',
+    conceptHi: 'सहसंयोजक बंध, कार्बन की प्रकृति, समजात श्रेणी, साबुन और अपमार्जक।',
+    wordsEn: 'Covalent Bond = सहसंयोजक बंध | Functional Group = प्रकार्य समूह | Saponification = साबुनीकरण',
+    wordsHi: 'Covalent Bond = सहसंयोजक बंध | Functional Group = प्रकार्य समूह | Saponification = साबुनीकरण',
+    exercises: [
+      { qEn: 'What is electron dot structure of CO₂?', qHi: 'कार्बन डाइऑक्साइड (CO₂) की इलेक्ट्रॉन बिंदु संरचना क्या है?', sol: 'कार्बन दोनों ऑक्सीजन परमाणुओं के साथ दो-दो इलेक्ट्रॉनों की साझेदारी करता है।' }
+    ],
+    guess1: [{ qEn: 'What is hydrogenation and its industrial application?', qHi: 'हाइड्रोजनीकरण क्या है और इसका औद्योगिक उपयोग क्या है?', sol: 'असंतृप्त हाइड्रोकार्बन से वनस्पति घी बनाना।' }],
+    guess2: [{ qEn: 'Explain cleansing action of soaps.', qHi: 'साबुन की सफाई प्रक्रिया की क्रियाविधि समझाएँ।', sol: 'मिसेल (Micelle) का निर्माण करके मैल को पानी में हटाना।' }]
   },
   {
-    id: 'm5', num: 'Ch 5', titleEn: 'Arithmetic Progressions', titleHi: 'समांतर श्रेढ़ियाँ',
-    conceptEn: 'nth term an = a + (n - 1)d. Sum Sn = n/2 [2a + (n - 1)d].',
-    conceptHi: 'nवाँ पद और n पदों का योग।',
-    wordsEn: 'Common difference = सार्व अंतर | AP = समांतर श्रेढ़ी',
-    wordsHi: 'Common difference = सार्व अंतर | AP = समांतर श्रेढ़ी',
-    exercises: [{ qEn: 'Find 11th term of AP: -3, -1/2, 2, ...', qHi: 'AP: -3, -1/2, 2, ... का 11वाँ पद ज्ञात करें।', sol: '22' }],
-    guess1: [{ qEn: 'Find sum of first 22 terms where d = 7 and 22nd term is 149.', qHi: 'प्रथम 22 पदों का योग ज्ञात करें जहाँ d = 7 और 22वाँ पद 149 है।', sol: '1661' }],
-    guess2: [{ qEn: 'If sum of first n terms is 4n - n², find first term.', qHi: 'यदि प्रथम n पदों का योग 4n - n² है, तो प्रथम पद क्या है?', sol: 'प्रथम पद = 3' }]
+    id: 's5', num: 'Ch 5', titleEn: 'Life Processes', titleHi: 'जैव प्रक्रम',
+    conceptEn: 'Nutrition, respiration, transportation in humans and plants, excretion.',
+    conceptHi: 'पोषण, श्वसन, परिवहन और उत्सर्जन।',
+    wordsEn: 'Autotrophic = स्वपोषी | Transpiration = वाष्पोत्सर्जन | Nephron = वृक्काणु',
+    wordsHi: 'Autotrophic = स्वपोषी | Transpiration = वाष्पोत्सर्जन | Nephron = वृक्काणु',
+    exercises: [
+      { qEn: 'Why is diffusion insufficient to meet oxygen requirements of multicellular organisms?', qHi: 'बहुकोशिकीय जीवों में ऑक्सीजन के लिए विसरण क्यों पर्याप्त नहीं है?', sol: 'सभी कोशिकाएँ सीधे पर्यावरण के संपर्क में नहीं होतीं।' }
+    ],
+    guess1: [{ qEn: 'Differences between aerobic and anaerobic respiration.', qHi: 'वायव्य और अवायव्य श्वसन में अंतर बताएँ।', sol: 'वायव्य में ऑक्सीजन आवश्यक है और अधिक ऊर्जा मिलती है।' }],
+    guess2: [{ qEn: 'Describe structure and functioning of nephrons.', qHi: 'नेफ्रॉन की संरचना और कार्यप्रणाली का वर्णन करें।', sol: 'यह वृक्क की इकाई है जो रक्त को छानकर मूत्र बनाती है।' }]
   },
   {
-    id: 'm6', num: 'Ch 6', titleEn: 'Triangles', titleHi: 'त्रिभुज',
-    conceptEn: 'Basic Proportionality Theorem (Thales Theorem) and similarity criteria.',
-    conceptHi: 'थेल्स प्रमेय और समरूपता कसौटियाँ।',
-    wordsEn: 'Similarity = समरूपता | Proportional = आनुपातिक',
-    wordsHi: 'Similarity = समरूपता | Proportional = आनुपातिक',
-    exercises: [{ qEn: 'If a line divides two sides in same ratio, it is parallel to third side.', qHi: 'यदि एक रेखा दो भुजाओं को एक ही अनुपात में बांटे, तो वह तीसरी भुजा के समांतर होती है।', sol: 'थेल्स प्रमेय से सत्यापित।' }],
-    guess1: [{ qEn: 'Determine right triangles from given side lengths.', qHi: 'दी गई भुजाओं से समकोण त्रिभुज पहचानें।', sol: 'पाइथागोरस त्रिक का प्रयोग करें।' }],
-    guess2: [{ qEn: 'Prove ratio of areas of similar triangles equals square of ratio of sides.', qHi: 'सिद्ध कीजिए कि समरूप त्रिभुजों के क्षेत्रफलों का अनुपात संगत भुजाओं के वर्ग के बराबर होता है।', sol: 'लंब खींचकर सिद्ध किया जाता है।' }]
+    id: 's6', num: 'Ch 6', titleEn: 'Control and Coordination', titleHi: 'नियंत्रण एवं समन्वय',
+    conceptEn: 'Nervous system, reflex action, human brain, plant hormones.',
+    conceptHi: 'तंत्रिका तंत्र, प्रतिवर्ती क्रिया, मस्तिष्क और पादप हॉर्मोन।',
+    wordsEn: 'Reflex Action = प्रतिवर्ती क्रिया | Synapse = सिनेप्स | Hormone = हॉर्मोन',
+    wordsHi: 'Reflex Action = प्रतिवर्ती क्रिया | Synapse = सिनेप्स | Hormone = हॉर्मोन',
+    exercises: [
+      { qEn: 'Difference between reflex action and walking.', qHi: 'प्रतिवर्ती क्रिया और टहलने में क्या अंतर है?', sol: 'प्रतिवर्ती अनैच्छिक और मेरुरज्जु द्वारा नियंत्रित होती है।' }
+    ],
+    guess1: [{ qEn: 'What is the function of plant hormones? Give examples.', qHi: 'पादप हॉर्मोन के कार्य और उदाहरण दें।', sol: 'ऑक्सिन कोशिका वृद्धि को नियंत्रित करता है।' }],
+    guess2: [{ qEn: 'Explain how insulin regulates blood sugar levels.', qHi: 'इंसुलिन रक्त शर्करा को कैसे नियंत्रित करता है?', sol: 'यह ग्लूकोज को ग्लाइकोजन में बदलता है। कमी से मधुमेह होता है।' }]
   },
   {
-    id: 'm7', num: 'Ch 7', titleEn: 'Coordinate Geometry', titleHi: 'निर्देशांक ज्यामिति',
-    conceptEn: 'Distance formula and section formula.',
-    conceptHi: 'दूरी सूत्र और विभाजन सूत्र।',
-    wordsEn: 'Coordinate = निर्देशांक | Section Formula = विभाजन सूत्र',
-    wordsHi: 'Coordinate = निर्देशांक | Section Formula = विभाजन सूत्र',
-    exercises: [{ qEn: 'Find distance between (2, 3) and (4, 1).', qHi: '(2, 3) और (4, 1) के बीच की दूरी निकालें।', sol: '2√2 units' }],
-    guess1: [{ qEn: 'Find point dividing (-1, 7) and (4, -3) in ratio 2:3.', qHi: 'बिंदुओं (-1, 7) और (4, -3) को 2:3 में बांटने वाले बिंदु के निर्देशांक निकालें।', sol: '(1, 3)' }],
-    guess2: [{ qEn: 'Find relation between x and y if (x, y) is equidistant from (7, 1) and (3, 5).', qHi: 'x और y में संबंध ज्ञात करें यदि बिंदु (x, y) समदूरस्थ हो।', sol: 'x - y = 2' }]
+    id: 's7', num: 'Ch 7', titleEn: 'How do Organisms Reproduce?', titleHi: 'जीव जनन कैसे करते हैं?',
+    conceptEn: 'Asexual and sexual reproduction, reproductive health.',
+    conceptHi: 'अलैंगिक और लैंगिक जनन, जनन स्वास्थ्य।',
+    wordsEn: 'Fission = खंडन | Budding = मुकुलन | Placenta = अपरा',
+    wordsHi: 'Fission = खंडन | Budding = मुकुलन | Placenta = अपरा',
+    exercises: [
+      { qEn: 'What is the importance of DNA copying in reproduction?', qHi: 'जनन में DNA प्रतिकृति का क्या महत्व है?', sol: 'यह पैतृक गुण संतति में पहुँचाती है और विभिन्नता लाती है।' }
+    ],
+    guess1: [{ qEn: 'Difference between self-pollination and cross-pollination.', qHi: 'स्व-परागण और पर-परागण में अंतर बताएँ।', sol: 'स्व-परागण एक ही पुष्प में होता है।' }],
+    guess2: [{ qEn: 'Explain contraceptive methods and their necessity.', qHi: 'गर्भनिरोधक विधियों और उनकी आवश्यकता समझाएँ।', sol: 'जनसंख्या नियंत्रण और रोगों से बचाव के लिए।' }]
   },
   {
-    id: 'm8', num: 'Ch 8', titleEn: 'Introduction to Trigonometry', titleHi: 'त्रिकोणमिति का परिचय',
-    conceptEn: 'Trigonometric ratios and identities (sin²θ + cos²θ = 1).',
-    conceptHi: 'त्रिकोणमितीय अनुपात और सर्वसमिकाएँ।',
-    wordsEn: 'Hypotenuse = कर्ण | Identity = सर्वसमिका',
-    wordsHi: 'Hypotenuse = कर्ण | Identity = सर्वसमिका',
-    exercises: [{ qEn: 'If sin A = 3/4, calculate cos A and tan A.', qHi: 'यदि sin A = 3/4 हो, तो cos A और tan A ज्ञात करें।', sol: 'cos A = √7/4, tan A = 3/√7' }],
-    guess1: [{ qEn: 'Evaluate: 2 tan² 45° + cos² 30° - sin² 60°', qHi: 'मान निकालें: 2 tan² 45° + cos² 30° - sin² 60°', sol: '2' }],
-    guess2: [{ qEn: 'Prove (sin θ - 2 sin³ θ) / (2 cos³ θ - cos θ) = tan θ', qHi: 'सिद्ध करें (sin θ - 2 sin³ θ) / (2 cos³ θ - cos θ) = tan θ', sol: 'कॉमन लेकर हल करने पर tan θ प्राप्त होता है।' }]
+    id: 's8', num: 'Ch 8', titleEn: 'Heredity', titleHi: 'आनुवंशिकता',
+    conceptEn: 'Mendel laws of inheritance, monohybrid/dihybrid crosses, sex determination.',
+    conceptHi: 'मेंडल के नियम, संकरण और लिंग निर्धारण।',
+    wordsEn: 'Heredity = आनुवंशिकता | Allele = एलील | Phenotype = लक्षणप्ररूप',
+    wordsHi: 'Heredity = आनुवंशिकता | Allele = एलील | Phenotype = लक्षणप्ररूप',
+    exercises: [
+      { qEn: 'Cross between round green and wrinkled yellow seeds in F2 generation.', qHi: 'गोल हरे और झुर्रीदार पीले बीजों का F2 संकरण।', sol: '9:3:3:1 अनुपात प्राप्त होता है।' }
+    ],
+    guess1: [{ qEn: 'How is sex determined in human beings?', qHi: 'मानव में लिंग निर्धारण कैसे होता है?', sol: 'पिता से मिलने वाला X या Y क्रोमोजोम तय करता है।' }],
+    guess2: [{ qEn: 'State Mendel Law of Independent Assortment.', qHi: 'मेंडल का स्वतंत्र अपव्यूहन का नियम लिखें।', sol: 'लक्षणों की वंशागति एक-दूसरे से स्वतंत्र होती है।' }]
   },
   {
-    id: 'm9', num: 'Ch 9', titleEn: 'Some Applications of Trigonometry', titleHi: 'त्रिकोणमिति के कुछ अनुप्रयोग',
-    conceptEn: 'Heights and distances using angle of elevation and depression.',
-    conceptHi: 'उन्नयन और अवनमन कोण द्वारा ऊँचाई और दूरी ज्ञात करना।',
-    wordsEn: 'Angle of elevation = उन्नयन कोण | Angle of depression = अवनमन कोण',
-    wordsHi: 'Angle of elevation = उन्नयन कोण | Angle of depression = अवनमन कोण',
-    exercises: [{ qEn: 'A tower is 30m high. Find angle of elevation from 30m away.', qHi: '30 मीटर ऊँची मीनार के पाद से 30 मीटर दूर बिंदु पर उन्नयन कोण क्या है?', sol: '45°' }],
-    guess1: [{ qEn: 'Circus artist climbs 20m rope tied at 30° angle. Find pole height.', qHi: '20 मीटर लंबी डोरी 30° कोण पर बंधी है, खंबे की ऊँचाई ज्ञात करें।', sol: '10 meters' }],
-    guess2: [{ qEn: 'Find river width from bridge with depression angles 30° and 45° at 3m height.', qHi: '3 मीटर ऊँचे पुल से अवनमन कोण 30° और 45° हों, तो नदी की चौड़ाई ज्ञात करें।', sol: '3(√3 + 1) meters' }]
+    id: 's9', num: 'Ch 9', titleEn: 'Light – Reflection and Refraction', titleHi: 'प्रकाश – परावर्तन तथा अपवर्तन',
+    conceptEn: 'Spherical mirrors, refraction, lens formula, power of lens.',
+    conceptHi: 'गोलीय दर्पण, अपवर्तन, लेंस सूत्र और लेंस की क्षमता।',
+    wordsEn: 'Reflection = परावर्तन | Refraction = अपवर्तन | Refractive Index = अपवर्तनांक',
+    wordsHi: 'Reflection = परावर्तन | Refraction = अपवर्तन | Refractive Index = अपवर्तनांक',
+    exercises: [
+      { qEn: 'Find focal length of convex mirror of radius 32 cm.', qHi: '32 सेमी वक्रता त्रिज्या वाले उत्तल दर्पण की फोकस दूरी निकालें।', sol: 'f = 16 cm' }
+    ],
+    guess1: [{ qEn: 'Object 5cm tall held 25cm from convex lens of focal length 10cm. Find image.', qHi: '10 सेमी फोकस दूरी वाले लेंस से 25 सेमी दूर रखे बिंब का प्रतिबिंब निकालें।', sol: 'लेंस सूत्र से v और m निकालें।' }],
+    guess2: [{ qEn: 'Define 1 dioptre of power of a lens.', qHi: '1 डाइऑप्टर लेंस की क्षमता को परिभाषित करें।', sol: 'जिसकी फोकस दूरी 1 मीटर हो।' }]
   },
   {
-    id: 'm10', num: 'Ch 10', titleEn: 'Circles', titleHi: 'वृत्त',
-    conceptEn: 'Tangents to circle and their properties.',
-    conceptHi: 'वृत्त की स्पर्श रेखाएँ और उनके गुण।',
-    wordsEn: 'Tangent = स्पर्श रेखा | Point of contact = स्पर्श बिंदु',
-    wordsHi: 'Tangent = स्पर्श रेखा | Point of contact = स्पर्श बिंदु',
-    exercises: [{ qEn: 'Prove tangents at ends of a diameter are parallel.', qHi: 'सिद्ध करें कि व्यास के सिरों पर स्पर्श रेखाएँ समांतर होती हैं।', sol: 'एकांतर कोणों द्वारा समांतर सिद्ध होता है।' }],
-    guess1: [{ qEn: 'Find radius if tangent length from Q is 24cm and distance from center is 25cm.', qHi: 'यदि स्पर्श रेखा 24 सेमी और केंद्र से दूरी 25 सेमी हो, तो त्रिज्या ज्ञात करें।', sol: '7 cm' }],
-    guess2: [{ qEn: 'Prove angle between two tangents is supplementary to angle subtended at center.', qHi: 'सिद्ध करें कि स्पर्श रेखाओं के बीच का कोण केंद्र पर बने कोण का संपूरक होता है।', sol: 'चतुर्भुज के सम्मुख कोणों के योग से।' }]
+    id: 's10', num: 'Ch 10', titleEn: 'The Human Eye and the Colourful World', titleHi: 'मानव नेत्र तथा रंगबिरंगा संसार',
+    conceptEn: 'Human eye defects, prism dispersion, scattering of light.',
+    conceptHi: 'नेत्र दृष्टि दोष, प्रिज्म विक्षेपण और प्रकाश का प्रकीर्णन।',
+    wordsEn: 'Myopia = निकटदृष्टि दोष | Hypermetropia = दूरदृष्टि दोष | Scattering = प्रकीर्णन',
+    wordsHi: 'Myopia = निकटदृष्टि दोष | Hypermetropia = दूरदृष्टि दोष | Scattering = प्रकीर्णन',
+    exercises: [
+      { qEn: 'What is power of accommodation of eye?', qHi: 'नेत्र की समंजन क्षमता क्या है?', sol: 'फोकस दूरी समायोजित करने की क्षमता।' }
+    ],
+    guess1: [{ qEn: 'Why is the colour of clear sky blue?', qHi: 'स्वच्छ आकाश का रंग नीला क्यों होता है?', sol: 'नीले प्रकाश के प्रकीर्णन के कारण।' }],
+    guess2: [{ qEn: 'Myopic eye cannot see beyond 1.2m. What lens is needed?', qHi: '1.2 मीटर से दूर न देख पाने वाले को कौन सा लेंस चाहिए?', sol: 'अवलन (अवतल) लेंस।' }]
   },
   {
-    id: 'm11', num: 'Ch 11', titleEn: 'Areas Related to Circles', titleHi: 'वृत्तों से संबंधित क्षेत्रफल',
-    conceptEn: 'Area of sector and segment formulas.',
-    conceptHi: 'त्रिज्यखंड और वृत्तखंड का क्षेत्रफल।',
-    wordsEn: 'Sector = त्रिज्यखंड | Segment = वृत्तखंड',
-    wordsHi: 'Sector = त्रिज्यखंड | Segment = वृत्तखंड',
-    exercises: [{ qEn: 'Find area of sector with radius 6cm and angle 60°.', qHi: '6 सेमी त्रिज्या और 60° कोण वाले त्रिज्यखंड का क्षेत्रफल ज्ञात करें।', sol: '132/7 cm²' }],
-    guess1: [{ qEn: 'Find area of quadrant with circumference 22cm.', qHi: '22 सेमी परिधि वाले वृत्त के चतुर्थांश का क्षेत्रफल ज्ञात करें।', sol: '77/8 cm²' }],
-    guess2: [{ qEn: 'Find area of minor segment with radius 10cm subtending right angle at center.', qHi: '10 सेमी त्रिज्या और समकोण वाले लघु वृत्तखंड का क्षेत्रफल निकालें।', sol: '28.5 cm²' }]
+    id: 's11', num: 'Ch 11', titleEn: 'Electricity', titleHi: 'विद्युत',
+    conceptEn: 'Ohm law, resistance, series/parallel combinations, electric power.',
+    conceptHi: 'ओह्म का नियम, प्रतिरोध संयोजन और विद्युत शक्ति।',
+    wordsEn: 'Current = विद्युत धारा | Resistance = प्रतिरोध | Joule Heating = जूल का तापीय प्रभाव',
+    wordsHi: 'Current = विद्युत धारा | Resistance = प्रतिरोध | Joule Heating = जूल का तापीय प्रभाव',
+    exercises: [
+      { qEn: 'Wire of resistance R cut into 5 parts and connected in parallel giving R'. Find R/R'.', qHi: 'R प्रतिरोध के तार के 5 भाग कर समांतर जोड़ने पर R' मिले, तो R/R' निकालें।', sol: '25' }
+    ],
+    guess1: [{ qEn: 'State Ohm law and its experimental verification.', qHi: 'ओह्म का नियम लिखें और सत्यापन समझाएँ।', sol: 'V = IR' }],
+    guess2: [{ qEn: 'Cost of energy for 400W refrigerator running 8 hours/day for 30 days at ₹3/kWh.', qHi: '400W फ्रिज 8 घंटे रोज चलने पर 30 दिन का ₹3 प्रति यूनिट से खर्च निकालें।', sol: '₹288' }]
   },
   {
-    id: 'm12', num: 'Ch 12', titleEn: 'Surface Areas and Volumes', titleHi: 'पृष्ठ क्षेत्रफल और आयतन',
-    conceptEn: 'Surface areas and volumes of combinations of solids.',
-    conceptHi: 'ठोसों के संयोजन के पृष्ठीय क्षेत्रफल और आयतन।',
-    wordsEn: 'Surface Area = पृष्ठीय क्षेत्रफल | Volume = आयतन | Frustum = छिन्नक',
-    wordsHi: 'Surface Area = पृष्ठीय क्षेत्रफल | Volume = आयतन | Frustum = छिन्नक',
-    exercises: [{ qEn: 'Join two cubes of volume 64cm³ end to end. Find resulting cuboid surface area.', qHi: '64 सेमी³ आयतन वाले दो घनों को मिलाने पर प्राप्त घनाभ का पृष्ठीय क्षेत्रफल ज्ञात करें।', sol: '160 cm²' }],
-    guess1: [{ qEn: 'Tent shaped as cylinder with conical top. Dimensions given, find canvas area.', qHi: 'बेलन पर शंकु आकार तंबू का क्षेत्रफल ज्ञात करें।', sol: '44 m²' }],
-    guess2: [{ qEn: 'Find mass of iron pole made of two cylinders.', qHi: 'दो बेलनों से बने लोहे के पोल का द्रव्यमान ज्ञात करें।', sol: 'आयतन × घनत्व से।' }]
+    id: 's12', num: 'Ch 12', titleEn: 'Magnetic Effects of Electric Current', titleHi: 'विद्युत धारा के चुंबकीय प्रभाव',
+    conceptEn: 'Magnetic field lines, solenoid, electric motor, electromagnetic induction.',
+    conceptHi: 'चुंबकीय क्षेत्र, परिनालिका, मोटर और विद्युतचुंबकीय प्रेरण।',
+    wordsEn: 'Magnetic Field = चुंबकीय क्षेत्र | Solenoid = परिनालिका | Galvanometer = गैल्वेनोमीटर',
+    wordsHi: 'Magnetic Field = चुंबकीय क्षेत्र | Solenoid = परिनालिका | Galvanometer = गैल्वेनोमीटर',
+    exercises: [
+      { qEn: 'State rule to find direction of magnetic field around current-carrying conductor.', qHi: 'धारावाही चालक के चारों ओर चुंबकीय क्षेत्र की दिशा का नियम लिखें।', sol: 'दक्षिण-हस्त अंगष्ठ नियम।' }
+    ],
+    guess1: [{ qEn: 'Difference between direct current (DC) and alternating current (AC).', qHi: 'दिष्ट धारा (DC) और प्रत्यावर्ती धारा (AC) में अंतर बताएँ।', sol: 'AC दिशा बदलती है, DC एक ही दिशा में रहती है।' }],
+    guess2: [{ qEn: 'Explain working principle of an electric motor.', qHi: 'विद्युत मोटर का कार्य सिद्धांत समझाएँ।', sol: 'चुंबकीय क्षेत्र में धारावाही चालक पर बल का सिद्धांत।' }]
   },
   {
-    id: 'm13', num: 'Ch 13', titleEn: 'Statistics', titleHi: 'सांख्यिकी',
-    conceptEn: 'Mean, Median, and Mode formulas for grouped data.',
-    conceptHi: 'वर्गीकृत आँकड़ों के माध्य, माध्यिका और बहुलक।',
-    wordsEn: 'Mean = माध्य | Median = माध्यिका | Mode = बहुलक',
-    wordsHi: 'Mean = माध्य | Median = माध्यिका | Mode = बहुलक',
-    exercises: [{ qEn: 'Find mean number of plants in 20 houses.', qHi: '20 घरों में पौधों की संख्या का माध्य ज्ञात करें।', sol: '8.1 plants' }],
-    guess1: [{ qEn: 'Find median of data: 5, 3, 11, 2, 7, 9, 4.', qHi: 'आँकड़ों की माध्यिका ज्ञात करें: 5, 3, 11, 2, 7, 9, 4.', sol: '5' }],
-    guess2: [{ qEn: 'Find missing frequencies if median is 28.5 and total frequency is 60.', qHi: 'लुप्त बारंबारताएँ ज्ञात करें यदि माध्यक 28.5 और कुल बारंबारता 60 हो।', sol: 'रैखिक समीकरण हल करके x और y का मान।' }]
-  },
-  {
-    id: 'm14', num: 'Ch 14', titleEn: 'Probability', titleHi: 'प्रायिकता',
-    conceptEn: 'Probability P(E) = (Favorable outcomes) / (Total outcomes).',
-    conceptHi: 'प्रायिकता की परिभाषा और गणना।',
-    wordsEn: 'Probability = प्रायिकता | Outcome = परिणाम',
-    wordsHi: 'Probability = प्रायिकता | Outcome = परिणाम',
-    exercises: [{ qEn: 'If P(Sangeeta winning) = 0.62, what is probability of Rashmi winning?', qHi: 'यदि संगीता के जीतने की प्रायिकता 0.62 है, तो रश्मी के जीतने की प्रायिकता क्या है?', sol: '0.38' }],
-    guess1: [{ qEn: 'Box has 3 red, 2 white, 4 blue marbles. Find probability of drawing each.', qHi: 'बक्से में 3 लाल, 2 सफेद, 4 नीले कंचे हैं। प्रत्येक की प्रायिकता ज्ञात करें।', sol: 'लाल: 1/3, सफेद: 2/9, नीला: 4/9' }],
-    guess2: [{ qEn: 'Throw a die. Find probability of prime number, number between 2 and 6, odd number.', qHi: 'पासा फेंकने पर अभाज्य संख्या, 2 और 6 के बीच की संख्या तथा विषम संख्या की प्रायिकता निकालें।', sol: 'प्रत्येक के लिए 1/2' }]
+    id: 's13', num: 'Ch 13', titleEn: 'Our Environment', titleHi: 'हमारा पर्यावरण',
+    conceptEn: 'Ecosystem, food chains, ozone layer depletion, garbage management.',
+    conceptHi: 'पारितंत्र, आहार श्रृंखला, ओजोन क्षय और कचरा प्रबंधन।',
+    wordsEn: 'Ecosystem = पारितंत्र | Food Chain = आहार श्रृंखला | Ozone Layer = ओजोन परत',
+    wordsHi: 'Ecosystem = पारितंत्र | Food Chain = आहार श्रृंखला | Ozone Layer = ओजोन परत',
+    exercises: [
+      { qEn: 'Why are some substances biodegradable and some non-biodegradable?', qHi: 'कुछ पदार्थ जैव निम्नीकरणीय और कुछ अजैव क्यों होते हैं?', sol: 'अपघटक सूक्ष्मजीवों की क्रियाशीलता के कारण।' }
+    ],
+    guess1: [{ qEn: 'What is biological magnification?', qHi: 'जैविक आवर्धन क्या है?', sol: 'खाद्य श्रृंखला में हानिकारक रसायनों की सांद्रता का बढ़ना।' }],
+    guess2: [{ qEn: 'How is ozone formed and why is its depletion concerning?', qHi: 'ओजोन का निर्माण और इसका क्षय चिंता का विषय क्यों है?', sol: 'UV किरणों से रक्षा करने वाली परत का नष्ट होना।' }]
   }
 ];
 
@@ -330,37 +343,37 @@ function render() {
 
   if (state.view === 'home') {
     app.innerHTML = `
-      <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, rgba(79,70,229,0.15), rgba(13,148,136,0.15)); border-color: var(--primary);">
-        <h2 style="margin: 0 0 8px; font-size: 1.2rem; color: var(--primary);">📐 Module 2: Mathematics Complete (All 14 Chapters)</h2>
+      <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(79,70,229,0.15)); border-color: #10b981;">
+        <h2 style="margin: 0 0 8px; font-size: 1.2rem; color: #10b981;">🔬 Module 3: Science Complete (All 13 Chapters)</h2>
         <p style="margin: 0; font-size: 0.88rem; color: var(--muted);">
-          यहाँ कक्षा 10 गणित के सभी 14 अध्याय, मूल प्रश्नावलियाँ, शब्दार्थ और बोर्ड परीक्षा के महत्वपूर्ण Guess Papers उपलब्ध हैं।
+          यहाँ कक्षा 10 विज्ञान के सभी 13 अध्याय (रसायन, जीव विज्ञान, भौतिकी), रासायनिक समीकरण, न्यूमेरिकल और Guess Papers उपलब्ध हैं।
         </p>
       </div>
 
-      <div class="card" onclick="state.view='math_chapters'; render();" style="cursor:pointer; display:flex; flex-direction:column; justify-content:space-between;">
+      <div class="card" onclick="state.view='sci_chapters'; render();" style="cursor:pointer; display:flex; flex-direction:column; justify-content:space-between;">
         <div>
-          <span class="subj-badge">Subject 1 • 14 Chapters</span>
-          <h2 style="margin:6px 0 8px; font-size:1.15rem; font-weight:800;">${state.medium==='hi'?'गणित (Mathematics)':'Mathematics (Ganit)'}</h2>
-          <p style="margin:0; font-size:0.85rem; color:var(--muted);">${state.medium==='hi'?'वास्तविक संख्याएँ से प्रायिकता तक सभी 14 पाठ और उनके हल।':'Complete Chapter-wise formulas, exercises, and master solutions.'}</p>
+          <span class="subj-badge">Subject 2 • 13 Chapters</span>
+          <h2 style="margin:6px 0 8px; font-size:1.15rem; font-weight:800;">${state.medium==='hi'?'विज्ञान (Science)':'Science (Vigyan)'}</h2>
+          <p style="margin:0; font-size:0.85rem; color:var(--muted);">${state.medium==='hi'?'रासायनिक अभिक्रियाएँ से हमारा पर्यावरण तक सभी 13 पाठ।':'Chemistry, Biology and Physics complete serial chapters.'}</p>
         </div>
-        <div class="btn-open">गणित के सभी पाठ खोलें (Open Chapters) →</div>
+        <div class="btn-open">विज्ञान के सभी पाठ खोलें (Open Chapters) →</div>
       </div>
     `;
     return;
   }
 
-  if (state.view === 'math_chapters') {
+  if (state.view === 'sci_chapters') {
     app.innerHTML = `
       <div style="display: flex; flex-direction: column; gap: 12px;">
-        ${MATH_LESSONS.map(l => `
-          <div class="card" onclick="state.view='math_lesson'; state.lessonId='${l.id}'; state.activeTab='book'; render();" style="cursor:pointer; padding: 16px 20px; margin-bottom:0;">
+        ${SCI_LESSONS.map(l => `
+          <div class="card" onclick="state.view='sci_lesson'; state.lessonId='${l.id}'; state.activeTab='book'; render();" style="cursor:pointer; padding: 16px 20px; margin-bottom:0;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <div>
                 <span class="subj-badge">${l.num}</span>
                 <h3 style="margin:4px 0 2px; font-size:1.02rem; font-weight:800;">${state.medium==='hi'?l.titleHi:l.titleEn}</h3>
                 <small style="color:var(--muted); font-size:0.78rem;">${(state.medium==='hi'?l.conceptHi:l.conceptEn).substring(0, 75)}...</small>
               </div>
-              <div style="font-weight:900; color:var(--primary); font-size:1.1rem;">→</div>
+              <div style="font-weight:900; color:#10b981; font-size:1.1rem;">→</div>
             </div>
           </div>
         `).join('')}
@@ -369,8 +382,8 @@ function render() {
     return;
   }
 
-  if (state.view === 'math_lesson') {
-    const les = MATH_LESSONS.find(l => l.id === state.lessonId);
+  if (state.view === 'sci_lesson') {
+    const les = SCI_LESSONS.find(l => l.id === state.lessonId);
     const activeTab = state.activeTab;
 
     app.innerHTML = `
@@ -406,7 +419,7 @@ function render() {
     } else if (activeTab === 'guess1') {
       app.innerHTML += `
         <div class="guess-paper-box">
-          <h3 style="margin:0 0 8px; font-size:1rem; color:var(--primary);">📝 Model Guess Paper 1 (Important Board Questions)</h3>
+          <h3 style="margin:0 0 8px; font-size:1rem; color:#10b981;">📝 Model Guess Paper 1 (Important Board Questions)</h3>
           <p style="margin:0 0 12px; font-size:0.8rem; color:var(--muted);">Practice these questions for scoring 80/80 in school and board exams.</p>
         </div>
       `;
