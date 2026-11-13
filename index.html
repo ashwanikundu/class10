@@ -364,6 +364,17 @@
   footer {
     text-align: center; padding: 24px 16px; color: var(--muted); font-size: 0.8rem;
   }
+
+  button, .subj-card, .lesson-item, .mode-card, .opt-btn, .pill, .qnav-btn, .crumb-btn {
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  button:active, .subj-card:active, .lesson-item:active, .mode-card:active, .opt-btn:active {
+    transform: scale(0.98) !important;
+    transition: transform 0.06s ease !important;
+  }
+
 </style>
 </head>
 <body>
@@ -417,7 +428,7 @@ const SafeStore = {
     } catch (e) { return fallback; }
   },
   set(key, val) {
-    try { SafeStore.set(key, val); } catch (e) {}
+    try { localStorage.setItem(key, val); } catch (e) {}
   },
   getJSON(key, fallback) {
     try {
