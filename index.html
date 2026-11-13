@@ -3,242 +3,367 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#1e3a8a">
+<meta name="theme-color" content="#0f172a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<title>Class 10 Master Portal — Ultra-Pro Board Edition (CBSE & HBSE)</title>
+<title>Class 10 Master Portal — Next-Gen Pro EdTech Edition</title>
 <style>
   :root {
-    --primary: #1e3a8a;
-    --primary-light: #2563eb;
-    --secondary: #0f766e;
-    --accent: #d97706;
-    --bg: #f1f5f9;
+    --primary: #4f46e5;
+    --primary-light: #6366f1;
+    --primary-glow: rgba(79, 70, 229, 0.18);
+    --secondary: #0d9488;
+    --accent: #f59e0b;
+    --bg: #f4f6fb;
     --card: #ffffff;
+    --card-glass: rgba(255, 255, 255, 0.88);
     --text: #0f172a;
-    --muted: #475569;
-    --border: #cbd5e1;
+    --muted: #64748b;
+    --border: #e2e8f0;
     --sub-bg: #f8fafc;
-    --concept-bg: #eff6ff;
-    --concept-border: #bfdbfe;
-    --sol-bg: #f0fdf4;
-    --sol-border: #86efac;
+    --concept-bg: linear-gradient(135deg, #eef2ff 0%, #f0fdfa 100%);
+    --concept-border: #c7d2fe;
+    --sol-bg: #ecfdf5;
+    --sol-border: #6ee7b7;
     --green-bg: #dcfce7;
     --green-border: #16a34a;
     --green-text: #14532d;
     --red-bg: #fee2e2;
     --red-border: #dc2626;
     --red-text: #7f1d1d;
+    --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+    --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 4px 10px -6px rgba(15, 23, 42, 0.04);
+    --shadow-lg: 0 20px 35px -10px rgba(79, 70, 229, 0.16);
     --font-scale: 16px;
   }
   body.dark {
-    --primary: #3b82f6;
-    --primary-light: #60a5fa;
-    --secondary: #14b8a6;
-    --bg: #0b1120;
-    --card: #1e293b;
-    --text: #f1f5f9;
+    --primary: #818cf8;
+    --primary-light: #a5b4fc;
+    --primary-glow: rgba(129, 140, 248, 0.22);
+    --secondary: #2dd4bf;
+    --bg: #070b14;
+    --card: #111827;
+    --card-glass: rgba(17, 24, 39, 0.88);
+    --text: #f8fafc;
     --muted: #94a3b8;
-    --border: #334155;
+    --border: #1e293b;
     --sub-bg: #0f172a;
-    --concept-bg: #172554;
-    --concept-border: #1d4ed8;
-    --sol-bg: #052e16;
-    --sol-border: #166534;
+    --concept-bg: linear-gradient(135deg, #1e1b4b 0%, #042f2e 100%);
+    --concept-border: #3730a3;
+    --sol-bg: #064e3b;
+    --sol-border: #059669;
     --green-bg: #14532d;
     --green-border: #22c55e;
     --green-text: #dcfce7;
     --red-bg: #7f1d1d;
     --red-border: #ef4444;
     --red-text: #fee2e2;
+    --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.45);
+    --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.6);
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html { font-size: var(--font-scale); }
+  html { font-size: var(--font-scale); scroll-behavior: smooth; }
   body {
     margin: 0; padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, "Noto Sans Devanagari", sans-serif;
     background: var(--bg); color: var(--text);
-    line-height: 1.55;
-    transition: background 0.2s, color 0.2s;
+    line-height: 1.6;
+    transition: background 0.25s ease, color 0.25s ease;
+    background-image: radial-gradient(circle at 15% 0%, var(--primary-glow) 0%, transparent 42%),
+                      radial-gradient(circle at 85% 10%, rgba(13, 148, 136, 0.12) 0%, transparent 40%);
+    background-attachment: fixed;
   }
+
+  /* Frosted Premium App Header */
   header {
-    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+    background: linear-gradient(135deg, #090d16 0%, #1e1b4b 55%, #312e81 100%);
     color: #fff;
-    padding: 12px 14px;
+    padding: 14px 16px 12px;
     position: sticky; top: 0; z-index: 100;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.28);
+    box-shadow: 0 8px 30px rgba(9, 13, 22, 0.35);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
   }
   .header-top {
-    display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;
-    max-width: 1120px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
+    max-width: 1140px; margin: 0 auto;
   }
-  .brand h1 { margin: 0; font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-  .brand p { margin: 2px 0 0; font-size: 0.74rem; color: #cbd5e1; }
-  .controls-bar {
-    display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  .brand {
+    display: flex; align-items: center; gap: 11px;
   }
+  .brand-logo {
+    width: 42px; height: 42px; border-radius: 12px;
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: #090d16; font-size: 1.35rem; font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.45);
+    flex-shrink: 0;
+  }
+  .brand-text h1 {
+    margin: 0; font-size: 1.08rem; font-weight: 800; letter-spacing: -0.2px;
+    display: flex; align-items: center; gap: 7px; flex-wrap: wrap;
+  }
+  .pro-pill {
+    background: linear-gradient(90deg, #10b981, #34d399);
+    color: #022c22; font-size: 0.64rem; font-weight: 800;
+    padding: 2px 8px; border-radius: 999px; letter-spacing: 0.4px;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
+  }
+  .brand-text p { margin: 2px 0 0; font-size: 0.72rem; color: #c7d2fe; opacity: 0.9; }
+
+  .controls-bar { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
   .medium-switch {
-    display: flex; background: rgba(255,255,255,0.15); border-radius: 999px; padding: 3px;
+    display: flex; background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.16);
+    border-radius: 999px; padding: 3px;
   }
   .medium-btn {
     border: none; background: transparent; color: #e2e8f0;
-    padding: 5px 10px; border-radius: 999px; font-size: 0.76rem; font-weight: 600; cursor: pointer;
+    padding: 5px 11px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; cursor: pointer;
+    transition: all 0.2s ease;
   }
   .medium-btn.active {
-    background: #fbbf24; color: #0f172a; box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #0f172a; box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
   }
   .tool-icon-btn {
-    background: rgba(255,255,255,0.16); color: #fff; border: 1px solid rgba(255,255,255,0.25);
-    padding: 5px 9px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; cursor: pointer;
+    background: rgba(255,255,255,0.12); color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 5px 10px; border-radius: 10px; font-size: 0.78rem; font-weight: 700; cursor: pointer;
+    transition: all 0.18s ease;
   }
-  .tool-icon-btn:hover { background: rgba(255,255,255,0.28); }
+  .tool-icon-btn:hover { background: rgba(255,255,255,0.24); transform: translateY(-1px); }
+
+  /* Horizontal Scrollable Navigation Dock */
   .quick-nav {
-    max-width: 1120px; margin: 10px auto 0; display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px;
+    max-width: 1140px; margin: 12px auto 0; display: flex; gap: 7px;
+    overflow-x: auto; padding-bottom: 3px; scrollbar-width: none;
   }
+  .quick-nav::-webkit-scrollbar { display: none; }
   .qnav-btn {
-    background: rgba(255,255,255,0.12); color: #f8fafc; border: 1px solid rgba(255,255,255,0.2);
-    padding: 5px 11px; border-radius: 999px; font-size: 0.76rem; font-weight: 600; cursor: pointer; white-space: nowrap;
+    background: rgba(255,255,255,0.09); color: #e2e8f0;
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 6px 13px; border-radius: 999px; font-size: 0.76rem; font-weight: 600;
+    cursor: pointer; white-space: nowrap; transition: all 0.2s ease;
   }
-  .qnav-btn.active { background: #22c55e; color: #052e16; border-color: #22c55e; font-weight: 700; }
-  .container { max-width: 1120px; margin: 0 auto; padding: 14px; }
+  .qnav-btn:hover { background: rgba(255,255,255,0.18); }
+  .qnav-btn.active {
+    background: #ffffff; color: #1e1b4b; border-color: #ffffff; font-weight: 800;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.25);
+  }
+
+  .container { max-width: 1140px; margin: 0 auto; padding: 16px; }
+
+  /* Modern Breadcrumb */
   .breadcrumb {
     display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-    background: var(--card); padding: 10px 14px; border-radius: 10px;
-    border: 1px solid var(--border); margin-bottom: 14px; font-size: 0.85rem;
+    background: var(--card-glass); backdrop-filter: blur(8px);
+    padding: 10px 14px; border-radius: 14px;
+    border: 1px solid var(--border); margin-bottom: 16px; font-size: 0.84rem;
+    box-shadow: var(--shadow-sm);
   }
   .crumb-btn {
-    background: var(--concept-bg); color: var(--primary); border: 1px solid var(--concept-border);
-    padding: 5px 10px; border-radius: 6px; font-weight: 600; cursor: pointer;
+    background: var(--sub-bg); color: var(--primary); border: 1px solid var(--border);
+    padding: 5px 11px; border-radius: 8px; font-weight: 700; cursor: pointer;
+    transition: all 0.15s;
   }
+  .crumb-btn:hover { border-color: var(--primary); transform: translateY(-1px); }
+
+  /* Progress Dashboard Banner */
   .progress-banner {
-    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-    padding: 12px 16px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+    background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+    padding: 16px 18px; margin-bottom: 18px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;
+    box-shadow: var(--shadow-md);
+    position: relative; overflow: hidden;
   }
-  .pbar-wrap { flex: 1; min-width: 180px; }
-  .pbar-track { height: 10px; background: var(--border); border-radius: 999px; overflow: hidden; margin-top: 5px; }
-  .pbar-fill { height: 100%; background: linear-gradient(90deg, #16a34a, #22c55e); transition: width 0.3s; }
+  .progress-banner::before {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px;
+    background: linear-gradient(180deg, #4f46e5, #10b981);
+  }
+  .pbar-wrap { flex: 1; min-width: 200px; }
+  .pbar-track { height: 10px; background: var(--sub-bg); border: 1px solid var(--border); border-radius: 999px; overflow: hidden; margin-top: 7px; }
+  .pbar-fill { height: 100%; background: linear-gradient(90deg, #4f46e5, #10b981); border-radius: 999px; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+
+  /* Subject Cards Grid */
   .grid-subjects {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(265px, 1fr)); gap: 14px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;
   }
   .subj-card {
-    background: var(--card); border-radius: 14px; padding: 18px;
-    border: 1px solid var(--border); box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-    cursor: pointer; transition: transform 0.15s, border-color 0.15s;
+    background: var(--card); border-radius: 20px; padding: 20px;
+    border: 1px solid var(--border); box-shadow: var(--shadow-md);
+    cursor: pointer; transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex; flex-direction: column; justify-content: space-between;
+    position: relative; overflow: hidden;
   }
-  .subj-card:hover { transform: translateY(-2px); border-color: var(--primary-light); }
+  .subj-card:hover {
+    transform: translateY(-4px); border-color: var(--primary); box-shadow: var(--shadow-lg);
+  }
   .subj-badge {
-    display: inline-block; padding: 4px 10px; border-radius: 999px;
-    font-size: 0.74rem; font-weight: 700; margin-bottom: 8px; width: fit-content;
+    display: inline-block; padding: 5px 12px; border-radius: 999px;
+    font-size: 0.73rem; font-weight: 800; margin-bottom: 10px; width: fit-content;
+    letter-spacing: 0.2px;
   }
-  .subj-card h2 { margin: 0 0 6px; font-size: 1.12rem; color: var(--text); }
-  .subj-card p { margin: 0; font-size: 0.84rem; color: var(--muted); }
-  .lesson-list { display: flex; flex-direction: column; gap: 10px; }
+  .subj-card h2 { margin: 0 0 6px; font-size: 1.18rem; font-weight: 800; color: var(--text); letter-spacing: -0.2px; }
+  .subj-card p { margin: 0; font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+
+  /* Lesson Rows */
+  .lesson-list { display: flex; flex-direction: column; gap: 11px; }
   .lesson-item {
-    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-    padding: 13px 15px; display: flex; justify-content: space-between; align-items: center;
-    cursor: pointer; gap: 12px;
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 14px 16px; display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer; gap: 14px; box-shadow: var(--shadow-sm);
+    transition: all 0.18s ease;
   }
-  .lesson-item:hover { border-color: var(--primary-light); }
+  .lesson-item:hover {
+    border-color: var(--primary); transform: translateX(4px); box-shadow: var(--shadow-md);
+  }
   .lesson-num {
-    background: #1e3a8a; color: #fff; font-weight: 700; font-size: 0.8rem;
-    padding: 6px 10px; border-radius: 8px; min-width: 66px; text-align: center;
+    background: linear-gradient(135deg, #4f46e5, #3730a3);
+    color: #fff; font-weight: 800; font-size: 0.78rem;
+    padding: 8px 11px; border-radius: 11px; min-width: 72px; text-align: center;
+    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.25);
   }
   .lesson-info { flex: 1; }
-  .lesson-info h3 { margin: 0; font-size: 0.98rem; color: var(--text); }
-  .lesson-info small { color: var(--muted); font-size: 0.79rem; display: block; margin-top: 2px; }
+  .lesson-info h3 { margin: 0; font-size: 1rem; font-weight: 700; color: var(--text); }
+  .lesson-info small { color: var(--muted); font-size: 0.8rem; display: block; margin-top: 3px; }
+
+  /* Mode Switcher Tabs */
   .mode-selector {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px;
   }
   @media (max-width: 600px) { .mode-selector { grid-template-columns: 1fr; } }
   .mode-card {
-    background: var(--card); border: 2px solid var(--border); border-radius: 12px;
-    padding: 13px; cursor: pointer; text-align: left;
+    background: var(--card); border: 2px solid var(--border); border-radius: 16px;
+    padding: 15px 16px; cursor: pointer; text-align: left;
+    transition: all 0.2s ease; box-shadow: var(--shadow-sm);
   }
   .mode-card.active {
-    border-color: var(--primary-light); background: var(--concept-bg);
+    border-color: var(--primary); background: var(--concept-bg);
+    box-shadow: 0 8px 20px var(--primary-glow);
   }
-  .mode-card h4 { margin: 0 0 4px; font-size: 0.96rem; color: var(--primary); }
+  .mode-card h4 { margin: 0 0 4px; font-size: 0.98rem; font-weight: 800; color: var(--primary); }
   .mode-card p { margin: 0; font-size: 0.8rem; color: var(--muted); }
+
+  /* Filter Pills */
   .filter-bar {
-    display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; align-items: center;
-    background: var(--card); padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border);
+    display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 16px; align-items: center;
+    background: var(--card); padding: 11px 14px; border-radius: 14px;
+    border: 1px solid var(--border); box-shadow: var(--shadow-sm);
   }
   .pill {
     border: 1px solid var(--border); background: var(--sub-bg); color: var(--text);
-    padding: 5px 11px; border-radius: 999px; font-size: 0.8rem; font-weight: 600; cursor: pointer;
+    padding: 5px 12px; border-radius: 999px; font-size: 0.79rem; font-weight: 700; cursor: pointer;
+    transition: all 0.15s;
   }
-  .pill.active { background: #1e3a8a; color: #fff; border-color: #1e3a8a; }
-  .pill.easy.active { background: #15803d; border-color: #15803d; }
-  .pill.medium.active { background: #b45309; border-color: #b45309; }
-  .pill.hard.active { background: #b91c1c; border-color: #b91c1c; }
+  .pill.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 3px 10px var(--primary-glow); }
+  .pill.easy.active { background: #16a34a; border-color: #16a34a; }
+  .pill.medium.active { background: #d97706; border-color: #d97706; }
+  .pill.hard.active { background: #dc2626; border-color: #dc2626; }
+
+  /* Question & Solution Cards */
   .q-card {
-    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-    padding: 15px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+    padding: 18px; margin-bottom: 16px; box-shadow: var(--shadow-md);
+    transition: border-color 0.2s;
   }
+  .q-card:hover { border-color: var(--primary-light); }
   .q-meta {
-    display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;
-    font-size: 0.76rem; font-weight: 700; gap: 8px; flex-wrap: wrap;
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
+    font-size: 0.76rem; font-weight: 800; gap: 8px; flex-wrap: wrap;
   }
-  .tag-marks { background: #e0e7ff; color: #1e3a8a; padding: 3px 9px; border-radius: 6px; }
-  .tag-diff { padding: 3px 9px; border-radius: 6px; text-transform: uppercase; }
+  .tag-marks {
+    background: linear-gradient(135deg, #e0e7ff, #ede9fe);
+    color: #3730a3; padding: 4px 10px; border-radius: 8px;
+  }
+  .tag-diff { padding: 4px 10px; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.3px; }
   .tag-Easy { background: #dcfce7; color: #166534; }
   .tag-Medium { background: #fef3c7; color: #92400e; }
   .tag-Hard { background: #fee2e2; color: #991b1b; }
+
   .bookmark-btn {
-    background: transparent; border: 1px solid var(--border); color: var(--text);
-    padding: 3px 9px; border-radius: 6px; font-size: 0.76rem; font-weight: 700; cursor: pointer;
+    background: var(--sub-bg); border: 1px solid var(--border); color: var(--text);
+    padding: 4px 10px; border-radius: 8px; font-size: 0.76rem; font-weight: 700; cursor: pointer;
+    transition: all 0.15s;
   }
   .bookmark-btn.saved { background: #fef3c7; border-color: #f59e0b; color: #92400e; }
-  .q-text { font-size: 0.96rem; font-weight: 600; margin-bottom: 8px; color: var(--text); white-space: pre-line; }
+
+  .q-text { font-size: 0.98rem; font-weight: 700; margin-bottom: 10px; color: var(--text); white-space: pre-line; }
   .hi-sub {
-    font-size: 0.9rem; color: var(--text); background: var(--sub-bg);
-    padding: 8px 10px; border-left: 3px solid #2563eb; border-radius: 4px; margin-bottom: 10px; white-space: pre-line;
+    font-size: 0.91rem; color: var(--text); background: var(--sub-bg);
+    padding: 10px 12px; border-left: 4px solid var(--primary); border-radius: 8px;
+    margin-bottom: 12px; white-space: pre-line;
   }
   .glossary-box {
-    background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px;
-    padding: 8px 10px; font-size: 0.81rem; color: #78350f; margin-bottom: 10px;
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+    border: 1px solid #fcd34d; border-radius: 12px;
+    padding: 10px 12px; font-size: 0.82rem; color: #78350f; margin-bottom: 10px;
   }
-  .mcq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+
+  /* Tactile MCQ Option Buttons */
+  .mcq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
   @media (max-width: 550px) { .mcq-grid { grid-template-columns: 1fr; } }
   .opt-btn {
-    text-align: left; padding: 10px 12px; border: 1.5px solid var(--border);
-    border-radius: 8px; background: var(--card); color: var(--text); font-size: 0.88rem; cursor: pointer; font-weight: 500;
+    text-align: left; padding: 12px 14px; border: 1.5px solid var(--border);
+    border-radius: 12px; background: var(--sub-bg); color: var(--text);
+    font-size: 0.89rem; cursor: pointer; font-weight: 600;
+    transition: all 0.15s ease;
   }
+  .opt-btn:hover { border-color: var(--primary); background: var(--card); }
   .opt-btn.correct {
     background: var(--green-bg) !important; border-color: var(--green-border) !important;
-    color: var(--green-text) !important; font-weight: 700;
+    color: var(--green-text) !important; font-weight: 800;
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2);
   }
   .opt-btn.wrong {
     background: var(--red-bg) !important; border-color: var(--red-border) !important;
-    color: var(--red-text) !important; font-weight: 700;
+    color: var(--red-text) !important; font-weight: 800;
   }
+
   .sol-btn {
-    background: var(--secondary); color: #fff; border: none;
-    padding: 8px 14px; border-radius: 8px; font-size: 0.83rem; font-weight: 600; cursor: pointer;
+    background: linear-gradient(135deg, #0d9488, #0f766e);
+    color: #fff; border: none;
+    padding: 9px 16px; border-radius: 10px; font-size: 0.84rem; font-weight: 700; cursor: pointer;
+    box-shadow: 0 4px 12px rgba(13, 148, 136, 0.28);
+    transition: transform 0.15s, box-shadow 0.15s;
   }
+  .sol-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(13, 148, 136, 0.35); }
+
   .sol-box {
-    display: none; margin-top: 12px; padding: 12px 14px;
-    background: var(--sol-bg); border: 1px solid var(--sol-border); border-radius: 8px; font-size: 0.9rem;
+    display: none; margin-top: 12px; padding: 14px 16px;
+    background: var(--sol-bg); border: 1px solid var(--sol-border);
+    border-radius: 12px; font-size: 0.91rem;
   }
-  .sol-box.open { display: block; }
+  .sol-box.open { display: block; animation: fadeIn 0.22s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
   .concept-card {
-    background: var(--concept-bg); border: 1px solid var(--concept-border); border-radius: 12px;
-    padding: 14px 16px; margin-bottom: 14px;
+    background: var(--concept-bg); border: 1px solid var(--concept-border); border-radius: 18px;
+    padding: 16px 18px; margin-bottom: 16px; box-shadow: var(--shadow-sm);
   }
-  .concept-card h4 { margin: 0 0 6px; color: var(--primary); }
+  .concept-card h4 { margin: 0 0 8px; font-size: 1.05rem; font-weight: 800; color: var(--primary); }
+
   .search-box {
-    width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border);
-    background: var(--card); color: var(--text); font-size: 0.9rem; margin-bottom: 12px;
+    width: 100%; padding: 12px 16px; border-radius: 14px; border: 1.5px solid var(--border);
+    background: var(--card); color: var(--text); font-size: 0.92rem; margin-bottom: 14px;
+    box-shadow: var(--shadow-sm); outline: none; transition: border-color 0.2s;
   }
+  .search-box:focus { border-color: var(--primary); }
+
   .timer-bar {
-    background: #0f172a; color: #fbbf24; padding: 10px 14px; border-radius: 10px;
-    display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; font-weight: 700;
+    background: linear-gradient(135deg, #090d16, #1e1b4b);
+    color: #fbbf24; padding: 12px 16px; border-radius: 14px;
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 16px; font-weight: 800; box-shadow: var(--shadow-md);
   }
   .svg-box {
-    background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 12px; text-align: center; margin: 10px 0; color: #0f172a;
+    background: #ffffff; border: 1px solid #cbd5e1; border-radius: 14px;
+    padding: 14px; text-align: center; margin: 10px 0; color: #0f172a;
   }
-  footer { text-align: center; padding: 20px; color: var(--muted); font-size: 0.78rem; }
+  footer {
+    text-align: center; padding: 24px 16px; color: var(--muted); font-size: 0.8rem;
+  }
 </style>
 </head>
 <body>
@@ -246,8 +371,11 @@
 <header>
   <div class="header-top">
     <div class="brand">
-      <h1>🎓 Class 10 Master Portal <span style="background:#22c55e;color:#052e16;font-size:0.68rem;padding:2px 8px;border-radius:999px;">ULTRA-PRO • 100% OFFLINE</span></h1>
-      <p>CBSE & HBSE • Full NCERT + Guess Papers + Mock Test + PYQs + Diagrams + Cheat Sheet</p>
+      <div class="brand-logo">10</div>
+      <div class="brand-text">
+        <h1>Class 10 Master Portal <span class="pro-pill">PRO • OFFLINE</span></h1>
+        <p>CBSE & HBSE • Full NCERT + Guess Papers + Mock Test + PYQs + Cheat Sheet</p>
+      </div>
     </div>
     <div class="controls-bar">
       <div class="medium-switch">
@@ -276,37 +404,48 @@
 </div>
 
 <footer>
-  Class 10 Complete Board Preparation App • CBSE & Haryana Board (HBSE) • Offline & APK Ready
+  Class 10 Master Portal • Next-Gen Pro EdTech Edition • CBSE & Haryana Board (HBSE)
 </footer>
 
 <script>
-// Register inline Service Worker for 100% Offline Support
-if ('serviceWorker' in navigator) {
-  const swCode = `
-    const CACHE = 'c10-master-v1';
-    self.addEventListener('install', e => { self.skipWaiting(); });
-    self.addEventListener('fetch', e => {
-      e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
-    });
-  `;
-  const blob = new Blob([swCode], { type: 'application/javascript' });
-  navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
-}
+// Safe Storage Wrapper (prevents crashes on restricted Android WebViews / Incognito)
+const SafeStore = {
+  get(key, fallback) {
+    try {
+      const v = localStorage.getItem(key);
+      return v !== null ? v : fallback;
+    } catch (e) { return fallback; }
+  },
+  set(key, val) {
+    try { SafeStore.set(key, val); } catch (e) {}
+  },
+  getJSON(key, fallback) {
+    try {
+      const v = localStorage.getItem(key);
+      return v ? JSON.parse(v) : fallback;
+    } catch (e) { return fallback; }
+  }
+};
+
+// Global Error Guard so UI never goes blank even on unexpected edge cases
+window.addEventListener('error', function(e) {
+  console.warn('Handled UI Error:', e.message);
+});
 
 let state = {
   view: 'home',
-  medium: localStorage.getItem('c10_medium') || 'en',
-  dark: localStorage.getItem('c10_dark') === '1',
-  fontSize: parseInt(localStorage.getItem('c10_font') || '16', 10),
+  medium: SafeStore.get('c10_medium', 'en'),
+  dark: SafeStore.get('c10_dark', '0') === '1',
+  fontSize: parseInt(SafeStore.get('c10_font', '16'), 10),
   subjectId: null,
   lessonId: null,
   mode: 'book',
   diff: 'All',
   marks: 'All',
   search: '',
-  answered: JSON.parse(localStorage.getItem('c10_answered') || '{}'),
-  saved: JSON.parse(localStorage.getItem('c10_saved') || '[]'),
-  mistakes: JSON.parse(localStorage.getItem('c10_mistakes') || '[]'),
+  answered: SafeStore.getJSON('c10_answered', {}),
+  saved: SafeStore.getJSON('c10_saved', []),
+  mistakes: SafeStore.getJSON('c10_mistakes', []),
   mockActive: false,
   mockSubj: 'all',
   mockSeconds: 10800,
@@ -327,19 +466,19 @@ function applyPrefs() {
 
 function toggleTheme() {
   state.dark = !state.dark;
-  localStorage.setItem('c10_dark', state.dark ? '1' : '0');
+  SafeStore.set('c10_dark', state.dark ? '1' : '0');
   applyPrefs();
 }
 
 function changeFont(delta) {
   state.fontSize = Math.min(21, Math.max(13, state.fontSize + delta));
-  localStorage.setItem('c10_font', state.fontSize);
+  SafeStore.set('c10_font', state.fontSize);
   applyPrefs();
 }
 
 function setMedium(m) {
   state.medium = m;
-  localStorage.setItem('c10_medium', m);
+  SafeStore.set('c10_medium', m);
   applyPrefs();
   render();
 }
@@ -351,16 +490,25 @@ function updateCounters() {
   if (mc) mc.textContent = state.mistakes.length;
 }
 
-function toggleBookmark(id, title, qEn, qHi, solEn, solHi) {
+const ITEM_REGISTRY = {};
+function regItem(id, data) {
+  ITEM_REGISTRY[id] = data;
+  return id;
+}
+function toggleBookmarkById(id) {
   const idx = state.saved.findIndex(x => x.id === id);
   if (idx >= 0) {
     state.saved.splice(idx, 1);
-  } else {
-    state.saved.push({ id, title, qEn, qHi, solEn, solHi });
+  } else if (ITEM_REGISTRY[id]) {
+    state.saved.push({ id, ...ITEM_REGISTRY[id] });
   }
-  localStorage.setItem('c10_saved', JSON.stringify(state.saved));
+  SafeStore.set('c10_saved', JSON.stringify(state.saved));
   updateCounters();
   render();
+}
+function checkMCQById(qid, optIdx, correctIdx) {
+  const qObj = ITEM_REGISTRY[qid] || null;
+  checkMCQ(qid, optIdx, correctIdx, qObj);
 }
 
 function switchView(v) {
@@ -3681,28 +3829,22 @@ const PYQ_COMPETENCY = [
   },
   {
     id: 'pyq2', tag: 'Competency • Science Assertion-Reason (1M)', diff: 'Medium',
-    qEn: 'Assertion (A): Silver chloride turns grey in sunlight.
-Reason (R): Decomposition of silver chloride in presence of sunlight forms silver metal and chlorine gas.',
-    qHi: 'अभिकथन (A): सूर्य के प्रकाश में सिल्वर क्लोराइड धूसर (Grey) रंग का हो जाता है।
-कारण (R): सूर्य के प्रकाश की उपस्थिति में सिल्वर क्लोराइड का वियोजन सिल्वर धातु और क्लोरीन गैस में होता है।',
+    qEn: 'Assertion (A): Silver chloride turns grey in sunlight.\nReason (R): Decomposition of silver chloride in presence of sunlight forms silver metal and chlorine gas.',
+    qHi: 'अभिकथन (A): सूर्य के प्रकाश में सिल्वर क्लोराइड धूसर (Grey) रंग का हो जाता है।\nकारण (R): सूर्य के प्रकाश की उपस्थिति में सिल्वर क्लोराइड का वियोजन सिल्वर धातु और क्लोरीन गैस में होता है।',
     solEn: '<b>Correct Answer: Both A and R are true, and R is the correct explanation of A.</b> (2AgCl(s) → 2Ag(s) + Cl₂(g) — Photolytic decomposition).',
     solHi: '<b>सही उत्तर: A और R दोनों सत्य हैं, तथा R, A की सही व्याख्या करता है।</b>'
   },
   {
     id: 'pyq3', tag: 'CBSE & HBSE PYQ • Science (5M)', diff: 'Hard',
-    qEn: '(a) Draw a schematic diagram of a circuit consisting of a battery of three cells of 2 V each, a 5 Ω resistor, an 8 Ω resistor, and a 12 Ω resistor, and a plug key, all connected in series.
-(b) Calculate the total current and potential difference across the 12 Ω resistor.',
-    qHi: '(a) 2 V के तीन सेलों की बैटरी, 5 Ω, 8 Ω तथा 12 Ω के तीन प्रतिरोधक तथा एक प्लग कुंजी को श्रेणीक्रम में जोड़कर विद्युत परिपथ बनाइए।
-(b) कुल विद्युत धारा तथा 12 Ω प्रतिरोधक के सिरों पर विभवांतर ज्ञात कीजिए।',
+    qEn: '(a) Draw a schematic diagram of a circuit consisting of a battery of three cells of 2 V each, a 5 Ω resistor, an 8 Ω resistor, and a 12 Ω resistor, and a plug key, all connected in series.\n(b) Calculate the total current and potential difference across the 12 Ω resistor.',
+    qHi: '(a) 2 V के तीन सेलों की बैटरी, 5 Ω, 8 Ω तथा 12 Ω के तीन प्रतिरोधक तथा एक प्लग कुंजी को श्रेणीक्रम में जोड़कर विद्युत परिपथ बनाइए।\n(b) कुल विद्युत धारा तथा 12 Ω प्रतिरोधक के सिरों पर विभवांतर ज्ञात कीजिए।',
     solEn: 'Total Voltage V = 3 × 2 V = 6 V.<br>Total Resistance Rs = 5 + 8 + 12 = <b>25 Ω</b>.<br>Total Current I = V/Rs = 6/25 = <b>0.24 A</b>.<br>Potential difference across 12 Ω resistor: V₁₂ = I × R = 0.24 × 12 = <b>2.88 V</b>.',
     solHi: 'कुल वोल्टता = 6 V, कुल प्रतिरोध = 25 Ω, कुल धारा = <b>0.24 A</b>, तथा 12 Ω के सिरों पर विभवांतर = <b>2.88 V</b>।'
   },
   {
     id: 'pyq4', tag: 'Competency • SST Case-Based (4M)', diff: 'Medium',
-    qEn: 'Case Study: In 1930, Mahatma Gandhi marched 240 miles from Sabarmati Ashram to Dandi with 78 trusted volunteers to break the Salt Law.
-(i) Why was salt chosen as a powerful symbol? (ii) Which movement started with this event?',
-    qHi: 'केस स्टडी: 1930 में महात्मा गांधी ने 78 विश्वस्त स्वयंसेवकों के साथ साबरमती आश्रम से दांडी तक 240 मील की यात्रा कर नमक कानून तोड़ा।
-(i) नमक को शक्तिशाली प्रतीक क्यों चुना गया? (ii) इस घटना से कौनसा आंदोलन शुरू हुआ?',
+    qEn: 'Case Study: In 1930, Mahatma Gandhi marched 240 miles from Sabarmati Ashram to Dandi with 78 trusted volunteers to break the Salt Law.\n(i) Why was salt chosen as a powerful symbol? (ii) Which movement started with this event?',
+    qHi: 'केस स्टडी: 1930 में महात्मा गांधी ने 78 विश्वस्त स्वयंसेवकों के साथ साबरमती आश्रम से दांडी तक 240 मील की यात्रा कर नमक कानून तोड़ा।\n(i) नमक को शक्तिशाली प्रतीक क्यों चुना गया? (ii) इस घटना से कौनसा आंदोलन शुरू हुआ?',
     solEn: '(i) Salt was an essential food item consumed equally by rich and poor alike, and the British monopoly & tax on salt revealed the most oppressive face of colonial rule.<br>(ii) <b>Civil Disobedience Movement (सविनय अवज्ञा आंदोलन)</b>.',
     solHi: '(i) नमक अमीर-गरीब सभी की अनिवार्य आवश्यकता थी और इस पर ब्रिटिश कर सबसे दमनकारी था। (ii) <b>सविनय अवज्ञा आंदोलन</b>।'
   },
@@ -3745,15 +3887,15 @@ function setMarks(mk) { state.marks = mk; render(); }
 
 function checkMCQ(qid, optIdx, correctIdx, qObj) {
   state.answered[qid] = { chosen: optIdx, correct: correctIdx };
-  localStorage.setItem('c10_answered', JSON.stringify(state.answered));
+  SafeStore.set('c10_answered', JSON.stringify(state.answered));
   if (optIdx !== correctIdx && qObj) {
     if (!state.mistakes.some(m => m.id === qid)) {
       state.mistakes.push({ id: qid, ...qObj });
-      localStorage.setItem('c10_mistakes', JSON.stringify(state.mistakes));
+      SafeStore.set('c10_mistakes', JSON.stringify(state.mistakes));
     }
   } else if (optIdx === correctIdx) {
     state.mistakes = state.mistakes.filter(m => m.id !== qid);
-    localStorage.setItem('c10_mistakes', JSON.stringify(state.mistakes));
+    SafeStore.set('c10_mistakes', JSON.stringify(state.mistakes));
   }
   updateCounters();
   render();
@@ -4058,7 +4200,7 @@ function render() {
       <div class="q-card">
         <div class="q-meta">
           <span class="tag-marks">⭐ ${item.title}</span>
-          <button class="bookmark-btn saved" onclick="toggleBookmark('${item.id}')">Remove ✕</button>
+          <button class="bookmark-btn saved" onclick="toggleBookmarkById('${item.id}')">Remove ✕</button>
         </div>
         <div class="q-text">${item.qEn}</div>
         ${state.medium === 'hi' && item.qHi ? `<div class="hi-sub">${item.qHi}</div>` : ''}
@@ -4084,6 +4226,7 @@ function render() {
       ${state.mistakes.map((q) => {
         const opts = state.medium === 'hi' ? q.optsHi : q.optsEn;
         const ansState = state.answered[q.id];
+        regItem(q.id, q);
         return `
           <div class="q-card">
             <div class="q-meta"><span class="tag-marks">${q.subjName || 'MCQ Practice'}</span></div>
@@ -4096,7 +4239,7 @@ function render() {
                   if (oIdx === q.ans) cls += ' correct';
                   else if (oIdx === ansState.chosen) cls += ' wrong';
                 }
-                return `<button class="${cls}" onclick='checkMCQ("${q.id}", ${oIdx}, ${q.ans}, ${JSON.stringify(q).replace(/'/g, "&apos;")})'>${String.fromCharCode(65 + oIdx)}. ${opt}</button>`;
+                return `<button class="${cls}" onclick="checkMCQById('${q.id}', ${oIdx}, ${q.ans})">${String.fromCharCode(65 + oIdx)}. ${opt}</button>`;
               }).join('')}
             </div>
           </div>
@@ -4188,12 +4331,13 @@ function render() {
   if (state.mode === 'book') {
     let bookHtml = les.book.map((item, idx) => {
       const bid = `${les.id}_b_${idx}`;
+      regItem(bid, { title: `${les.num} • Ex #${idx+1}`, qEn: item.qEn, qHi: item.qHi, solEn: item.solEn, solHi: item.solHi });
       const isSaved = state.saved.some(x => x.id === bid);
       return `
         <div class="q-card">
           <div class="q-meta">
             <span class="tag-marks">Original Textbook Exercise #${idx + 1}</span>
-            <button class="bookmark-btn ${isSaved ? 'saved' : ''}" onclick='toggleBookmark("${bid}", "${les.num} • Ex #${idx+1}", ${JSON.stringify(item.qEn)}, ${JSON.stringify(item.qHi)}, ${JSON.stringify(item.solEn)}, ${JSON.stringify(item.solHi)})'>${isSaved ? '⭐ Saved' : '☆ Save'}</button>
+            <button class="bookmark-btn ${isSaved ? 'saved' : ''}" onclick="toggleBookmarkById('${bid}')">${isSaved ? '⭐ Saved' : '☆ Save'}</button>
           </div>
           <div class="q-text">${item.qEn}</div>
           ${state.medium === 'hi' ? `<div class="hi-sub">${item.qHi}</div>` : ''}
@@ -4232,14 +4376,15 @@ function render() {
           if (q.marks === 1) {
             const ansState = state.answered[qid];
             const opts = state.medium === 'hi' ? q.optsHi : q.optsEn;
-            const qPayload = { subjName: subj.titleEn + ' (' + les.num + ')', qEn: q.qEn, qHi: q.qHi, optsEn: q.optsEn, optsHi: q.optsHi, ans: q.ans };
+            const qPayload = { title: `${les.num} • 1M MCQ`, subjName: subj.titleEn + ' (' + les.num + ')', qEn: q.qEn, qHi: q.qHi, optsEn: q.optsEn, optsHi: q.optsHi, ans: q.ans, solEn: "Correct Answer: " + q.optsEn[q.ans], solHi: "सही उत्तर: " + q.optsHi[q.ans] };
+            regItem(qid, qPayload);
             return `
               <div class="q-card">
                 <div class="q-meta">
                   <span class="tag-marks">1 Mark • MCQ (Only Green/Red)</span>
                   <div>
                     <span class="tag-diff tag-${q.diff}">${q.diff}</span>
-                    <button class="bookmark-btn ${isSaved ? 'saved' : ''}" onclick='toggleBookmark("${qid}", "${les.num} • 1M MCQ", ${JSON.stringify(q.qEn)}, ${JSON.stringify(q.qHi)}, ${JSON.stringify("Correct Answer: " + q.optsEn[q.ans])}, ${JSON.stringify("सही उत्तर: " + q.optsHi[q.ans])})'>${isSaved ? '⭐ Saved' : '☆ Save'}</button>
+                    <button class="bookmark-btn ${isSaved ? 'saved' : ''}" onclick="toggleBookmarkById('${qid}')">${isSaved ? '⭐ Saved' : '☆ Save'}</button>
                   </div>
                 </div>
                 <div class="q-text">${q.qEn}</div>
@@ -4251,19 +4396,20 @@ function render() {
                       if (oIdx === q.ans) cls += ' correct';
                       else if (oIdx === ansState.chosen) cls += ' wrong';
                     }
-                    return `<button class="${cls}" onclick='checkMCQ("${qid}", ${oIdx}, ${q.ans}, ${JSON.stringify(qPayload).replace(/'/g, "&apos;")})'>${String.fromCharCode(65 + oIdx)}. ${opt}</button>`;
+                    return `<button class="${cls}" onclick="checkMCQById('${qid}', ${oIdx}, ${q.ans})">${String.fromCharCode(65 + oIdx)}. ${opt}</button>`;
                   }).join('')}
                 </div>
               </div>
             `;
           } else {
+            regItem(qid, { title: `${les.num} • ${q.marks}M`, qEn: q.qEn, qHi: q.qHi, solEn: q.solEn, solHi: q.solHi });
             return `
               <div class="q-card">
                 <div class="q-meta">
                   <span class="tag-marks">${q.marks} Marks • Direct Answer</span>
                   <div>
                     <span class="tag-diff tag-${q.diff}">${q.diff}</span>
-                    <button class="bookmark-btn ${isSaved ? 'saved' : ''}" onclick='toggleBookmark("${qid}", "${les.num} • ${q.marks}M", ${JSON.stringify(q.qEn)}, ${JSON.stringify(q.qHi)}, ${JSON.stringify(q.solEn)}, ${JSON.stringify(q.solHi)})'>${isSaved ? '⭐ Saved' : '☆ Save'}</button>
+                    <button class="bookmark-btn ${isSaved ? 'saved' : ''}" onclick="toggleBookmarkById('${qid}')">${isSaved ? '⭐ Saved' : '☆ Save'}</button>
                   </div>
                 </div>
                 <div class="q-text">${q.qEn}</div>
