@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Windy Live Radar - Wind, Rain & Forecast Models (GPS)</title>
+    <style>
+        :root {
+            --windy-red: #d92b2b;
+            --windy-red-dark: #991b1b;
+            --windy-red-glow: rgba(217, 43, 43, 0.35);
+            --bg-dark: #0b0f17;
+            --card-bg: #131926;
+            --card-elevated: #1b2334;
+            --border-subtle: rgba(255, 255, 255, 0.09);
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --text-muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 12px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .windy-app {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-bottom: 24px;
+        }
+
+        /* Official Windy Header */
+        .windy-header {
+            background: linear-gradient(135deg, #991b1b 0%, #d92b2b 100%);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 15px;
+            padding: 13px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 8px 24px rgba(217, 43, 43, 0.28);
+        }
+
+        .brand-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .windy-logo {
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .brand-title h1 {
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            color: #ffffff;
+        }
+
+        .brand-title p {
+            font-size: 11px;
+            color: #fecaca;
+            margin-top: 1px;
+        }
+
+        .gps-sync-btn {
+            background: rgba(0, 0, 0, 0.32);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            color: #ffffff;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: transform 0.15s ease, background 0.15s ease;
+        }
+
+        .gps-sync-btn:active {
+            transform: scale(0.95);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Location & Coordinates Strip */
+        .loc-bar {
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: 11px;
+            padding: 9px 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        .loc-name {
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+
+        .sync-badge {
+            font-size: 11px;
+            color: #fca5a5;
+            background: rgba(217, 43, 43, 0.18);
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        /* Live Interactive Windy Radar Card */
+        .radar-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+        }
+
+        .radar-toolbar {
+            padding: 10px 12px;
+            background: var(--card-elevated);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .radar-label {
+            font-size: 12px;
+            font-weight: 800;
+            color: #fca5a5;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ef4444;
+            box-shadow: 0 0 8px #ef4444;
+        }
+
+        .layer-tabs {
+            display: flex;
+            gap: 6px;
+            padding: 9px 10px;
+            overflow-x: auto;
+            background: #101520;
+            scrollbar-width: none;
+        }
+
+        .layer-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .layer-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #cbd5e1;
+            padding: 6px 11px;
+            border-radius: 18px;
+            font-size: 11.5px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .layer-btn.active {
+            background: var(--windy-red);
+            color: #ffffff;
+            border-color: #f87171;
+            box-shadow: 0 2px 10px var(--windy-red-glow);
+        }
+
+        .radar-frame-wrap {
+            position: relative;
+            width: 100%;
+            height: 270px;
+            background: #0f172a;
+        }
+
+        .radar-frame-wrap iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        /* Forecast Model Selector (ECMWF / GFS / ICON) */
+        .model-bar {
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: 13px;
+            padding: 10px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .model-title {
+            font-size: 11.5px;
+            font-weight: 700;
+            color: var(--text-sub);
+        }
+
+        .model-pills {
+            display: flex;
+            gap: 6px;
+        }
+
+        .model-pill {
+            background: var(--card-elevated);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .model-pill.active {
+            background: var(--windy-red);
+            color: #ffffff;
+            border-color: #fca5a5;
+        }
+
+        /* Hero Wind & Compass Telemetry */
+        .wind-hero {
+            background: linear-gradient(145deg, #182032 0%, #111622 100%);
+            border: 1px solid var(--border-subtle);
+            border-radius: 15px;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .wh-left h2 {
+            font-size: 38px;
+            font-weight: 800;
+            line-height: 1;
+            color: #ffffff;
+        }
+
+        .wh-left h2 span {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-sub);
+        }
+
+        .wh-gust {
+            font-size: 13px;
+            font-weight: 700;
+            color: #fca5a5;
+            margin-top: 6px;
+        }
+
+        .wh-cond {
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-top: 3px;
+        }
+
+        .compass-box {
+            width: 74px;
+            height: 74px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 2px solid rgba(217, 43, 43, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .compass-arrow {
+            font-size: 24px;
+            transition: transform 0.4s ease;
+            line-height: 1;
+        }
+
+        .compass-dir {
+            font-size: 11px;
+            font-weight: 800;
+            color: #fca5a5;
+            margin-top: 3px;
+        }
+
+        /* 6-Metric Atmospheric Grid */
+        .atm-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 9px;
+        }
+
+        .atm-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 11px 8px;
+            text-align: center;
+        }
+
+        .atm-ico {
+            font-size: 19px;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .atm-val {
+            font-size: 14.5px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .atm-lbl {
+            font-size: 10.5px;
+            color: var(--text-sub);
+            margin-top: 2px;
+        }
+
+        /* Windy Meteogram Section */
+        .meteo-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: 15px;
+            padding: 14px;
+        }
+
+        .sec-head {
+            font-size: 12.5px;
+            font-weight: 800;
+            color: #fca5a5;
+            margin-bottom: 11px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .meteo-scroll {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            scrollbar-width: none;
+        }
+
+        .meteo-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .m-col {
+            min-width: 66px;
+            background: var(--card-elevated);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 11px;
+            padding: 9px 5px;
+            text-align: center;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .m-time {
+            font-size: 11px;
+            color: var(--text-sub);
+            font-weight: 600;
+        }
+
+        .m-ico {
+            font-size: 19px;
+        }
+
+        .m-temp {
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .m-wind-pill {
+            font-size: 11px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 6px;
+            color: #ffffff;
+            width: 90%;
+        }
+
+        .m-gust {
+            font-size: 10px;
+            color: var(--text-sub);
+        }
+
+        .m-arrow {
+            font-size: 13px;
+            color: #38bdf8;
+        }
+
+        .m-rain {
+            font-size: 10px;
+            color: #60a5fa;
+            font-weight: 700;
+        }
+
+        /* 5-Day Wind & Weather Summary */
+        .daily-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: 15px;
+            padding: 14px;
+        }
+
+        .d-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .d-row {
+            background: var(--card-elevated);
+            border-radius: 10px;
+            padding: 9px 11px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12.5px;
+        }
+
+        .d-day {
+            width: 26%;
+            font-weight: 700;
+        }
+
+        .d-wind {
+            width: 30%;
+            color: #fca5a5;
+            font-weight: 700;
+            font-size: 11.5px;
+        }
+
+        .d-rain {
+            width: 18%;
+            color: #38bdf8;
+            font-size: 11.5px;
+            font-weight: 600;
+        }
+
+        .d-temp {
+            width: 26%;
+            text-align: right;
+            font-weight: 800;
+        }
+
+        .d-temp span {
+            color: var(--text-sub);
+            font-weight: 400;
+            margin-left: 4px;
+        }
+
+        .windy-footer {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            padding-top: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="windy-app">
+    <!-- Official Windy Header -->
+    <header class="windy-header">
+        <div class="brand-box">
+            <div class="windy-logo">🌪️</div>
+            <div class="brand-title">
+                <h1>Windy Live Radar</h1>
+                <p>ECMWF • GFS • Live Wind & Storm Map</p>
+            </div>
+        </div>
+        <button class="gps-sync-btn" onclick="initWindy()">📍 GPS सिंक</button>
+    </header>
+
+    <!-- Location Bar -->
+    <div class="loc-bar">
+        <div class="loc-name" id="w-loc">📍 खड़क गगर, जींद (29.33°N, 76.32°E)</div>
+        <div class="sync-badge" id="w-sync">सिंक हो रहा है...</div>
+    </div>
+
+    <!-- Interactive Live Windy Radar Map -->
+    <section class="radar-card">
+        <div class="radar-toolbar">
+            <div class="radar-label"><span class="live-dot"></span> LIVE SATELLITE & WIND MAP</div>
+            <span style="font-size: 10.5px; color: var(--text-sub);">Interactive</span>
+        </div>
+        <div class="layer-tabs" id="layer-tabs">
+            <button class="layer-btn active" onclick="switchWindyLayer('wind', this)">💨 हवा (Wind)</button>
+            <button class="layer-btn" onclick="switchWindyLayer('rain', this)">🌧️ बारिश (Rain)</button>
+            <button class="layer-btn" onclick="switchWindyLayer('temp', this)">🌡️ तापमान (Temp)</button>
+            <button class="layer-btn" onclick="switchWindyLayer('clouds', this)">☁️ बादल (Clouds)</button>
+            <button class="layer-btn" onclick="switchWindyLayer('cape', this)">⚡ तूफान (CAPE)</button>
+        </div>
+        <div class="radar-frame-wrap">
+            <iframe id="windy-iframe" title="Windy Live Weather Radar" loading="lazy"
+                src="https://embed.windy.com/embed2.html?lat=29.325&lon=76.315&detailLat=29.325&detailLon=76.315&width=480&height=270&zoom=8&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=true&calendar=now&pressure=true&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1">
+            </iframe>
+        </div>
+    </section>
+
+    <!-- Forecast Model Selector -->
+    <div class="model-bar">
+        <div class="model-title">🛰️ वेदर मॉडल:</div>
+        <div class="model-pills">
+            <button class="model-pill active" onclick="switchWeatherModel('best_match', this)">ECMWF 9km</button>
+            <button class="model-pill" onclick="switchWeatherModel('gfs_seamless', this)">GFS 22km</button>
+            <button class="model-pill" onclick="switchWeatherModel('icon_seamless', this)">ICON 13km</button>
+        </div>
+    </div>
+
+    <!-- Hero Wind Speed & Compass -->
+    <section class="wind-hero">
+        <div class="wh-left">
+            <h2 id="hero-wind">-- <span>km/h</span></h2>
+            <div class="wh-gust" id="hero-gust">हवा के झोंके (Gusts): -- km/h</div>
+            <div class="wh-cond" id="hero-cond">तापमान: --°C • साफ आसमान</div>
+        </div>
+        <div class="compass-box">
+            <div class="compass-arrow" id="compass-arrow">⬆️</div>
+            <div class="compass-dir" id="compass-dir">N 0°</div>
+        </div>
+    </section>
+
+    <!-- 6 Atmospheric Telemetry Cards -->
+    <section class="atm-grid">
+        <div class="atm-card">
+            <span class="atm-ico">🌡️</span>
+            <div class="atm-val" id="atm-temp">--°C</div>
+            <div class="atm-lbl">तापमान</div>
+        </div>
+        <div class="atm-card">
+            <span class="atm-ico">🧭</span>
+            <div class="atm-val" id="atm-press">-- hPa</div>
+            <div class="atm-lbl">वायुदाब</div>
+        </div>
+        <div class="atm-card">
+            <span class="atm-ico">💧</span>
+            <div class="atm-val" id="atm-hum">--%</div>
+            <div class="atm-lbl">नमी (Humidity)</div>
+        </div>
+        <div class="atm-card">
+            <span class="atm-ico">☁️</span>
+            <div class="atm-val" id="atm-cloud">--%</div>
+            <div class="atm-lbl">बादल आवरण</div>
+        </div>
+        <div class="atm-card">
+            <span class="atm-ico">🌧️</span>
+            <div class="atm-val" id="atm-rain">0 mm</div>
+            <div class="atm-lbl">वर्षा (Rain)</div>
+        </div>
+        <div class="atm-card">
+            <span class="atm-ico">⚡</span>
+            <div class="atm-val" id="atm-cape">0 J/kg</div>
+            <div class="atm-lbl">तूफान ऊर्जा (CAPE)</div>
+        </div>
+    </section>
+
+    <!-- Windy Meteogram (Hour-by-Hour Wind & Rain) -->
+    <section class="meteo-card">
+        <div class="sec-head">
+            <span>📊 Windy मेटियोग्राम (प्रति घंटा हवा व बारिश)</span>
+            <span style="font-size: 10.5px; color: var(--text-sub);">km/h • दिशा</span>
+        </div>
+        <div class="meteo-scroll" id="meteo-strip">
+            <!-- JS Populated -->
+        </div>
+    </section>
+
+    <!-- 5-Day Wind & Weather Summary -->
+    <section class="daily-card">
+        <div class="sec-head">
+            <span>📅 5-दिवसीय हवा और मौसम पूर्वानुमान</span>
+            <span style="font-size: 10.5px; color: var(--text-sub);">अधिकतम झोंके</span>
+        </div>
+        <div class="d-list" id="daily-wind-list">
+            <!-- JS Populated -->
+        </div>
+    </section>
+
+    <footer class="windy-footer">
+        Windy Radar & Telemetry Module v1.0 • Zero-Crash Live GPS
+    </footer>
+</div>
+
+<script>
+    let currentLat = 29.3250;
+    let currentLon = 76.3150;
+    let currentLocLabel = "📍 खड़क गगर, जींद (29.33°N, 76.32°E)";
+    let currentOverlay = "wind";
+    let currentModel = "best_match";
+
+    function updateWindyIframe() {
+        const iframe = document.getElementById("windy-iframe");
+        const prod = currentModel === "gfs_seamless" ? "gfs" : (currentModel === "icon_seamless" ? "icon" : "ecmwf");
+        iframe.src = `https://embed.windy.com/embed2.html?lat=${currentLat}&lon=${currentLon}&detailLat=${currentLat}&detailLon=${currentLon}&width=480&height=270&zoom=8&level=surface&overlay=${currentOverlay}&product=${prod}&menu=&message=true&marker=true&calendar=now&pressure=true&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1`;
+    }
+
+    function switchWindyLayer(layer, btnEl) {
+        currentOverlay = layer;
+        if (btnEl) {
+            document.querySelectorAll(".layer-btn").forEach(b => b.classList.remove("active"));
+            btnEl.classList.add("active");
+        }
+        updateWindyIframe();
+    }
+
+    function switchWeatherModel(model, btnEl) {
+        currentModel = model;
+        if (btnEl) {
+            document.querySelectorAll(".model-pill").forEach(p => p.classList.remove("active"));
+            btnEl.classList.add("active");
+        }
+        updateWindyIframe();
+        fetchWindyTelemetry();
+    }
+
+    function getWindBadgeColor(speed) {
+        if (speed < 12) return "#0284c7"; // Calm blue
+        if (speed < 22) return "#10b981"; // Moderate green
+        if (speed < 35) return "#f59e0b"; // Fresh yellow-orange
+        return "#dc2626";                 // Strong red
+    }
+
+    function getWindCompass(deg) {
+        const dirs = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
+        const idx = Math.round(((deg %= 360) < 0 ? deg + 360 : deg) / 45) % 8;
+        return dirs[idx];
+    }
+
+    function getWeatherIcon(code) {
+        if (code === 0) return "☀️";
+        if (code === 1 || code === 2) return "🌤️";
+        if (code === 3) return "☁️";
+        if (code === 45 || code === 48) return "🌫️";
+        if (code >= 51 && code <= 65) return "🌧️";
+        if (code >= 80 && code <= 82) return "⛈️";
+        if (code >= 95) return "⚡";
+        return "⛅";
+    }
+
+    function getHindiDay(dateStr, idx) {
+        if (idx === 0) return "आज";
+        if (idx === 1) return "कल";
+        const days = ["रविवार", "सोमवार", "मंगलवार", "बुधवार", "गुरुवार", "शुक्रवार", "शनिवार"];
+        return days[new Date(dateStr).getDay()];
+    }
+
+    async function fetchWithTimeout(url, ms = 6500) {
+        const ctrl = new AbortController();
+        const tid = setTimeout(() => ctrl.abort(), ms);
+        try {
+            const res = await fetch(url, { signal: ctrl.signal });
+            clearTimeout(tid);
+            return res;
+        } catch (e) {
+            clearTimeout(tid);
+            throw e;
+        }
+    }
+
+    async function fetchWindyTelemetry() {
+        document.getElementById("w-loc").innerText = currentLocLabel;
+        const modelParam = currentModel === "best_match" ? "" : `&models=${currentModel}`;
+
+        try {
+            const url = `https://api.open-meteo.com/v1/forecast?latitude=${currentLat}&longitude=${currentLon}&current=temperature_2m,relative_humidity_2m,precipitation,weather_code,cloud_cover,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m&hourly=temperature_2m,precipitation_probability,precipitation,weather_code,wind_speed_10m,wind_direction_10m,wind_gusts_10m,cape&daily=weather_code,temperature_2m_max,temperature_2m_min,wind_speed_10m_max,wind_gusts_10m_max,precipitation_probability_max&timezone=auto${modelParam}`;
+
+            let res = await fetchWithTimeout(url, 6500);
+            if (!res.ok && modelParam !== "") {
+                // Fallback to best_match if specific model endpoint is unavailable
+                const fallbackUrl = url.replace(modelParam, "");
+                res = await fetchWithTimeout(fallbackUrl, 6500);
+            }
+            if (!res.ok) throw new Error("API failed");
+
+            const data = await res.json();
+            const curr = data.current;
+            const hourly = data.hourly;
+            const daily = data.daily;
+            const nowHr = new Date().getHours();
+
+            const windSpd = Math.round(curr.wind_speed_10m);
+            const windGust = Math.round(curr.wind_gusts_10m || windSpd + 6);
+            const windDeg = Math.round(curr.wind_direction_10m || 0);
+            const temp = Math.round(curr.temperature_2m);
+
+            // Hero Wind & Compass
+            document.getElementById("hero-wind").innerHTML = `${windSpd} <span>km/h</span>`;
+            document.getElementById("hero-gust").innerText = `हवा के झोंके (Gusts): ${windGust} km/h`;
+            document.getElementById("hero-cond").innerText = `तापमान: ${temp}°C • दबाव: ${Math.round(curr.surface_pressure)} hPa`;
+
+            const arrowEl = document.getElementById("compass-arrow");
+            // Arrow points in direction wind is blowing TO (deg + 180)
+            arrowEl.style.transform = `rotate(${(windDeg + 180) % 360}deg)`;
+            document.getElementById("compass-dir").innerText = `${getWindCompass(windDeg)} ${windDeg}°`;
+
+            // 6 Atmospheric Cards
+            document.getElementById("atm-temp").innerText = `${temp}°C`;
+            document.getElementById("atm-press").innerText = `${Math.round(curr.surface_pressure)} hPa`;
+            document.getElementById("atm-hum").innerText = `${Math.round(curr.relative_humidity_2m)}%`;
+            document.getElementById("atm-cloud").innerText = `${Math.round(curr.cloud_cover)}%`;
+            document.getElementById("atm-rain").innerText = `${curr.precipitation || 0} mm`;
+            const capeVal = (hourly.cape && hourly.cape[nowHr] !== null) ? Math.round(hourly.cape[nowHr]) : 0;
+            document.getElementById("atm-cape").innerText = `${capeVal} J/kg`;
+
+            // Meteogram Strip (Next 24 Hours)
+            const strip = document.getElementById("meteo-strip");
+            strip.innerHTML = "";
+            for (let i = nowHr; i < nowHr + 24 && i < hourly.time.length; i++) {
+                const dt = new Date(hourly.time[i]);
+                const hrLbl = i === nowHr ? "अभी" : `${dt.getHours()}:00`;
+                const hTemp = Math.round(hourly.temperature_2m[i]);
+                const hWind = Math.round(hourly.wind_speed_10m[i]);
+                const hGust = Math.round(hourly.wind_gusts_10m[i] || hWind + 4);
+                const hDeg = Math.round(hourly.wind_direction_10m[i] || 0);
+                const hRain = hourly.precipitation_probability[i] || 0;
+                const badgeBg = getWindBadgeColor(hWind);
+
+                strip.innerHTML += `
+                    <div class="m-col">
+                        <div class="m-time">${hrLbl}</div>
+                        <div class="m-ico">${getWeatherIcon(hourly.weather_code[i])}</div>
+                        <div class="m-temp">${hTemp}°</div>
+                        <div class="m-wind-pill" style="background:${badgeBg};">${hWind} km/h</div>
+                        <div class="m-gust">झोंका ${hGust}</div>
+                        <div class="m-arrow" style="transform: rotate(${(hDeg + 180) % 360}deg);">⬆️</div>
+                        <div class="m-rain">💧${hRain}%</div>
+                    </div>
+                `;
+            }
+
+            // 5-Day Summary
+            const dList = document.getElementById("daily-wind-list");
+            dList.innerHTML = "";
+            const daysCount = Math.min(5, daily.time.length);
+            for (let d = 0; d < daysCount; d++) {
+                const dName = getHindiDay(daily.time[d], d);
+                const dWindMax = Math.round(daily.wind_speed_10m_max[d] || 12);
+                const dGustMax = Math.round(daily.wind_gusts_10m_max[d] || dWindMax + 6);
+                const dRain = daily.precipitation_probability_max[d] || 0;
+                const dMaxT = Math.round(daily.temperature_2m_max[d]);
+                const dMinT = Math.round(daily.temperature_2m_min[d]);
+
+                dList.innerHTML += `
+                    <div class="d-row">
+                        <div class="d-day">${dName}</div>
+                        <div class="d-wind">💨 ${dWindMax} (${dGustMax}) km/h</div>
+                        <div class="d-rain">💧 ${dRain}%</div>
+                        <div class="d-temp">${dMaxT}°<span>/${dMinT}°</span></div>
+                    </div>
+                `;
+            }
+
+            const now = new Date();
+            document.getElementById("w-sync").innerText = `लाइव: ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+
+        } catch (err) {
+            console.warn("Windy fallback activated:", err);
+            loadWindyFallback();
+        }
+    }
+
+    function loadWindyFallback() {
+        document.getElementById("w-sync").innerText = "ऑफलाइन बैकअप";
+        document.getElementById("hero-wind").innerHTML = `11 <span>km/h</span>`;
+        document.getElementById("hero-gust").innerText = "हवा के झोंके (Gusts): 18 km/h";
+        document.getElementById("hero-cond").innerText = "तापमान: 24°C • दबाव: 1015 hPa";
+        document.getElementById("atm-temp").innerText = "24°C";
+        document.getElementById("atm-press").innerText = "1015 hPa";
+        document.getElementById("atm-hum").innerText = "46%";
+        document.getElementById("atm-cloud").innerText = "12%";
+        document.getElementById("atm-rain").innerText = "0 mm";
+        document.getElementById("atm-cape").innerText = "0 J/kg";
+    }
+
+    function initWindy() {
+        document.getElementById("w-loc").innerText = "🛰️ लाइव GPS रडार लोकेशन सिंक जारी...";
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    currentLat = parseFloat(pos.coords.latitude.toFixed(4));
+                    currentLon = parseFloat(pos.coords.longitude.toFixed(4));
+                    currentLocLabel = `📍 लाइव GPS (${currentLat}°N, ${currentLon}°E)`;
+                    updateWindyIframe();
+                    fetchWindyTelemetry();
+                },
+                () => {
+                    currentLat = 29.3250;
+                    currentLon = 76.3150;
+                    currentLocLabel = "📍 खड़क गगर, जींद (29.33°N, 76.32°E)";
+                    updateWindyIframe();
+                    fetchWindyTelemetry();
+                },
+                { enableHighAccuracy: true, timeout: 6000, maximumAge: 60000 }
+            );
+        } else {
+            updateWindyIframe();
+            fetchWindyTelemetry();
+        }
+    }
+
+    window.addEventListener("DOMContentLoaded", initWindy);
+</script>
+
+</body>
+</html>
