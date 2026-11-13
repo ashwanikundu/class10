@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#070b14">
-<title>Class 10 Master Portal • Module 8 (Advanced AI Formula & Theorem Reference Bank)</title>
+<title>Class 10 Master Portal • Module 9 (Board Exam Strategy & Time Management Hub)</title>
 <style>
   :root {
     --primary: #4f46e5;
@@ -74,11 +74,10 @@
     background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 16px; padding: 20px;
     margin-bottom: 16px; box-shadow: var(--shadow); position: relative; overflow: hidden;
   }
-  .card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: linear-gradient(180deg, #3b82f6, #10b981); }
+  .card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: linear-gradient(180deg, #ec4899, #8b5cf6); }
   
-  .formula-card { background: var(--sub-bg); border: 1px solid var(--border); padding: 14px 16px; border-radius: 12px; margin-top: 10px; }
-  .formula-title { font-weight: 800; color: #38bdf8; font-size: 0.95rem; margin-bottom: 4px; }
-  .formula-expr { font-family: monospace; font-size: 1.05rem; color: #fbbf24; background: rgba(0,0,0,0.3); padding: 6px 10px; border-radius: 6px; display: inline-block; margin: 4px 0; }
+  .tip-box { background: var(--sub-box, var(--sub-bg)); border: 1px solid var(--border); padding: 14px 16px; border-radius: 12px; margin-top: 12px; }
+  .tip-title { font-weight: 800; color: #f472b6; font-size: 0.95rem; margin-bottom: 4px; }
 
   footer { text-align: center; padding: 20px; color: var(--muted); font-size: 0.78rem; }
 </style>
@@ -90,7 +89,7 @@
     <div class="brand-row">
       <div>
         <h1 class="brand-title">Class 10 Master Portal (CBSE & HBSE)</h1>
-        <p class="brand-sub">Module 8: Advanced AI Formula & Theorem Reference Bank</p>
+        <p class="brand-sub">Module 9: Board Exam Strategy & Time Management Hub</p>
       </div>
       <div class="top-controls">
         <div class="medium-switch">
@@ -109,7 +108,7 @@
 </div>
 
 <footer>
-  Class 10 Master Portal • Module 8 (Formula Bank) • Zero Data Loss Engine
+  Class 10 Master Portal • Module 9 (Strategy Hub) • Zero Data Loss Engine
 </footer>
 
 <script>
@@ -120,8 +119,7 @@ const SafeStore = {
 
 let state = {
   medium: SafeStore.get('mp_med', 'en'),
-  isDark: SafeStore.get('mp_dark', '1') === '1',
-  activeSubj: 'math' // 'math', 'sci'
+  isDark: SafeStore.get('mp_dark', '1') === '1'
 };
 
 function applyTheme() {
@@ -143,46 +141,49 @@ function setMedium(m) {
 
 function renderBreadcrumb() {
   const bc = document.getElementById('breadcrumb');
-  bc.innerHTML = `<span>🏠 All Utilities • Module 8 (Advanced Formula & Theorem Bank)</span>`;
+  bc.innerHTML = `<span>🏠 All Utilities • Module 9 (Board Exam Strategy & Blueprint)</span>`;
 }
 
-const FORMULAS = {
-  math: [
-    { titleEn: "Real Numbers: HCF & LCM relation", titleHi: "वास्तविक संख्याएँ: HCF और LCM संबंध", expr: "HCF(a, b) × LCM(a, b) = a × b", descEn: "Product of two positive integers equals product of their HCF and LCM.", descHi: "किन्हीं दो धनात्मक पूर्णांकों का गुणनफल उनके HCF और LCM के गुणनफल के बराबर होता है।" },
-    { titleEn: "Quadratic Polynomial Zeroes", titleHi: "द्विघात बहुपद के शून्यक", expr: "α + β = -b/a , αβ = c/a", descEn: "Sum and product of zeroes for ax² + bx + c.", descHi: "द्विघात बहुपद ax² + bx + c के शून्यकों का योग और गुणनफल।" },
-    { titleEn: "Quadratic Formula", titleHi: "द्विघात सूत्र (श्रीधराचार्य नियम)", expr: "x = (-b ± √(b² - 4ac)) / 2a", descEn: "Direct formula to find roots when D = b² - 4ac ≥ 0.", descHi: "मूल निकालने का सीधा सूत्र जहाँ विविक्तकर D = b² - 4ac ≥ 0 हो।" },
-    { titleEn: "Arithmetic Progression (AP)", titleHi: "समांतर श्रेढ़ी (AP)", expr: "an = a + (n - 1)d , Sn = n/2[2a + (n - 1)d]", descEn: "Formula for nth term and sum of n terms of an AP.", descHi: "nवाँ पद और n पदों के योग का सूत्र।" },
-    { titleEn: "Trigonometric Identities", titleHi: "त्रिकोणमितीय सर्वसमिकाएँ", expr: "sin²θ + cos²θ = 1, 1 + tan²θ = sec²θ", descEn: "Fundamental trigonometric relations for right triangles.", descHi: "समकोण त्रिभुज के लिए मूलभूत त्रिकोणमितीय संबंध।" }
-  ],
-  sci: [
-    { titleEn: "Ohm's Law", titleHi: "ओह्म का नियम", expr: "V = IR (or I = V/R)", descEn: "Relationship between potential difference (V), current (I) and resistance (R).", descHi: "विभवांतर (V), विद्युत धारा (I) और प्रतिरोध (R) के बीच संबंध।" },
-    { titleEn: "Lens Formula & Magnification", titleHi: "लेंस सूत्र और आवर्धन", expr: "1/v - 1/u = 1/f , m = h'/h = v/u", descEn: "Relates image distance, object distance and focal length for spherical lenses.", descHi: "गोलीय लेंसों के लिए प्रतिबिंब दूरी, वस्तु दूरी और फोकस दूरी में संबंध।" },
-    { titleEn: "Refractive Index", titleHi: "अपवर्तनांक", expr: "n = c / v", descEn: "Ratio of speed of light in vacuum to speed in medium.", descHi: "निर्वात में प्रकाश की चाल और माध्यम में प्रकाश की चाल का अनुपात।" },
-    { titleEn: "Electric Power", titleHi: "विद्युत शक्ति", expr: "P = VI = I²R = V²/R", descEn: "Rate at which electrical energy is dissipated or consumed.", descHi: "विद्युत ऊर्जा के उपभोग की दर।" }
-  ]
-};
+const STRATEGIES = [
+  {
+    titleEn: "Paper Attempt Strategy (3-Hour Rule)",
+    titleHi: "पेपर हल करने की रणनीति (3-घंटे का नियम)",
+    descEn: "Start with 2-mark and 3-mark questions first when your mind is fresh. Leave 15 minutes at the end for revision and checking calculations.",
+    descHi: "दिमाग तरोताजा होने पर सबसे पहले 2-अंक और 3-अंक वाले प्रश्न हल करें। अंत में 15 मिनट रिवीजन और कैलकुलेशन जाँच के लिए जरूर बचाएँ।"
+  },
+  {
+    titleEn: "Presentation & Step Marking",
+    titleHi: "उत्तर प्रस्तुति और स्टेप मार्किंग",
+    descEn: "Always draw a neat margin on the answer sheet. Write given values, formula, substitution, and final answer with correct SI units for step marks.",
+    descHi: "उत्तर पुस्तिका में हमेशा हाशिया (Margin) खींचें। स्टेप मार्किंग पाने के लिए दिया गया मान, सूत्र, मान रखना और सही मात्रक के साथ अंतिम उत्तर लिखें।"
+  },
+  {
+    titleEn: "Diagram & Graph Precision",
+    titleHi: "चित्र और ग्राफ की सटीकता",
+    descEn: "Use a sharp HB pencil for all science diagrams (ray optics, biology life processes) and math constructions/graphs. Label every important part clearly.",
+    descHi: "विज्ञान के चित्रों (किरण आरेख, जैव प्रक्रम) और गणित की रचनाओं व ग्राफ के लिए हमेशा तेज धार वाली HB पेंसिल का उपयोग करें।"
+  },
+  {
+    titleEn: "Handling Difficult Numerical Questions",
+    titleHi: "कठिन न्यूमेरिकल प्रश्नों को हल करने का तरीका",
+    descEn: "If stuck in a numerical, write down all known variables (Given:) and the relevant formula. Even partial steps fetch 50% marks in board exams.",
+    descHi: "यदि किसी न्यूमेरिकल में अटक जाएँ, तो कम से कम 'Given:' (दिया गया है) और संबंधित सूत्र जरूर लिख आएं। बोर्ड परीक्षा में आधे नंबर मिल जाते हैं।"
+  }
+];
 
 function render() {
   renderBreadcrumb();
   const app = document.getElementById('app');
 
-  const list = FORMULAS[state.activeSubj];
-
   app.innerHTML = `
-    <div style="display:flex; gap:8px; margin-bottom:16px;">
-      <button class="btn ${state.activeSubj==='math'?'':'btn-diag'}" onclick="state.activeSubj='math';render();" style="background:${state.activeSubj==='math'?'#4f46e5':'#1e293b'}; color:#fff;">📐 Mathematics Formulas</button>
-      <button class="btn ${state.activeSubj==='sci'?'':'btn-diag'}" onclick="state.activeSubj='sci';render();" style="background:${state.activeSubj==='sci'?'#10b981':'#1e293b'}; color:#fff;">🔬 Science Formulas & Laws</button>
-    </div>
-
     <div class="card">
-      <h2 style="margin:0 0 8px; font-size:1.15rem;">📚 ${state.activeSubj === 'math' ? 'Mathematics Master Formula Bank' : 'Science Laws & Formulas Bank'}</h2>
-      <p style="margin:0 0 14px; font-size:0.85rem; color:var(--muted);">बोर्ड परीक्षा के अंतिम समय में रिवीजन के लिए सभी महत्वपूर्ण सूत्र और प्रमेय एक ही जगह।</p>
+      <h2 style="margin:0 0 8px; font-size:1.15rem;">🎯 CBSE & HBSE Board Exam Master Strategy (Topper Blueprint)</h2>
+      <p style="margin:0 0 14px; font-size:0.85rem; color:var(--muted);">बोर्ड परीक्षा में 80/80 अंक पक्के करने के लिए अचूक समय प्रबंधन और परीक्षा हॉल टिप्स।</p>
       
-      ${list.map(f => `
-        <div class="formula-card">
-          <div class="formula-title">${state.medium === 'hi' ? f.titleHi : f.titleEn}</div>
-          <div class="formula-expr">${f.expr}</div>
-          <div style="font-size:0.82rem; color:var(--muted); margin-top:4px;">${state.medium === 'hi' ? f.descHi : f.descEn}</div>
+      ${STRATEGIES.map(s => `
+        <div class="tip-box">
+          <div class="tip-title">📌 ${state.medium === 'hi' ? s.titleHi : s.titleEn}</div>
+          <div style="font-size:0.88rem; color:var(--text); margin-top:4px;">${state.medium === 'hi' ? s.descHi : s.descEn}</div>
         </div>
       `).join('')}
     </div>
