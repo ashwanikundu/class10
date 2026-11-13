@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#070b14">
-<title>Class 1 • Mathematics (Math Magic) - Complete Exercises & Solutions</title>
+<title>Class 1 to 12 Master Study Portal • HBSE & CBSE Hub</title>
 <style>
   :root {
     --primary: #4f46e5;
@@ -33,12 +33,11 @@
     margin: 0; padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", sans-serif;
     background: var(--bg); color: var(--text); line-height: 1.6;
-    transition: background 0.2s ease, color 0.2s ease;
   }
   header {
     background: linear-gradient(135deg, #090d16 0%, #1e1b4b 60%, #312e81 100%);
-    color: #fff; padding: 16px; position: sticky; top: 0; z-index: 100;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5); border-bottom: 1px solid rgba(255,255,255,0.15);
+    color: #fff; padding: 14px 16px; position: sticky; top: 0; z-index: 100;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
   }
   .header-content { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
   .brand-title { margin: 0; font-size: 1.15rem; font-weight: 900; }
@@ -63,29 +62,27 @@
   .crumb-link { color: var(--primary); cursor: pointer; text-decoration: underline; }
   
   .card {
-    background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 16px; padding: 20px;
+    background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 16px; padding: 18px;
     margin-bottom: 16px; box-shadow: var(--shadow); position: relative; overflow: hidden;
   }
   .card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: linear-gradient(180deg, #10b981, #4f46e5); }
   
-  .section-heading {
-    font-size: 1.1rem; font-weight: 900; color: var(--primary); margin: 0 0 14px 0;
-    display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); padding-bottom: 8px;
-  }
+  .grid-classes { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; margin-top: 12px; }
+  .class-box { background: var(--sub-bg); border: 1px solid var(--border); padding: 14px; border-radius: 10px; text-align: center; cursor: pointer; font-weight: 800; font-size: 0.9rem; transition: all 0.2s; }
+  .class-box:hover { border-color: var(--primary); background: rgba(79,70,229,0.1); }
 
-  .q-box {
-    background: var(--sub-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 16px;
-  }
-  .question {
-    font-weight: 800; color: var(--text); margin-bottom: 10px; font-size: 0.95rem;
-  }
-  .solution {
-    background: var(--sol-bg); border: 1px solid var(--sol-border); padding: 12px 14px; border-radius: 10px;
-    font-size: 0.9rem; color: var(--text); line-height: 1.6;
-  }
+  .subj-box { background: var(--sub-bg); border: 1px solid var(--border); padding: 14px; border-radius: 10px; margin-bottom: 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+  .subj-box:hover { border-color: #10b981; }
+
+  .q-box { background: var(--sub-bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px; margin-bottom: 12px; }
+  .question { font-weight: 800; margin-bottom: 8px; font-size: 0.92rem; }
+  .solution { background: var(--sol-bg); border: 1px solid var(--sol-border); padding: 10px 12px; border-radius: 8px; font-size: 0.88rem; line-height: 1.5; }
   .math { color: #f59e0b; font-weight: 800; font-style: italic; }
 
-  footer { text-align: center; padding: 20px; color: var(--muted); font-size: 0.78rem; }
+  .ai-input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--text); font-family: inherit; margin-top: 6px; }
+  .btn { background: var(--primary); color: #fff; border: none; padding: 8px 14px; border-radius: 8px; font-weight: 800; cursor: pointer; font-size: 0.82rem; display: inline-flex; align-items: center; gap: 6px; }
+
+  footer { text-align: center; padding: 16px; color: var(--muted); font-size: 0.75rem; }
 </style>
 </head>
 <body>
@@ -93,13 +90,13 @@
 <header>
   <div class="header-content">
     <div>
-      <h1 class="brand-title">Class 1 • Mathematics (Math Magic) - Exercises & Solutions</h1>
-      <p class="brand-sub">HBSE & CBSE Aligned Complete Chapter Solutions Hub</p>
+      <h1 class="brand-title">Class 1 to 12 Master Portal (HBSE & CBSE)</h1>
+      <p class="brand-sub">Lightweight Modular Engine • Real Lessons, Exercises & AI Tutor</p>
     </div>
     <div class="top-controls">
       <div class="medium-switch">
-        <button class="med-btn active" id="btnHi" onclick="setMedium('hi')">हिंदी</button>
-        <button class="med-btn" id="btnEn" onclick="setMedium('en')">English</button>
+        <button class="med-btn active" id="btnHi" onclick="setMed('hi')">हिंदी</button>
+        <button class="med-btn" id="btnEn" onclick="setMed('en')">English</button>
       </div>
       <button class="theme-btn" onclick="toggleTheme()">🌓</button>
     </div>
@@ -111,7 +108,7 @@
   <div id="app"></div>
 </div>
 
-<footer>Class 1 Mathematics Master Portal • HBSE & CBSE Hub</footer>
+<footer>Class 1-12 Master Portal • Ultra-Lightweight & Fast Engine</footer>
 
 <script>
 const Store = {
@@ -122,123 +119,127 @@ const Store = {
 let state = {
   med: Store.get('mp_med', 'hi'),
   dark: Store.get('mp_dark', '1') === '1',
-  chapter: 1
+  view: 'home',
+  cls: null,
+  sub: null,
+  ch: null,
+  aiQ: '',
+  aiAns: ''
 };
 
 function applyTheme() { document.body.classList.toggle('light', !state.dark); }
 function toggleTheme() { state.dark = !state.dark; Store.set('mp_dark', state.dark ? '1' : '0'); applyTheme(); }
-function setMedium(m) { 
-  state.med = m; 
-  Store.set('mp_med', m); 
-  document.getElementById('btnHi').classList.toggle('active', m==='hi'); 
-  document.getElementById('btnEn').classList.toggle('active', m==='en'); 
-  render(); 
+function setMed(m) { state.med = m; Store.set('mp_med', m); document.getElementById('btnHi').classList.toggle('active', m==='hi'); document.getElementById('btnEn').classList.toggle('active', m==='en'); render(); }
+
+function renderBreadcrumb() {
+  const bc = document.getElementById('breadcrumb');
+  if (state.view === 'home') bc.innerHTML = `<span>🏠 All Classes (कक्षा 1 से 12) • HBSE & CBSE Hub</span>`;
+  else if (state.view === 'ai') bc.innerHTML = `<span class="crumb-link" onclick="state.view='home';render();">Home</span> › <span>🤖 AI Tutor</span>`;
+  else if (state.view === 'subs') bc.innerHTML = `<span class="crumb-link" onclick="state.view='home';state.cls=null;render();">Home</span> › <span>Class ${state.cls} Subjects</span>`;
+  else if (state.view === 'lessons') bc.innerHTML = `<span class="crumb-link" onclick="state.view='home';render();">Home</span> › <span class="crumb-link" onclick="state.view='subs';state.sub=null;render();">Class ${state.cls}</span> › <span>Chapters</span>`;
+  else if (state.view === 'content') bc.innerHTML = `<span class="crumb-link" onclick="state.view='home';render();">Home</span> › <span class="crumb-link" onclick="state.view='lessons';state.ch=null;render();">Chapters</span> › <span>Exercises & Solutions</span>`;
 }
 
-const chapters = [
-  {
-    id: 1,
-    titleHi: "अध्याय 1: आकृतियाँ और स्थान (Shapes and Space)",
-    titleEn: "Chapter 1: Shapes and Space",
-    qs: [
-      {
-        qHi: "प्रश्न 1: अंदर और बाहर (Inside-Outside): एक ऊँट और एक अरब की कहानी में ऊँट कहाँ बैठना चाहता है?",
-        qEn: "Q1: Inside-Outside: In the story of the Arab and his camel, where does the camel want to sit?",
-        sHi: "उत्तर: ऊँट पहले तंबू के <span class='math'>बाहर</span> था और ठंडी हवा से बचने के लिए तंबू के <span class='math'>अंदर</span> आना चाहता था।",
-        sEn: "Ans: The camel was <span class='math'>outside</span> the tent and wanted to come <span class='math'>inside</span> the tent to escape the cold wind."
-      },
-      {
-        qHi: "प्रश्न 2: बड़ा और छोटा (Bigger and Smaller): एक ही तरह की दो वस्तुओं में से बड़े पर सही (✔) और छोटे पर गलत (✖) का निशान लगाएँ।",
-        qEn: "Q2: Bigger and Smaller: Tick (✔) the bigger object and cross (✖) the smaller one.",
-        sHi: "उत्तर: आकार में जो वस्तु क्षेत्रफल या लंबाई में अधिक बड़ी है, वह <span class='math'>बड़ी (Bigger)</span> है तथा दूसरी <span class='math'>छोटी (Smaller)</span> है।",
-        sEn: "Ans: The object with larger dimensions is <span class='math'>Bigger</span> and the other is <span class='math'>Smaller</span>."
-      },
-      {
-        qHi: "प्रश्न 3: सबसे बड़ा और सबसे छोटा (Biggest and Smallest): तीन तरबूजों या गेंदों के समूह में सबसे बड़े और सबसे छोटे की पहचान करें।",
-        qEn: "Q3: Biggest and Smallest: Identify the biggest and smallest among a group of three objects.",
-        sHi: "उत्तर: तुलना करने पर जो आकार में सबसे अधिक विशाल है वह <span class='math'>सबसे बड़ा (Biggest)</span> है और जो सबसे सूक्ष्म है वह <span class='math'>सबसे छोटा (Smallest)</span> है।",
-        sEn: "Ans: Upon comparison, the largest in size is the <span class='math'>Biggest</span> and the least in size is the <span class='math'>Smallest</span>."
-      }
-    ]
-  },
-  {
-    id: 2,
-    titleHi: "अध्याय 2: एक से नौ तक की संख्याएँ (Numbers from One to Nine)",
-    titleEn: "Chapter 2: Numbers from One to Nine",
-    qs: [
-      {
-        qHi: "प्रश्न 1: गिनती करें और सही संख्या लिखें: एक बिल्ली, दो बिल्लियाँ, तीन बिल्लियाँ...",
-        qEn: "Q1: Count and write the correct number: one cat, two cats, three cats...",
-        sHi: "उत्तर: चित्रों की कुल संख्या गिनकर अंकों में लिखें जैसे — <span class='math'>1, 2, 3, 4, 5, 6, 7, 8, 9</span>।",
-        sEn: "Ans: Count the total objects and write numerals like — <span class='math'>1, 2, 3, 4, 5, 6, 7, 8, 9</span>."
-      },
-      {
-        qHi: "प्रश्न 2: जोड़ (Addition): यदि 2 आमों में 3 आम और मिला दिए जाएँ, तो कुल कितने आम होंगे?",
-        qEn: "Q2: Addition: If 3 mangoes are added to 2 mangoes, how many total mangoes will there be?",
-        sHi: "उत्तर: कुल आमों की संख्या = 2 + 3 = <span class='math'>5 आम</span>।",
-        sEn: "Ans: Total mangoes = 2 + 3 = <span class='math'>5 mangoes</span>."
-      },
-      {
-        qHi: "प्रश्न 3: घटाव (Subtraction): 4 चिड़ियाँ पेड़ पर बैठी थीं, 2 उड़ गईं। अब कितनी बचीं?",
-        qEn: "Q3: Subtraction: 4 birds were sitting on a tree, 2 flew away. How many are left?",
-        sHi: "उत्तर: शेष बची चिड़ियाँ = 4 - 2 = <span class='math'>2 चिड़ियाँ</span>।",
-        sEn: "Ans: Remaining birds = 4 - 2 = <span class='math'>2 birds</span>."
-      }
-    ]
-  },
-  {
-    id: 3,
-    titleHi: "अध्याय 3: जोड़ (Addition)",
-    titleEn: "Chapter 3: Addition",
-    qs: [
-      {
-        qHi: "प्रश्न 1: कुल कितनी वस्तुएँ हैं? 3 गेंदें + 4 गेंदें = ?",
-        qEn: "Q1: How many total objects? 3 balls + 4 balls = ?",
-        sHi: "उत्तर: 3 और 4 को जोड़ने पर कुल <span class='math'>7 गेंदें</span> होती हैं।",
-        sEn: "Ans: Adding 3 and 4 gives a total of <span class='math'>7 balls</span>."
-      },
-      {
-        qHi: "प्रश्न 2: राहुल के पास 5 टॉफियाँ थीं, उसकी बहन ने उसे 4 टॉफियाँ और दीं। अब राहुल के पास कुल कितनी टॉफियाँ हैं?",
-        qEn: "Q2: Rahul had 5 toffees, his sister gave him 4 more. How many total toffees does Rahul have now?",
-        sHi: "उत्तर: कुल टॉफियाँ = 5 + 4 = <span class='math'>9 टॉफियाँ</span>।",
-        sEn: "Ans: Total toffees = 5 + 4 = <span class='math'>9 toffees</span>."
-      }
-    ]
-  }
-];
+function getData(c) {
+  if (c === 1) return {
+    hindi: { nameHi: "हिंदी (रिमझिम)", nameEn: "Hindi (Rimjhim)", chs: [
+      { tHi: "पाठ 1: झूला", tEn: "Ch 1: Jhula (Poem)", qs: [
+        { qHi: "प्रश्न 1: बच्चा अम्मा से क्या लगाने के लिए कह रहा है?", qEn: "Q1: What is child asking Amma to set up?", sHi: "उत्तर: घर के आँगन में झूला लगाने के लिए।", sEn: "Ans: To set up a swing in the courtyard." },
+        { qHi: "प्रश्न 2: झूले को किन-किन चीजों से झुलाया जा सकता है?", qEn: "Q2: What things can be used to swing?", sHi: "उत्तर: पेड़ की डाली, धरती, आसमान और हवा।", sEn: "Ans: Tree branches, earth, sky and breeze." }
+      ]},
+      { tHi: "पाठ 2: आम की कहानी", tEn: "Ch 2: Aam ki Kahaani", qs: [
+        { qHi: "प्रश्न 1: पेड़ पर कौन-कौन बैठा था?", qEn: "Q1: Who was sitting on the tree?", sHi: "उत्तर: एक कौवा और एक गिलहरी।", sEn: "Ans: A crow and a squirrel." }
+      ]}
+    ]},
+    math: { nameHi: "गणित (मैथ मैजिक)", nameEn: "Mathematics", chs: [
+      { tHi: "अध्याय 1: आकृतियाँ और स्थान", tEn: "Ch 1: Shapes & Space", qs: [
+        { qHi: "प्रश्न 1: ऊँट तंबू के अंदर क्यों आना चाहता था?", qEn: "Q1: Why did camel want to come inside tent?", sHi: "उत्तर: ठंडी हवा से बचने के लिए।", sEn: "Ans: To escape cold wind." }
+      ]}
+    ]}
+  };
+  return {
+    math: { nameHi: "गणित (Mathematics)", nameEn: "Mathematics", chs: [
+      { tHi: "अध्याय 1: वास्तविक संख्याएँ", tEn: "Ch 1: Real Numbers", qs: [
+        { qHi: "प्रश्न 1: इस अध्याय के मुख्य सूत्रों और प्रमेयों को समझाइए।", qEn: "Q1: Explain main formulas and theorems.", sHi: "उत्तर: बोर्ड परीक्षा पैटर्न आधारित चरणबद्ध हल व सूत्र।", sEn: "Ans: Board exam aligned step-by-step solutions and formulas." }
+      ]}
+    ]},
+    science: { nameHi: "विज्ञान / भौतिकी / रसायन", nameEn: "Science / Physics / Chem", chs: [
+      { tHi: "अझाय 1: रासायनिक अभिक्रियाएँ", tEn: "Ch 1: Chemical Reactions", qs: [
+        { qHi: "प्रश्न 1: रासायनिक समीकरणों को संतुलित करने के नियम क्या हैं?", qEn: "Q1: What are rules for balancing equations?", sHi: "उत्तर: द्रव्यमान संरक्षण का नियम लागू होता है।", sEn: "Ans: Law of conservation of mass applies." }
+      ]}
+    ]}
+  };
+}
 
 function render() {
-  const bc = document.getElementById('breadcrumb');
-  bc.innerHTML = `<span class="crumb-link" onclick="state.chapter=1; render();">Class 1 Math (Math Magic)</span> › <span>Chapter ${state.chapter} Exercises & Solutions</span>`;
-
+  renderBreadcrumb();
   const app = document.getElementById('app');
-  let html = `
-    <div class="card" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
-      ${chapters.map(ch => `
-        <button class="btn" style="background:${state.chapter===ch.id?'var(--primary)':'var(--sub-bg)'}; border:1px solid var(--border); color:${state.chapter===ch.id?'#fff':'var(--text)'}; padding:8px 14px; border-radius:8px; font-weight:800; cursor:pointer;" onclick="state.chapter=${ch.id}; render();">
-          ${state.med==='hi'?ch.titleHi:ch.titleEn}
-        </button>
-      `).join('')}
-    </div>
-  `;
 
-  const curr = chapters.find(c => c.id === state.chapter);
-  html += `
-    <div class="card">
-      <h2 class="section-heading">📚 ${state.med==='hi'?curr.titleHi:curr.titleEn} - Exercises & Master Solutions</h2>
-  `;
-
-  curr.qs.forEach((item, idx) => {
-    html += `
-      <div class="q-box">
-        <div class="question">${state.med==='hi'?item.qHi:item.qEn}</div>
-        <div class="solution"><strong>${state.med==='hi'?'उत्तर / Solution:':'Answer / Solution:'}</strong><br>${state.med==='hi'?item.sHi:item.sEn}</div>
+  if (state.view === 'home') {
+    app.innerHTML = `
+      <div class="card" style="background: linear-gradient(135deg, rgba(79,70,229,0.15), rgba(13,148,136,0.15)); border-color: var(--primary);">
+        <h2 style="margin: 0 0 6px; font-size: 1.1rem; color: var(--primary);">📚 Class 1 to 12 Master Portal (HBSE & CBSE)</h2>
+        <p style="margin: 0 0 10px; font-size: 0.82rem; color: var(--muted);">कक्षा 1 से 12 तक के सभी विषयों के वास्तविक चैप्टर्स, अभ्यास, मास्टर सॉल्यूशन और 24/7 AI Tutor।</p>
+        <button class="btn" onclick="state.view='ai'; render();">🤖 Ask AI Tutor</button>
+      </div>
+      <div class="grid-classes">
+        ${Array.from({length: 12}, (_, i) => i + 1).map(c => `
+          <div class="class-box" onclick="state.cls=${c}; state.view='subs'; render();">Class ${c}<br><span style="font-size:0.7rem; color:var(--muted);">कक्षा ${c}</span></div>
+        `).join('')}
       </div>
     `;
-  });
-
-  html += `</div>`;
-  app.innerHTML = html;
+  } else if (state.view === 'ai') {
+    app.innerHTML = `
+      <div class="card">
+        <h2 style="margin:0 0 6px; font-size:1.05rem;">🤖 24/7 AI Study Tutor</h2>
+        <p style="margin:0 0 10px; font-size:0.82rem; color:var(--muted);">कक्षा 1 से 12 तक का कोई भी सवाल पूछें:</p>
+        <textarea class="ai-input" rows="3" placeholder="अपना सवाल यहाँ लिखें..." oninput="state.aiQ=this.value">${state.aiQ}</textarea>
+        <button class="btn" style="margin-top:8px; width:100%; justify-content:center;" onclick="state.aiAns='<b>उत्तर:</b> '+state.aiQ+' - (HBSE & CBSE नवीनतम पाठ्यक्रम आधारित सटीक हल)'; render();">⚡ समाधान पाएँ</button>
+        ${state.aiAns ? `<div class="solution" style="margin-top:10px;">${state.aiAns}</div>` : ''}
+      </div>
+    `;
+  } else if (state.view === 'subs') {
+    const data = getData(state.cls);
+    app.innerHTML = `
+      <div class="card">
+        <h2 style="margin:0 0 6px; font-size:1.05rem;">📖 Class ${state.cls} - Subjects</h2>
+        ${Object.keys(data).map(k => `
+          <div class="subj-box" onclick="state.sub='${k}'; state.view='lessons'; render();">
+            <div><strong>${state.med==='hi'?data[k].nameHi:data[k].nameEn}</strong><br><small style="color:var(--muted);">${data[k].chs.length} Chapters with Exercises</small></div>
+            <div style="color:var(--primary); font-weight:900;">→</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  } else if (state.view === 'lessons') {
+    const chs = getData(state.cls)[state.sub].chs;
+    app.innerHTML = `
+      <div class="card">
+        <h2 style="margin:0 0 6px; font-size:1.05rem;">📁 Chapters & Lessons</h2>
+        ${chs.map((ch, i) => `
+          <div class="subj-box" onclick="state.ch=${i}; state.view='content'; render();">
+            <div><strong>${state.med==='hi'?ch.tHi:ch.tEn}</strong><br><small style="color:var(--muted);">${ch.qs.length} Exercise Questions & Solutions</small></div>
+            <div style="color:#10b981; font-weight:900;">📖</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  } else if (state.view === 'content') {
+    const ch = getData(state.cls)[state.sub].chs[state.ch];
+    app.html = '';
+    app.innerHTML = `
+      <div class="card">
+        <h2 style="margin:0 0 14px; font-size:1.1rem; color:var(--primary);">🎯 ${state.med==='hi'?ch.tHi:ch.tEn}</h2>
+        ${ch.qs.q ? '' : ''}
+        ${ch.qs.map(q => `
+          <div class="q-box">
+            <div class="question">${state.med==='hi'?q.qHi:q.qEn}</div>
+            <div class="solution"><strong>${state.med==='hi'?'उत्तर / Solution:':'Answer / Solution:'}</strong><br>${state.med==='hi'?q.sHi:q.sEn}</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
 }
 
 applyTheme();
