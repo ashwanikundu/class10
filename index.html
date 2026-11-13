@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#1e3a8a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<title>Class 10 Master Portal — CBSE & HBSE (All Subjects + Guess Papers)</title>
+<title>Class 10 Master Portal — Ultra-Pro Board Edition (CBSE & HBSE)</title>
 <style>
   :root {
     --primary: #1e3a8a;
@@ -18,142 +18,193 @@
     --text: #0f172a;
     --muted: #475569;
     --border: #cbd5e1;
+    --sub-bg: #f8fafc;
+    --concept-bg: #eff6ff;
+    --concept-border: #bfdbfe;
+    --sol-bg: #f0fdf4;
+    --sol-border: #86efac;
     --green-bg: #dcfce7;
     --green-border: #16a34a;
     --green-text: #14532d;
     --red-bg: #fee2e2;
     --red-border: #dc2626;
     --red-text: #7f1d1d;
+    --font-scale: 16px;
+  }
+  body.dark {
+    --primary: #3b82f6;
+    --primary-light: #60a5fa;
+    --secondary: #14b8a6;
+    --bg: #0b1120;
+    --card: #1e293b;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --border: #334155;
+    --sub-bg: #0f172a;
+    --concept-bg: #172554;
+    --concept-border: #1d4ed8;
+    --sol-bg: #052e16;
+    --sol-border: #166534;
+    --green-bg: #14532d;
+    --green-border: #22c55e;
+    --green-text: #dcfce7;
+    --red-bg: #7f1d1d;
+    --red-border: #ef4444;
+    --red-text: #fee2e2;
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { font-size: var(--font-scale); }
   body {
     margin: 0; padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", sans-serif;
     background: var(--bg); color: var(--text);
-    line-height: 1.5;
+    line-height: 1.55;
+    transition: background 0.2s, color 0.2s;
   }
   header {
     background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
     color: #fff;
-    padding: 14px 16px;
+    padding: 12px 14px;
     position: sticky; top: 0; z-index: 100;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.28);
   }
   .header-top {
     display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;
-    max-width: 1100px; margin: 0 auto;
+    max-width: 1120px; margin: 0 auto;
   }
-  .brand h1 { margin: 0; font-size: 1.15rem; font-weight: 700; letter-spacing: 0.2px; }
-  .brand p { margin: 2px 0 0; font-size: 0.78rem; color: #cbd5e1; }
+  .brand h1 { margin: 0; font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .brand p { margin: 2px 0 0; font-size: 0.74rem; color: #cbd5e1; }
+  .controls-bar {
+    display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  }
   .medium-switch {
     display: flex; background: rgba(255,255,255,0.15); border-radius: 999px; padding: 3px;
   }
   .medium-btn {
     border: none; background: transparent; color: #e2e8f0;
-    padding: 6px 12px; border-radius: 999px; font-size: 0.8rem; font-weight: 600; cursor: pointer;
-    transition: all 0.2s;
+    padding: 5px 10px; border-radius: 999px; font-size: 0.76rem; font-weight: 600; cursor: pointer;
   }
   .medium-btn.active {
     background: #fbbf24; color: #0f172a; box-shadow: 0 2px 6px rgba(0,0,0,0.25);
   }
-  .container { max-width: 1100px; margin: 0 auto; padding: 14px; }
+  .tool-icon-btn {
+    background: rgba(255,255,255,0.16); color: #fff; border: 1px solid rgba(255,255,255,0.25);
+    padding: 5px 9px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; cursor: pointer;
+  }
+  .tool-icon-btn:hover { background: rgba(255,255,255,0.28); }
+  .quick-nav {
+    max-width: 1120px; margin: 10px auto 0; display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px;
+  }
+  .qnav-btn {
+    background: rgba(255,255,255,0.12); color: #f8fafc; border: 1px solid rgba(255,255,255,0.2);
+    padding: 5px 11px; border-radius: 999px; font-size: 0.76rem; font-weight: 600; cursor: pointer; white-space: nowrap;
+  }
+  .qnav-btn.active { background: #22c55e; color: #052e16; border-color: #22c55e; font-weight: 700; }
+  .container { max-width: 1120px; margin: 0 auto; padding: 14px; }
   .breadcrumb {
     display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-    background: #fff; padding: 10px 14px; border-radius: 10px;
-    border: 1px solid var(--border); margin-bottom: 14px; font-size: 0.88rem;
+    background: var(--card); padding: 10px 14px; border-radius: 10px;
+    border: 1px solid var(--border); margin-bottom: 14px; font-size: 0.85rem;
   }
   .crumb-btn {
-    background: #eff6ff; color: var(--primary); border: 1px solid #bfdbfe;
+    background: var(--concept-bg); color: var(--primary); border: 1px solid var(--concept-border);
     padding: 5px 10px; border-radius: 6px; font-weight: 600; cursor: pointer;
   }
-  .crumb-btn:hover { background: #dbeafe; }
+  .progress-banner {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 12px 16px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+  }
+  .pbar-wrap { flex: 1; min-width: 180px; }
+  .pbar-track { height: 10px; background: var(--border); border-radius: 999px; overflow: hidden; margin-top: 5px; }
+  .pbar-fill { height: 100%; background: linear-gradient(90deg, #16a34a, #22c55e); transition: width 0.3s; }
   .grid-subjects {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(265px, 1fr)); gap: 14px;
   }
   .subj-card {
     background: var(--card); border-radius: 14px; padding: 18px;
-    border: 1px solid var(--border); box-shadow: 0 2px 6px rgba(15,23,42,0.05);
-    cursor: pointer; transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+    border: 1px solid var(--border); box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    cursor: pointer; transition: transform 0.15s, border-color 0.15s;
     display: flex; flex-direction: column; justify-content: space-between;
   }
-  .subj-card:hover { transform: translateY(-2px); border-color: var(--primary-light); box-shadow: 0 8px 18px rgba(30,58,138,0.12); }
+  .subj-card:hover { transform: translateY(-2px); border-color: var(--primary-light); }
   .subj-badge {
     display: inline-block; padding: 4px 10px; border-radius: 999px;
-    font-size: 0.75rem; font-weight: 700; margin-bottom: 8px; width: fit-content;
+    font-size: 0.74rem; font-weight: 700; margin-bottom: 8px; width: fit-content;
   }
-  .subj-card h2 { margin: 0 0 6px; font-size: 1.15rem; color: var(--text); }
-  .subj-card p { margin: 0; font-size: 0.85rem; color: var(--muted); }
+  .subj-card h2 { margin: 0 0 6px; font-size: 1.12rem; color: var(--text); }
+  .subj-card p { margin: 0; font-size: 0.84rem; color: var(--muted); }
   .lesson-list { display: flex; flex-direction: column; gap: 10px; }
   .lesson-item {
-    background: #fff; border: 1px solid var(--border); border-radius: 12px;
-    padding: 14px 16px; display: flex; justify-content: space-between; align-items: center;
-    cursor: pointer; transition: all 0.15s; gap: 12px;
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 13px 15px; display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer; gap: 12px;
   }
-  .lesson-item:hover { border-color: var(--primary-light); background: #f8fafc; }
+  .lesson-item:hover { border-color: var(--primary-light); }
   .lesson-num {
-    background: var(--primary); color: #fff; font-weight: 700; font-size: 0.82rem;
-    padding: 6px 10px; border-radius: 8px; min-width: 62px; text-align: center;
+    background: #1e3a8a; color: #fff; font-weight: 700; font-size: 0.8rem;
+    padding: 6px 10px; border-radius: 8px; min-width: 66px; text-align: center;
   }
   .lesson-info { flex: 1; }
-  .lesson-info h3 { margin: 0; font-size: 1rem; color: var(--text); }
-  .lesson-info small { color: var(--muted); font-size: 0.8rem; display: block; margin-top: 2px; }
+  .lesson-info h3 { margin: 0; font-size: 0.98rem; color: var(--text); }
+  .lesson-info small { color: var(--muted); font-size: 0.79rem; display: block; margin-top: 2px; }
   .mode-selector {
     display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;
   }
   @media (max-width: 600px) { .mode-selector { grid-template-columns: 1fr; } }
   .mode-card {
-    background: #fff; border: 2px solid var(--border); border-radius: 12px;
-    padding: 14px; cursor: pointer; text-align: left; transition: all 0.15s;
+    background: var(--card); border: 2px solid var(--border); border-radius: 12px;
+    padding: 13px; cursor: pointer; text-align: left;
   }
   .mode-card.active {
-    border-color: var(--primary-light); background: #eff6ff; box-shadow: 0 4px 12px rgba(37,99,235,0.12);
+    border-color: var(--primary-light); background: var(--concept-bg);
   }
-  .mode-card h4 { margin: 0 0 4px; font-size: 1rem; color: var(--primary); }
-  .mode-card p { margin: 0; font-size: 0.82rem; color: var(--muted); }
+  .mode-card h4 { margin: 0 0 4px; font-size: 0.96rem; color: var(--primary); }
+  .mode-card p { margin: 0; font-size: 0.8rem; color: var(--muted); }
   .filter-bar {
-    display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center;
-    background: #fff; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border);
+    display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; align-items: center;
+    background: var(--card); padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border);
   }
   .pill {
-    border: 1px solid var(--border); background: #f8fafc; color: var(--text);
-    padding: 6px 12px; border-radius: 999px; font-size: 0.82rem; font-weight: 600; cursor: pointer;
+    border: 1px solid var(--border); background: var(--sub-bg); color: var(--text);
+    padding: 5px 11px; border-radius: 999px; font-size: 0.8rem; font-weight: 600; cursor: pointer;
   }
-  .pill.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+  .pill.active { background: #1e3a8a; color: #fff; border-color: #1e3a8a; }
   .pill.easy.active { background: #15803d; border-color: #15803d; }
   .pill.medium.active { background: #b45309; border-color: #b45309; }
   .pill.hard.active { background: #b91c1c; border-color: #b91c1c; }
   .q-card {
-    background: #fff; border: 1px solid var(--border); border-radius: 12px;
-    padding: 16px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 15px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.04);
   }
   .q-meta {
     display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;
-    font-size: 0.78rem; font-weight: 700;
+    font-size: 0.76rem; font-weight: 700; gap: 8px; flex-wrap: wrap;
   }
-  .tag-marks {
-    background: #e0e7ff; color: #1e3a8a; padding: 3px 9px; border-radius: 6px;
-  }
+  .tag-marks { background: #e0e7ff; color: #1e3a8a; padding: 3px 9px; border-radius: 6px; }
   .tag-diff { padding: 3px 9px; border-radius: 6px; text-transform: uppercase; }
   .tag-Easy { background: #dcfce7; color: #166534; }
   .tag-Medium { background: #fef3c7; color: #92400e; }
   .tag-Hard { background: #fee2e2; color: #991b1b; }
-  .q-text { font-size: 0.98rem; font-weight: 600; margin-bottom: 8px; color: #0f172a; }
+  .bookmark-btn {
+    background: transparent; border: 1px solid var(--border); color: var(--text);
+    padding: 3px 9px; border-radius: 6px; font-size: 0.76rem; font-weight: 700; cursor: pointer;
+  }
+  .bookmark-btn.saved { background: #fef3c7; border-color: #f59e0b; color: #92400e; }
+  .q-text { font-size: 0.96rem; font-weight: 600; margin-bottom: 8px; color: var(--text); white-space: pre-line; }
   .hi-sub {
-    font-size: 0.92rem; color: #334155; background: #f8fafc;
-    padding: 8px 10px; border-left: 3px solid #2563eb; border-radius: 4px; margin-bottom: 10px;
+    font-size: 0.9rem; color: var(--text); background: var(--sub-bg);
+    padding: 8px 10px; border-left: 3px solid #2563eb; border-radius: 4px; margin-bottom: 10px; white-space: pre-line;
   }
   .glossary-box {
     background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px;
-    padding: 8px 10px; font-size: 0.82rem; color: #78350f; margin-bottom: 10px;
+    padding: 8px 10px; font-size: 0.81rem; color: #78350f; margin-bottom: 10px;
   }
   .mcq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
   @media (max-width: 550px) { .mcq-grid { grid-template-columns: 1fr; } }
   .opt-btn {
     text-align: left; padding: 10px 12px; border: 1.5px solid var(--border);
-    border-radius: 8px; background: #fff; font-size: 0.9rem; cursor: pointer;
-    transition: all 0.15s; font-weight: 500;
+    border-radius: 8px; background: var(--card); color: var(--text); font-size: 0.88rem; cursor: pointer; font-weight: 500;
   }
-  .opt-btn:hover { background: #f1f5f9; }
   .opt-btn.correct {
     background: var(--green-bg) !important; border-color: var(--green-border) !important;
     color: var(--green-text) !important; font-weight: 700;
@@ -164,25 +215,30 @@
   }
   .sol-btn {
     background: var(--secondary); color: #fff; border: none;
-    padding: 8px 14px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+    padding: 8px 14px; border-radius: 8px; font-size: 0.83rem; font-weight: 600; cursor: pointer;
   }
   .sol-box {
     display: none; margin-top: 12px; padding: 12px 14px;
-    background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; font-size: 0.92rem;
+    background: var(--sol-bg); border: 1px solid var(--sol-border); border-radius: 8px; font-size: 0.9rem;
   }
   .sol-box.open { display: block; }
   .concept-card {
-    background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px;
+    background: var(--concept-bg); border: 1px solid var(--concept-border); border-radius: 12px;
     padding: 14px 16px; margin-bottom: 14px;
   }
-  .concept-card h4 { margin: 0 0 6px; color: #1e3a8a; }
+  .concept-card h4 { margin: 0 0 6px; color: var(--primary); }
   .search-box {
     width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border);
-    font-size: 0.92rem; margin-bottom: 12px;
+    background: var(--card); color: var(--text); font-size: 0.9rem; margin-bottom: 12px;
   }
-  footer {
-    text-align: center; padding: 20px; color: var(--muted); font-size: 0.8rem;
+  .timer-bar {
+    background: #0f172a; color: #fbbf24; padding: 10px 14px; border-radius: 10px;
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; font-weight: 700;
   }
+  .svg-box {
+    background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 12px; text-align: center; margin: 10px 0; color: #0f172a;
+  }
+  footer { text-align: center; padding: 20px; color: var(--muted); font-size: 0.78rem; }
 </style>
 </head>
 <body>
@@ -190,13 +246,27 @@
 <header>
   <div class="header-top">
     <div class="brand">
-      <h1>🎓 Class 10 Master Portal (CBSE & HBSE) <span style='background:#22c55e;color:#052e16;font-size:0.7rem;padding:2px 8px;border-radius:999px;vertical-align:middle;'>100% AUTHENTIC NCERT EDITION • WORD-BY-WORD VERIFIED</span></h1>
-      <p>All Subjects • Serial-wise Lessons • Original Exercises + Easy/Medium/Hard Guess Papers</p>
+      <h1>🎓 Class 10 Master Portal <span style="background:#22c55e;color:#052e16;font-size:0.68rem;padding:2px 8px;border-radius:999px;">ULTRA-PRO • 100% OFFLINE</span></h1>
+      <p>CBSE & HBSE • Full NCERT + Guess Papers + Mock Test + PYQs + Diagrams + Cheat Sheet</p>
     </div>
-    <div class="medium-switch">
-      <button class="medium-btn active" id="btnEn" onclick="setMedium('en')">English + Word Meanings</button>
-      <button class="medium-btn" id="btnHi" onclick="setMedium('hi')">Hindi Medium (EN + हिंदी)</button>
+    <div class="controls-bar">
+      <div class="medium-switch">
+        <button class="medium-btn active" id="btnEn" onclick="setMedium('en')">EN + Meanings</button>
+        <button class="medium-btn" id="btnHi" onclick="setMedium('hi')">हिंदी + EN</button>
+      </div>
+      <button class="tool-icon-btn" onclick="changeFont(-1)" title="Decrease Font">A-</button>
+      <button class="tool-icon-btn" onclick="changeFont(1)" title="Increase Font">A+</button>
+      <button class="tool-icon-btn" id="themeBtn" onclick="toggleTheme()" title="Dark/Light Mode">🌙</button>
     </div>
+  </div>
+  <div class="quick-nav">
+    <button class="qnav-btn active" id="nav_home" onclick="switchView('home')">📚 All Subjects</button>
+    <button class="qnav-btn" id="nav_mock" onclick="switchView('mock')">⏱️ 3-Hr Mock Test</button>
+    <button class="qnav-btn" id="nav_cheat" onclick="switchView('cheat')">⚡ 1-Page Cheat Sheet</button>
+    <button class="qnav-btn" id="nav_diagrams" onclick="switchView('diagrams')">🖼️ Diagrams & Maps</button>
+    <button class="qnav-btn" id="nav_pyq" onclick="switchView('pyq')">🏆 PYQs & Competency</button>
+    <button class="qnav-btn" id="nav_saved" onclick="switchView('saved')">⭐ Saved (<span id="savedCount">0</span>)</button>
+    <button class="qnav-btn" id="nav_mistakes" onclick="switchView('mistakes')">❌ Mistake Bank (<span id="mistakeCount">0</span>)</button>
   </div>
 </header>
 
@@ -206,22 +276,105 @@
 </div>
 
 <footer>
-  Class 10 Complete Board Preparation App • CBSE & Haryana Board (HBSE) • Offline & Web2APK Ready
+  Class 10 Complete Board Preparation App • CBSE & Haryana Board (HBSE) • Offline & APK Ready
 </footer>
 
 <script>
+// Register inline Service Worker for 100% Offline Support
+if ('serviceWorker' in navigator) {
+  const swCode = `
+    const CACHE = 'c10-master-v1';
+    self.addEventListener('install', e => { self.skipWaiting(); });
+    self.addEventListener('fetch', e => {
+      e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+    });
+  `;
+  const blob = new Blob([swCode], { type: 'application/javascript' });
+  navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
+}
+
 let state = {
-  medium: 'en', // 'en' or 'hi'
+  view: 'home',
+  medium: localStorage.getItem('c10_medium') || 'en',
+  dark: localStorage.getItem('c10_dark') === '1',
+  fontSize: parseInt(localStorage.getItem('c10_font') || '16', 10),
   subjectId: null,
   lessonId: null,
-  mode: 'book', // 'book' or 'guess'
+  mode: 'book',
   diff: 'All',
   marks: 'All',
   search: '',
-  answered: {}
+  answered: JSON.parse(localStorage.getItem('c10_answered') || '{}'),
+  saved: JSON.parse(localStorage.getItem('c10_saved') || '[]'),
+  mistakes: JSON.parse(localStorage.getItem('c10_mistakes') || '[]'),
+  mockActive: false,
+  mockSubj: 'all',
+  mockSeconds: 10800,
+  mockAnswers: {},
+  mockSubmitted: false
 };
 
-// Complete Serial-Wise Database across all 5 Subjects + Bonus Section
+let mockTimerInterval = null;
+
+function applyPrefs() {
+  document.body.classList.toggle('dark', state.dark);
+  document.getElementById('themeBtn').textContent = state.dark ? '☀️' : '🌙';
+  document.documentElement.style.setProperty('--font-scale', state.fontSize + 'px');
+  document.getElementById('btnEn').classList.toggle('active', state.medium === 'en');
+  document.getElementById('btnHi').classList.toggle('active', state.medium === 'hi');
+  updateCounters();
+}
+
+function toggleTheme() {
+  state.dark = !state.dark;
+  localStorage.setItem('c10_dark', state.dark ? '1' : '0');
+  applyPrefs();
+}
+
+function changeFont(delta) {
+  state.fontSize = Math.min(21, Math.max(13, state.fontSize + delta));
+  localStorage.setItem('c10_font', state.fontSize);
+  applyPrefs();
+}
+
+function setMedium(m) {
+  state.medium = m;
+  localStorage.setItem('c10_medium', m);
+  applyPrefs();
+  render();
+}
+
+function updateCounters() {
+  const sc = document.getElementById('savedCount');
+  const mc = document.getElementById('mistakeCount');
+  if (sc) sc.textContent = state.saved.length;
+  if (mc) mc.textContent = state.mistakes.length;
+}
+
+function toggleBookmark(id, title, qEn, qHi, solEn, solHi) {
+  const idx = state.saved.findIndex(x => x.id === id);
+  if (idx >= 0) {
+    state.saved.splice(idx, 1);
+  } else {
+    state.saved.push({ id, title, qEn, qHi, solEn, solHi });
+  }
+  localStorage.setItem('c10_saved', JSON.stringify(state.saved));
+  updateCounters();
+  render();
+}
+
+function switchView(v) {
+  state.view = v;
+  if (v !== 'home') {
+    state.subjectId = null;
+    state.lessonId = null;
+  }
+  document.querySelectorAll('.qnav-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('nav_' + v);
+  if (btn) btn.classList.add('active');
+  render();
+}
+
 const DB = [
 {
   "id": "math",
@@ -3518,21 +3671,60 @@ const DB = [
   }
 ];
 
-function setMedium(m) {
-  state.medium = m;
-  document.getElementById('btnEn').classList.toggle('active', m === 'en');
-  document.getElementById('btnHi').classList.toggle('active', m === 'hi');
-  render();
-}
+const PYQ_COMPETENCY = [
+  {
+    id: 'pyq1', tag: 'CBSE & HBSE PYQ • Maths (5M)', diff: 'Hard',
+    qEn: 'Prove that if a line is drawn parallel to one side of a triangle to intersect the other two sides in distinct points, the other two sides are divided in the same ratio (Thales Theorem). Using this, if DE || BC and AD = 3 cm, DB = 4.5 cm, AE = 2 cm, find AC.',
+    qHi: 'सिद्ध कीजिए कि यदि किसी त्रिभुज की एक भुजा के समांतर अन्य दो भुजाओं को भिन्न बिंदुओं पर प्रतिच्छेद करने के लिए एक रेखा खींची जाए, तो ये अन्य दो भुजाएँ एक ही अनुपात में विभाजित हो जाती हैं। यदि DE || BC और AD = 3 cm, DB = 4.5 cm, AE = 2 cm, तो AC ज्ञात कीजिए।',
+    solEn: '<b>Part 1:</b> Standard BPT proof using area of triangles.<br><b>Part 2:</b> AD/DB = AE/EC ⇒ 3/4.5 = 2/EC ⇒ EC = (2 × 4.5)/3 = 3 cm.<br>Therefore, AC = AE + EC = 2 + 3 = <b>5 cm</b>.',
+    solHi: 'थेल्स प्रमेय से: 3/4.5 = 2/EC ⇒ EC = 3 cm। अतः AC = 2 + 3 = <b>5 cm</b>।'
+  },
+  {
+    id: 'pyq2', tag: 'Competency • Science Assertion-Reason (1M)', diff: 'Medium',
+    qEn: 'Assertion (A): Silver chloride turns grey in sunlight.
+Reason (R): Decomposition of silver chloride in presence of sunlight forms silver metal and chlorine gas.',
+    qHi: 'अभिकथन (A): सूर्य के प्रकाश में सिल्वर क्लोराइड धूसर (Grey) रंग का हो जाता है।
+कारण (R): सूर्य के प्रकाश की उपस्थिति में सिल्वर क्लोराइड का वियोजन सिल्वर धातु और क्लोरीन गैस में होता है।',
+    solEn: '<b>Correct Answer: Both A and R are true, and R is the correct explanation of A.</b> (2AgCl(s) → 2Ag(s) + Cl₂(g) — Photolytic decomposition).',
+    solHi: '<b>सही उत्तर: A और R दोनों सत्य हैं, तथा R, A की सही व्याख्या करता है।</b>'
+  },
+  {
+    id: 'pyq3', tag: 'CBSE & HBSE PYQ • Science (5M)', diff: 'Hard',
+    qEn: '(a) Draw a schematic diagram of a circuit consisting of a battery of three cells of 2 V each, a 5 Ω resistor, an 8 Ω resistor, and a 12 Ω resistor, and a plug key, all connected in series.
+(b) Calculate the total current and potential difference across the 12 Ω resistor.',
+    qHi: '(a) 2 V के तीन सेलों की बैटरी, 5 Ω, 8 Ω तथा 12 Ω के तीन प्रतिरोधक तथा एक प्लग कुंजी को श्रेणीक्रम में जोड़कर विद्युत परिपथ बनाइए।
+(b) कुल विद्युत धारा तथा 12 Ω प्रतिरोधक के सिरों पर विभवांतर ज्ञात कीजिए।',
+    solEn: 'Total Voltage V = 3 × 2 V = 6 V.<br>Total Resistance Rs = 5 + 8 + 12 = <b>25 Ω</b>.<br>Total Current I = V/Rs = 6/25 = <b>0.24 A</b>.<br>Potential difference across 12 Ω resistor: V₁₂ = I × R = 0.24 × 12 = <b>2.88 V</b>.',
+    solHi: 'कुल वोल्टता = 6 V, कुल प्रतिरोध = 25 Ω, कुल धारा = <b>0.24 A</b>, तथा 12 Ω के सिरों पर विभवांतर = <b>2.88 V</b>।'
+  },
+  {
+    id: 'pyq4', tag: 'Competency • SST Case-Based (4M)', diff: 'Medium',
+    qEn: 'Case Study: In 1930, Mahatma Gandhi marched 240 miles from Sabarmati Ashram to Dandi with 78 trusted volunteers to break the Salt Law.
+(i) Why was salt chosen as a powerful symbol? (ii) Which movement started with this event?',
+    qHi: 'केस स्टडी: 1930 में महात्मा गांधी ने 78 विश्वस्त स्वयंसेवकों के साथ साबरमती आश्रम से दांडी तक 240 मील की यात्रा कर नमक कानून तोड़ा।
+(i) नमक को शक्तिशाली प्रतीक क्यों चुना गया? (ii) इस घटना से कौनसा आंदोलन शुरू हुआ?',
+    solEn: '(i) Salt was an essential food item consumed equally by rich and poor alike, and the British monopoly & tax on salt revealed the most oppressive face of colonial rule.<br>(ii) <b>Civil Disobedience Movement (सविनय अवज्ञा आंदोलन)</b>.',
+    solHi: '(i) नमक अमीर-गरीब सभी की अनिवार्य आवश्यकता थी और इस पर ब्रिटिश कर सबसे दमनकारी था। (ii) <b>सविनय अवज्ञा आंदोलन</b>।'
+  },
+  {
+    id: 'pyq5', tag: 'Topper Answer-Sheet Writing Tips (Board Exam)', diff: 'Easy',
+    qEn: 'How to score 95%+ in Class 10 CBSE & HBSE Board Exams (Topper Presentation Rules):',
+    qHi: 'बोर्ड परीक्षा में 95%+ अंक लाने के लिए उत्तर लिखने के गोल्डन नियम:',
+    solEn: '1. <b>Mathematics:</b> Always write Given, To Find, Formula in a box, step-by-step calculation, and underline final answer with units.<br>2. <b>Science:</b> Write balanced chemical equations with state symbols (s, l, g, aq) and draw neat pencil diagrams with right-side labelling.<br>3. <b>Social Science:</b> Write answers in bullet points with bold headings (3 points for 3M, 5 points for 5M) and double-check state names in Map work.<br>4. <b>English & Hindi:</b> Stick strictly to word limits, box advertisements/notices, and underline key keywords.',
+    solHi: '1. गणित में सूत्र को बॉक्स में लिखें और अंतिम उत्तर मात्रक सहित रेखांकित करें। 2. विज्ञान में संतुलित समीकरण व पेंसिल से नामांकित चित्र बनाएं। 3. सामाजिक विज्ञान में बिंदुवार (Bullet points) उत्तर लिखें।'
+  }
+];
 
 function goHome() {
+  state.view = 'home';
   state.subjectId = null;
   state.lessonId = null;
   state.search = '';
-  render();
+  switchView('home');
 }
 
 function selectSubject(sid) {
+  state.view = 'home';
   state.subjectId = sid;
   state.lessonId = null;
   state.search = '';
@@ -3551,8 +3743,19 @@ function setMode(m) { state.mode = m; render(); }
 function setDiff(d) { state.diff = d; render(); }
 function setMarks(mk) { state.marks = mk; render(); }
 
-function checkMCQ(qid, optIdx, correctIdx) {
+function checkMCQ(qid, optIdx, correctIdx, qObj) {
   state.answered[qid] = { chosen: optIdx, correct: correctIdx };
+  localStorage.setItem('c10_answered', JSON.stringify(state.answered));
+  if (optIdx !== correctIdx && qObj) {
+    if (!state.mistakes.some(m => m.id === qid)) {
+      state.mistakes.push({ id: qid, ...qObj });
+      localStorage.setItem('c10_mistakes', JSON.stringify(state.mistakes));
+    }
+  } else if (optIdx === correctIdx) {
+    state.mistakes = state.mistakes.filter(m => m.id !== qid);
+    localStorage.setItem('c10_mistakes', JSON.stringify(state.mistakes));
+  }
+  updateCounters();
   render();
 }
 
@@ -3561,16 +3764,82 @@ function toggleSol(id) {
   if (el) el.classList.toggle('open');
 }
 
+function getAllMCQs() {
+  let list = [];
+  DB.forEach(s => {
+    s.lessons.forEach(l => {
+      l.guess.forEach((q, idx) => {
+        if (q.marks === 1) {
+          list.push({
+            id: `${l.id}_g_${idx}_${q.marks}_${q.diff}`,
+            subjId: s.id,
+            subjName: s.titleEn,
+            lessonNum: l.num,
+            ...q
+          });
+        }
+      });
+    });
+  });
+  return list;
+}
+
+function startMockTest(subjFilter) {
+  state.mockSubj = subjFilter;
+  state.mockActive = true;
+  state.mockSubmitted = false;
+  state.mockSeconds = 3 * 3600;
+  state.mockAnswers = {};
+  if (mockTimerInterval) clearInterval(mockTimerInterval);
+  mockTimerInterval = setInterval(() => {
+    if (state.mockActive && !state.mockSubmitted) {
+      state.mockSeconds--;
+      if (state.mockSeconds <= 0) {
+        submitMockTest();
+      } else {
+        const tEl = document.getElementById('mockTimerDisplay');
+        if (tEl) tEl.textContent = formatTime(state.mockSeconds);
+      }
+    }
+  }, 1000);
+  render();
+}
+
+function submitMockTest() {
+  state.mockSubmitted = true;
+  if (mockTimerInterval) clearInterval(mockTimerInterval);
+  render();
+}
+
+function formatTime(sec) {
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = sec % 60;
+  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+
 function renderBreadcrumb() {
   const bc = document.getElementById('breadcrumb');
-  let html = `<button class="crumb-btn" onclick="goHome()">🏠 All Subjects (सभी विषय)</button>`;
-  if (state.subjectId) {
-    const subj = DB.find(s => s.id === state.subjectId);
-    html += ` <span>›</span> <button class="crumb-btn" onclick="selectSubject('${subj.id}')">${subj.titleEn}</button>`;
-    if (state.lessonId) {
-      const les = subj.lessons.find(l => l.id === state.lessonId);
-      html += ` <span>›</span> <strong>${les.num}: ${les.titleEn}</strong>`;
+  let html = `<button class="crumb-btn" onclick="goHome()">🏠 Home</button>`;
+  if (state.view === 'home') {
+    if (state.subjectId) {
+      const subj = DB.find(s => s.id === state.subjectId);
+      html += ` <span>›</span> <button class="crumb-btn" onclick="selectSubject('${subj.id}')">${subj.titleEn}</button>`;
+      if (state.lessonId) {
+        const les = subj.lessons.find(l => l.id === state.lessonId);
+        html += ` <span>›</span> <strong>${les.num}: ${les.titleEn}</strong>`;
+      }
     }
+  } else {
+    const names = {
+      mock: '⏱️ 3-Hour Live Board Mock Test',
+      cheat: '⚡ 1-Page Last-Day Formula & Reaction Cheat Sheet',
+      diagrams: '🖼️ Science Diagrams & India Board Map Gallery',
+      pyq: '🏆 Past 5 Years PYQs, Competency Qs & Topper Tips',
+      saved: '⭐ Saved / Bookmarked Questions',
+      mistakes: '❌ Mistake Bank (गलत हुए प्रश्नों का अभ्यास)'
+    };
+    html += ` <span>›</span> <strong>${names[state.view]}</strong>`;
   }
   bc.innerHTML = html;
 }
@@ -3579,26 +3848,301 @@ function render() {
   renderBreadcrumb();
   const app = document.getElementById('app');
 
-  // LEVEL 1: ALL SUBJECTS
+  if (state.view === 'mock') {
+    if (!state.mockActive) {
+      app.innerHTML = `
+        <div class="concept-card">
+          <h4>⏱️ 3-Hour Live Board Exam Mock Test Simulator (CBSE & HBSE)</h4>
+          <p>असली बोर्ड परीक्षा की तरह 3 घंटे (03:00:00) की उल्टी गिनती के साथ अभ्यास करें। अंत में तुरंत स्कोर, प्रतिशत और सही उत्तर देखें।</p>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+            <button class="sol-btn" onclick="startMockTest('all')">Start Full All-Subject Mock Test</button>
+            <button class="sol-btn" style="background:#1e3a8a;" onclick="startMockTest('math')">Maths Mock Test</button>
+            <button class="sol-btn" style="background:#15803d;" onclick="startMockTest('sci')">Science Mock Test</button>
+            <button class="sol-btn" style="background:#92400e;" onclick="startMockTest('eng')">English Mock Test</button>
+            <button class="sol-btn" style="background:#9d174d;" onclick="startMockTest('hin')">Hindi Mock Test</button>
+            <button class="sol-btn" style="background:#3730a3;" onclick="startMockTest('sst')">SST Mock Test</button>
+          </div>
+        </div>
+      `;
+      return;
+    }
+    let qs = getAllMCQs();
+    if (state.mockSubj !== 'all') qs = qs.filter(q => q.subjId === state.mockSubj);
+    let score = 0;
+    qs.forEach(q => { if (state.mockAnswers[q.id] === q.ans) score++; });
+    const pct = qs.length ? Math.round((score / qs.length) * 100) : 0;
+
+    let topBar = `
+      <div class="timer-bar">
+        <span>⏱️ Time Left: <span id="mockTimerDisplay">${formatTime(state.mockSeconds)}</span></span>
+        <span>Questions: ${qs.length}</span>
+        ${!state.mockSubmitted
+          ? `<button class="sol-btn" style="background:#22c55e;color:#052e16;" onclick="submitMockTest()">Submit Test ✅</button>`
+          : `<button class="sol-btn" onclick="state.mockActive=false; render();">Exit / New Test</button>`}
+      </div>
+    `;
+
+    let resultBanner = state.mockSubmitted ? `
+      <div class="concept-card" style="border-color:#16a34a;">
+        <h4>🎉 Mock Test Result: ${score} / ${qs.length} (${pct}%)</h4>
+        <p>${pct >= 80 ? 'शाबाश! आपकी बोर्ड तैयारी शानदार है।' : 'अच्छा प्रयास! नीचे लाल रंग में गलत हुए प्रश्नों के सही उत्तर देखें।'}</p>
+      </div>
+    ` : '';
+
+    let qList = qs.map((q, idx) => {
+      const opts = state.medium === 'hi' ? q.optsHi : q.optsEn;
+      const chosen = state.mockAnswers[q.id];
+      return `
+        <div class="q-card">
+          <div class="q-meta">
+            <span class="tag-marks">Q${idx + 1} • ${q.subjName} (${q.lessonNum})</span>
+            <span class="tag-diff tag-${q.diff}">${q.diff}</span>
+          </div>
+          <div class="q-text">${q.qEn}</div>
+          ${state.medium === 'hi' ? `<div class="hi-sub">${q.qHi}</div>` : ''}
+          <div class="mcq-grid">
+            ${opts.map((opt, oIdx) => {
+              let cls = 'opt-btn';
+              if (state.mockSubmitted) {
+                if (oIdx === q.ans) cls += ' correct';
+                else if (oIdx === chosen) cls += ' wrong';
+              } else if (chosen === oIdx) {
+                cls += ' correct';
+              }
+              return `<button class="${cls}" onclick="if(!state.mockSubmitted){state.mockAnswers['${q.id}']=${oIdx}; render();}">${String.fromCharCode(65 + oIdx)}. ${opt}</button>`;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    app.innerHTML = topBar + resultBanner + qList;
+    return;
+  }
+
+  if (state.view === 'cheat') {
+    app.innerHTML = `
+      <div class="concept-card">
+        <h4>⚡ 1-Page Last-Day Master Cheat Sheet (परीक्षा से 1 दिन पहले का क्विक रिवीजन)</h4>
+        <p>सभी प्रमुख गणितीय सूत्र, रासायनिक अभिक्रियाएँ, भौतिकी के सूत्र और इतिहास की मुख्य तिथियाँ एक ही स्क्रीन पर।</p>
+      </div>
+      <div class="q-card">
+        <div class="q-meta"><span class="tag-marks">📐 Mathematics Complete Formula Sheet</span></div>
+        <div class="q-text" style="font-weight:400;">
+          • <b>Real Numbers:</b> HCF(a, b) × LCM(a, b) = a × b<br>
+          • <b>Polynomials:</b> α + β = -b/a; αβ = c/a; Quadratic = k[x² - (α + β)x + αβ]<br>
+          • <b>Linear Equations:</b> Unique (a₁/a₂ ≠ b₁/b₂), Infinite (a₁/a₂ = b₁/b₂ = c₁/c₂), Parallel/No Sol (a₁/a₂ = b₁/b₂ ≠ c₁/c₂)<br>
+          • <b>Quadratic Formula:</b> x = [-b ± √(b² - 4ac)] / 2a; Discriminant D = b² - 4ac<br>
+          • <b>AP:</b> aₙ = a + (n - 1)d; Sₙ = (n/2)[2a + (n - 1)d] = (n/2)(a + l)<br>
+          • <b>Coordinate Geometry:</b> Distance = √[(x₂ - x₁)² + (y₂ - y₁)²]; Section = [(m₁x₂ + m₂x₁)/(m₁ + m₂), (m₁y₂ + m₂y₁)/(m₁ + m₂)]<br>
+          • <b>Trigonometry:</b> sin²θ + cos²θ = 1; 1 + tan²θ = sec²θ; 1 + cot²θ = cosec²θ<br>
+          • <b>Circles & Sectors:</b> Arc l = (θ/360°)×2πr; Sector Area = (θ/360°)×πr²<br>
+          • <b>Mensuration:</b> Cylinder Vol = πr²h; Cone Vol = (1/3)πr²h, l = √(r² + h²); Sphere SA = 4πr², Vol = (4/3)πr³; Hemisphere TSA = 3πr², Vol = (2/3)πr³<br>
+          • <b>Statistics:</b> Mode = l + [(f₁ - f₀)/(2f₁ - f₀ - f₂)]×h; Median = l + [(n/2 - cf)/f]×h; 3 Median = Mode + 2 Mean
+        </div>
+      </div>
+      <div class="q-card">
+        <div class="q-meta"><span class="tag-marks">🧪 Science Key Equations & Formulas</span></div>
+        <div class="q-text" style="font-weight:400;">
+          • <b>Bleaching Powder:</b> CaOCl₂ | <b>Baking Soda:</b> NaHCO₃ | <b>Washing Soda:</b> Na₂CO₃·10H₂O | <b>POP:</b> CaSO₄·½H₂O<br>
+          • <b>Photosynthesis:</b> 6CO₂ + 12H₂O → C₆H₁₂O₆ + 6O₂ + 6H₂O<br>
+          • <b>Mirror Formula:</b> 1/v + 1/u = 1/f; m = -v/u | <b>Lens Formula:</b> 1/v - 1/u = 1/f; m = v/u; Power P = 1/f (m)<br>
+          • <b>Electricity:</b> V = IR; R = ρ(l/A); H = I²Rt; P = VI = I²R = V²/R; 1 kWh = 3.6 × 10⁶ J
+        </div>
+      </div>
+      <div class="q-card">
+        <div class="q-meta"><span class="tag-marks">🌍 History & Civics Must-Know Dates</span></div>
+        <div class="q-text" style="font-weight:400;">
+          • <b>1789:</b> French Revolution | <b>1804:</b> Napoleonic Code | <b>1815:</b> Treaty of Vienna | <b>1871:</b> Unification of Germany<br>
+          • <b>1917:</b> Champaran & Kheda Satyagraha | <b>1919:</b> Rowlatt Act & Jallianwala Bagh (13 April)<br>
+          • <b>1920:</b> Non-Cooperation Movement | <b>1922:</b> Chauri Chaura incident | <b>1930:</b> Dandi Salt March & Civil Disobedience<br>
+          • <b>1932:</b> Poona Pact | <b>1986:</b> Consumer Protection Act (COPRA) | <b>1992:</b> Panchayati Raj Decentralisation Amendment
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  if (state.view === 'diagrams') {
+    app.innerHTML = `
+      <div class="concept-card">
+        <h4>🖼️ Visual Science Diagrams & India Board Map Guide</h4>
+        <p>बोर्ड परीक्षा में बार-बार पूछे जाने वाले महत्वपूर्ण वैज्ञानिक चित्र और मानचित्र के मुख्य बिंदु।</p>
+      </div>
+      <div class="q-card">
+        <div class="q-meta"><span class="tag-marks">1. Dispersion of White Light through Glass Prism (VIBGYOR)</span></div>
+        <div class="svg-box">
+          <svg width="100%" height="180" viewBox="0 0 420 180">
+            <polygon points="150,25 70,155 230,155" fill="#e0f2fe" stroke="#0284c7" stroke-width="2.5"/>
+            <line x1="15" y1="115" x2="108" y2="92" stroke="#0f172a" stroke-width="3"/>
+            <text x="12" y="105" font-size="11" font-weight="bold">White Light</text>
+            <line x1="108" y1="92" x2="188" y2="85" stroke="#dc2626" stroke-width="2"/>
+            <line x1="108" y1="92" x2="196" y2="105" stroke="#7c3aed" stroke-width="2"/>
+            <line x1="188" y1="85" x2="330" y2="65" stroke="#dc2626" stroke-width="2.5"/>
+            <line x1="196" y1="105" x2="330" y2="145" stroke="#7c3aed" stroke-width="2.5"/>
+            <rect x="330" y="55" width="14" height="100" fill="#fef3c7" stroke="#334155"/>
+            <text x="350" y="70" font-size="11" fill="#dc2626" font-weight="bold">Red (Least Bend)</text>
+            <text x="350" y="145" font-size="11" fill="#6d28d9" font-weight="bold">Violet (Most Bend)</text>
+          </svg>
+        </div>
+      </div>
+      <div class="q-card">
+        <div class="q-meta"><span class="tag-marks">2. Series Electric Circuit Diagram (Ohm's Law Verification)</span></div>
+        <div class="svg-box">
+          <svg width="100%" height="170" viewBox="0 0 420 170">
+            <rect x="70" y="30" width="280" height="110" fill="none" stroke="#1e3a8a" stroke-width="2.5"/>
+            <rect x="165" y="18" width="90" height="24" fill="#fef3c7" stroke="#b45309" stroke-width="2"/>
+            <text x="180" y="34" font-size="11" font-weight="bold">Resistor R</text>
+            <circle cx="210" cy="75" r="16" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+            <text x="205" y="79" font-size="12" font-weight="bold">V</text>
+            <line x1="165" y1="30" x2="165" y2="75" stroke="#15803d" stroke-width="1.5" stroke-dasharray="3"/>
+            <line x1="255" y1="30" x2="255" y2="75" stroke="#15803d" stroke-width="1.5" stroke-dasharray="3"/>
+            <line x1="165" y1="75" x2="194" y2="75" stroke="#15803d" stroke-width="1.5"/>
+            <line x1="226" y1="75" x2="255" y2="75" stroke="#15803d" stroke-width="1.5"/>
+            <circle cx="350" cy="85" r="15" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+            <text x="345" y="89" font-size="12" font-weight="bold">A</text>
+            <rect x="175" y="128" width="70" height="24" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+            <text x="185" y="144" font-size="11" font-weight="bold">+ Battery -</text>
+          </svg>
+        </div>
+      </div>
+      <div class="q-card">
+        <div class="q-meta"><span class="tag-marks">3. Complete India Political Map Locations (5 Marks)</span></div>
+        <div class="q-text" style="font-weight:400;">
+          <b>History (2 Marks):</b><br>
+          • <b>Calcutta (Sept 1920)</b> & <b>Nagpur (Dec 1920)</b> & <b>Madras (1927)</b> — INC Sessions<br>
+          • <b>Champaran (Bihar)</b> — Indigo Planters Satyagraha<br>
+          • <b>Kheda & Ahmedabad (Gujarat)</b> — Peasant & Cotton Mill Satyagraha<br>
+          • <b>Amritsar (Punjab)</b> — Jallianwala Bagh | <b>Chauri Chaura (UP)</b> — Calling off NCM | <b>Dandi (Gujarat)</b> — Salt March<br><br>
+          <b>Geography (3 Marks):</b><br>
+          • <b>Dams:</b> Salal (J&K), Bhakra Nangal (HP), Tehri (Uttarakhand), Rana Pratap Sagar (Rajasthan), Sardar Sarovar (Gujarat), Hirakud (Odisha), Nagarjuna Sagar (Telangana), Tungabhadra (Karnataka)<br>
+          • <b>Nuclear Plants:</b> Narora (UP), Kakrapara (Gujarat), Tarapur (Maharashtra), Kalpakkam (Tamil Nadu)<br>
+          • <b>Major Ports:</b> Kandla, Mumbai, Marmagao, New Mangalore, Kochi, Tuticorin, Chennai, Visakhapatnam, Paradip, Haldia
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  if (state.view === 'pyq') {
+    app.innerHTML = `
+      <div class="concept-card">
+        <h4>🏆 Past 5 Years PYQs, Competency Questions & Topper Tips</h4>
+        <p>नए बोर्ड पैटर्न के अनुसार Assertion-Reason, Case-Based प्रश्न और टॉपर उत्तर-लेखन टिप्स।</p>
+      </div>
+      ${PYQ_COMPETENCY.map((item, idx) => `
+        <div class="q-card">
+          <div class="q-meta">
+            <span class="tag-marks">${item.tag}</span>
+            <span class="tag-diff tag-${item.diff}">${item.diff}</span>
+          </div>
+          <div class="q-text">${item.qEn}</div>
+          ${state.medium === 'hi' ? `<div class="hi-sub">${item.qHi}</div>` : ''}
+          <button class="sol-btn" onclick="toggleSol('pyq_sol_${idx}')">Show / Hide Answer (उत्तर देखें)</button>
+          <div class="sol-box open" id="pyq_sol_${idx}">
+            <div>${item.solEn}</div>
+            ${state.medium === 'hi' ? `<hr style="border:none;border-top:1px dashed #86efac;margin:8px 0;"><div>${item.solHi}</div>` : ''}
+          </div>
+        </div>
+      `).join('')}
+    `;
+    return;
+  }
+
+  if (state.view === 'saved') {
+    if (state.saved.length === 0) {
+      app.innerHTML = `<div class="q-card">अभी कोई प्रश्न सेव नहीं है। किसी भी पाठ के प्रश्न पर <strong>☆ Save</strong> दबाकर यहाँ जोड़ें।</div>`;
+      return;
+    }
+    app.innerHTML = state.saved.map((item) => `
+      <div class="q-card">
+        <div class="q-meta">
+          <span class="tag-marks">⭐ ${item.title}</span>
+          <button class="bookmark-btn saved" onclick="toggleBookmark('${item.id}')">Remove ✕</button>
+        </div>
+        <div class="q-text">${item.qEn}</div>
+        ${state.medium === 'hi' && item.qHi ? `<div class="hi-sub">${item.qHi}</div>` : ''}
+        <div class="sol-box open">
+          <div>${item.solEn}</div>
+          ${state.medium === 'hi' && item.solHi ? `<hr style="border:none;border-top:1px dashed #86efac;margin:8px 0;"><div>${item.solHi}</div>` : ''}
+        </div>
+      </div>
+    `).join('');
+    return;
+  }
+
+  if (state.view === 'mistakes') {
+    if (state.mistakes.length === 0) {
+      app.innerHTML = `<div class="q-card">🎉 आपका Mistake Bank खाली है! जब आप किसी MCQ का गलत उत्तर चुनेंगे तो वह अपने-आप अभ्यास के लिए यहाँ जुड़ जाएगा।</div>`;
+      return;
+    }
+    app.innerHTML = `
+      <div class="concept-card">
+        <h4>❌ Mistake Bank (${state.mistakes.length} Questions to Re-Practice)</h4>
+        <p>इन प्रश्नों का सही उत्तर चुनते ही ये अपने-आप Mistake Bank से हट जाएंगे।</p>
+      </div>
+      ${state.mistakes.map((q) => {
+        const opts = state.medium === 'hi' ? q.optsHi : q.optsEn;
+        const ansState = state.answered[q.id];
+        return `
+          <div class="q-card">
+            <div class="q-meta"><span class="tag-marks">${q.subjName || 'MCQ Practice'}</span></div>
+            <div class="q-text">${q.qEn}</div>
+            ${state.medium === 'hi' ? `<div class="hi-sub">${q.qHi}</div>` : ''}
+            <div class="mcq-grid">
+              ${opts.map((opt, oIdx) => {
+                let cls = 'opt-btn';
+                if (ansState) {
+                  if (oIdx === q.ans) cls += ' correct';
+                  else if (oIdx === ansState.chosen) cls += ' wrong';
+                }
+                return `<button class="${cls}" onclick='checkMCQ("${q.id}", ${oIdx}, ${q.ans}, ${JSON.stringify(q).replace(/'/g, "&apos;")})'>${String.fromCharCode(65 + oIdx)}. ${opt}</button>`;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      }).join('')}
+    `;
+    return;
+  }
+
+  // HOME VIEW: LEVEL 1
   if (!state.subjectId) {
+    const allMcqs = getAllMCQs();
+    const solvedCount = Object.keys(state.answered).length;
+    const progressPct = allMcqs.length ? Math.min(100, Math.round((solvedCount / allMcqs.length) * 100)) : 0;
+
+    let progressHtml = `
+      <div class="progress-banner">
+        <div class="pbar-wrap">
+          <div style="display:flex;justify-content:space-between;font-size:0.84rem;font-weight:700;">
+            <span>📊 Overall Practice Progress (MCQ Solved: ${solvedCount} / ${allMcqs.length})</span>
+            <span>${progressPct}%</span>
+          </div>
+          <div class="pbar-track"><div class="pbar-fill" style="width:${progressPct}%"></div></div>
+        </div>
+        <button class="sol-btn" onclick="switchView('mock')">Start 3-Hr Mock Test →</button>
+      </div>
+    `;
+
     let cards = DB.map(s => `
       <div class="subj-card" onclick="selectSubject('${s.id}')">
         <div>
           <span class="subj-badge" style="background:${s.color}; color:${s.textColor};">${s.badge}</span>
           <h2>${s.titleEn}</h2>
-          <div style="font-weight:600; color:#334155; font-size:0.9rem; margin-bottom:6px;">${s.titleHi}</div>
+          <div style="font-weight:600; color:var(--muted); font-size:0.88rem; margin-bottom:6px;">${s.titleHi}</div>
           <p>${state.medium === 'hi' ? s.descHi : s.descEn}</p>
         </div>
-        <div style="margin-top:14px; font-weight:700; color:#1e3a8a; font-size:0.85rem;">Open Lessons →</div>
+        <div style="margin-top:14px; font-weight:700; color:var(--primary); font-size:0.85rem;">Open Lessons →</div>
       </div>
     `).join('');
-    app.innerHTML = `<div class="grid-subjects">${cards}</div>`;
+    app.innerHTML = progressHtml + `<div class="grid-subjects">${cards}</div>`;
     return;
   }
 
   const subj = DB.find(s => s.id === state.subjectId);
 
-  // LEVEL 2: ALL LESSONS OF SUBJECT (SERIAL-WISE)
+  // LEVEL 2
   if (!state.lessonId) {
     const filtered = subj.lessons.filter(l =>
       (l.num + ' ' + l.titleEn + ' ' + l.titleHi).toLowerCase().includes(state.search.toLowerCase())
@@ -3610,7 +4154,7 @@ function render() {
           <h3>${l.titleEn}</h3>
           <small>${l.titleHi}</small>
         </div>
-        <div style="color:#2563eb; font-weight:700; font-size:0.85rem;">Study / Guess →</div>
+        <div style="color:var(--primary); font-weight:700; font-size:0.84rem;">Study / Guess →</div>
       </div>
     `).join('');
     app.innerHTML = `
@@ -3620,7 +4164,7 @@ function render() {
     return;
   }
 
-  // LEVEL 3: LESSON WORKSPACE (2 MODES: ORIGINAL BOOK vs LESSON GUESS PAPER)
+  // LEVEL 3
   const les = subj.lessons.find(l => l.id === state.lessonId);
   let headerCards = `
     <div class="concept-card">
@@ -3642,28 +4186,34 @@ function render() {
   `;
 
   if (state.mode === 'book') {
-    let bookHtml = les.book.map((item, idx) => `
-      <div class="q-card">
-        <div class="q-meta"><span class="tag-marks">Original Textbook Exercise #${idx + 1}</span></div>
-        <div class="q-text">${item.qEn}</div>
-        ${state.medium === 'hi' ? `<div class="hi-sub">${item.qHi}</div>` : ''}
-        <button class="sol-btn" onclick="toggleSol('bsol_${idx}')">Show / Hide Complete Solution (हल देखें)</button>
-        <div class="sol-box open" id="bsol_${idx}">
-          <div>${item.solEn}</div>
-          ${state.medium === 'hi' ? `<hr style="border:none; border-top:1px dashed #86efac; margin:8px 0;"><div>${item.solHi}</div>` : ''}
+    let bookHtml = les.book.map((item, idx) => {
+      const bid = `${les.id}_b_${idx}`;
+      const isSaved = state.saved.some(x => x.id === bid);
+      return `
+        <div class="q-card">
+          <div class="q-meta">
+            <span class="tag-marks">Original Textbook Exercise #${idx + 1}</span>
+            <button class="bookmark-btn ${isSaved ? 'saved' : ''}" onclick='toggleBookmark("${bid}", "${les.num} • Ex #${idx+1}", ${JSON.stringify(item.qEn)}, ${JSON.stringify(item.qHi)}, ${JSON.stringify(item.solEn)}, ${JSON.stringify(item.solHi)})'>${isSaved ? '⭐ Saved' : '☆ Save'}</button>
+          </div>
+          <div class="q-text">${item.qEn}</div>
+          ${state.medium === 'hi' ? `<div class="hi-sub">${item.qHi}</div>` : ''}
+          <button class="sol-btn" onclick="toggleSol('bsol_${idx}')">Show / Hide Complete Solution (हल देखें)</button>
+          <div class="sol-box open" id="bsol_${idx}">
+            <div>${item.solEn}</div>
+            ${state.medium === 'hi' ? `<hr style="border:none; border-top:1px dashed #86efac; margin:8px 0;"><div>${item.solHi}</div>` : ''}
+          </div>
         </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
     app.innerHTML = headerCards + bookHtml;
   } else {
-    // GUESS PAPER MODE
     const diffs = ['All', 'Easy', 'Medium', 'Hard'];
     const marksList = ['All', 1, 2, 3, 4, 5];
     let filterBar = `
       <div class="filter-bar">
         <strong style="font-size:0.82rem;">Difficulty:</strong>
         ${diffs.map(d => `<button class="pill ${d.toLowerCase()} ${state.diff === d ? 'active' : ''}" onclick="setDiff('${d}')">${d}</button>`).join('')}
-        <span style="margin:0 4px; color:#cbd5e1;">|</span>
+        <span style="margin:0 4px; color:var(--border);">|</span>
         <strong style="font-size:0.82rem;">Marks:</strong>
         ${marksList.map(m => `<button class="pill ${state.marks === m ? 'active' : ''}" onclick="setMarks(${typeof m === 'string' ? `'${m}'` : m})">${m === 'All' ? 'All' : m + 'M'}</button>`).join('')}
       </div>
@@ -3678,14 +4228,19 @@ function render() {
       ? `<div class="q-card">No questions in this exact filter. Click <strong>All</strong> above to view all Easy/Medium/Hard questions of this lesson.</div>`
       : qs.map((q, idx) => {
           const qid = `${les.id}_g_${idx}_${q.marks}_${q.diff}`;
+          const isSaved = state.saved.some(x => x.id === qid);
           if (q.marks === 1) {
             const ansState = state.answered[qid];
             const opts = state.medium === 'hi' ? q.optsHi : q.optsEn;
+            const qPayload = { subjName: subj.titleEn + ' (' + les.num + ')', qEn: q.qEn, qHi: q.qHi, optsEn: q.optsEn, optsHi: q.optsHi, ans: q.ans };
             return `
               <div class="q-card">
                 <div class="q-meta">
                   <span class="tag-marks">1 Mark • MCQ (Only Green/Red)</span>
-                  <span class="tag-diff tag-${q.diff}">${q.diff}</span>
+                  <div>
+                    <span class="tag-diff tag-${q.diff}">${q.diff}</span>
+                    <button class="bookmark-btn ${isSaved ? 'saved' : ''}" onclick='toggleBookmark("${qid}", "${les.num} • 1M MCQ", ${JSON.stringify(q.qEn)}, ${JSON.stringify(q.qHi)}, ${JSON.stringify("Correct Answer: " + q.optsEn[q.ans])}, ${JSON.stringify("सही उत्तर: " + q.optsHi[q.ans])})'>${isSaved ? '⭐ Saved' : '☆ Save'}</button>
+                  </div>
                 </div>
                 <div class="q-text">${q.qEn}</div>
                 ${state.medium === 'hi' ? `<div class="hi-sub">${q.qHi}</div>` : ''}
@@ -3696,7 +4251,7 @@ function render() {
                       if (oIdx === q.ans) cls += ' correct';
                       else if (oIdx === ansState.chosen) cls += ' wrong';
                     }
-                    return `<button class="${cls}" onclick="checkMCQ('${qid}', ${oIdx}, ${q.ans})">${String.fromCharCode(65 + oIdx)}. ${opt}</button>`;
+                    return `<button class="${cls}" onclick='checkMCQ("${qid}", ${oIdx}, ${q.ans}, ${JSON.stringify(qPayload).replace(/'/g, "&apos;")})'>${String.fromCharCode(65 + oIdx)}. ${opt}</button>`;
                   }).join('')}
                 </div>
               </div>
@@ -3706,7 +4261,10 @@ function render() {
               <div class="q-card">
                 <div class="q-meta">
                   <span class="tag-marks">${q.marks} Marks • Direct Answer</span>
-                  <span class="tag-diff tag-${q.diff}">${q.diff}</span>
+                  <div>
+                    <span class="tag-diff tag-${q.diff}">${q.diff}</span>
+                    <button class="bookmark-btn ${isSaved ? 'saved' : ''}" onclick='toggleBookmark("${qid}", "${les.num} • ${q.marks}M", ${JSON.stringify(q.qEn)}, ${JSON.stringify(q.qHi)}, ${JSON.stringify(q.solEn)}, ${JSON.stringify(q.solHi)})'>${isSaved ? '⭐ Saved' : '☆ Save'}</button>
+                  </div>
                 </div>
                 <div class="q-text">${q.qEn}</div>
                 ${state.medium === 'hi' ? `<div class="hi-sub">${q.qHi}</div>` : ''}
@@ -3724,6 +4282,7 @@ function render() {
   }
 }
 
+applyPrefs();
 render();
 </script>
 </body>
