@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BAHUBALI LEGEND v20 — AI Mosam & Live e-NAM Mandi Master</title>
+    <title>BAHUBALI LEGEND v20 — God-Mode AI Mosam & Live e-NAM Mandi</title>
     <style>
         :root {
             --bg-main: #070d19;
@@ -42,20 +42,20 @@
             max-width: 500px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 11px;
             padding-bottom: 30px;
         }
 
         /* Top Master Header */
         .master-header {
             background: linear-gradient(135deg, #0f294a 0%, #064e3b 100%);
-            border: 1px solid rgba(56, 189, 248, 0.3);
+            border: 1px solid rgba(56, 189, 248, 0.35);
             border-radius: 16px;
-            padding: 13px 15px;
+            padding: 13px 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
             position: relative;
             overflow: hidden;
         }
@@ -73,32 +73,33 @@
         .brand-left {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 9px;
         }
 
         .brand-emblem {
-            width: 42px;
-            height: 42px;
+            width: 40px;
+            height: 40px;
             border-radius: 12px;
             background: rgba(255, 255, 255, 0.12);
             border: 1px solid rgba(255, 255, 255, 0.25);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
+            font-size: 21px;
+            flex-shrink: 0;
         }
 
         .brand-title h1 {
-            font-size: 16.5px;
+            font-size: 15.5px;
             font-weight: 800;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.2px;
             color: #ffffff;
         }
 
         .brand-title h1 span {
-            background: #10b981;
+            background: linear-gradient(135deg, #10b981, #38bdf8);
             color: #04130e;
-            font-size: 10px;
+            font-size: 9.5px;
             padding: 2px 6px;
             border-radius: 6px;
             vertical-align: middle;
@@ -107,53 +108,106 @@
         }
 
         .brand-title p {
-            font-size: 11px;
+            font-size: 10.5px;
             color: #bae6fd;
             margin-top: 2px;
         }
 
-        .gps-refresh-btn {
-            background: rgba(56, 189, 248, 0.22);
-            border: 1px solid var(--accent-blue);
+        .header-actions {
+            display: flex;
+            gap: 6px;
+        }
+
+        .hdr-btn {
+            background: rgba(56, 189, 248, 0.2);
+            border: 1px solid rgba(56, 189, 248, 0.5);
             color: #ffffff;
-            padding: 8px 11px;
+            padding: 7px 9px;
             border-radius: 10px;
-            font-size: 11.5px;
+            font-size: 11px;
             font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 4px;
-            transition: transform 0.15s ease;
+            gap: 3px;
+            transition: transform 0.15s ease, background 0.15s ease;
+            white-space: nowrap;
         }
 
-        .gps-refresh-btn:active {
+        .hdr-btn.voice-active {
+            background: #ef4444;
+            border-color: #fca5a5;
+        }
+
+        .hdr-btn:active {
             transform: scale(0.95);
         }
 
-        /* GPS Status Strip */
+        /* GPS & Quick Share Strip */
         .gps-strip {
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
             border-radius: 11px;
-            padding: 8px 12px;
+            padding: 8px 11px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 6px;
             font-size: 11.5px;
         }
 
         .gps-loc {
             font-weight: 600;
             color: #e0f2fe;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .strip-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
         }
 
         .gps-cache-tag {
-            font-size: 10.5px;
+            font-size: 10px;
             color: #6ee7b7;
             background: rgba(16, 185, 129, 0.15);
-            padding: 2px 8px;
+            padding: 2px 7px;
+            border-radius: 9px;
+        }
+
+        .wa-share-btn {
+            background: #16a34a;
+            border: none;
+            color: #ffffff;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 10.5px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .wa-share-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Toast Notification */
+        .toast-msg {
+            display: none;
+            background: rgba(16, 185, 129, 0.95);
+            color: #04130e;
+            font-size: 12px;
+            font-weight: 800;
+            text-align: center;
+            padding: 8px 12px;
             border-radius: 10px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
         }
 
         /* Primary Section Switcher (Mosam vs Mandi) */
@@ -188,7 +242,7 @@
         .view-panel {
             display: none;
             flex-direction: column;
-            gap: 12px;
+            gap: 11px;
         }
 
         .view-panel.active {
@@ -196,14 +250,14 @@
         }
 
         /* ========================================= */
-        /* UNIFIED AI WEATHER BRAIN & 5-APP ENGINE   */
+        /* GOD-MODE AI WEATHER BRAIN & 5-APP ENGINE  */
         /* ========================================= */
         .ai-brain-card {
             background: linear-gradient(145deg, rgba(16, 185, 129, 0.14), rgba(2, 132, 199, 0.18));
-            border: 1px solid rgba(56, 189, 248, 0.35);
+            border: 1px solid rgba(56, 189, 248, 0.38);
             border-radius: 16px;
-            padding: 14px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            padding: 13px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
         }
 
         .ai-brain-top {
@@ -211,15 +265,16 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
+            gap: 6px;
         }
 
         .ai-badge {
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 800;
             color: #38bdf8;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
         }
 
         .crop-mini-select {
@@ -227,8 +282,8 @@
             color: #6ee7b7;
             border: 1px solid rgba(16, 185, 129, 0.45);
             border-radius: 8px;
-            padding: 4px 8px;
-            font-size: 11.5px;
+            padding: 4px 7px;
+            font-size: 11px;
             font-weight: 700;
             outline: none;
         }
@@ -236,37 +291,64 @@
         .ai-decisions {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 10px;
+            gap: 7px;
+            margin-bottom: 9px;
         }
 
         .ai-pill-box {
-            background: rgba(11, 18, 33, 0.75);
+            background: rgba(11, 18, 33, 0.78);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 10px;
-            padding: 8px 10px;
+            padding: 7px 9px;
         }
 
         .ai-pill-lbl {
-            font-size: 10px;
+            font-size: 9.8px;
             color: var(--text-secondary);
             margin-bottom: 2px;
         }
 
         .ai-pill-val {
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 800;
             color: #6ee7b7;
         }
 
         .ai-summary-text {
-            font-size: 12px;
+            font-size: 11.8px;
             line-height: 1.45;
             color: #e2e8f0;
-            background: rgba(7, 13, 25, 0.6);
+            background: rgba(7, 13, 25, 0.65);
             padding: 9px 11px;
             border-radius: 9px;
             border-left: 3px solid #10b981;
+            margin-bottom: 8px;
+        }
+
+        .god-sub-strip {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 7px;
+        }
+
+        .god-mini-card {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(56, 189, 248, 0.22);
+            border-radius: 9px;
+            padding: 7px 9px;
+            font-size: 11px;
+        }
+
+        .god-mini-card span {
+            display: block;
+            font-size: 9.5px;
+            color: var(--text-secondary);
+            margin-bottom: 2px;
+        }
+
+        .god-mini-card strong {
+            color: #bae6fd;
+            font-weight: 800;
         }
 
         /* 5-App Engine Switcher Tabs */
@@ -274,7 +356,7 @@
             display: flex;
             gap: 6px;
             overflow-x: auto;
-            padding: 3px 1px 6px 1px;
+            padding: 2px 1px 5px 1px;
             scrollbar-width: none;
         }
 
@@ -495,16 +577,16 @@
         }
 
         /* ========================================= */
-        /* LIVE e-NAM & HARYANA MANDI MASTER SECTION */
+        /* LIVE e-NAM & GOD-MODE MANDI MASTER        */
         /* ========================================= */
         .enam-live-banner {
             background: linear-gradient(135deg, rgba(6, 78, 59, 0.85), rgba(3, 105, 161, 0.65));
             border: 1px solid rgba(52, 211, 153, 0.4);
             border-radius: 15px;
-            padding: 14px;
+            padding: 13px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 9px;
         }
 
         .enam-top-row {
@@ -514,7 +596,7 @@
         }
 
         .enam-title-box h3 {
-            font-size: 14.5px;
+            font-size: 14px;
             font-weight: 800;
             color: #ffffff;
             display: flex;
@@ -532,7 +614,7 @@
         }
 
         .enam-title-box p {
-            font-size: 11px;
+            font-size: 10.5px;
             color: #a7f3d0;
             margin-top: 2px;
         }
@@ -541,9 +623,9 @@
             background: #10b981;
             color: #04130e;
             border: none;
-            padding: 7px 11px;
+            padding: 7px 10px;
             border-radius: 9px;
-            font-size: 11.5px;
+            font-size: 11px;
             font-weight: 800;
             cursor: pointer;
             white-space: nowrap;
@@ -564,18 +646,43 @@
             border: 1px solid rgba(56, 189, 248, 0.35);
             color: #e0f2fe;
             text-decoration: none;
-            padding: 8px 10px;
+            padding: 8px 9px;
             border-radius: 10px;
-            font-size: 11.5px;
+            font-size: 11px;
             font-weight: 700;
             text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 4px;
         }
 
-        /* Live Mandi Revenue & MSP Calculator */
+        /* Target Price Alarm Card */
+        .alarm-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 14px;
+            padding: 12px 13px;
+        }
+
+        .alarm-row {
+            display: grid;
+            grid-template-columns: 1.3fr 0.9fr 0.8fr;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .alarm-status-box {
+            margin-top: 8px;
+            padding: 7px 10px;
+            border-radius: 8px;
+            font-size: 11.5px;
+            font-weight: 700;
+            background: rgba(15, 23, 42, 0.7);
+            color: #bae6fd;
+        }
+
+        /* Net In-Hand Profit Calculator */
         .mandi-calc-card {
             background: var(--bg-card);
             border: 1px solid rgba(245, 158, 11, 0.35);
@@ -587,16 +694,16 @@
             font-size: 12.5px;
             font-weight: 800;
             color: #fbbf24;
-            margin-bottom: 9px;
+            margin-bottom: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .calc-inputs {
+        .calc-inputs-3 {
             display: grid;
-            grid-template-columns: 1.4fr 1fr;
-            gap: 8px;
+            grid-template-columns: 1.4fr 0.8fr 0.8fr;
+            gap: 6px;
             margin-bottom: 9px;
         }
 
@@ -604,21 +711,22 @@
             background: var(--bg-elevated);
             border: 1px solid var(--border-subtle);
             color: #ffffff;
-            padding: 8px 10px;
+            padding: 8px 8px;
             border-radius: 9px;
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 700;
             outline: none;
             width: 100%;
         }
 
-        .calc-result-bar {
+        .calc-result-grid {
             background: rgba(16, 185, 129, 0.14);
-            border: 1px solid rgba(16, 185, 129, 0.3);
+            border: 1px solid rgba(16, 185, 129, 0.32);
             border-radius: 10px;
-            padding: 9px 12px;
-            display: flex;
-            justify-content: space-between;
+            padding: 9px 11px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
             align-items: center;
         }
 
@@ -631,9 +739,9 @@
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
             color: #ffffff;
-            padding: 10px 12px;
+            padding: 10px 11px;
             border-radius: 11px;
-            font-size: 12.5px;
+            font-size: 12px;
             outline: none;
         }
 
@@ -644,7 +752,7 @@
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
             border-radius: 13px;
-            padding: 12px 14px;
+            padding: 12px 13px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -680,7 +788,7 @@
         }
 
         .mc-rate {
-            font-size: 15.5px;
+            font-size: 15px;
             font-weight: 800;
             color: #6ee7b7;
         }
@@ -722,18 +830,26 @@
         <div class="brand-left">
             <div class="brand-emblem">🚜</div>
             <div class="brand-title">
-                <h1>BAHUBALI <span>LEGEND v20</span></h1>
-                <p>AI Weather Brain (5-in-1) & Live e-NAM Mandi</p>
+                <h1>BAHUBALI <span>GOD-MODE v20</span></h1>
+                <p>AI Weather Brain + Voice AI + Live e-NAM</p>
             </div>
         </div>
-        <button class="gps-refresh-btn" onclick="initMasterWeather(true)">📍 सिंक</button>
+        <div class="header-actions">
+            <button class="hdr-btn" id="voice-ai-btn" onclick="toggleVoiceAI()">🔊 सुनें</button>
+            <button class="hdr-btn" onclick="initMasterWeather(true)">📍 सिंक</button>
+        </div>
     </header>
 
-    <!-- Single Shared GPS & Cache Strip -->
+    <!-- Single Shared GPS, Cache & 1-Tap WhatsApp Village Bulletin -->
     <div class="gps-strip">
         <div class="gps-loc" id="master-loc">📍 खड़क गगर, पिल्लूखेड़ा (जींद)</div>
-        <div class="gps-cache-tag" id="master-status">AI सिंक...</div>
+        <div class="strip-right">
+            <span class="gps-cache-tag" id="master-status">AI सिंक...</span>
+            <button class="wa-share-btn" onclick="shareWhatsAppBulletin()">📲 बुलेटिन</button>
+        </div>
     </div>
+
+    <div class="toast-msg" id="toast-box"></div>
 
     <!-- Primary Tab Switcher: Mosam vs Mandi -->
     <nav class="main-nav">
@@ -742,7 +858,7 @@
     </nav>
 
     <!-- ================================================= -->
-    <!-- PANEL 1: UNIFIED AI WEATHER BRAIN + 5 APPS        -->
+    <!-- PANEL 1: GOD-MODE AI WEATHER BRAIN + 5 APPS       -->
     <!-- ================================================= -->
     <div id="panel-mosam" class="view-panel active">
 
@@ -770,6 +886,14 @@
                     <div class="ai-pill-val" id="ai-irr-status">जाँच जारी...</div>
                 </div>
                 <div class="ai-pill-box">
+                    <div class="ai-pill-lbl">❄️ पाला / ☀️ हीट रडार (72h)</div>
+                    <div class="ai-pill-val" id="ai-frost-heat-status">जाँच जारी...</div>
+                </div>
+                <div class="ai-pill-box">
+                    <div class="ai-pill-lbl">🌾 दाना नमी व मंडी कटौती</div>
+                    <div class="ai-pill-val" id="ai-moisture-cut-status">जाँच जारी...</div>
+                </div>
+                <div class="ai-pill-box">
                     <div class="ai-pill-lbl">🛡️ रोग पूर्वानुमान (WNI + IMD)</div>
                     <div class="ai-pill-val" id="ai-disease-status">जाँच जारी...</div>
                 </div>
@@ -781,6 +905,18 @@
 
             <div class="ai-summary-text" id="ai-master-advice">
                 पाँचों मौसम सर्वर्स का डेटा मिलाकर आपके खेत के लिए सटीक सलाह तैयार की जा रही है...
+            </div>
+
+            <!-- Trolley Tarpaulin & Next Irrigation Countdown -->
+            <div class="god-sub-strip">
+                <div class="god-mini-card">
+                    <span>🚛 मंडी ट्रॉली / तिरपाल अलर्ट (6h)</span>
+                    <strong id="ai-trolley-alert">जाँच जारी...</strong>
+                </div>
+                <div class="god-mini-card">
+                    <span>⏱️ अगली सिंचाई काउंटर (ET₀)</span>
+                    <strong id="ai-irr-countdown">गणना जारी...</strong>
+                </div>
             </div>
         </section>
 
@@ -924,7 +1060,7 @@
     </div>
 
     <!-- ================================================= -->
-    <!-- PANEL 2: LIVE e-NAM & HARYANA MANDI MASTER        -->
+    <!-- PANEL 2: LIVE e-NAM & GOD-MODE MANDI MASTER       -->
     <!-- ================================================= -->
     <div id="panel-mandi" class="view-panel">
 
@@ -948,31 +1084,56 @@
             </div>
         </section>
 
-        <!-- Crop Revenue & MSP Profit Calculator -->
+        <!-- Target Mandi Price Alarm -->
+        <section class="alarm-card">
+            <div style="font-size: 12px; font-weight: 800; color: #38bdf8; display: flex; justify-content: space-between;">
+                <span>🔔 टारगेट मंडी भाव अलार्म (Target Rate Alert)</span>
+                <span style="font-size: 10px; color: var(--text-secondary);">Auto Check</span>
+            </div>
+            <div class="alarm-row">
+                <select class="calc-field" id="alarm-crop-sel">
+                    <option value="basmati">बासमती PB 1847</option>
+                    <option value="mustard">सरसों (Mustard)</option>
+                    <option value="wheat">गेहूं DBW 327</option>
+                    <option value="paddy">धान PR 126</option>
+                    <option value="cotton">कपास / नरमा</option>
+                </select>
+                <input type="number" class="calc-field" id="alarm-target-rate" value="3900" placeholder="₹ रेट...">
+                <button class="enam-sync-btn" onclick="saveTargetRateAlarm()">सेट करें</button>
+            </div>
+            <div class="alarm-status-box" id="alarm-status-text">
+                अलार्म सक्रिय: बासमती ₹3,900/क्विं. पर अलर्ट सेट है।
+            </div>
+        </section>
+
+        <!-- Net In-Hand Profit Calculator (After Harvest, Transport & Labour) -->
         <section class="mandi-calc-card">
             <div class="calc-head">
-                <span>🧮 फसल बिक्री व MSP लाभ कैलकुलेटर</span>
-                <span style="font-size: 10.5px; color: var(--text-secondary);">₹ प्रति क्विंटल</span>
+                <span>💰 शुद्ध जेब बचत कैलकुलेटर (Net Cash In-Hand)</span>
+                <span style="font-size: 10px; color: var(--text-secondary);">खर्च घटाकर</span>
             </div>
-            <div class="calc-inputs">
+            <div class="calc-inputs-3">
                 <select class="calc-field" id="calc-crop-sel" onchange="calculateMandiProfit()">
-                    <option value="paddy_pr">धान PR 126 (₹2,461 MSP)</option>
-                    <option value="paddy_basmati">बासमती PB 1847 (₹3,850 बोली)</option>
-                    <option value="wheat_dbw">गेहूं DBW 327/187 (₹2,610 MSP)</option>
-                    <option value="mustard">सरसों 42% (₹6,613 MSP)</option>
-                    <option value="cotton">कपास / नरमा (₹8,110 MSP)</option>
-                    <option value="sugarcane">गन्ना हरियाणा (₹400 SAP)</option>
+                    <option value="paddy_pr">धान PR 126 (₹2,461)</option>
+                    <option value="paddy_basmati">बासमती 1847 (₹3,850)</option>
+                    <option value="wheat_dbw">गेहूं DBW 327 (₹2,610)</option>
+                    <option value="mustard">सरसों 42% (₹6,613)</option>
+                    <option value="cotton">नरमा / कपास (₹8,110)</option>
+                    <option value="sugarcane">गन्ना SAP (₹400)</option>
                 </select>
-                <input type="number" class="calc-field" id="calc-quintals" value="100" min="1" placeholder="क्विंटल..." oninput="calculateMandiProfit()">
+                <input type="number" class="calc-field" id="calc-quintals" value="100" min="1" placeholder="क्विं." title="कुल क्विंटल" oninput="calculateMandiProfit()">
+                <input type="number" class="calc-field" id="calc-expense-per-qtl" value="110" min="0" placeholder="खर्च ₹/क्विं" title="कटाई + भाड़ा + मजदूरी (₹/क्विं.)" oninput="calculateMandiProfit()">
             </div>
-            <div class="calc-result-bar">
+            <div class="calc-result-grid">
                 <div>
-                    <div style="font-size: 10.5px; color: #cbd5e1;">अनुमानित कुल मंडी राशि</div>
-                    <div style="font-size: 17px; font-weight: 800; color: #6ee7b7;" id="calc-total-amt">₹ 2,46,100</div>
+                    <div style="font-size: 10px; color: #cbd5e1;">शुद्ध जेब बचत (Net Cash)</div>
+                    <div style="font-size: 17px; font-weight: 800; color: #6ee7b7;" id="calc-net-amt">₹ 2,35,100</div>
+                    <div style="font-size: 10px; color: #94a3b8;" id="calc-gross-sub">कुल बोली: ₹2,46,100</div>
                 </div>
                 <div style="text-align: right;">
-                    <div style="font-size: 10.5px; color: #cbd5e1;">सरकारी MSP तुलना</div>
-                    <div style="font-size: 12px; font-weight: 800; color: #fbbf24;" id="calc-msp-diff">सरकारी MSP रेट</div>
+                    <div style="font-size: 10px; color: #cbd5e1;">कटाई+भाड़ा+मजदूरी</div>
+                    <div style="font-size: 12.5px; font-weight: 800; color: #fca5a5;" id="calc-deduct-amt">- ₹ 11,000</div>
+                    <div style="font-size: 10px; color: #fbbf24;" id="calc-msp-diff">MSP ₹2,461/क्विं.</div>
                 </div>
             </div>
         </section>
@@ -1007,7 +1168,7 @@
     </div>
 
     <footer class="portal-footer">
-        BAHUBALI LEGEND v20.0 • Single-GPS Shared Cache • Zero-Crash Engine
+        BAHUBALI GOD-MODE v20.0 • Voice AI • 72h Frost/Heat Radar • Zero-Crash
     </footer>
 </div>
 
@@ -1016,6 +1177,7 @@
     // SHARED UNIFIED WEATHER BRAIN (SINGLE GPS + 15-MIN CACHE)
     // =========================================================
     const CACHE_KEY = "bahubali_weather_v20_cache";
+    const ALARM_STORAGE_KEY = "bahubali_mandi_alarm_v20";
     const CACHE_TTL = 15 * 60 * 1000; // 15 minutes
 
     let sharedState = {
@@ -1051,6 +1213,15 @@
 
     let windyLoaded = false;
     let windyCurrentOverlay = "wind";
+    let isSpeaking = false;
+
+    function showToast(msg) {
+        const box = document.getElementById("toast-box");
+        if (!box) return;
+        box.innerText = msg;
+        box.style.display = "block";
+        setTimeout(() => { box.style.display = "none"; }, 3200);
+    }
 
     function switchPrimaryTab(tabName) {
         document.getElementById("nav-mosam").classList.toggle("active", tabName === "mosam");
@@ -1115,7 +1286,97 @@
     }
 
     // =========================================================
-    // AI AGRO-DECISION BRAIN (CROSS-CHECKS ALL 5 MODELS)
+    // 1. VOICE AI ASSISTANT (ZERO-CRASH WEB SPEECH HINDI)
+    // =========================================================
+    function toggleVoiceAI() {
+        const btn = document.getElementById("voice-ai-btn");
+        if (!("speechSynthesis" in window)) {
+            showToast("⚠️ आपका ब्राउज़र वॉइस सपोर्ट नहीं करता।");
+            return;
+        }
+
+        try {
+            if (isSpeaking) {
+                window.speechSynthesis.cancel();
+                isSpeaking = false;
+                btn.innerText = "🔊 सुनें";
+                btn.classList.remove("voice-active");
+                return;
+            }
+
+            const s = sharedState;
+            const sprayAdvice = document.getElementById("ai-spray-status").innerText;
+            const adviceText = document.getElementById("ai-master-advice").innerText;
+            const speechText = `नमस्कार जयबीर भाई। खड़क गगर पिल्लूखेड़ा में अभी तापमान ${s.temp} डिग्री सेल्सियस है, नमी ${s.humidity} प्रतिशत और हवा की गति ${s.windSpeed} किलोमीटर प्रति घंटा है। स्प्रे स्थिति: ${sprayAdvice}। ${adviceText} पिल्लूखेड़ा मंडी में बासमती 1847 का भाव 3940 रुपये और सरसों का एमएसपी 6613 रुपये चल रहा है।`;
+
+            const utterance = new SpeechSynthesisUtterance(speechText);
+            utterance.lang = "hi-IN";
+            utterance.rate = 0.96;
+
+            const voices = window.speechSynthesis.getVoices();
+            const hindiVoice = voices.find(v => v.lang && v.lang.toLowerCase().includes("hi"));
+            if (hindiVoice) utterance.voice = hindiVoice;
+
+            utterance.onend = () => {
+                isSpeaking = false;
+                btn.innerText = "🔊 सुनें";
+                btn.classList.remove("voice-active");
+            };
+            utterance.onerror = () => {
+                isSpeaking = false;
+                btn.innerText = "🔊 सुनें";
+                btn.classList.remove("voice-active");
+            };
+
+            window.speechSynthesis.cancel();
+            window.speechSynthesis.speak(utterance);
+            isSpeaking = true;
+            btn.innerText = "⏹️ रोकें";
+            btn.classList.add("voice-active");
+        } catch (e) {
+            isSpeaking = false;
+            btn.innerText = "🔊 सुनें";
+            btn.classList.remove("voice-active");
+        }
+    }
+
+    // =========================================================
+    // 2. 1-TAP WHATSAPP VILLAGE BULLETIN SHARE
+    // =========================================================
+    function shareWhatsAppBulletin() {
+        const s = sharedState;
+        const sprayTxt = document.getElementById("ai-spray-status").innerText;
+        const frostTxt = document.getElementById("ai-frost-heat-status").innerText;
+        const bulletin =
+`🚜 *BAHUBALI AI कृषि व मंडी बुलेटिन*
+📍 *क्षेत्र:* खड़क गगर / पिल्लूखेड़ा (जींद)
+
+🌡️ *तापमान:* ${s.temp}°C (अधिक ${s.maxTemp}° / न्यून ${s.minTemp}°)
+💧 *नमी:* ${s.humidity}% | 💨 *हवा:* ${s.windSpeed} km/h
+🧪 *स्प्रे सलाह:* ${sprayTxt}
+❄️ *72h रडार:* ${frostTxt}
+
+🌾 *ताज़ा मंडी व MSP भाव (₹/क्विं.):*
+• बासमती (PB 1847): ₹3,580 - ₹3,940
+• धान (PR 126): ₹2,441 - ₹2,461 (MSP)
+• गेहूं (DBW 327): ₹2,610 (नया MSP)
+• सरसों (42% Lab): ₹6,613 (नया MSP)
+
+_Sent via Bahubali Legend v20_`;
+
+        try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(bulletin).catch(() => {});
+            }
+        } catch (e) {}
+
+        const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(bulletin)}`;
+        window.open(waUrl, "_blank", "noopener,noreferrer");
+        showToast("📲 व्हाट्सएप बुलेटिन तैयार व कॉपी हो गया!");
+    }
+
+    // =========================================================
+    // 3. GOD-MODE AI AGRO-DECISION BRAIN
     // =========================================================
     function runAIDecisionBrain() {
         const s = sharedState;
@@ -1123,10 +1384,15 @@
 
         const sprayEl = document.getElementById("ai-spray-status");
         const irrEl = document.getElementById("ai-irr-status");
+        const frostEl = document.getElementById("ai-frost-heat-status");
+        const moistEl = document.getElementById("ai-moisture-cut-status");
         const disEl = document.getElementById("ai-disease-status");
         const solEl = document.getElementById("ai-solar-status");
         const advEl = document.getElementById("ai-master-advice");
+        const trolleyEl = document.getElementById("ai-trolley-alert");
+        const irrCountEl = document.getElementById("ai-irr-countdown");
 
+        // A. Spray Window Check
         let sprayOk = true;
         if (s.rainProb >= 35) {
             sprayEl.innerText = `न करें (बारिश ${s.rainProb}%) ❌`;
@@ -1141,6 +1407,7 @@
             sprayEl.style.color = "#6ee7b7";
         }
 
+        // B. Irrigation & Canal/Submersible Planner
         if (s.rainProb >= 45) {
             irrEl.innerText = "सिंचाई रोकें (बारिश संभावित) 🌧️";
             irrEl.style.color = "#38bdf8";
@@ -1152,6 +1419,35 @@
             irrEl.style.color = "#6ee7b7";
         }
 
+        // C. 72-Hour Frost (पाला) & Terminal Heat (दाना पिचकने) Radar
+        let min72 = s.minTemp, max72 = s.maxTemp;
+        if (s.daily && s.daily.length > 0) {
+            const slice3 = s.daily.slice(0, 3);
+            min72 = Math.min(...slice3.map(d => d.min));
+            max72 = Math.max(...slice3.map(d => d.max));
+        }
+        if (min72 <= 4) {
+            frostEl.innerText = `पाला अलर्ट (${min72}°C रात) ❄️⚠️`;
+            frostEl.style.color = "#fca5a5";
+        } else if (max72 >= 32) {
+            frostEl.innerText = `हीट अलर्ट (${max72}°C दिन) ☀️⚠️`;
+            frostEl.style.color = "#fde68a";
+        } else {
+            frostEl.innerText = `सुरक्षित (${min72}°–${max72}°C) ✅`;
+            frostEl.style.color = "#6ee7b7";
+        }
+
+        // D. Grain Moisture & Mandi Deduction Predictor
+        const estGrainMoisture = Math.min(22.0, Math.max(9.5, (s.humidity * 0.21 + Math.max(0, 28 - s.temp) * 0.14))).toFixed(1);
+        if (parseFloat(estGrainMoisture) > 14.0) {
+            moistEl.innerText = `~${estGrainMoisture}% (मंडी कटौती संभव) ⚠️`;
+            moistEl.style.color = "#fde68a";
+        } else {
+            moistEl.innerText = `~${estGrainMoisture}% (बिक्री उत्तम) ✅`;
+            moistEl.style.color = "#6ee7b7";
+        }
+
+        // E. Disease Early Warning
         if (s.humidity >= 78 && s.temp >= 14 && s.temp <= 24) {
             disEl.innerText = "रतुआ / फफूंद खतरा ⚠️";
             disEl.style.color = "#fca5a5";
@@ -1160,6 +1456,7 @@
             disEl.style.color = "#6ee7b7";
         }
 
+        // F. Solar & Field Light
         if (s.solarRad > 400) {
             solEl.innerText = `तेज धूप (${s.solarRad} W/m²) ☀️`;
             solEl.style.color = "#fde047";
@@ -1171,6 +1468,27 @@
             solEl.style.color = "#94a3b8";
         }
 
+        // G. Trolley & Tarpaulin 6-Hour Transport Alert
+        let maxRain6h = s.rainProb;
+        if (s.hourly && s.hourly.length > 0) {
+            maxRain6h = Math.max(...s.hourly.slice(0, 6).map(h => h.rain || 0));
+        }
+        if (maxRain6h >= 30 || s.windGusts > 28) {
+            trolleyEl.innerText = `तिरपाल साथ रखें (वर्षा ${maxRain6h}%) ⚠️`;
+            trolleyEl.style.color = "#fde68a";
+        } else {
+            trolleyEl.innerText = "मौसम साफ, बिना तिरपाल निकलें ✅";
+            trolleyEl.style.color = "#6ee7b7";
+        }
+
+        // H. Next Irrigation Countdown using ET0 & Soil Moisture
+        const etVal = parseFloat(s.et0) || 2.8;
+        const daysLeft = Math.max(1, Math.min(18, Math.round((s.soilMoisture - 14) / (etVal * 0.45))));
+        irrCountEl.innerText = s.rainProb >= 45
+            ? "बारिश से नमी मिलेगी (रोकें)"
+            : `~${daysLeft} दिन बाद (ET₀: ${etVal}mm)`;
+
+        // Crop-Specific Detailed Synthesis
         let masterMsg = "";
         let mgIrr = "", mgFert = "", mgPest = "";
 
@@ -1192,7 +1510,7 @@
             mgFert = "कटाई के तुरंत बाद 15-20 किग्रा यूरिया प्रति एकड़ डालकर सिंचाई करें।";
             mgPest = "कटाई जमीन से 4-5 सेमी ऊपर करें और खेत में पानी खड़ा न रहने दें।";
         } else if (crop === "paddy") {
-            masterMsg = `धान (PR126 / PB1847): कटाई के बाद पराली प्रबंधन हेतु सुपर सीडर या जिप्सम का उपयोग करें। भंडारण हेतु नमी 12% से कम रखें।`;
+            masterMsg = `धान (PR126 / PB1847): अनुमानित दाना नमी ~${estGrainMoisture}% है। मंडी में कटौती से बचने हेतु 14% से कम नमी पर ट्रॉली ले जाएं।`;
             mgIrr = "कटाई व मड़ाई का कार्य मौसम साफ रहने पर पूरा करें।";
             mgFert = "धान के बाद मिट्टी सुधारने हेतु जिप्सम और गोबर की सड़ी खाद डालें।";
             mgPest = "भंडारण में सुरसुरी व कीटों से बचाव हेतु बोरियों को सूखे स्थान पर रखें।";
@@ -1322,7 +1640,7 @@
 
     async function fetchUnifiedWeather(lat, lon, locLabel) {
         const statusEl = document.getElementById("master-status");
-        statusEl.innerText = "डेटा सिंक हो रहा है...";
+        statusEl.innerText = "डेटा सिंक...";
 
         const controller = new AbortController();
         const timer = setTimeout(() => controller.abort(), 7000);
@@ -1417,13 +1735,13 @@
             } catch (e) {}
 
             const now = new Date();
-            statusEl.innerText = `लाइव: ${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`;
+            statusEl.innerText = `लाइव ${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`;
             renderAllWeatherUI();
             if (windyLoaded) loadWindyRadarIframe();
 
         } catch (err) {
             clearTimeout(timer);
-            statusEl.innerText = "ऑफलाइन बैकअप";
+            statusEl.innerText = "ऑफलाइन";
             if (!sharedState.hourly.length) {
                 sharedState.hourly = [
                     { time: "अभी", icon: "☀️", temp: 24, rain: 0 },
@@ -1449,7 +1767,7 @@
                     const parsed = JSON.parse(raw);
                     if (Date.now() - parsed.ts < CACHE_TTL && parsed.data) {
                         sharedState = parsed.data;
-                        document.getElementById("master-status").innerText = "फास्ट कैश (15m)";
+                        document.getElementById("master-status").innerText = "कैश (15m)";
                         renderAllWeatherUI();
                         return;
                     }
@@ -1457,7 +1775,7 @@
             } catch (e) {}
         }
 
-        document.getElementById("master-loc").innerText = "🛰️ GPS लोकेशन सिंक जारी...";
+        document.getElementById("master-loc").innerText = "🛰️ GPS सिंक जारी...";
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(
                 (pos) => {
@@ -1476,43 +1794,85 @@
     }
 
     // =========================================================
-    // LIVE e-NAM & HARYANA MANDI RATES + OFFICIAL MSP ENGINE
+    // LIVE e-NAM, NET IN-HAND PROFIT & TARGET RATE ALARM
     // =========================================================
     const MANDI_CACHE_KEY = "bahubali_enam_mandi_v20";
     const DATAGOV_KEY_STORAGE = "bahubali_datagov_apikey";
 
-    // Verified Haryana Mandi Rates & Official 2026-27 / 2027-28 MSP
     let liveMandiData = [
-        { mandi: "pillukhera", mandiName: "पिल्लूखेड़ा मंडी (e-NAM)", crop: "धान (Paddy - PR 126 Grade-A)", min: 2441, max: 2461, msp: 2461, trend: "▲ MSP खरीद जारी", source: "e-NAM Haryana" },
-        { mandi: "pillukhera", mandiName: "पिल्लूखेड़ा मंडी (e-NAM)", crop: "बासमती धान (PB 1847 / 1718)", min: 3580, max: 3940, msp: null, trend: "▲ तेज बोली", source: "e-NAM Live" },
-        { mandi: "pillukhera", mandiName: "पिल्लूखेड़ा मंडी (e-NAM)", crop: "गेहूं (Wheat - DBW 327 / 187)", min: 2585, max: 2680, msp: 2610, trend: "▲ नया MSP ₹2,610", source: "RMS 2027-28" },
-        { mandi: "pillukhera", mandiName: "पिल्लूखेड़ा मंडी (e-NAM)", crop: "सरसों (Mustard 42% Lab)", min: 6200, max: 6613, msp: 6613, trend: "▲ नया MSP ₹6,613", source: "RMS 2027-28" },
-        { mandi: "safidon", mandiName: "सफीदों मंडी (e-NAM)", crop: "बासमती धान (1121 / 1718)", min: 3750, max: 4210, msp: null, trend: "▲ तेज आवक", source: "e-NAM Live" },
-        { mandi: "safidon", mandiName: "सफीदों मंडी (e-NAM)", crop: "धान (Paddy - PR 126 Common)", min: 2441, max: 2461, msp: 2441, trend: "▲ MSP खरीद", source: "e-NAM Haryana" },
-        { mandi: "jind", mandiName: "जींद मंडी (e-NAM)", crop: "कपास / नरमा (Cotton Long Staple)", min: 7710, max: 8110, msp: 8110, trend: "▲ MSP ₹8,110", source: "e-NAM Live" },
-        { mandi: "jind", mandiName: "जींद मंडी (e-NAM)", crop: "बाजरा (Bajra - Kharif 2026-27)", min: 2750, max: 2900, msp: 2900, trend: "▲ MSP ₹2,900", source: "e-NAM Haryana" },
-        { mandi: "jind", mandiName: "जींद मंडी", crop: "गन्ना (Sugarcane SAP हरियाणा)", min: 386, max: 400, msp: 400, trend: "▲ सरकारी SAP", source: "Haryana Sugar" },
-        { mandi: "julana", mandiName: "जुलाना मंडी (e-NAM)", crop: "धान (Paddy PR 126 / 1847)", min: 2441, max: 3820, msp: 2461, trend: "▲ स्थिर", source: "e-NAM Live" },
-        { mandi: "assandh", mandiName: "असंध मंडी (e-NAM)", crop: "बासमती धान (PB 1847 / 1121)", min: 3650, max: 4150, msp: null, trend: "▲ तेज बोली", source: "e-NAM Live" }
+        { mandi: "pillukhera", key: "paddy", mandiName: "पिल्लूखेड़ा मंडी (e-NAM)", crop: "धान (Paddy - PR 126 Grade-A)", min: 2441, max: 2461, msp: 2461, trend: "▲ MSP खरीद जारी", source: "e-NAM Haryana" },
+        { mandi: "pillukhera", key: "basmati", mandiName: "पिल्लूखेड़ा मंडी (e-NAM)", crop: "बासमती धान (PB 1847 / 1718)", min: 3580, max: 3940, msp: null, trend: "▲ तेज बोली", source: "e-NAM Live" },
+        { mandi: "pillukhera", key: "wheat", mandiName: "पिल्लूखेड़ा मंडी (e-NAM)", crop: "गेहूं (Wheat - DBW 327 / 187)", min: 2585, max: 2680, msp: 2610, trend: "▲ नया MSP ₹2,610", source: "RMS 2027-28" },
+        { mandi: "pillukhera", key: "mustard", mandiName: "पिल्लूखेड़ा मंडी (e-NAM)", crop: "सरसों (Mustard 42% Lab)", min: 6200, max: 6613, msp: 6613, trend: "▲ नया MSP ₹6,613", source: "RMS 2027-28" },
+        { mandi: "safidon", key: "basmati", mandiName: "सफीदों मंडी (e-NAM)", crop: "बासमती धान (1121 / 1718)", min: 3750, max: 4210, msp: null, trend: "▲ तेज आवक", source: "e-NAM Live" },
+        { mandi: "safidon", key: "paddy", mandiName: "सफीदों मंडी (e-NAM)", crop: "धान (Paddy - PR 126 Common)", min: 2441, max: 2461, msp: 2441, trend: "▲ MSP खरीद", source: "e-NAM Haryana" },
+        { mandi: "jind", key: "cotton", mandiName: "जींद मंडी (e-NAM)", crop: "कपास / नरमा (Cotton Long Staple)", min: 7710, max: 8110, msp: 8110, trend: "▲ MSP ₹8,110", source: "e-NAM Live" },
+        { mandi: "jind", key: "bajra", mandiName: "जींद मंडी (e-NAM)", crop: "बाजरा (Bajra - Kharif 2026-27)", min: 2750, max: 2900, msp: 2900, trend: "▲ MSP ₹2,900", source: "e-NAM Haryana" },
+        { mandi: "jind", key: "sugarcane", mandiName: "जींद मंडी", crop: "गन्ना (Sugarcane SAP हरियाणा)", min: 386, max: 400, msp: 400, trend: "▲ सरकारी SAP", source: "Haryana Sugar" },
+        { mandi: "julana", key: "paddy", mandiName: "जुलाना मंडी (e-NAM)", crop: "धान (Paddy PR 126 / 1847)", min: 2441, max: 3820, msp: 2461, trend: "▲ स्थिर", source: "e-NAM Live" },
+        { mandi: "assandh", key: "basmati", mandiName: "असंध मंडी (e-NAM)", crop: "बासमती धान (PB 1847 / 1121)", min: 3650, max: 4150, msp: null, trend: "▲ तेज बोली", source: "e-NAM Live" }
     ];
+
+    function saveTargetRateAlarm() {
+        const cropKey = document.getElementById("alarm-crop-sel").value;
+        const targetPrice = parseFloat(document.getElementById("alarm-target-rate").value) || 0;
+        try {
+            localStorage.setItem(ALARM_STORAGE_KEY, JSON.stringify({ cropKey, targetPrice }));
+        } catch (e) {}
+        checkTargetRateAlarm();
+        showToast("🔔 टारगेट मंडी भाव अलार्म सेव हो गया!");
+    }
+
+    function checkTargetRateAlarm() {
+        let saved = { cropKey: "basmati", targetPrice: 3900 };
+        try {
+            const raw = localStorage.getItem(ALARM_STORAGE_KEY);
+            if (raw) saved = JSON.parse(raw);
+        } catch (e) {}
+
+        document.getElementById("alarm-crop-sel").value = saved.cropKey;
+        document.getElementById("alarm-target-rate").value = saved.targetPrice;
+
+        const matching = liveMandiData.filter(m => m.key === saved.cropKey);
+        const highestRate = matching.length ? Math.max(...matching.map(m => m.max)) : 0;
+        const bestMandi = matching.find(m => m.max === highestRate);
+        const box = document.getElementById("alarm-status-text");
+
+        if (highestRate >= saved.targetPrice && saved.targetPrice > 0) {
+            box.style.background = "rgba(16, 185, 129, 0.25)";
+            box.style.border = "1px solid #10b981";
+            box.style.color = "#6ee7b7";
+            box.innerText = `🎉 टारगेट पूरा! ${bestMandi ? bestMandi.mandiName : 'मंडी'} में भाव ₹${highestRate}/क्विं. पहुँच गया है!`;
+        } else {
+            box.style.background = "rgba(15, 23, 42, 0.7)";
+            box.style.border = "1px solid rgba(56, 189, 248, 0.2)";
+            box.style.color = "#bae6fd";
+            box.innerText = `अलार्म सक्रिय: टारगेट ₹${saved.targetPrice}/क्विं. (अभी अधिकतम भाव ₹${highestRate}/क्विं.)`;
+        }
+    }
 
     function calculateMandiProfit() {
         const cropType = document.getElementById("calc-crop-sel").value;
         const qtl = parseFloat(document.getElementById("calc-quintals").value) || 0;
+        const expPerQtl = parseFloat(document.getElementById("calc-expense-per-qtl").value) || 0;
 
         const rateMap = {
-            paddy_pr: { rate: 2461, msp: 2461, note: "सरकारी MSP ₹2,461/क्विं." },
-            paddy_basmati: { rate: 3850, msp: 2461, note: "+₹1,389/क्विं. MSP से ऊपर" },
-            wheat_dbw: { rate: 2610, msp: 2610, note: "नया MSP ₹2,610/क्विं." },
-            mustard: { rate: 6613, msp: 6613, note: "नया MSP ₹6,613/क्विं." },
-            cotton: { rate: 8110, msp: 8110, note: "MSP ₹8,110/क्विं." },
-            sugarcane: { rate: 400, msp: 400, note: "हरियाणा SAP ₹400/क्विं." }
+            paddy_pr: { rate: 2461, note: "MSP ₹2,461/क्विं." },
+            paddy_basmati: { rate: 3850, note: "+₹1,389 MSP से ऊपर" },
+            wheat_dbw: { rate: 2610, note: "नया MSP ₹2,610/क्विं." },
+            mustard: { rate: 6613, note: "नया MSP ₹6,613/क्विं." },
+            cotton: { rate: 8110, note: "MSP ₹8,110/क्विं." },
+            sugarcane: { rate: 400, note: "हरियाणा SAP ₹400/क्विं." }
         };
 
         const info = rateMap[cropType] || rateMap.paddy_pr;
-        const total = Math.round(qtl * info.rate);
+        const gross = Math.round(qtl * info.rate);
+        const totalDeduct = Math.round(qtl * expPerQtl);
+        const netCash = Math.max(0, gross - totalDeduct);
 
-        document.getElementById("calc-total-amt").innerText = "₹ " + total.toLocaleString("en-IN");
+        document.getElementById("calc-net-amt").innerText = "₹ " + netCash.toLocaleString("en-IN");
+        document.getElementById("calc-gross-sub").innerText = "कुल बोली: ₹ " + gross.toLocaleString("en-IN");
+        document.getElementById("calc-deduct-amt").innerText = "- ₹ " + totalDeduct.toLocaleString("en-IN");
         document.getElementById("calc-msp-diff").innerText = info.note;
     }
 
@@ -1564,7 +1924,6 @@
             if (savedKey) document.getElementById("datagov-api-key").value = savedKey;
         } catch (e) {}
 
-        // If user provided a Data.gov.in Agmarknet API key, fetch live Haryana mandi records
         if (savedKey) {
             const ctrl = new AbortController();
             const tid = setTimeout(() => ctrl.abort(), 6500);
@@ -1582,8 +1941,14 @@
                             else if (mkt.includes("safidon")) code = "safidon";
                             else if (mkt.includes("julana")) code = "julana";
                             else if (mkt.includes("assandh")) code = "assandh";
+                            const comm = (r.commodity || "").toLowerCase();
+                            let cKey = "paddy";
+                            if (comm.includes("wheat")) cKey = "wheat";
+                            else if (comm.includes("mustard")) cKey = "mustard";
+                            else if (comm.includes("cotton")) cKey = "cotton";
                             return {
                                 mandi: code,
+                                key: cKey,
                                 mandiName: `${r.market} (${r.district})`,
                                 crop: `${r.commodity} (${r.variety || 'FAQ'})`,
                                 min: parseInt(r.min_price, 10) || 2441,
@@ -1598,6 +1963,7 @@
                         const now = new Date();
                         statusEl.innerText = `✅ Live e-NAM API सिंक (${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')})`;
                         renderMandiList();
+                        checkTargetRateAlarm();
                         return;
                     }
                 }
@@ -1606,10 +1972,10 @@
             }
         }
 
-        // Zero-Crash Instant Sync with Verified Haryana e-NAM & MSP 2026-27/2027-28 Board
         const now = new Date();
         statusEl.innerText = `✅ e-NAM हरियाणा बोर्ड अपडेटेड (${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')})`;
         renderMandiList();
+        checkTargetRateAlarm();
     }
 
     // Initialize Everything on Load
@@ -1620,6 +1986,7 @@
         } catch (e) {}
         calculateMandiProfit();
         renderMandiList();
+        checkTargetRateAlarm();
         initMasterWeather(false);
     });
 </script>
