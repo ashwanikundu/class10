@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#070b14">
-<title>Class 10 Master Portal • Module 12 (Interactive Quick Revision & Flashcards Hub)</title>
+<title>Class 10 Master Portal • Module 13 (Master Exam Dashboard & Final Review Hub)</title>
 <style>
   :root {
     --primary: #4f46e5;
@@ -74,19 +74,15 @@
     background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 16px; padding: 20px;
     margin-bottom: 16px; box-shadow: var(--shadow); position: relative; overflow: hidden;
   }
-  .card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: linear-gradient(180deg, #ec4899, #3b82f6); }
+  .card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: linear-gradient(180deg, #10b981, #f59e0b); }
   
   .btn {
-    background: linear-gradient(135deg, #ec4899, #be185d); color: #fff; border: none;
+    background: linear-gradient(135deg, #10b981, #047857); color: #fff; border: none;
     padding: 10px 18px; border-radius: 10px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem;
   }
-  
-  .flashcard {
-    background: var(--sub-bg); border: 2px dashed var(--primary); padding: 30px 20px; border-radius: 14px;
-    text-align: center; cursor: pointer; margin-top: 12px; min-height: 160px; display: flex; flex-direction: column; justify-content: center; align-items: center;
-    transition: all 0.2s;
-  }
-  .flashcard:hover { border-color: #fbbf24; background: rgba(79,70,229,0.08); }
+
+  .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 14px; }
+  .dash-card { background: var(--sub-bg); border: 1px solid var(--border); padding: 16px; border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between; }
 
   footer { text-align: center; padding: 20px; color: var(--muted); font-size: 0.78rem; }
 </style>
@@ -98,7 +94,7 @@
     <div class="brand-row">
       <div>
         <h1 class="brand-title">Class 10 Master Portal (CBSE & HBSE)</h1>
-        <p class="brand-sub">Module 12: Interactive Quick Revision & Flashcards Hub</p>
+        <p class="brand-sub">Module 13: Master Exam Dashboard & Final Review Hub</p>
       </div>
       <div class="top-controls">
         <div class="medium-switch">
@@ -117,7 +113,7 @@
 </div>
 
 <footer>
-  Class 10 Master Portal • Module 12 (Flashcards Hub) • Zero Data Loss Engine
+  Class 10 Master Portal • Module 13 (Master Dashboard) • Zero Data Loss Engine
 </footer>
 
 <script>
@@ -128,37 +124,8 @@ const SafeStore = {
 
 let state = {
   medium: SafeStore.get('mp_med', 'en'),
-  isDark: SafeStore.get('mp_dark', '1') === '1',
-  cardIndex: 0,
-  showAnswer: false
+  isDark: SafeStore.get('mp_dark', '1') === '1'
 };
-
-const FLASHCARDS = [
-  {
-    termEn: "Fundamental Theorem of Arithmetic",
-    termHi: "अंकगणित की आधारभूत प्रमेय",
-    defEn: "Every composite number can be expressed as a product of primes, and this factorization is unique.",
-    defHi: "प्रत्येक भाज्य संख्या को अभाज्य संख्याओं के गुणनफल के रूप में व्यक्त किया जा सकता है और यह गुणनखंड अद्वितीय होता है।"
-  },
-  {
-    termEn: "Ohm's Law",
-    termHi: "ओह्म का नियम",
-    defEn: "At constant temperature, current flowing through a conductor is directly proportional to potential difference across its ends (V = IR).",
-    defHi: "नियत ताप पर चालक में बहने वाली धारा उसके सिरों के विभवांतर के समानुपाती होती है (V = IR)।"
-  },
-  {
-    termEn: "Thales Theorem (BPT)",
-    termHi: "थेल्स प्रमेय (आधारभूत आनुपातिकता प्रमेय)",
-    defEn: "If a line is drawn parallel to one side of a triangle to intersect other two sides, it divides them in the same ratio.",
-    defHi: "यदि किसी त्रिभुज की एक भुजा के समांतर रेखा खींची जाए, तो वह अन्य दो भुजाओं को समान अनुपात में विभाजित करती है।"
-  },
-  {
-    termEn: "Refractive Index",
-    termHi: "अपवर्तनांक",
-    defEn: "The ratio of speed of light in vacuum to speed of light in the given medium (n = c/v).",
-    defHi: "निर्वात में प्रकाश की चाल और माध्यम में प्रकाश की चाल का अनुपात (n = c/v)।"
-  }
-];
 
 function applyTheme() {
   document.body.classList.toggle('light', !state.isDark);
@@ -179,50 +146,47 @@ function setMedium(m) {
 
 function renderBreadcrumb() {
   const bc = document.getElementById('breadcrumb');
-  bc.innerHTML = `<span>🏠 All Utilities • Module 12 (Interactive Flashcards Hub)</span>`;
+  bc.innerHTML = `<span>🏠 All Utilities • Module 13 (Master Exam Dashboard)</span>`;
 }
 
 function render() {
   renderBreadcrumb();
   const app = document.getElementById('app');
 
-  const card = FLASHCARDS[state.cardIndex];
-
   app.innerHTML = `
     <div class="card">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-        <span style="font-size:0.78rem; font-weight:700; color:var(--muted);">Flashcard ${state.cardIndex + 1} of ${FLASHCARDS.length}</span>
-        <span style="font-size:0.78rem; font-weight:700; color:#fbbf24;">💡 Tap card to flip</span>
-      </div>
-      
-      <div class="flashcard" onclick="state.showAnswer=!state.showAnswer; render();">
-        ${!state.showAnswer ? `
-          <div style="font-size:0.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">Concept / Term</div>
-          <div style="font-size:1.2rem; font-weight:900; color:var(--text);">${state.medium === 'hi' ? card.termHi : card.termEn}</div>
-        ` : `
-          <div style="font-size:0.75rem; color:#34d399; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">Definition / Statement</div>
-          <div style="font-size:1.05rem; font-weight:700; color:#34d399; line-height:1.5;">${state.medium === 'hi' ? card.defHi : card.defEn}</div>
-        `}
-      </div>
+      <h2 style="margin:0 0 8px; font-size:1.2rem; color:#34d399;">🌟 Class 10 Master Exam Dashboard (Ultimate Hub)</h2>
+      <p style="margin:0 0 14px; font-size:0.88rem; color:var(--muted);">
+        कक्षा 10 के सभी मॉड्यूल्स, चैप्टर्स, एआई टूल्स, क्विज़ और परीक्षा रणनीतियों का केंद्रीय नियंत्रण कक्ष (Master Control Hub)।
+      </p>
 
-      <div style="display:flex; justify-content:space-between; margin-top:16px;">
-        <button class="btn" onclick="prevCard()">← Previous</button>
-        <button class="btn" onclick="nextCard()">Next →</button>
+      <div class="dashboard-grid">
+        <div class="dash-card">
+          <div>
+            <h3 style="margin:0 0 6px; font-size:1.02rem; color:#fbbf24;">📚 Academic Core</h3>
+            <p style="font-size:0.82rem; color:var(--muted); margin:0;">गणित (14 चैप्टर्स) और विज्ञान (13 चैप्टर्स) के संपूर्ण हल और Guess Papers।</p>
+          </div>
+          <div style="margin-top:12px; font-size:0.8rem; font-weight:700; color:#34d399;">Status: Fully Synced (27 Chapters)</div>
+        </div>
+
+        <div class="dash-card">
+          <div>
+            <h3 style="margin:0 0 6px; font-size:1.02rem; color:#38bdf8;">🤖 AI Tools & Utilities</h3>
+            <p style="font-size:0.82rem; color:var(--muted); margin:0;">कैमरा/गैलरी स्कैनर, वॉइस असिस्टेंट, पीडीएफ जनरेटर और फॉर्मूला बैंक।</p>
+          </div>
+          <div style="margin-top:12px; font-size:0.8rem; font-weight:700; color:#34d399;">Status: Active & Online</div>
+        </div>
+
+        <div class="dash-card">
+          <div>
+            <h3 style="margin:0 0 6px; font-size:1.02rem; color:#ec4899;">🎯 Assessment & Revision</h3>
+            <p style="font-size:0.82rem; color:var(--muted); margin:0;">इंटरैक्टिव क्विज़, फ्लैशकार्ड्स, प्रोग्रेस ट्रैकर और बोर्ड परीक्षा रणनीति।</p>
+          </div>
+          <div style="margin-top:12px; font-size:0.8rem; font-weight:700; color:#34d399;">Status: Ready for Exam Topper Prep</div>
+        </div>
       </div>
     </div>
   `;
-}
-
-function nextCard() {
-  state.cardIndex = (state.cardIndex + 1) % FLASHCARDS.length;
-  state.showAnswer = false;
-  render();
-}
-
-function prevCard() {
-  state.cardIndex = (state.cardIndex - 1 + FLASHCARDS.length) % FLASHCARDS.length;
-  state.showAnswer = false;
-  render();
 }
 
 applyTheme();
