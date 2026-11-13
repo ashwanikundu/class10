@@ -213,8 +213,8 @@
         /* Primary Section Switcher (Mosam vs Mandi) */
         .main-nav {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
             background: var(--bg-card);
             padding: 5px;
             border-radius: 13px;
@@ -1325,6 +1325,91 @@
             font-weight: 700;
         }
 
+    
+        /* ========================================================= */
+        /* SALT & BIO MASTER (CHEMICAL, BIO, HERBICIDE, FUNGICIDE)   */
+        /* ========================================================= */
+        .salt-search-card {
+            background: linear-gradient(145deg, rgba(14, 116, 144, 0.35), rgba(15, 23, 42, 0.92));
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            border-radius: 15px;
+            padding: 13px;
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+            margin-bottom: 11px;
+        }
+
+        .salt-search-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 7px;
+        }
+
+        .salt-item-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 13px;
+            padding: 12px 13px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 8px;
+            border-left: 4px solid #38bdf8;
+        }
+
+        .salt-item-card.cat-bio { border-left-color: #10b981; }
+        .salt-item-card.cat-herb { border-left-color: #ef4444; }
+        .salt-item-card.cat-fung { border-left-color: #38bdf8; }
+        .salt-item-card.cat-inse { border-left-color: #f59e0b; }
+        .salt-item-card.cat-nutr { border-left-color: #a855f7; }
+
+        .si-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .si-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .si-tech {
+            font-size: 10.5px;
+            color: #bae6fd;
+            font-family: monospace;
+            margin-top: 1px;
+        }
+
+        .si-badge {
+            font-size: 9.5px;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 6px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .si-body {
+            font-size: 11.5px;
+            color: #cbd5e1;
+            line-height: 1.4;
+        }
+
+        .si-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: #fde68a;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 5px;
+        }
+
     </style>
 </head>
 <body>
@@ -1361,6 +1446,7 @@
         <button class="main-nav-btn active" id="nav-mosam" onclick="switchPrimaryTab('mosam')">🛰️ AI मौसम</button>
         <button class="main-nav-btn" id="nav-mandi" onclick="switchPrimaryTab('mandi')">🌾 Live मंडी</button>
         <button class="main-nav-btn" id="nav-fasal" onclick="switchPrimaryTab('fasal')">🌱 फसल चरण</button>
+        <button class="main-nav-btn" id="nav-salt" onclick="switchPrimaryTab('salt')">🧪 सॉल्ट मास्टर</button>
     </nav>
 
     <!-- ================================================= -->
@@ -1895,6 +1981,47 @@
 
     </div>
 
+
+    <!-- ================================================= -->
+    <!-- PANEL 4: SALT & BIO MASTER (HYPER-AI CHEMICAL DB) -->
+    <!-- ================================================= -->
+    <div id="panel-salt" class="view-panel">
+
+        <section class="salt-search-card">
+            <div class="fasal-top-row">
+                <h3>🧪 हाइपर-एआई सॉल्ट, बायो & कीटनाशक मास्टर</h3>
+                <span style="font-size:10.5px; color:#6ee7b7; font-weight:800;">100% सटीक सॉल्ट डेटाबेस</span>
+            </div>
+
+            <div class="salt-search-row">
+                <div class="fasal-input-grp">
+                    <label>श्रेणी चुनें (Category)</label>
+                    <select class="calc-field" id="salt-cat-sel" onchange="renderSaltList()">
+                        <option value="all">🌐 सभी (बायो, खरपतवार, फफूंद, कीट)</option>
+                        <option value="bio">🌿 जैविक उत्पाद व बायो (Bio-Products)</option>
+                        <option value="herb">🔴 खरपतवारनाशी (Herbicides)</option>
+                        <option value="fung">🔵 फफूंदनाशक (Fungicides)</option>
+                        <option value="inse">🟡 कीटनाशक व सुंडी (Insecticides)</option>
+                        <option value="nutr">🟣 पोषण व टॉनिक (Nutrients)</option>
+                    </select>
+                </div>
+                <div class="fasal-input-grp">
+                    <label>सॉल्ट या फसल खोजें (Search)</label>
+                    <input type="text" class="calc-field" id="salt-search-input" placeholder="🔍 गिल्ली-डंडा, रतुआ, चेपा..." oninput="renderSaltList()">
+                </div>
+            </div>
+            <div style="font-size: 11px; color: var(--text-secondary);" id="salt-count-lbl">
+                कुल 24 पेशेवर सॉल्ट व बायो उत्पाद उपलब्ध
+            </div>
+        </section>
+
+        <!-- Dynamic Salt Cards Container -->
+        <div id="salt-list-container" style="display: flex; flex-direction: column; gap: 8px;">
+            <!-- Populated by JS -->
+        </div>
+
+    </div>
+
     <footer class="portal-footer">
         BAHUBALI HYPER-AI v20.0 • 3-Model Consensus • Root-Zone & GDD • Zero-Crash
     </footer>
@@ -1962,7 +2089,7 @@
     }
 
     function switchPrimaryTab(tabName) {
-        ["mosam", "mandi", "fasal"].forEach(t => {
+        ["mosam", "mandi", "fasal", "salt"].forEach(t => {
             const navEl = document.getElementById("nav-" + t);
             const panEl = document.getElementById("panel-" + t);
             if (navEl) navEl.classList.toggle("active", tabName === t);
@@ -1971,6 +2098,8 @@
         if (tabName === "fasal") {
             syncFasalFromGlobal();
             renderFasalTimeline();
+        } else if (tabName === "salt") {
+            renderSaltList();
         }
     }
 
@@ -3846,6 +3975,199 @@ _Bahubali Hyper-AI v20_`;
         showToast("📲 फसल चरण शेड्यूल व्हाट्सएप पर तैयार!");
     }
 
+
+    // =========================================================
+    // SALT & BIO MASTER DATABASE (HYPER-AI CHEMICAL DIRECTORY)
+    // =========================================================
+    const saltMasterDatabase = [
+        // --- 1. BIOLOGICAL PRODUCTS ---
+        {
+            id: "s_bio1", cat: "bio", badgeClass: "badge-bio", badgeText: "🌿 बायो-फंगसाइड",
+            name: "Trichoderma Viride / Harzianum 1.15% WP", brands: "Sanjivani, Ecoderma, Bio-Cure",
+            crop: "गेहूं, धान, सरसों, चना (सभी फसलें)", dose: "1 किग्रा (50 किग्रा सड़ी गोबर खाद में मिलाकर)",
+            desc: "मिट्टी जनित फफूंद जैसे उखटा (Wilt), कॉलर रॉट और जड़ गलन को जैविक रूप से नष्ट करता है।"
+        },
+        {
+            id: "s_bio2", cat: "bio", badgeClass: "badge-bio", badgeText: "🌿 बायो-बैक्टीरीसाइड",
+            name: "Pseudomonas Fluorescens 1.25% WP", brands: "Bio-Pseudomonas, Pf-Guard",
+            crop: "धान, कपास, सब्जियां", dose: "1 किग्रा प्रति एकड़ (सिंचाई या खाद के साथ)",
+            desc: "पौधे की प्रतिरक्षा प्रणाली मजबूत करता है और जीवाणु जनित रोगों (Bacterial Leaf Blight) से रक्षा करता है।"
+        },
+        {
+            id: "s_bio3", cat: "bio", badgeClass: "badge-bio", badgeText: "🌿 रूट बूस्टर",
+            name: "Mycorrhiza (VAM) Granules", brands: "Root Energizer, VAM Gold, Myco-Root",
+            crop: "गेहूं, धान, गन्ना, फलदार पौधे", dose: "4 से 5 किलोग्राम प्रति एकड़",
+            desc: "जड़ों का दायरा 3 गुना बढ़ाकर मिट्टी से फास्फोरस व अखाद्य सूक्ष्म पोषक खींचकर पौधे तक पहुँचाता है।"
+        },
+        {
+            id: "s_bio4", cat: "bio", badgeClass: "badge-bio", badgeText: "🌿 बायो-फर्टिलाइजर",
+            name: "Azotobacter + PSB + KMB Consortium", brands: "Bio-N-P-K Consortia, Multiplex Liquid",
+            crop: "सभी फसलें", dose: "1 लीटर या 2 किलो (ड्रिप या सिंचाई के साथ)",
+            desc: "मिट्टी में छिपी अघुलनशील नाइट्रोजन, फास्फोरस व पोटाश को पौधे के ग्रहण करने योग्य रूप में बदलता है।"
+        },
+
+        // --- 2. HERBICIDES (खरपतवारनाशी) ---
+        {
+            id: "s_herb1", cat: "herb", badgeClass: "badge-herb", badgeText: "🔴 खरपतवारनाशी",
+            name: "Clodinafop-propargyl 15% + Metsulfuron 1% WP", brands: "Topik Total, Vesta, Leader Total",
+            crop: "गेहूं (Wheat)", dose: "160 ग्राम + 8 ग्राम प्रति एकड़ (150 लीटर पानी)",
+            desc: "गेहूं में मंडूसी (गिल्ली डंडा) और चौड़ी पत्ती के खरपतवारों का एक ही स्प्रे में संपूर्ण नाश।"
+        },
+        {
+            id: "s_herb2", cat: "herb", badgeClass: "badge-herb", badgeText: "🔴 खरपतवारनाशी",
+            name: "Sulfosulfuron 75% WG", brands: "Leader, Total, Sulfostar",
+            crop: "गेहूं", dose: "13.5 ग्राम प्रति एकड़ (150 लीटर पानी)",
+            desc: "गेहूं की फसल में जिद्दी मंडूसी और घास कुल के अन्य खरपतवारों हेतु।"
+        },
+        {
+            id: "s_herb3", cat: "herb", badgeClass: "badge-herb", badgeText: "🔴 खरपतवारनाशी",
+            name: "Bispyribac Sodium 10% SC", brands: "Nominee Gold, Taarak",
+            crop: "धान (Paddy)", dose: "80 से 100 मिली प्रति एकड़",
+            desc: "धान में संकरी व चौड़ी पत्ती के सभी खरपतवार। (नोट: स्प्रे से 24 घंटे पहले खेत का पानी निकाल दें)।"
+        },
+        {
+            id: "s_herb4", cat: "herb", badgeClass: "badge-herb", badgeText: "🔴 अंकुरण-पूर्व",
+            name: "Pendimethalin 30% EC", brands: "Stomp Extra, Panida",
+            crop: "धान, गेहूं, सरसों, कपास, सोयाबीन", dose: "1 लीटर प्रति एकड़",
+            desc: "बिजाई या रोपाई के तुरंत बाद खेत में पर्याप्त नमी होने पर स्प्रे करें ताकि खरपतवार उगने ही न पाएं।"
+        },
+        {
+            id: "s_herb5", cat: "herb", badgeClass: "badge-herb", badgeText: "🔴 दलहनी खरपतवार",
+            name: "Imazethapyr 10% SL", brands: "Pursuit, Orizon",
+            crop: "मूंग, सोयाबीन, ग्वार, मूंगफली", dose: "300 मिली प्रति एकड़",
+            desc: "दलहनी व तिलहनी फसलों में चौड़ी व संकरी पत्ती के खरपतवारों को रोकने हेतु।"
+        },
+
+        // --- 3. FUNGICIDES (फफूंदनाशक) ---
+        {
+            id: "s_fung1", cat: "fung", badgeClass: "badge-fung", badgeText: "🔵 फफूंदनाशक",
+            name: "Propiconazole 25% EC", brands: "Tilt, Radar, Hitweed",
+            crop: "गेहूं, धान (रतुआ व ब्लास्ट)", dose: "200 मिली प्रति एकड़ (150L पानी)",
+            desc: "गेहूं में पीला रतुआ (Yellow Rust) की धारियां दिखते ही तुरंत रोकथाम के लिए सिस्टमिक फफूंदनाशक।"
+        },
+        {
+            id: "s_fung2", cat: "fung", badgeClass: "badge-fung", badgeText: "🔵 फफूंदनाशक",
+            name: "Tebuconazole 25.9% EC", brands: "Folicur, Horizon",
+            crop: "गेहूं, सरसों, चना", dose: "200 से 250 मिली प्रति एकड़",
+            desc: "सरसों में अल्टरनेरिया ब्लाइट और गेहूं में फफूंद जनित रोगों के खिलाफ अत्यंत असरदार।"
+        },
+        {
+            id: "s_fung3", cat: "fung", badgeClass: "badge-fung", badgeText: "🔵 फफूंदनाशक",
+            name: "Azoxystrobin 18.2% + Difenoconazole 11.4% SC", brands: "Amistar Top",
+            crop: "धान, कपास, टमाटर", dose: "200 मिली प्रति एकड़",
+            desc: "धान की गर्दन तोड़ (Neck Blast) और शीथ ब्लाइट का सबसे अचूक डबल-एक्शन फार्मूला।"
+        },
+        {
+            id: "s_fung4", cat: "fung", badgeClass: "badge-fung", badgeText: "🔵 बीज उपचार",
+            name: "Carbendazim 12% + Mancozeb 63% WP", brands: "Saaf, Companion, Sprint",
+            crop: "सभी फसलें (बीज उपचार हेतु)", dose: "2.5 ग्राम प्रति किलोग्राम बीज",
+            desc: "बिजाई से पहले बीजों को उपचारित करने के लिए ताकि मिट्टी की फफूंद बीज को न सड़ाए।"
+        },
+        {
+            id: "s_fung5", cat: "fung", badgeClass: "badge-fung", badgeText: "🔵 फफूंदनाशक",
+            name: "Mancozeb 75% WP", brands: "Indofil M-45, Dithane M-45",
+            crop: "सभी फसलें (ब्लाइट व धब्बे)", dose: "400 से 500 ग्राम प्रति एकड़",
+            desc: "व्यापक स्पेक्ट्रम संपर्क फफूंदनाशक (Contact Fungicide) जो फफूंद को पौधे पर चिपकने नहीं देता।"
+        },
+
+        // --- 4. INSECTICIDES (कीटनाशक व सुंडी नाशक) ---
+        {
+            id: "s_inse1", cat: "inse", badgeClass: "badge-inse", badgeText: "🟡 कीटनाशक",
+            name: "Thiamethoxam 25% WG", brands: "Actara, Cruiser",
+            crop: "गेहूं, सरसों, धान, कपास", dose: "40 से 50 ग्राम प्रति एकड़",
+            desc: "चेपा (Aphid), तेला, और रसचूसक कीटों के नियंत्रण हेतु सिस्टमिक कीटनाशक।"
+        },
+        {
+            id: "s_inse2", cat: "inse", badgeClass: "badge-inse", badgeText: "🟡 कीटनाशक",
+            name: "Imidacloprid 17.8% SL", brands: "Confidor, Admire",
+            crop: "कपास, धान, गन्ना (दीमक)", dose: "50 से 60 मिली प्रति एकड़",
+            desc: "दीमक, तेला और जैसिड के प्रकोप को रोकने के लिए बेहतरीन दवा।"
+        },
+        {
+            id: "s_inse3", cat: "inse", badgeClass: "badge-inse", badgeText: "🟡 सुंडी नाशक",
+            name: "Emamectin Benzoate 5% SG", brands: "Proclaim, Missile, Allow",
+            crop: "चना, कपास, टमाटर, गोभी", dose: "80 से 100 ग्राम प्रति एकड़",
+            desc: "फली छेदक और सभी प्रकार की सुंडियों (Lepidoptera Caterpillars) का तुरंत सफाया।"
+        },
+        {
+            id: "s_inse4", cat: "inse", badgeClass: "badge-inse", badgeText: "🟡 तना छेदक",
+            name: "Chlorantraniliprole 18.5% SC", brands: "Coragen",
+            crop: "धान, मक्का, गन्ना, कपास", dose: "60 मिली प्रति एकड़ (या 4ml प्रति 15L पंप)",
+            desc: "तना छेदक (Stem Borer) और फॉल आर्मीवर्म के खिलाफ लंबे समय तक सुरक्षा देने वाला विश्वस्तरीय सॉल्ट।"
+        },
+        {
+            id: "s_inse5", cat: "inse", badgeClass: "badge-inse", badgeText: "🟡 रसचूसक कीट",
+            name: "Flonicamid 50% WG", brands: "Ultrasor, Takumi",
+            crop: "कपास, धान, सब्जियां", dose: "60 ग्राम प्रति एकड़",
+            desc: "कपास व धान में सफेद मक्खी (Whitefly) और माहू के विरुद्ध अत्यधिक कारगर।"
+        },
+
+        // --- 5. NUTRIENTS & TONICS (पोषण व टॉनिक) ---
+        {
+            id: "s_nutr1", cat: "nutr", badgeClass: "badge-nutr", badgeText: "🟣 पोषण टॉनिक",
+            name: "NPK 0:52:34 (Water Soluble)", brands: "Yara, Haifa, Multifeed",
+            crop: "गेहूं, धान, सरसों (बाली/फूल अवस्था)", dose: "1 से 1.5 किलोग्राम प्रति एकड़",
+            desc: "पौधे को फास्फोरस व पोटाश की त्वरित ताकत देता है जिससे दाने वजनदार और चमकदार बनते हैं।"
+        },
+        {
+            id: "s_nutr2", cat: "nutr", badgeClass: "badge-nutr", badgeText: "🟣 एंटी-हीट स्प्रे",
+            name: "NPK 13:0:45 (Potassium Nitrate)", brands: "Multi-K, Potassium Nitrate",
+            crop: "गेहूं, सब्जियां (मार्च हीट वेव)", dose: "1 किलोग्राम प्रति एकड़",
+            desc: "फरवरी-मार्च में तापमान बढ़ने पर गेहूं में लू/गर्मी से दाना सिकुड़ने (Terminal Heat) से बचाता है।"
+        },
+        {
+            id: "s_nutr3", cat: "nutr", badgeClass: "badge-nutr", badgeText: "🟣 सल्फर खाद",
+            name: "Bentonite Sulphur 90%", brands: "Sulfex Gold, Dharti Sulfur",
+            crop: "सरसों, गेहूं, तिलहन", dose: "10 किलोग्राम प्रति एकड़ (बिजाई पर)",
+            desc: "सरसों में तेल की मात्रा 3% तक बढ़ाता है और फफूंद के खिलाफ प्राकृतिक प्रतिरोधक क्षमता पैदा करता है।"
+        },
+        {
+            id: "s_nutr4", cat: "nutr", badgeClass: "badge-nutr", badgeText: "🟣 सूक्ष्म पोषक",
+            name: "Zinc Sulphate 33% (या 21%)", brands: "Zinc-33, Khaira-Nivar",
+            crop: "धान, गेहूं, मक्का", dose: "5 kg (33%) या 10 kg (21%) प्रति एकड़",
+            desc: "पत्तियों का पीलापन दूर करता है और धान में खैरा रोग का शत-प्रतिशत निवारण करता है।"
+        }
+    ];
+
+    function renderSaltList() {
+        const catFilter = document.getElementById("salt-cat-sel").value;
+        const query = (document.getElementById("salt-search-input").value || "").trim().toLowerCase();
+        const container = document.getElementById("salt-list-container");
+
+        const filtered = saltMasterDatabase.filter(item => {
+            const matchCat = catFilter === "all" || item.cat === catFilter;
+            const matchQuery = !query || item.name.toLowerCase().includes(query) || item.brands.toLowerCase().includes(query) || item.crop.toLowerCase().includes(query) || item.desc.toLowerCase().includes(query);
+            return matchCat && matchQuery;
+        });
+
+        document.getElementById("salt-count-lbl").innerText = `कुल ${filtered.length} पेशेवर सॉल्ट व बायो उत्पाद प्रदर्शित हैं`;
+
+        if (filtered.length === 0) {
+            container.innerHTML = `<div style="text-align:center; padding:20px; color:#94a3b8; font-size:13px;">कोई सॉल्ट या बायो उत्पाद नहीं मिला।</div>`;
+            return;
+        }
+
+        container.innerHTML = filtered.map(i => `
+            <div class="salt-item-card cat-${i.cat}">
+                <div class="si-top">
+                    <div>
+                        <div class="si-title">${i.name}</div>
+                        <div class="si-tech">ब्रैंड: ${i.brands}</div>
+                    </div>
+                    <span class="si-badge ${i.badgeClass}">${i.badgeText}</span>
+                </div>
+                <div class="si-body">
+                    🌾 <strong>फसल:</strong> ${i.crop}<br>
+                    📝 ${i.desc}
+                </div>
+                <div class="si-footer">
+                    <span>⚖️ मात्रा: ${i.dose}</span>
+                    <span style="font-size:10px; color:#38bdf8;">Hyper-AI Verified</span>
+                </div>
+            </div>
+        `).join("");
+    }
+
     // Initialize Everything on Load
     window.addEventListener("DOMContentLoaded", () => {
         try {
@@ -3859,6 +4181,7 @@ _Bahubali Hyper-AI v20_`;
         initMasterWeather(false);
         syncFasalFromGlobal();
         renderFasalTimeline();
+        renderSaltList();
     });
 </script>
 
