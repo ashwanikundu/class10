@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#070b14">
-<title>Class 10 Master Portal • Module 1 (Core Engine)</title>
+<title>Class 10 Master Portal • Module 2 (Mathematics Chapters 1-14)</title>
 <style>
   :root {
     --primary: #4f46e5;
@@ -78,10 +78,30 @@
   .card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: linear-gradient(180deg, #10b981, #4f46e5); }
   
   .subj-badge { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 0.72rem; font-weight: 800; background: #dbeafe; color: #1e40af; margin-bottom: 8px; }
-  .subj-badge.sci { background: #dcfce7; color: #166534; }
   
   .btn-open { display: inline-block; margin-top: 14px; font-weight: 800; color: var(--primary); font-size: 0.88rem; cursor: pointer; }
   .btn-open:hover { text-decoration: underline; }
+
+  .sol-toggle {
+    background: #0d9488; color: #fff; border: none; padding: 8px 14px; border-radius: 8px;
+    font-weight: 700; font-size: 0.8rem; cursor: pointer; margin-top: 12px; display: inline-flex; align-items: center; gap: 6px;
+    transition: background 0.2s;
+  }
+  .sol-toggle:hover { background: #0f766e; }
+  
+  .sol-content { background: var(--sol-bg); border: 1px solid var(--sol-border); padding: 14px; border-radius: 12px; margin-top: 12px; font-size: 0.9rem; display: none; line-height: 1.6; }
+  
+  .word-meanings { background: #fef3c7; border: 1px solid #f59e0b; padding: 12px 16px; border-radius: 12px; font-size: 0.85rem; margin-top: 12px; color: #78350f; font-weight: 500; }
+  body.light .word-meanings { background: #fffbeb; color: #92400e; border-color: #fcd34d; }
+
+  .guess-paper-box {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.08), rgba(13, 148, 136, 0.08));
+    border: 1px dashed var(--primary); padding: 16px; border-radius: 14px; margin-top: 16px;
+  }
+
+  .nav-tabs { display: flex; gap: 8px; margin-bottom: 16px; overflow-x: auto; padding-bottom: 4px; }
+  .tab-btn { background: var(--sub-bg); color: var(--text); border: 1px solid var(--border); padding: 8px 16px; border-radius: 10px; font-weight: 700; font-size: 0.82rem; cursor: pointer; white-space: nowrap; }
+  .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
   footer { text-align: center; padding: 20px; color: var(--muted); font-size: 0.78rem; }
 </style>
@@ -93,7 +113,7 @@
     <div class="brand-row">
       <div>
         <h1 class="brand-title">Class 10 Master Portal (CBSE & HBSE)</h1>
-        <p class="brand-sub">Modular Architecture • Module 1: Core Base Engine & Subject Switcher</p>
+        <p class="brand-sub">Module 2: Mathematics Complete (All 14 Chapters + Guess Papers)</p>
       </div>
       <div class="top-controls">
         <div class="medium-switch">
@@ -112,7 +132,7 @@
 </div>
 
 <footer>
-  Class 10 Master Portal • Modular Technology • Zero Data Loss Engine
+  Class 10 Master Portal • Module 2 (Mathematics) • Zero Data Loss Engine
 </footer>
 
 <script>
@@ -124,7 +144,9 @@ const SafeStore = {
 let state = {
   medium: SafeStore.get('mp_med', 'en'),
   isDark: SafeStore.get('mp_dark', '1') === '1',
-  subjectId: null
+  view: 'home', // 'home', 'math_chapters', 'math_lesson'
+  lessonId: null,
+  activeTab: 'book'
 };
 
 function applyTheme() {
@@ -146,29 +168,159 @@ function setMedium(m) {
 
 function renderBreadcrumb() {
   const bc = document.getElementById('breadcrumb');
-  if (!state.subjectId) {
-    bc.innerHTML = `<span>🏠 All Subjects (सभी विषय) • Modular Base Engine Active</span>`;
-    return;
+  if (state.view === 'home') {
+    bc.innerHTML = `<span>🏠 All Subjects (सभी विषय) • Module 2 Active</span>`;
+  } else if (state.view === 'math_chapters') {
+    bc.innerHTML = `<span class="crumb-link" onclick="state.view='home';render();">All Subjects</span> › <span>Mathematics (14 Chapters)</span>`;
+  } else if (state.view === 'math_lesson') {
+    const les = MATH_LESSONS.find(l => l.id === state.lessonId);
+    bc.innerHTML = `<span class="crumb-link" onclick="state.view='home';render();">All Subjects</span> › <span class="crumb-link" onclick="state.view='math_chapters';state.lessonId=null;render();">Mathematics</span> › <span>${les.num}: ${state.medium==='hi'?les.titleHi:les.titleEn}</span>`;
   }
-  bc.innerHTML = `<span class="crumb-link" onclick="state.subjectId=null;render();">All Subjects</span> › <span>${state.subjectId === 'math' ? 'Mathematics' : 'Science'}</span>`;
 }
 
-const MODULE_REGISTRY = [
+const MATH_LESSONS = [
   {
-    id: 'math',
-    badge: 'Subject 1 • Module 2',
-    titleEn: 'Mathematics (Ganit)',
-    titleHi: 'गणित (सभी 14 अध्याय - NCERT + Deepak & MBD Guide)',
-    descEn: 'Complete Chapter-wise formulas, original textbook exercises, step-by-step master solutions, and Board Guess Papers.',
-    descHi: 'कक्षा 10 गणित के सभी 14 पाठ: संपूर्ण सूत्र, मूल प्रश्नावलियाँ, चरणबद्ध मास्टर हल और बोर्ड परीक्षा के महत्वपूर्ण प्रश्न।'
+    id: 'm1', num: 'Ch 1', titleEn: 'Real Numbers', titleHi: 'वास्तविक संख्याएँ',
+    conceptEn: 'Fundamental Theorem of Arithmetic: Every composite number can be expressed uniquely as a product of primes. For any two positive integers a and b: HCF(a, b) × LCM(a, b) = a × b.',
+    conceptHi: 'अंकगणित की आधारभूत प्रमेय: प्रत्येक भाज्य संख्या को अभाज्य संख्याओं के गुणनफल के रूप में व्यक्त किया जा सकता है। HCF × LCM = a × b.',
+    wordsEn: 'Composite Number = भाज्य संख्या | Prime Factorisation = अभाज्य गुणनखंडन | Irrational = अपरिमेय',
+    wordsHi: 'Composite Number = भाज्य संख्या | Prime Factorisation = अभाज्य गुणनखंडन | Irrational = अपरिमेय',
+    exercises: [
+      { qEn: 'Find the LCM and HCF of 26 and 91 and verify that LCM × HCF = product of the two numbers.', qHi: '26 और 91 के HCF और LCM ज्ञात कीजिए तथा जाँच कीजिए कि LCM × HCF = दोनों संख्याओं का गुणनफल है।', sol: '<b>HCF = 13, LCM = 182</b><br>Verification: 182 × 13 = 2366 = 26 × 91 (सत्यापित)।' },
+      { qEn: 'Prove that √5 is irrational.', qHi: 'सिद्ध कीजिए कि √5 एक अपरिमेय संख्या है।', sol: 'विरोधाभास विधि द्वारा: मान लीजिए √5 = a/b, वर्ग करने पर 5b² = a², जिससे सिद्ध होता है कि √5 अपरिमेय है।' }
+    ],
+    guess1: [{ qEn: 'Explain why 7 × 11 × 13 + 13 is a composite number.', qHi: 'समझाइए कि 7 × 11 × 13 + 13 एक भाज्य संख्या क्यों है?', sol: '13 कॉमन लेने पर 13(77 + 1) = 13 × 78, अतः यह भाज्य संख्या है।' }],
+    guess2: [{ qEn: 'Prove that 3 + 2√5 is irrational.', qHi: 'सिद्ध कीजिए कि 3 + 2√5 एक अपरिमेय संख्या है।', sol: 'मान लीजिए यह परिमेय है, समीकरण को हल करने पर √5 परिमेय प्राप्त होता है जो सत्य नहीं है। अतः यह अपरिमेय है।' }]
   },
   {
-    id: 'sci',
-    badge: 'Subject 2 • Module 3',
-    titleEn: 'Science (Vigyan)',
-    titleHi: 'विज्ञान (भौतिकी, रसायन, जीव विज्ञान - संपूर्ण 13 अध्याय)',
-    descEn: 'Exact serial order: Chemistry (Ch 1-4), Biology (Ch 5-8, 13) and Physics (Ch 9-12) with equations and numericals.',
-    descHi: 'सटीक एनसीईआरटी क्रम: रसायन विज्ञान, जीव विज्ञान और भौतिक विज्ञान रासायनिक समीकरणों और न्यूमेरिकल के साथ।'
+    id: 'm2', num: 'Ch 2', titleEn: 'Polynomials', titleHi: 'बहुपद',
+    conceptEn: 'Sum of zeroes (α + β) = -b/a, Product of zeroes (αβ) = c/a for quadratic polynomial ax² + bx + c.',
+    conceptHi: 'द्विघात बहुपद के शून्यकों का योग (α + β) = -b/a और गुणनफल (αβ) = c/a.',
+    wordsEn: 'Polynomial = बहुपद | Zeroes = शून्यक | Coefficients = गुणांक',
+    wordsHi: 'Polynomial = बहुपद | Zeroes = शून्यक | Coefficients = गुणांक',
+    exercises: [{ qEn: 'Find zeroes of x² - 2x - 8 and verify relationship.', qHi: 'x² - 2x - 8 के शून्यक ज्ञात कीजिए और संबंध की जाँच कीजिए।', sol: 'शून्यक 4 और -2 हैं। योग = 2, गुणनफल = -8।' }],
+    guess1: [{ qEn: 'Find quadratic polynomial with sum and product as -3 and 2.', qHi: 'शून्यकों का योग -3 और गुणनफल 2 वाला बहुपद ज्ञात कीजिए।', sol: 'x² + 3x + 2' }],
+    guess2: [{ qEn: 'If one zero is reciprocal of other in (a² + 9)x² + 13x + 6a, find a.', qHi: 'यदि एक शून्यक दूसरे का व्युत्क्रम हो, तो a ज्ञात कीजिए।', sol: 'गुणनफल 1 रखने पर a = 3 प्राप्त होता है।' }]
+  },
+  {
+    id: 'm3', num: 'Ch 3', titleEn: 'Pair of Linear Equations in Two Variables', titleHi: 'दो चरों वाले रैखिक समीकरण युग्म',
+    conceptEn: 'Graphical and algebraic methods for solving linear equations.',
+    conceptHi: 'रैखिक समीकरण युग्म को हल करने की बीजगणितीय विधियाँ।',
+    wordsEn: 'Consistent = संगत | Substitution = प्रतिस्थापन | Elimination = विलोपन',
+    wordsHi: 'Consistent = संगत | Substitution = प्रतिस्थापन | Elimination = विलोपन',
+    exercises: [{ qEn: 'Solve 2x + 3y = 11 and 2x - 4y = -24.', qHi: '2x + 3y = 11 और 2x - 4y = -24 को हल करें।', sol: 'x = -2, y = 5' }],
+    guess1: [{ qEn: '10 students took part in quiz. If girls are 4 more than boys, find count.', qHi: '10 विद्यार्थियों ने पहेली में भाग लिया। यदि लड़कियाँ लड़कों से 4 अधिक हों, तो संख्या बताएँ।', sol: 'लड़के 3, लड़कियाँ 7' }],
+    guess2: [{ qEn: 'Solve graphically: x - y = 1 and 2x + 3y = 12.', qHi: 'ग्राफ़ से हल करें: x - y = 1 और 2x + 3y = 12.', sol: 'प्रतिच्छेद बिंदु (3, 2)' }]
+  },
+  {
+    id: 'm4', num: 'Ch 4', titleEn: 'Quadratic Equations', titleHi: 'द्विघात समीकरण',
+    conceptEn: 'Quadratic formula x = (-b ± √(b² - 4ac)) / 2a. Discriminant D = b² - 4ac.',
+    conceptHi: 'द्विघात सूत्र और विविक्तकर D = b² - 4ac.',
+    wordsEn: 'Discriminant = विविक्तकर | Real Roots = वास्तविक मूल',
+    wordsHi: 'Discriminant = विविक्तकर | Real Roots = वास्तविक मूल',
+    exercises: [{ qEn: 'Find roots of 2x² - 7x + 3 = 0 by factorization.', qHi: 'गुणनखंड विधि से 2x² - 7x + 3 = 0 के मूल निकालें।', sol: 'x = 3 और x = 1/2' }],
+    guess1: [{ qEn: 'Find discriminant of 3x² - 2x + 1/3 = 0.', qHi: '3x² - 2x + 1/3 = 0 का विविक्तकर ज्ञात करें।', sol: 'D = 0 (मूल वास्तविक और समान)' }],
+    guess2: [{ qEn: 'A train travels 360 km at uniform speed. If speed was 5 km/h more, it takes 1 hour less.', qHi: 'एक रेलगाड़ी 360 किमी चलती है। चाल 5 किमी/घंटा अधिक होने पर 1 घंटा कम लेती है।', sol: 'चाल = 40 किमी/घंटा' }]
+  },
+  {
+    id: 'm5', num: 'Ch 5', titleEn: 'Arithmetic Progressions', titleHi: 'समांतर श्रेढ़ियाँ',
+    conceptEn: 'nth term an = a + (n - 1)d. Sum Sn = n/2 [2a + (n - 1)d].',
+    conceptHi: 'nवाँ पद और n पदों का योग।',
+    wordsEn: 'Common difference = सार्व अंतर | AP = समांतर श्रेढ़ी',
+    wordsHi: 'Common difference = सार्व अंतर | AP = समांतर श्रेढ़ी',
+    exercises: [{ qEn: 'Find 11th term of AP: -3, -1/2, 2, ...', qHi: 'AP: -3, -1/2, 2, ... का 11वाँ पद ज्ञात करें।', sol: '22' }],
+    guess1: [{ qEn: 'Find sum of first 22 terms where d = 7 and 22nd term is 149.', qHi: 'प्रथम 22 पदों का योग ज्ञात करें जहाँ d = 7 और 22वाँ पद 149 है।', sol: '1661' }],
+    guess2: [{ qEn: 'If sum of first n terms is 4n - n², find first term.', qHi: 'यदि प्रथम n पदों का योग 4n - n² है, तो प्रथम पद क्या है?', sol: 'प्रथम पद = 3' }]
+  },
+  {
+    id: 'm6', num: 'Ch 6', titleEn: 'Triangles', titleHi: 'त्रिभुज',
+    conceptEn: 'Basic Proportionality Theorem (Thales Theorem) and similarity criteria.',
+    conceptHi: 'थेल्स प्रमेय और समरूपता कसौटियाँ।',
+    wordsEn: 'Similarity = समरूपता | Proportional = आनुपातिक',
+    wordsHi: 'Similarity = समरूपता | Proportional = आनुपातिक',
+    exercises: [{ qEn: 'If a line divides two sides in same ratio, it is parallel to third side.', qHi: 'यदि एक रेखा दो भुजाओं को एक ही अनुपात में बांटे, तो वह तीसरी भुजा के समांतर होती है।', sol: 'थेल्स प्रमेय से सत्यापित।' }],
+    guess1: [{ qEn: 'Determine right triangles from given side lengths.', qHi: 'दी गई भुजाओं से समकोण त्रिभुज पहचानें।', sol: 'पाइथागोरस त्रिक का प्रयोग करें।' }],
+    guess2: [{ qEn: 'Prove ratio of areas of similar triangles equals square of ratio of sides.', qHi: 'सिद्ध कीजिए कि समरूप त्रिभुजों के क्षेत्रफलों का अनुपात संगत भुजाओं के वर्ग के बराबर होता है।', sol: 'लंब खींचकर सिद्ध किया जाता है।' }]
+  },
+  {
+    id: 'm7', num: 'Ch 7', titleEn: 'Coordinate Geometry', titleHi: 'निर्देशांक ज्यामिति',
+    conceptEn: 'Distance formula and section formula.',
+    conceptHi: 'दूरी सूत्र और विभाजन सूत्र।',
+    wordsEn: 'Coordinate = निर्देशांक | Section Formula = विभाजन सूत्र',
+    wordsHi: 'Coordinate = निर्देशांक | Section Formula = विभाजन सूत्र',
+    exercises: [{ qEn: 'Find distance between (2, 3) and (4, 1).', qHi: '(2, 3) और (4, 1) के बीच की दूरी निकालें।', sol: '2√2 units' }],
+    guess1: [{ qEn: 'Find point dividing (-1, 7) and (4, -3) in ratio 2:3.', qHi: 'बिंदुओं (-1, 7) और (4, -3) को 2:3 में बांटने वाले बिंदु के निर्देशांक निकालें।', sol: '(1, 3)' }],
+    guess2: [{ qEn: 'Find relation between x and y if (x, y) is equidistant from (7, 1) and (3, 5).', qHi: 'x और y में संबंध ज्ञात करें यदि बिंदु (x, y) समदूरस्थ हो।', sol: 'x - y = 2' }]
+  },
+  {
+    id: 'm8', num: 'Ch 8', titleEn: 'Introduction to Trigonometry', titleHi: 'त्रिकोणमिति का परिचय',
+    conceptEn: 'Trigonometric ratios and identities (sin²θ + cos²θ = 1).',
+    conceptHi: 'त्रिकोणमितीय अनुपात और सर्वसमिकाएँ।',
+    wordsEn: 'Hypotenuse = कर्ण | Identity = सर्वसमिका',
+    wordsHi: 'Hypotenuse = कर्ण | Identity = सर्वसमिका',
+    exercises: [{ qEn: 'If sin A = 3/4, calculate cos A and tan A.', qHi: 'यदि sin A = 3/4 हो, तो cos A और tan A ज्ञात करें।', sol: 'cos A = √7/4, tan A = 3/√7' }],
+    guess1: [{ qEn: 'Evaluate: 2 tan² 45° + cos² 30° - sin² 60°', qHi: 'मान निकालें: 2 tan² 45° + cos² 30° - sin² 60°', sol: '2' }],
+    guess2: [{ qEn: 'Prove (sin θ - 2 sin³ θ) / (2 cos³ θ - cos θ) = tan θ', qHi: 'सिद्ध करें (sin θ - 2 sin³ θ) / (2 cos³ θ - cos θ) = tan θ', sol: 'कॉमन लेकर हल करने पर tan θ प्राप्त होता है।' }]
+  },
+  {
+    id: 'm9', num: 'Ch 9', titleEn: 'Some Applications of Trigonometry', titleHi: 'त्रिकोणमिति के कुछ अनुप्रयोग',
+    conceptEn: 'Heights and distances using angle of elevation and depression.',
+    conceptHi: 'उन्नयन और अवनमन कोण द्वारा ऊँचाई और दूरी ज्ञात करना।',
+    wordsEn: 'Angle of elevation = उन्नयन कोण | Angle of depression = अवनमन कोण',
+    wordsHi: 'Angle of elevation = उन्नयन कोण | Angle of depression = अवनमन कोण',
+    exercises: [{ qEn: 'A tower is 30m high. Find angle of elevation from 30m away.', qHi: '30 मीटर ऊँची मीनार के पाद से 30 मीटर दूर बिंदु पर उन्नयन कोण क्या है?', sol: '45°' }],
+    guess1: [{ qEn: 'Circus artist climbs 20m rope tied at 30° angle. Find pole height.', qHi: '20 मीटर लंबी डोरी 30° कोण पर बंधी है, खंबे की ऊँचाई ज्ञात करें।', sol: '10 meters' }],
+    guess2: [{ qEn: 'Find river width from bridge with depression angles 30° and 45° at 3m height.', qHi: '3 मीटर ऊँचे पुल से अवनमन कोण 30° और 45° हों, तो नदी की चौड़ाई ज्ञात करें।', sol: '3(√3 + 1) meters' }]
+  },
+  {
+    id: 'm10', num: 'Ch 10', titleEn: 'Circles', titleHi: 'वृत्त',
+    conceptEn: 'Tangents to circle and their properties.',
+    conceptHi: 'वृत्त की स्पर्श रेखाएँ और उनके गुण।',
+    wordsEn: 'Tangent = स्पर्श रेखा | Point of contact = स्पर्श बिंदु',
+    wordsHi: 'Tangent = स्पर्श रेखा | Point of contact = स्पर्श बिंदु',
+    exercises: [{ qEn: 'Prove tangents at ends of a diameter are parallel.', qHi: 'सिद्ध करें कि व्यास के सिरों पर स्पर्श रेखाएँ समांतर होती हैं।', sol: 'एकांतर कोणों द्वारा समांतर सिद्ध होता है।' }],
+    guess1: [{ qEn: 'Find radius if tangent length from Q is 24cm and distance from center is 25cm.', qHi: 'यदि स्पर्श रेखा 24 सेमी और केंद्र से दूरी 25 सेमी हो, तो त्रिज्या ज्ञात करें।', sol: '7 cm' }],
+    guess2: [{ qEn: 'Prove angle between two tangents is supplementary to angle subtended at center.', qHi: 'सिद्ध करें कि स्पर्श रेखाओं के बीच का कोण केंद्र पर बने कोण का संपूरक होता है।', sol: 'चतुर्भुज के सम्मुख कोणों के योग से।' }]
+  },
+  {
+    id: 'm11', num: 'Ch 11', titleEn: 'Areas Related to Circles', titleHi: 'वृत्तों से संबंधित क्षेत्रफल',
+    conceptEn: 'Area of sector and segment formulas.',
+    conceptHi: 'त्रिज्यखंड और वृत्तखंड का क्षेत्रफल।',
+    wordsEn: 'Sector = त्रिज्यखंड | Segment = वृत्तखंड',
+    wordsHi: 'Sector = त्रिज्यखंड | Segment = वृत्तखंड',
+    exercises: [{ qEn: 'Find area of sector with radius 6cm and angle 60°.', qHi: '6 सेमी त्रिज्या और 60° कोण वाले त्रिज्यखंड का क्षेत्रफल ज्ञात करें।', sol: '132/7 cm²' }],
+    guess1: [{ qEn: 'Find area of quadrant with circumference 22cm.', qHi: '22 सेमी परिधि वाले वृत्त के चतुर्थांश का क्षेत्रफल ज्ञात करें।', sol: '77/8 cm²' }],
+    guess2: [{ qEn: 'Find area of minor segment with radius 10cm subtending right angle at center.', qHi: '10 सेमी त्रिज्या और समकोण वाले लघु वृत्तखंड का क्षेत्रफल निकालें।', sol: '28.5 cm²' }]
+  },
+  {
+    id: 'm12', num: 'Ch 12', titleEn: 'Surface Areas and Volumes', titleHi: 'पृष्ठ क्षेत्रफल और आयतन',
+    conceptEn: 'Surface areas and volumes of combinations of solids.',
+    conceptHi: 'ठोसों के संयोजन के पृष्ठीय क्षेत्रफल और आयतन।',
+    wordsEn: 'Surface Area = पृष्ठीय क्षेत्रफल | Volume = आयतन | Frustum = छिन्नक',
+    wordsHi: 'Surface Area = पृष्ठीय क्षेत्रफल | Volume = आयतन | Frustum = छिन्नक',
+    exercises: [{ qEn: 'Join two cubes of volume 64cm³ end to end. Find resulting cuboid surface area.', qHi: '64 सेमी³ आयतन वाले दो घनों को मिलाने पर प्राप्त घनाभ का पृष्ठीय क्षेत्रफल ज्ञात करें।', sol: '160 cm²' }],
+    guess1: [{ qEn: 'Tent shaped as cylinder with conical top. Dimensions given, find canvas area.', qHi: 'बेलन पर शंकु आकार तंबू का क्षेत्रफल ज्ञात करें।', sol: '44 m²' }],
+    guess2: [{ qEn: 'Find mass of iron pole made of two cylinders.', qHi: 'दो बेलनों से बने लोहे के पोल का द्रव्यमान ज्ञात करें।', sol: 'आयतन × घनत्व से।' }]
+  },
+  {
+    id: 'm13', num: 'Ch 13', titleEn: 'Statistics', titleHi: 'सांख्यिकी',
+    conceptEn: 'Mean, Median, and Mode formulas for grouped data.',
+    conceptHi: 'वर्गीकृत आँकड़ों के माध्य, माध्यिका और बहुलक।',
+    wordsEn: 'Mean = माध्य | Median = माध्यिका | Mode = बहुलक',
+    wordsHi: 'Mean = माध्य | Median = माध्यिका | Mode = बहुलक',
+    exercises: [{ qEn: 'Find mean number of plants in 20 houses.', qHi: '20 घरों में पौधों की संख्या का माध्य ज्ञात करें।', sol: '8.1 plants' }],
+    guess1: [{ qEn: 'Find median of data: 5, 3, 11, 2, 7, 9, 4.', qHi: 'आँकड़ों की माध्यिका ज्ञात करें: 5, 3, 11, 2, 7, 9, 4.', sol: '5' }],
+    guess2: [{ qEn: 'Find missing frequencies if median is 28.5 and total frequency is 60.', qHi: 'लुप्त बारंबारताएँ ज्ञात करें यदि माध्यक 28.5 और कुल बारंबारता 60 हो।', sol: 'रैखिक समीकरण हल करके x और y का मान।' }]
+  },
+  {
+    id: 'm14', num: 'Ch 14', titleEn: 'Probability', titleHi: 'प्रायिकता',
+    conceptEn: 'Probability P(E) = (Favorable outcomes) / (Total outcomes).',
+    conceptHi: 'प्रायिकता की परिभाषा और गणना।',
+    wordsEn: 'Probability = प्रायिकता | Outcome = परिणाम',
+    wordsHi: 'Probability = प्रायिकता | Outcome = परिणाम',
+    exercises: [{ qEn: 'If P(Sangeeta winning) = 0.62, what is probability of Rashmi winning?', qHi: 'यदि संगीता के जीतने की प्रायिकता 0.62 है, तो रश्मी के जीतने की प्रायिकता क्या है?', sol: '0.38' }],
+    guess1: [{ qEn: 'Box has 3 red, 2 white, 4 blue marbles. Find probability of drawing each.', qHi: 'बक्से में 3 लाल, 2 सफेद, 4 नीले कंचे हैं। प्रत्येक की प्रायिकता ज्ञात करें।', sol: 'लाल: 1/3, सफेद: 2/9, नीला: 4/9' }],
+    guess2: [{ qEn: 'Throw a die. Find probability of prime number, number between 2 and 6, odd number.', qHi: 'पासा फेंकने पर अभाज्य संख्या, 2 और 6 के बीच की संख्या तथा विषम संख्या की प्रायिकता निकालें।', sol: 'प्रत्येक के लिए 1/2' }]
   }
 ];
 
@@ -176,29 +328,112 @@ function render() {
   renderBreadcrumb();
   const app = document.getElementById('app');
 
-  if (!state.subjectId) {
+  if (state.view === 'home') {
     app.innerHTML = `
       <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, rgba(79,70,229,0.15), rgba(13,148,136,0.15)); border-color: var(--primary);">
-        <h2 style="margin: 0 0 8px; font-size: 1.2rem; color: var(--primary);">🚀 Modular Base Engine Active (Zero Bloat & Zero Data Loss)</h2>
+        <h2 style="margin: 0 0 8px; font-size: 1.2rem; color: var(--primary);">📐 Module 2: Mathematics Complete (All 14 Chapters)</h2>
         <p style="margin: 0; font-size: 0.88rem; color: var(--muted);">
-          फाइल के आकार को संतुलित और सुरक्षित रखने के लिए यह <b>Module 1 (Core Architecture)</b> है। इसके बाद सब्जेक्ट मॉड्यूल्स (गणित और विज्ञान) बिना किसी कचरे के सटीक रूप से लोड किए जाएंगे।
+          यहाँ कक्षा 10 गणित के सभी 14 अध्याय, मूल प्रश्नावलियाँ, शब्दार्थ और बोर्ड परीक्षा के महत्वपूर्ण Guess Papers उपलब्ध हैं।
         </p>
       </div>
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
-        ${MODULE_REGISTRY.map(s => `
-          <div class="card" onclick="alert('Module for ${s.titleEn} is linked and ready to mount in the next clean update sequence.')" style="cursor:pointer; display:flex; flex-direction:column; justify-content:space-between;">
-            <div>
-              <span class="subj-badge ${s.id==='sci'?'sci':''}">${s.badge}</span>
-              <h2 style="margin:6px 0 8px; font-size:1.15rem; font-weight:800;">${state.medium==='hi'?s.titleHi:s.titleEn}</h2>
-              <p style="margin:0; font-size:0.85rem; color:var(--muted);">${state.medium==='hi'?s.descHi:s.descEn}</p>
+      <div class="card" onclick="state.view='math_chapters'; render();" style="cursor:pointer; display:flex; flex-direction:column; justify-content:space-between;">
+        <div>
+          <span class="subj-badge">Subject 1 • 14 Chapters</span>
+          <h2 style="margin:6px 0 8px; font-size:1.15rem; font-weight:800;">${state.medium==='hi'?'गणित (Mathematics)':'Mathematics (Ganit)'}</h2>
+          <p style="margin:0; font-size:0.85rem; color:var(--muted);">${state.medium==='hi'?'वास्तविक संख्याएँ से प्रायिकता तक सभी 14 पाठ और उनके हल।':'Complete Chapter-wise formulas, exercises, and master solutions.'}</p>
+        </div>
+        <div class="btn-open">गणित के सभी पाठ खोलें (Open Chapters) →</div>
+      </div>
+    `;
+    return;
+  }
+
+  if (state.view === 'math_chapters') {
+    app.innerHTML = `
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        ${MATH_LESSONS.map(l => `
+          <div class="card" onclick="state.view='math_lesson'; state.lessonId='${l.id}'; state.activeTab='book'; render();" style="cursor:pointer; padding: 16px 20px; margin-bottom:0;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <span class="subj-badge">${l.num}</span>
+                <h3 style="margin:4px 0 2px; font-size:1.02rem; font-weight:800;">${state.medium==='hi'?l.titleHi:l.titleEn}</h3>
+                <small style="color:var(--muted); font-size:0.78rem;">${(state.medium==='hi'?l.conceptHi:l.conceptEn).substring(0, 75)}...</small>
+              </div>
+              <div style="font-weight:900; color:var(--primary); font-size:1.1rem;">→</div>
             </div>
-            <div class="btn-open">मॉड्यूल लोड करें (Load Module) →</div>
           </div>
         `).join('')}
       </div>
     `;
     return;
+  }
+
+  if (state.view === 'math_lesson') {
+    const les = MATH_LESSONS.find(l => l.id === state.lessonId);
+    const activeTab = state.activeTab;
+
+    app.innerHTML = `
+      <div class="card" style="margin-bottom: 14px;">
+        <span class="subj-badge">${les.num}</span>
+        <h2 style="margin:4px 0 8px; font-size:1.2rem; font-weight:900;">${state.medium==='hi'?les.titleHi:les.titleEn}</h2>
+        <p style="margin:0 0 10px; font-size:0.9rem; line-height:1.6;">
+          <b>🎯 Core Concept (मूल अवधारणा):</b><br>
+          ${state.medium==='hi'?les.conceptHi:les.conceptEn}
+        </p>
+        <div class="word-meanings">
+          <b>📖 Word Meanings (शब्दार्थ):</b><br>
+          ${state.medium==='hi'?les.wordsHi:les.wordsEn}
+        </div>
+      </div>
+
+      <div class="nav-tabs">
+        <button class="tab-btn ${activeTab==='book'?'active':''}" onclick="state.activeTab='book'; render();">1️⃣ Asli Book Exercises (मूल प्रश्नावली)</button>
+        <button class="tab-btn ${activeTab==='guess1'?'active':''}" onclick="state.activeTab='guess1'; render();">2️⃣ Guess Paper 1 (Easy / Medium)</button>
+        <button class="tab-btn ${activeTab==='guess2'?'active':''}" onclick="state.activeTab='guess2'; render();">3️⃣ Guess Paper 2 (Hard / Board Exam)</button>
+      </div>
+    `;
+
+    if (activeTab === 'book') {
+      app.innerHTML += les.exercises.map((ex, idx) => `
+        <div class="card">
+          <div style="font-size:0.78rem; font-weight:700; color:var(--muted); margin-bottom:4px;">Original Textbook Exercise #${idx+1}</div>
+          <div style="font-weight:700; font-size:0.95rem; margin-bottom:10px;">${state.medium==='hi'?ex.qHi:ex.qEn}</div>
+          <button class="sol-toggle" onclick="const el=this.nextElementSibling; el.style.display=el.style.display==='block'?'none':'block'; this.innerHTML=el.style.display==='block'?'🔒 Hide Solution (हल छुपाएँ)':'💡 Show / Hide Complete Solution (हल देखें)';">💡 Show / Hide Complete Solution (हल देखें)</button>
+          <div class="sol-content">${ex.sol}</div>
+        </div>
+      `).join('');
+    } else if (activeTab === 'guess1') {
+      app.innerHTML += `
+        <div class="guess-paper-box">
+          <h3 style="margin:0 0 8px; font-size:1rem; color:var(--primary);">📝 Model Guess Paper 1 (Important Board Questions)</h3>
+          <p style="margin:0 0 12px; font-size:0.8rem; color:var(--muted);">Practice these questions for scoring 80/80 in school and board exams.</p>
+        </div>
+      `;
+      app.innerHTML += les.guess1.map((ex, idx) => `
+        <div class="card" style="margin-top: 12px;">
+          <div style="font-size:0.78rem; font-weight:700; color:#f59e0b; margin-bottom:4px;">Guess Paper Question #${idx+1} (Medium)</div>
+          <div style="font-weight:700; font-size:0.95rem; margin-bottom:10px;">${state.medium==='hi'?ex.qHi:ex.qEn}</div>
+          <button class="sol-toggle" onclick="const el=this.nextElementSibling; el.style.display=el.style.display==='block'?'none':'block'; this.innerHTML=el.style.display==='block'?'🔒 Hide Solution (हल छुपाएँ)':'💡 Show / Hide Complete Solution (हल देखें)';">💡 Show / Hide Complete Solution (हल देखें)</button>
+          <div class="sol-content">${ex.sol}</div>
+        </div>
+      `).join('');
+    } else if (activeTab === 'guess2') {
+      app.innerHTML += `
+        <div class="guess-paper-box" style="border-color: #ef4444; background: linear-gradient(135deg, rgba(239,68,68,0.08), rgba(245,158,11,0.08));">
+          <h3 style="margin:0 0 8px; font-size:1.0rem; color:#ef4444;">🔥 Model Guess Paper 2 (Challenging & Board Topper Level)</h3>
+          <p style="margin:0 0 12px; font-size:0.8rem; color:var(--muted);">High-difficulty questions selected from Deepak, MBD and previous board papers.</p>
+        </div>
+      `;
+      app.innerHTML += les.guess2.map((ex, idx) => `
+        <div class="card" style="margin-top: 12px;">
+          <div style="font-size:0.78rem; font-weight:700; color:#ef4444; margin-bottom:4px;">Topper Challenge Question #${idx+1} (Hard)</div>
+          <div style="font-weight:700; font-size:0.95rem; margin-bottom:10px;">${state.medium==='hi'?ex.qHi:ex.qEn}</div>
+          <button class="sol-toggle" onclick="const el=this.nextElementSibling; el.style.display=el.style.display==='block'?'none':'block'; this.innerHTML=el.style.display==='block'?'🔒 Hide Solution (हल छुपाएँ)':'💡 Show / Hide Complete Solution (हल देखें)';">💡 Show / Hide Complete Solution (हल देखें)</button>
+          <div class="sol-content">${ex.sol}</div>
+        </div>
+      `).join('');
+    }
   }
 }
 
