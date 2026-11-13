@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#0f172a">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#090d16">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<title>Class 10 Master Portal — Next-Gen Pro EdTech Edition</title>
+<title>Class 10 Master Portal v2.0 — Robot AI Scanner & Pro EdTech</title>
 <style>
   :root {
     --primary: #4f46e5;
@@ -79,7 +80,7 @@
   header {
     background: linear-gradient(135deg, #090d16 0%, #1e1b4b 55%, #312e81 100%);
     color: #fff;
-    padding: 14px 16px 12px;
+    padding: calc(env(safe-area-inset-top, 0px) + 12px) 14px 12px;
     position: sticky; top: 0; z-index: 100;
     box-shadow: 0 8px 30px rgba(9, 13, 22, 0.35);
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
@@ -375,6 +376,62 @@
     transition: transform 0.06s ease !important;
   }
 
+
+  @media (max-width: 480px) {
+    header { padding: calc(env(safe-area-inset-top, 0px) + 10px) 12px 10px; }
+    .brand-logo { width: 36px; height: 36px; font-size: 1.15rem; border-radius: 10px; }
+    .brand-text h1 { font-size: 0.98rem; }
+    .brand-text p { font-size: 0.68rem; }
+    .controls-bar { width: 100%; justify-content: space-between; margin-top: 4px; }
+    .quick-nav { margin-top: 8px; gap: 6px; }
+    .qnav-btn { padding: 5px 11px; font-size: 0.74rem; }
+  }
+
+
+  /* Robot Scanner & Ultra-Zoom Viewer */
+  .scanner-stage {
+    position: relative; width: 100%; height: 340px;
+    background: #090d16; border-radius: 16px; overflow: hidden;
+    border: 2px solid var(--primary); margin: 12px 0;
+    display: flex; align-items: center; justify-content: center;
+    touch-action: none;
+  }
+  .scanner-stage img {
+    max-width: 100%; max-height: 100%;
+    transform-origin: center center;
+    transition: transform 0.08s ease-out, filter 0.15s ease;
+    cursor: grab;
+  }
+  .zoom-hud {
+    position: absolute; bottom: 10px; left: 10px; right: 10px;
+    background: rgba(9, 13, 22, 0.85); backdrop-filter: blur(8px);
+    padding: 8px 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.18);
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap; color: #fff; font-size: 0.78rem;
+  }
+  .zoom-hud input[type="range"] { flex: 1; min-width: 100px; accent-color: #fbbf24; }
+  .page-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 8px; }
+  .page-tab {
+    padding: 6px 12px; border-radius: 10px; border: 1.5px solid var(--border);
+    background: var(--sub-bg); color: var(--text); font-weight: 700; font-size: 0.78rem; cursor: pointer; white-space: nowrap;
+  }
+  .page-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+  .xp-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: linear-gradient(135deg, #fef3c7, #fde68a); color: #78350f;
+    padding: 4px 10px; border-radius: 999px; font-size: 0.76rem; font-weight: 800;
+    border: 1px solid #f59e0b;
+  }
+  .voice-btn {
+    background: linear-gradient(135deg, #4f46e5, #6366f1); color: #fff; border: none;
+    padding: 7px 12px; border-radius: 10px; font-size: 0.8rem; font-weight: 700; cursor: pointer;
+    margin-left: 6px;
+  }
+  .scan-textarea {
+    width: 100%; min-height: 82px; padding: 11px 13px; border-radius: 12px;
+    border: 1.5px solid var(--border); background: var(--sub-bg); color: var(--text);
+    font-family: inherit; font-size: 0.9rem; resize: vertical; margin-top: 8px;
+  }
+
 </style>
 </head>
 <body>
@@ -384,7 +441,7 @@
     <div class="brand">
       <div class="brand-logo">10</div>
       <div class="brand-text">
-        <h1>Class 10 Master Portal <span class="pro-pill">PRO • OFFLINE</span></h1>
+        <h1>Class 10 Master Portal <span class="pro-pill">v2.0 • ROBOT AI</span></h1>
         <p>CBSE & HBSE • Full NCERT + Guess Papers + Mock Test + PYQs + Cheat Sheet</p>
       </div>
     </div>
@@ -400,6 +457,7 @@
   </div>
   <div class="quick-nav">
     <button class="qnav-btn active" id="nav_home" onclick="switchView('home')">📚 All Subjects</button>
+    <button class="qnav-btn" id="nav_scanner" onclick="switchView('scanner')" style="background:linear-gradient(135deg,rgba(245,158,11,0.28),rgba(16,185,129,0.28));border-color:#fbbf24;color:#fef3c7;font-weight:800;">🤖 Ultra-Zoom AI Scanner</button>
     <button class="qnav-btn" id="nav_mock" onclick="switchView('mock')">⏱️ 3-Hr Mock Test</button>
     <button class="qnav-btn" id="nav_cheat" onclick="switchView('cheat')">⚡ 1-Page Cheat Sheet</button>
     <button class="qnav-btn" id="nav_diagrams" onclick="switchView('diagrams')">🖼️ Diagrams & Maps</button>
@@ -520,6 +578,245 @@ function toggleBookmarkById(id) {
 function checkMCQById(qid, optIdx, correctIdx) {
   const qObj = ITEM_REGISTRY[qid] || null;
   checkMCQ(qid, optIdx, correctIdx, qObj);
+}
+
+
+// Gamification (XP & Daily Study Streak)
+const todayStr = new Date().toISOString().slice(0, 10);
+let xpData = SafeStore.getJSON('c10_xp', { xp: 10, streak: 1, lastDay: todayStr });
+if (xpData.lastDay !== todayStr) {
+  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  xpData.streak = (xpData.lastDay === yesterday) ? (xpData.streak + 1) : 1;
+  xpData.lastDay = todayStr;
+  xpData.xp += 10;
+  SafeStore.set('c10_xp', JSON.stringify(xpData));
+}
+function addXP(pts) {
+  xpData.xp += pts;
+  SafeStore.set('c10_xp', JSON.stringify(xpData));
+}
+function getRankTitle(xp) {
+  if (xp >= 500) return '🏆 Board Topper';
+  if (xp >= 200) return '🚀 Scholar Pro';
+  if (xp >= 80) return '⭐ Rising Star';
+  return '🌱 Learner';
+}
+
+// Voice Read-Aloud Teacher (Safe Web Speech API)
+function speakText(rawHtml) {
+  try {
+    if (!('speechSynthesis' in window)) {
+      alert('आपके ब्राउज़र में वॉइस फीचर उपलब्ध नहीं है।');
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const tmp = document.createElement('div');
+    tmp.innerHTML = rawHtml;
+    const cleanText = (tmp.textContent || tmp.innerText || '').trim();
+    if (!cleanText) return;
+    const utter = new SpeechSynthesisUtterance(cleanText);
+    utter.lang = /[ऀ-ॿ]/.test(cleanText) ? 'hi-IN' : 'en-IN';
+    utter.rate = 0.95;
+    window.speechSynthesis.speak(utter);
+  } catch (e) {}
+}
+function stopSpeaking() {
+  try { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); } catch (e) {}
+}
+
+// Robot Ultra-Zoom Multi-Page Scanner State
+let scanState = {
+  pages: [], // { name, dataUrl, base64, mimeType, extractedText }
+  activeIdx: 0,
+  zoom: 1.0,
+  panX: 0,
+  panY: 0,
+  contrast: 105,
+  dragging: false,
+  startX: 0,
+  startY: 0,
+  queryText: '',
+  ocrStatus: '',
+  aiLoading: false,
+  aiResult: '',
+  apiKey: SafeStore.get('c10_gemini_key', '')
+};
+
+function handleScanFiles(fileList) {
+  if (!fileList || !fileList.length) return;
+  const files = Array.from(fileList);
+  let loaded = 0;
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      const dataUrl = ev.target.result;
+      const parts = dataUrl.split(',');
+      const mimeType = (parts[0].match(/:(.*?);/) || [])[1] || 'image/jpeg';
+      const base64 = parts[1] || '';
+      scanState.pages.push({
+        name: file.name || ('Page ' + (scanState.pages.length + 1)),
+        dataUrl, base64, mimeType, extractedText: ''
+      });
+      loaded++;
+      if (loaded === files.length) {
+        scanState.activeIdx = scanState.pages.length - 1;
+        scanState.zoom = 1.0;
+        scanState.panX = 0;
+        scanState.panY = 0;
+        addXP(15);
+        render();
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function setScanZoom(val) {
+  scanState.zoom = Math.min(6, Math.max(1, parseFloat(val) || 1));
+  if (scanState.zoom === 1) { scanState.panX = 0; scanState.panY = 0; }
+  const img = document.getElementById('scanZoomImg');
+  const lbl = document.getElementById('zoomPctLabel');
+  if (img) img.style.transform = `translate(${scanState.panX}px, ${scanState.panY}px) scale(${scanState.zoom})`;
+  if (lbl) lbl.textContent = scanState.zoom.toFixed(1) + 'x';
+}
+
+function setScanContrast(val) {
+  scanState.contrast = parseInt(val, 10) || 100;
+  const img = document.getElementById('scanZoomImg');
+  if (img) img.style.filter = `contrast(${scanState.contrast}%) brightness(103%)`;
+}
+
+function runOfflineOCR() {
+  const page = scanState.pages[scanState.activeIdx];
+  if (!page) return;
+  scanState.ocrStatus = '⏳ स्कैन हो रहा है (Loading Robot OCR Engine)...';
+  render();
+  const startTesseract = () => {
+    window.Tesseract.recognize(page.dataUrl, 'eng+hin', {
+      logger: m => {
+        if (m.status === 'recognizing text') {
+          const el = document.getElementById('ocrStatusBox');
+          if (el) el.textContent = `🤖 Robot Scanning Page... ${Math.round((m.progress || 0) * 100)}%`;
+        }
+      }
+    }).then(({ data: { text } }) => {
+      const cleaned = (text || '').trim();
+      page.extractedText = cleaned;
+      scanState.queryText = cleaned;
+      scanState.ocrStatus = cleaned ? '✅ पेज का टेक्स्ट सफलतापूर्वक स्कैन हो गया!' : '⚠️ टेक्स्ट साफ नहीं पढ़ा गया — नीचे प्रश्न टाइप करें या Ultra-Zoom से देखकर लिखें।';
+      addXP(10);
+      render();
+    }).catch(() => {
+      scanState.ocrStatus = '⚠️ ऑफलाइन OCR के लिए इंटरनेट या नीचे प्रश्न टाइप करें।';
+      render();
+    });
+  };
+  if (window.Tesseract) {
+    startTesseract();
+  } else {
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';
+    s.onload = startTesseract;
+    s.onerror = () => {
+      scanState.ocrStatus = '⚠️ OCR लोड नहीं हो सका — नीचे बॉक्स में प्रश्न लिखकर तुरंत हल निकालें।';
+      render();
+    };
+    document.head.appendChild(s);
+  }
+}
+
+function findSmartBookMatches(query) {
+  const q = (query || '').toLowerCase().trim();
+  if (!q || q.length < 3) return [];
+  const words = q.split(/[^a-zA-Z0-9ऀ-ॿ]+/).filter(w => w.length >= 3);
+  if (!words.length) return [];
+  let matches = [];
+  DB.forEach(subj => {
+    subj.lessons.forEach(les => {
+      les.book.forEach((b, i) => {
+        const hay = (b.qEn + ' ' + b.qHi + ' ' + b.solEn).toLowerCase();
+        let score = 0;
+        words.forEach(w => { if (hay.includes(w)) score++; });
+        if (score > 0) {
+          matches.push({
+            score,
+            badge: `${subj.titleEn} • ${les.num} (Textbook #${i + 1})`,
+            qEn: b.qEn, qHi: b.qHi, solEn: b.solEn, solHi: b.solHi
+          });
+        }
+      });
+      les.guess.forEach((g, i) => {
+        const hay = (g.qEn + ' ' + g.qHi + ' ' + (g.solEn || '')).toLowerCase();
+        let score = 0;
+        words.forEach(w => { if (hay.includes(w)) score++; });
+        if (score > 0) {
+          const solE = g.marks === 1 ? `<b>Correct Answer:</b> ${g.optsEn[g.ans]}` : g.solEn;
+          const solH = g.marks === 1 ? `<b>सही उत्तर:</b> ${g.optsHi[g.ans]}` : g.solHi;
+          matches.push({
+            score,
+            badge: `${subj.titleEn} • ${les.num} (${g.marks}M Guess)`,
+            qEn: g.qEn, qHi: g.qHi, solEn: solE, solHi: solH
+          });
+        }
+      });
+    });
+  });
+  matches.sort((a, b) => b.score - a.score);
+  return matches.slice(0, 5);
+}
+
+async function solveWithRobotAI() {
+  const key = (scanState.apiKey || '').trim();
+  const page = scanState.pages[scanState.activeIdx];
+  const promptText = (scanState.queryText || '').trim();
+  if (!key) {
+    alert('लाइव AI हल के लिए पहले ऊपर अपनी फ्री Gemini API Key सेव करें (या नीचे Offline Smart Match हल देखें)।');
+    return;
+  }
+  if (!page && !promptText) {
+    alert('कृपया पहले किताब के पन्ने की फोटो चुनें या बॉक्स में अपना प्रश्न लिखें।');
+    return;
+  }
+  scanState.aiLoading = true;
+  scanState.aiResult = '';
+  render();
+
+  const sysInstruction = `You are an expert, friendly Class 10 CBSE & Haryana Board (HBSE) teacher. Explain the scanned page or question with DEEP conceptual clarity yet in VERY SIMPLE, easy-to-understand step-by-step method (सरल और गहराई से समझाने वाली विधि) in BOTH English and Hindi (हिंदी + English). Use clear headings: 1. Given / दिया है, 2. Formula / सूत्र, 3. Step-by-Step Simple Solution / सरल चरणबद्ध हल, 4. Final Answer & Exam Tip / अंतिम उत्तर व परीक्षा टिप.`;
+
+  const parts = [{ text: sysInstruction + (promptText ? `
+
+Student Question / Scanned Text:
+${promptText}` : '
+
+Please read the attached book/notebook page carefully and solve all visible questions step-by-step in simple Hindi and English.') }];
+  if (page && page.base64) {
+    parts.push({ inline_data: { mime_type: page.mimeType, data: page.base64 } });
+  }
+
+  try {
+    const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(key)}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents: [{ parts }] })
+    });
+    const data = await resp.json();
+    if (data.error) {
+      scanState.aiResult = `<div style="color:#dc2626;font-weight:700;">⚠️ API Error: ${data.error.message}</div>`;
+    } else {
+      const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response received.';
+      const formatted = raw
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
+        .replace(/
+/g, '<br>');
+      scanState.aiResult = formatted;
+      addXP(25);
+    }
+  } catch (err) {
+    scanState.aiResult = `<div style="color:#dc2626;font-weight:700;">⚠️ इंटरनेट कनेक्शन जांचें या नीचे Offline Smart Match हल देखें।</div>`;
+  }
+  scanState.aiLoading = false;
+  render();
 }
 
 function switchView(v) {
@@ -3985,6 +4282,7 @@ function renderBreadcrumb() {
     }
   } else {
     const names = {
+      scanner: '🤖 Robot Ultra-Zoom Page Scanner & Step-by-Step Solver',
       mock: '⏱️ 3-Hour Live Board Mock Test',
       cheat: '⚡ 1-Page Last-Day Formula & Reaction Cheat Sheet',
       diagrams: '🖼️ Science Diagrams & India Board Map Gallery',
@@ -4000,6 +4298,120 @@ function renderBreadcrumb() {
 function render() {
   renderBreadcrumb();
   const app = document.getElementById('app');
+
+
+  if (state.view === 'scanner') {
+    const page = scanState.pages[scanState.activeIdx];
+    const matches = findSmartBookMatches(scanState.queryText);
+    app.innerHTML = `
+      <div class="concept-card">
+        <h4>🤖 Robot Mode: Ultra-Zoom Multi-Page Scanner & Deep Step-by-Step Solver</h4>
+        <p>किताब या कॉपी के कितने भी पन्नों की फोटो खींचें या गैलरी से चुनें → <b>6x Ultra-Zoom</b> से देखें → और किसी भी विषय (Maths, Science, SST, English, Hindi) का <b>गहराई से व बिल्कुल सरल भाषा में स्टेप-बाय-स्टेप हल</b> पाएं!</p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+          <label class="sol-btn" style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;">
+            📷 Camera / Scan Pages (मल्टी-पेज)
+            <input type="file" accept="image/*" multiple capture="environment" style="display:none;" onchange="handleScanFiles(this.files)">
+          </label>
+          <label class="sol-btn" style="background:#4f46e5;display:inline-flex;align-items:center;gap:6px;cursor:pointer;">
+            🖼️ Gallery से पन्ने चुनें
+            <input type="file" accept="image/*" multiple style="display:none;" onchange="handleScanFiles(this.files)">
+          </label>
+          ${scanState.pages.length ? `<button class="tool-icon-btn" style="background:#dc2626;border:none;" onclick="scanState.pages=[];scanState.activeIdx=0;scanState.aiResult='';render();">🗑️ Clear Pages</button>` : ''}
+        </div>
+      </div>
+
+      ${scanState.pages.length ? `
+        <div class="q-card">
+          <div class="page-tabs">
+            ${scanState.pages.map((p, idx) => `
+              <button class="page-tab ${idx === scanState.activeIdx ? 'active' : ''}" onclick="scanState.activeIdx=${idx};scanState.zoom=1;scanState.panX=0;scanState.panY=0;scanState.queryText=scanState.pages[${idx}].extractedText||'';render();">
+                📄 Page ${idx + 1}
+              </button>
+            `).join('')}
+          </div>
+          <div class="scanner-stage" id="scannerStage"
+            onmousedown="scanState.dragging=true;scanState.startX=event.clientX-scanState.panX;scanState.startY=event.clientY-scanState.panY;"
+            onmousemove="if(scanState.dragging && scanState.zoom>1){scanState.panX=event.clientX-scanState.startX;scanState.panY=event.clientY-scanState.startY;setScanZoom(scanState.zoom);}"
+            onmouseup="scanState.dragging=false;"
+            onmouseleave="scanState.dragging=false;"
+            ontouchstart="if(event.touches.length===1){scanState.dragging=true;scanState.startX=event.touches[0].clientX-scanState.panX;scanState.startY=event.touches[0].clientY-scanState.panY;}"
+            ontouchmove="if(scanState.dragging && scanState.zoom>1 && event.touches.length===1){scanState.panX=event.touches[0].clientX-scanState.startX;scanState.panY=event.touches[0].clientY-scanState.startY;setScanZoom(scanState.zoom);}"
+            ontouchend="scanState.dragging=false;">
+            <img id="scanZoomImg" src="${page.dataUrl}" style="transform:translate(${scanState.panX}px,${scanState.panY}px) scale(${scanState.zoom});filter:contrast(${scanState.contrast}%) brightness(103%);" alt="Scanned Page">
+            <div class="zoom-hud">
+              <span>🔍 Ultra-Zoom: <strong id="zoomPctLabel">${scanState.zoom.toFixed(1)}x</strong></span>
+              <button class="tool-icon-btn" onclick="setScanZoom(scanState.zoom - 0.5)">-</button>
+              <input type="range" min="1" max="6" step="0.2" value="${scanState.zoom}" oninput="setScanZoom(this.value)">
+              <button class="tool-icon-btn" onclick="setScanZoom(scanState.zoom + 0.5)">+</button>
+              <button class="tool-icon-btn" onclick="setScanZoom(1)">Reset</button>
+              <span>☀️ Clarity:</span>
+              <input type="range" min="90" max="160" step="5" value="${scanState.contrast}" style="max-width:70px;" oninput="setScanContrast(this.value)">
+            </div>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
+            <button class="sol-btn" onclick="runOfflineOCR()">📝 Page से Text निकालें (OCR)</button>
+            <button class="sol-btn" style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#090d16;" onclick="solveWithRobotAI()">🤖 AI से गहरा व सरल हल निकालें</button>
+          </div>
+          ${scanState.ocrStatus ? `<div id="ocrStatusBox" style="margin-top:8px;font-size:0.84rem;font-weight:700;color:var(--primary);">${scanState.ocrStatus}</div>` : ''}
+        </div>
+      ` : ''}
+
+      <div class="q-card">
+        <div class="q-meta">
+          <span class="tag-marks">✍️ Scanned / Typed Question (किसी भी विषय का प्रश्न)</span>
+          <span class="xp-badge">🔥 ${xpData.streak} Day Streak • ⚡ ${xpData.xp} XP</span>
+        </div>
+        <textarea class="scan-textarea" placeholder="यहाँ स्कैन किया हुआ प्रश्न अपने-आप आएगा, या आप सीधे किताब/कॉपी का कोई भी सवाल टाइप या पेस्ट करें..." oninput="scanState.queryText=this.value;">${scanState.queryText}</textarea>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; align-items:center;">
+          <button class="sol-btn" onclick="render()">🔍 Offline Smart Match हल देखें (0 सेकंड)</button>
+          <button class="sol-btn" style="background:linear-gradient(135deg,#4f46e5,#3730a3);" onclick="solveWithRobotAI()">${scanState.aiLoading ? '⏳ Robot AI हल निकाल रहा है...' : '✨ Deep AI Step-by-Step हल'}</button>
+        </div>
+
+        <details style="margin-top:12px; font-size:0.82rem; color:var(--muted);">
+          <summary style="cursor:pointer; font-weight:700; color:var(--primary);">⚙️ Optional: Live AI Solver के लिए अपनी Free Gemini API Key सेट करें</summary>
+          <div style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap;">
+            <input type="password" value="${scanState.apiKey}" placeholder="Paste Free Gemini API Key (AIza...)" style="flex:1;min-width:200px;padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:var(--sub-bg);color:var(--text);" oninput="scanState.apiKey=this.value;SafeStore.set('c10_gemini_key',this.value);">
+            <span style="font-size:0.76rem;">(Key केवल आपके फोन में सुरक्षित रहती है; बिना Key के भी नीचे Offline Smart Match हमेशा काम करेगा।)</span>
+          </div>
+        </details>
+      </div>
+
+      ${scanState.aiResult ? `
+        <div class="q-card" style="border:2px solid #10b981;">
+          <div class="q-meta">
+            <span class="tag-marks" style="background:#dcfce7;color:#14532d;">🤖 Robot AI — सरल एवं गहराई से चरणबद्ध हल</span>
+            <div>
+              <button class="voice-btn" onclick="speakText(document.getElementById('aiSolContent').innerHTML)">🔊 सुनें</button>
+              <button class="tool-icon-btn" style="background:#64748b;border:none;" onclick="stopSpeaking()">⏹️</button>
+            </div>
+          </div>
+          <div id="aiSolContent" style="font-size:0.93rem; line-height:1.7;">${scanState.aiResult}</div>
+        </div>
+      ` : ''}
+
+      ${matches.length ? `
+        <div class="concept-card">
+          <h4>📚 Instant Offline Book & Guess Paper Matches (${matches.length} सटीक उत्तर मिले)</h4>
+          <p>आपके प्रश्न से मिलते-जुलते पाठ के असली प्रश्न और मास्टर जी जैसे सरल हल:</p>
+        </div>
+        ${matches.map((m, idx) => `
+          <div class="q-card">
+            <div class="q-meta">
+              <span class="tag-marks">${m.badge}</span>
+              <button class="voice-btn" onclick="speakText(document.getElementById('matchSol_${idx}').innerHTML)">🔊 सुनें</button>
+            </div>
+            <div class="q-text">${m.qEn}</div>
+            ${state.medium === 'hi' ? `<div class="hi-sub">${m.qHi}</div>` : ''}
+            <div class="sol-box open" id="matchSol_${idx}">
+              <div>${m.solEn}</div>
+              ${state.medium === 'hi' ? `<hr style="border:none;border-top:1px dashed #86efac;margin:8px 0;"><div>${m.solHi}</div>` : ''}
+            </div>
+          </div>
+        `).join('')}
+      ` : (scanState.queryText.trim().length >= 3 ? `<div class="q-card">इस प्रश्न के लिए ऑफलाइन बुक डेटाबेस में सीधा मिलान नहीं मिला — ऊपर <b>"✨ Deep AI Step-by-Step हल"</b> दबाकर किसी भी बाहरी प्रश्न का पूरा हल तुरंत पाएं!</div>` : '')}
+    `;
+    return;
+  }
 
   if (state.view === 'mock') {
     if (!state.mockActive) {
@@ -4270,7 +4682,7 @@ function render() {
       <div class="progress-banner">
         <div class="pbar-wrap">
           <div style="display:flex;justify-content:space-between;font-size:0.84rem;font-weight:700;">
-            <span>📊 Overall Practice Progress (MCQ Solved: ${solvedCount} / ${allMcqs.length})</span>
+            <span>📊 Progress: ${solvedCount}/${allMcqs.length} MCQs • <span class='xp-badge'>🔥 ${xpData.streak}d Streak • ⚡ ${xpData.xp} XP (${getRankTitle(xpData.xp)})</span></span>
             <span>${progressPct}%</span>
           </div>
           <div class="pbar-track"><div class="pbar-fill" style="width:${progressPct}%"></div></div>
@@ -4352,7 +4764,7 @@ function render() {
           </div>
           <div class="q-text">${item.qEn}</div>
           ${state.medium === 'hi' ? `<div class="hi-sub">${item.qHi}</div>` : ''}
-          <button class="sol-btn" onclick="toggleSol('bsol_${idx}')">Show / Hide Complete Solution (हल देखें)</button>
+          <button class="sol-btn" onclick="toggleSol('bsol_${idx}')">Show / Hide Solution (हल देखें)</button><button class="voice-btn" onclick="speakText(document.getElementById('bsol_${idx}').innerHTML)">🔊 सुनें</button>
           <div class="sol-box open" id="bsol_${idx}">
             <div>${item.solEn}</div>
             ${state.medium === 'hi' ? `<hr style="border:none; border-top:1px dashed #86efac; margin:8px 0;"><div>${item.solHi}</div>` : ''}
