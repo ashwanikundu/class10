@@ -4048,7 +4048,7 @@ _Bahubali Hyper-AI v20_`;
     // =========================================================
     // SALT & BIO MASTER DATABASE (HYPER-AI CHEMICAL DIRECTORY)
     // =========================================================
-    const saltMasterDatabase = [
+    const saltMasterDatabase = window.saltMasterDatabase = [
         // --- 1. BIOLOGICAL PRODUCTS ---
         {
             id: "s_bio1", cat: "bio", badgeClass: "badge-bio", badgeText: "🌿 बायो-फंगसाइड",
@@ -4464,7 +4464,7 @@ _Bahubali Hyper-AI v20_`;
         const rawQuery = (document.getElementById("salt-search-input").value || "").trim().toLowerCase();
         const container = document.getElementById("salt-list-container");
 
-        if (!window.saltMasterDatabase || !Array.isArray(saltMasterDatabase)) {
+        if (typeof saltMasterDatabase === 'undefined' || !Array.isArray(saltMasterDatabase)) {
             container.innerHTML = `<div style="text-align:center; padding:20px; color:#fca5a5;">⚠️ डेटाबेस लोड हो रहा है... कृपया पुनः प्रयास करें।</div>`;
             return;
         }
