@@ -213,8 +213,8 @@
         /* Primary Section Switcher (Mosam vs Mandi) */
         .main-nav {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
             background: var(--bg-card);
             padding: 5px;
             border-radius: 13px;
@@ -1062,6 +1062,216 @@
             color: var(--text-muted);
             padding-top: 6px;
         }
+    
+        /* ========================================================= */
+        /* FASAL MASTER (CROP STAGES, DOSE CALCULATOR & TIMELINE)    */
+        /* ========================================================= */
+        .fasal-setup-card {
+            background: linear-gradient(145deg, rgba(6, 78, 59, 0.45), rgba(15, 23, 42, 0.92));
+            border: 1px solid rgba(52, 211, 153, 0.38);
+            border-radius: 15px;
+            padding: 13px;
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .fasal-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .fasal-top-row h3 {
+            font-size: 13.5px;
+            font-weight: 800;
+            color: #6ee7b7;
+        }
+
+        .fasal-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 7px;
+        }
+
+        .fasal-input-grp label {
+            display: block;
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-bottom: 3px;
+            font-weight: 700;
+        }
+
+        .fasal-progress-wrap {
+            background: rgba(11, 18, 33, 0.82);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 10px;
+            padding: 8px 10px;
+        }
+
+        .fp-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .fp-track {
+            height: 8px;
+            background: #1e293b;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .fp-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #10b981, #38bdf8);
+            border-radius: 6px;
+            transition: width 0.35s ease;
+        }
+
+        .fasal-dose-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            border-radius: 14px;
+            padding: 12px 13px;
+        }
+
+        .dose-grid-4 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 7px;
+            margin-top: 8px;
+        }
+
+        .dose-pill {
+            background: var(--bg-elevated);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 8px 9px;
+        }
+
+        .dose-pill span {
+            display: block;
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+
+        .dose-pill strong {
+            font-size: 12.5px;
+            font-weight: 800;
+            color: #fde68a;
+        }
+
+        .fasal-weather-guard {
+            background: rgba(2, 132, 199, 0.16);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            border-left: 4px solid #38bdf8;
+            border-radius: 11px;
+            padding: 9px 11px;
+            font-size: 11.5px;
+            color: #e0f2fe;
+            line-height: 1.4;
+        }
+
+        .stage-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-left: 4px solid #38bdf8;
+            border-radius: 13px;
+            padding: 12px 13px;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            transition: opacity 0.2s ease, border-color 0.2s ease;
+        }
+
+        .stage-card.active-stage {
+            border-color: rgba(245, 158, 11, 0.55);
+            border-left: 4px solid #f59e0b;
+            background: linear-gradient(145deg, rgba(245, 158, 11, 0.1), var(--bg-card));
+        }
+
+        .stage-card.done-stage {
+            border-left: 4px solid #10b981;
+            opacity: 0.78;
+        }
+
+        .st-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .st-day-badge {
+            font-size: 10.5px;
+            font-weight: 800;
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.14);
+            padding: 2px 7px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 3px;
+        }
+
+        .st-title {
+            font-size: 13.5px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .st-status-pill {
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 10px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .st-dose-box {
+            background: rgba(11, 18, 33, 0.82);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            border-radius: 8px;
+            padding: 7px 9px;
+            font-size: 11.5px;
+            color: #a7f3d0;
+            font-weight: 700;
+        }
+
+        .st-desc {
+            font-size: 11.5px;
+            color: #cbd5e1;
+            line-height: 1.45;
+        }
+
+        .st-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 4px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .st-done-btn {
+            background: rgba(16, 185, 129, 0.18);
+            border: 1px solid #10b981;
+            color: #6ee7b7;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .st-done-btn.is-done {
+            background: #10b981;
+            color: #04130e;
+        }
+
     </style>
 </head>
 <body>
@@ -1095,8 +1305,9 @@
 
     <!-- Primary Tab Switcher: Mosam vs Mandi -->
     <nav class="main-nav">
-        <button class="main-nav-btn active" id="nav-mosam" onclick="switchPrimaryTab('mosam')">🛰️ AI मौसम (5 ऐप्स)</button>
-        <button class="main-nav-btn" id="nav-mandi" onclick="switchPrimaryTab('mandi')">🌾 Live e-NAM मंडी</button>
+        <button class="main-nav-btn active" id="nav-mosam" onclick="switchPrimaryTab('mosam')">🛰️ AI मौसम</button>
+        <button class="main-nav-btn" id="nav-mandi" onclick="switchPrimaryTab('mandi')">🌾 Live मंडी</button>
+        <button class="main-nav-btn" id="nav-fasal" onclick="switchPrimaryTab('fasal')">🌱 फसल चरण</button>
     </nav>
 
     <!-- ================================================= -->
@@ -1510,6 +1721,82 @@
 
     </div>
 
+
+    <!-- ================================================= -->
+    <!-- PANEL 3: FASAL MASTER (GROWTH STAGES & DOSES)     -->
+    <!-- ================================================= -->
+    <div id="panel-fasal" class="view-panel">
+
+        <!-- Crop, Variety, Acres & Sowing Setup -->
+        <section class="fasal-setup-card">
+            <div class="fasal-top-row">
+                <h3>🌱 फसल चक्र एवं चरण मास्टर</h3>
+                <button class="wa-share-btn" onclick="shareFasalScheduleWA()">📲 शेड्यूल भेजें</button>
+            </div>
+
+            <div class="fasal-grid-2">
+                <div class="fasal-input-grp">
+                    <label>फसल चुनें (Crop)</label>
+                    <select class="calc-field" id="fasal-crop-sel" onchange="onFasalCropChange()">
+                        <option value="wheat">🌾 गेहूं (Wheat)</option>
+                        <option value="paddy">🌱 धान (Paddy)</option>
+                        <option value="mustard">🌼 सरसों (Mustard)</option>
+                        <option value="barseem">🌿 बरसीम (हरा चारा)</option>
+                        <option value="cotton">☁️ कपास / नरमा</option>
+                        <option value="sugarcane">🎋 गन्ना (Sugarcane)</option>
+                    </select>
+                </div>
+                <div class="fasal-input-grp">
+                    <label>किस्म (Variety)</label>
+                    <select class="calc-field" id="fasal-variety-sel" onchange="renderFasalTimeline()"></select>
+                </div>
+            </div>
+
+            <div class="fasal-grid-2">
+                <div class="fasal-input-grp">
+                    <label>कुल रकबा (एकड़ में)</label>
+                    <input type="number" class="calc-field" id="fasal-acres-input" value="5" min="0.5" max="200" step="0.5" oninput="saveFasalAcresAndRender()">
+                </div>
+                <div class="fasal-input-grp">
+                    <label>बुआई / रोपाई तारीख</label>
+                    <input type="date" class="calc-field" id="fasal-sowing-input" onchange="onFasalSowingChange()">
+                </div>
+            </div>
+
+            <div class="fasal-progress-wrap">
+                <div class="fp-meta">
+                    <span id="fasal-age-badge" style="color:#38bdf8;">फसल उम्र: -- दिन</span>
+                    <span id="fasal-progress-txt" style="color:#6ee7b7;">0 / 6 चरण पूर्ण</span>
+                </div>
+                <div class="fp-track">
+                    <div class="fp-fill" id="fasal-progress-bar"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Weather-Synced Field Action Guard -->
+        <div class="fasal-weather-guard" id="fasal-weather-guard">
+            🛰️ लाइव मौसम सिंक: आज खेत में छिड़काव व सिंचाई के लिए स्थिति की जाँच हो रही है...
+        </div>
+
+        <!-- Auto Seed, Fertilizer & Cost Calculator for Selected Acres -->
+        <section class="fasal-dose-card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:12.5px; font-weight:800; color:#fbbf24;" id="fasal-dose-header">🧮 5 एकड़ के लिए कुल खाद-बीज हिसाब</span>
+                <span style="font-size:10px; color:var(--text-secondary);">ICAR / HAU मानक</span>
+            </div>
+            <div class="dose-grid-4" id="fasal-dose-grid">
+                <!-- Populated by JS -->
+            </div>
+        </section>
+
+        <!-- Day 0 to Harvest Stage-by-Stage Timeline -->
+        <div id="fasal-timeline-container" style="display:flex; flex-direction:column; gap:9px;">
+            <!-- Populated by JS -->
+        </div>
+
+    </div>
+
     <footer class="portal-footer">
         BAHUBALI HYPER-AI v20.0 • 3-Model Consensus • Root-Zone & GDD • Zero-Crash
     </footer>
@@ -1519,7 +1806,7 @@
     // =========================================================
     // SHARED UNIFIED WEATHER BRAIN + GROUND TRUTH STORAGE
     // =========================================================
-    const CACHE_KEY = "bahubali_weather_v20_cache";
+    const CACHE_KEY = "bahubali_weather_hyper_v20_cache";
     const IRR_STORAGE_KEY = "bahubali_field_irrigation_v20";
     const SOWING_STORAGE_KEY = "bahubali_sowing_dates_v20";
     const ALARM_STORAGE_KEY = "bahubali_mandi_alarm_v20";
@@ -1577,10 +1864,16 @@
     }
 
     function switchPrimaryTab(tabName) {
-        document.getElementById("nav-mosam").classList.toggle("active", tabName === "mosam");
-        document.getElementById("nav-mandi").classList.toggle("active", tabName === "mandi");
-        document.getElementById("panel-mosam").classList.toggle("active", tabName === "mosam");
-        document.getElementById("panel-mandi").classList.toggle("active", tabName === "mandi");
+        ["mosam", "mandi", "fasal"].forEach(t => {
+            const navEl = document.getElementById("nav-" + t);
+            const panEl = document.getElementById("panel-" + t);
+            if (navEl) navEl.classList.toggle("active", tabName === t);
+            if (panEl) panEl.classList.toggle("active", tabName === t);
+        });
+        if (tabName === "fasal") {
+            syncFasalFromGlobal();
+            renderFasalTimeline();
+        }
     }
 
     function switchWeatherEngine(engName) {
@@ -2041,14 +2334,20 @@ _Sent via Bahubali Legend v20_`;
 
         document.getElementById("master-loc").innerText = s.locName;
 
-        // 3-Model Consensus & Barometric Storm Detector UI
-        document.getElementById("mv-ecmwf").innerText = s.ecmwfSummary;
-        document.getElementById("mv-gfs").innerText = s.gfsSummary;
-        document.getElementById("mv-icon").innerText = s.iconSummary;
+        // 3-Model Consensus & Barometric Storm Detector UI (Null-Safe)
+        const safeEcmwf = s.ecmwfSummary || `${s.temp}°C • ${s.rainProb}%`;
+        const safeGfs = s.gfsSummary || `${s.temp}°C • ${s.rainProb}%`;
+        const safeIcon = s.iconSummary || `${s.temp}°C • ${s.rainProb}%`;
+        const safeConf = (typeof s.confidencePct === "number" && !isNaN(s.confidencePct)) ? s.confidencePct : 98;
+        s.confidencePct = safeConf;
+
+        document.getElementById("mv-ecmwf").innerText = safeEcmwf;
+        document.getElementById("mv-gfs").innerText = safeGfs;
+        document.getElementById("mv-icon").innerText = safeIcon;
 
         const confBadge = document.getElementById("model-conf-badge");
-        confBadge.innerText = `${s.confidencePct}% पक्की रिपोर्ट`;
-        if (s.confidencePct >= 90) {
+        confBadge.innerText = `${safeConf}% पक्की रिपोर्ट`;
+        if (safeConf >= 90) {
             confBadge.style.background = "rgba(16, 185, 129, 0.2)";
             confBadge.style.borderColor = "#10b981";
             confBadge.style.color = "#6ee7b7";
@@ -2704,6 +3003,507 @@ _Sent via Bahubali Legend v20_`;
         checkTargetRateAlarm();
     }
 
+
+    // =========================================================
+    // FASAL MASTER ENGINE (DAY 0 TO HARVEST TIMELINE & DOSES)
+    // =========================================================
+    const FASAL_ACRES_KEY = "bahubali_fasal_acres_v20";
+    const FASAL_DONE_KEY = "bahubali_fasal_done_v20";
+
+    const fasalDatabase = {
+        wheat: {
+            name: "गेहूं (Wheat)",
+            varieties: ["DBW 327 (करण शिवानी)", "DBW 187 (करण वंदना)", "HD 2967", "HD 3086"],
+            seedPerAcreKg: 40,
+            dapBagsPerAcre: 1.1,
+            ureaBagsPerAcre: 2.5,
+            mopBagsPerAcre: 0.5,
+            extraNote: "जिंक 5kg + सल्फर/जिप्सम",
+            estCostPerAcre: 5400,
+            stages: [
+                {
+                    id: "w_d0", startDay: 0, endDay: 2, dayLabel: "Day 0 (बिजाई समय)",
+                    title: "भूमि तैयारी, बीज उपचार व बेसल खाद",
+                    perAcreDose: "40 kg बीज + 55 kg DAP (1.1 बैग) + 25 kg पोटाश (MOP)",
+                    calcFn: (ac) => `${Math.round(40*ac)} kg बीज • ${(1.1*ac).toFixed(1)} बैग DAP • ${(0.5*ac).toFixed(1)} बैग पोटाश`,
+                    desc: "सबसॉइलर व जिप्सम सुधारी भूमि में रोटावेटर चलाकर 40 kg/एकड़ बीज से बिजाई करें। दीमक से बचाव हेतु क्लोरपायरीफॉस या फिप्रोनिल से बीज उपचार करें।"
+                },
+                {
+                    id: "w_d21", startDay: 20, endDay: 26, dayLabel: "Day 21–25 (CRI अवस्था)",
+                    title: "पहली सिंचाई व कल्ले फुटाव खुराक",
+                    perAcreDose: "45 kg यूरिया (1 बैग) + 5 kg जिंक सल्फेट (33%)",
+                    calcFn: (ac) => `${(1*ac).toFixed(1)} बैग यूरिया (${Math.round(45*ac)} kg) + ${Math.round(5*ac)} kg जिंक`,
+                    desc: "जड़ जमाव (CRI) पर 6h नहर या मीठे ट्यूबवेल से पहली हल्की सिंचाई करें। सिंचाई से ठीक पहले यूरिया व जिंक मिलाकर बिखेरें।"
+                },
+                {
+                    id: "w_d32", startDay: 30, endDay: 38, dayLabel: "Day 30–35 (खरपतवार नियंत्रण)",
+                    title: "मंडूसी (गिल्ली डंडा) व चौड़ी पत्ती स्प्रे",
+                    perAcreDose: "Topik (Clodinafop) 160g या Leader (Sulfosulfuron) 13.5g",
+                    calcFn: (ac) => `Topik ${Math.round(160*ac)}g या Leader ${(13.5*ac).toFixed(1)}g (150L पानी/एकड़)`,
+                    desc: "गुल्ली-डंडा 2-3 पत्ती का होने पर कट-नोज़ल से साफ धूप में स्प्रे करें। चौड़ी पत्ती के लिए Metsulfuron (Algrip) 8g/एकड़ मिलाएं।"
+                },
+                {
+                    id: "w_d45", startDay: 42, endDay: 52, dayLabel: "Day 45–50 (दूसरी सिंचाई व यूरिया)",
+                    title: "अधिकतम फुटाव (Tillering) पोषण",
+                    perAcreDose: "45–55 kg यूरिया + 2 kg सागरिका / ह्यूमिक ग्रैन्यूल",
+                    calcFn: (ac) => `${(1.1*ac).toFixed(1)} बैग यूरिया (${Math.round(50*ac)} kg) + ${Math.round(2*ac)} kg ग्रोथ बूस्टर`,
+                    desc: "दूसरी सिंचाई के साथ बची हुई यूरिया की अंतिम खुराक पूरी करें। 50 दिन के बाद यूरिया न डालें ताकि फसल गिरे नहीं।"
+                },
+                {
+                    id: "w_d75", startDay: 72, endDay: 85, dayLabel: "Day 75–85 (गाभ व बाली अवस्था)",
+                    title: "पीला रतुआ सुरक्षा व बाली पोषण स्प्रे",
+                    perAcreDose: "NPK 0:52:34 (1 kg) + बोरॉन 100g + Propiconazole 200ml",
+                    calcFn: (ac) => `NPK 0:52:34 ${ac} kg + Propiconazole ${Math.round(200*ac)} ml`,
+                    desc: "गाभ अवस्था में पोटाश व बोरॉन के स्प्रे से बालियां लंबी व दाने भरपूर बनते हैं। पत्तियों पर पीली धारियां दिखने पर तुरंत Propiconazole करें।"
+                },
+                {
+                    id: "w_d105", startDay: 100, endDay: 115, dayLabel: "Day 100–112 (दूधिया अवस्था)",
+                    title: "दाना भराव व लू/गर्मी से बचाव (Terminal Heat)",
+                    perAcreDose: "NPK 13:0:45 (1 kg/एकड़) + हल्की सिंचाई (हवा शांत होने पर)",
+                    calcFn: (ac) => `NPK 13:0:45 (${ac} kg) + शाम को हल्की सिंचाई`,
+                    desc: "फरवरी-मार्च में तापमान 30°C से ऊपर जाने पर दाना पिचकने से बचाने के लिए NPK 13:0:45 का स्प्रे करें। तेज हवा में पानी न लगाएं।"
+                },
+                {
+                    id: "w_d140", startDay: 135, endDay: 150, dayLabel: "Day 138–145 (कटाई व मंडी)",
+                    title: "कटाई व पिल्लूखेड़ा मंडी बिक्री",
+                    perAcreDose: "दाना नमी 12% से कम होने पर कंबाइन कटाई",
+                    calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(23*ac)} से ${Math.round(26*ac)} क्विंटल`,
+                    desc: "दाने सख्त व सुनहरे होने पर कटाई करें। पिल्लूखेड़ा या जींद मंडी में सरकारी MSP ₹2,610/क्विं. पर बिक्री हेतु नमी 12% रखें।"
+                }
+            ]
+        },
+        paddy: {
+            name: "धान (Paddy)",
+            varieties: ["PR 126 (कम अवधि)", "PB 1847 (बासमती)", "VNR 2222 (हाइब्रिड)", "PB 1718"],
+            seedPerAcreKg: 6,
+            dapBagsPerAcre: 1.0,
+            ureaBagsPerAcre: 2.5,
+            mopBagsPerAcre: 0.5,
+            extraNote: "जिंक 10kg + फेरस सल्फेट",
+            estCostPerAcre: 6200,
+            stages: [
+                {
+                    id: "p_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (रोपाई समय)",
+                    title: "कद्दू (Puddling), रोपाई व बेसल खाद",
+                    perAcreDose: "50 kg DAP (1 बैग) + 25 kg पोटाश + Pretilachlor खरपतवारनाशी",
+                    calcFn: (ac) => `${(1*ac).toFixed(1)} बैग DAP + ${(0.5*ac).toFixed(1)} बैग पोटाश + ${Math.round(600*ac)}ml Pretilachlor`,
+                    desc: "रोपाई के 2–3 दिन के अंदर रेत में मिलाकर Pretilachlor छिड़कें ताकि सांवक व मोथा न उगे। 2–3 सेमी पानी बनाए रखें।"
+                },
+                {
+                    id: "p_d15", startDay: 14, endDay: 20, dayLabel: "Day 15–18 (पहली यूरिया व जिंक)",
+                    title: "जड़ विकास व शुरुआती कल्ले",
+                    perAcreDose: "45 kg यूरिया (1 बैग) + 10 kg जिंक सल्फेट (21%)",
+                    calcFn: (ac) => `${(1*ac).toFixed(1)} बैग यूरिया + ${Math.round(10*ac)} kg जिंक सल्फेट`,
+                    desc: "खैरा रोग (पत्तियों पर कत्थई धब्बे) से बचाव के लिए यूरिया के साथ जिंक सल्फेट अवश्य दें।"
+                },
+                {
+                    id: "p_d25", startDay: 22, endDay: 30, dayLabel: "Day 22–28 (खरपतवार व फुटाव)",
+                    title: "बचे हुए खरपतवार नियंत्रण (Nominee Gold)",
+                    perAcreDose: "Bispyribac Sodium (Nominee Gold) 80–100 ml/एकड़",
+                    calcFn: (ac) => `Nominee Gold ${Math.round(90*ac)} ml (खेत से पानी निकालकर स्प्रे)`,
+                    desc: "स्प्रे से एक दिन पहले खेत का पानी निकाल दें और स्प्रे के 24 घंटे बाद दोबारा हल्का पानी भरें।"
+                },
+                {
+                    id: "p_d42", startDay: 38, endDay: 48, dayLabel: "Day 40–45 (अंतिम यूरिया व पत्ता लपेट)",
+                    title: "अधिकतम कल्ले व कीट सुरक्षा",
+                    perAcreDose: "45 kg यूरिया + Cartap Hydrochloride 7.5 kg (जरूरत पर)",
+                    calcFn: (ac) => `${(1*ac).toFixed(1)} बैग यूरिया + Cartap ${(7.5*ac).toFixed(1)} kg`,
+                    desc: "45 दिन के बाद यूरिया बंद कर दें। पत्ता लपेट सुंडी या तना छेदक दिखने पर दानेदार दवा का प्रयोग करें।"
+                },
+                {
+                    id: "p_d65", startDay: 60, endDay: 72, dayLabel: "Day 62–70 (गोभ अवस्था / Booting)",
+                    title: "बाली निकलने व शीथ ब्लाइट सुरक्षा",
+                    perAcreDose: "Azoxystrobin + Tebuconazole 200ml + NPK 0:52:34 (1 kg)",
+                    calcFn: (ac) => `फफूंदनाशक ${Math.round(200*ac)} ml + NPK 0:52:34 (${ac} kg)`,
+                    desc: "गर्दन तोड़ (Neck Blast) व शीथ ब्लाइट से बचाव के लिए बाली निकलने से ठीक पहले फफूंदनाशक का स्प्रे करें।"
+                },
+                {
+                    id: "p_d110", startDay: 105, endDay: 125, dayLabel: "Day 105–120 (कटाई व मंडी)",
+                    title: "कटाई व e-NAM मंडी बिक्री",
+                    perAcreDose: "85% बालियां पकने पर कटाई (नमी < 17%)",
+                    calcFn: (ac) => `अनुमानित पैदावार: PR126 ~${Math.round(30*ac)} क्विं. / बासमती ~${Math.round(21*ac)} क्विं.`,
+                    desc: "कटाई से 10 दिन पहले सिंचाई बंद कर दें। पिल्लूखेड़ा या सफीदों मंडी में ले जाने से पहले ओस सूखने दें।"
+                }
+            ]
+        },
+        mustard: {
+            name: "सरसों (Mustard)",
+            varieties: ["RH 725 (उच्च तेल)", "Pioneer 45S46", "RH 749", "RH 1424"],
+            seedPerAcreKg: 1.5,
+            dapBagsPerAcre: 0.8,
+            ureaBagsPerAcre: 1.5,
+            mopBagsPerAcre: 0.3,
+            extraNote: "बेंटोनाइट सल्फर 10kg/एकड़",
+            estCostPerAcre: 3600,
+            stages: [
+                {
+                    id: "m_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (बिजाई समय)",
+                    title: "बिजाई, सल्फर व बेसल खाद",
+                    perAcreDose: "1.5 kg बीज + 40 kg DAP + 10 kg बेंटोनाइट सल्फर",
+                    calcFn: (ac) => `${(1.5*ac).toFixed(1)} kg बीज • ${(0.8*ac).toFixed(1)} बैग DAP • ${Math.round(10*ac)} kg सल्फर`,
+                    desc: "सरसों में तेल की मात्रा बढ़ाने के लिए सल्फर (गंधक) अनिवार्य है। कतार से कतार की दूरी 45 सेमी रखें।"
+                },
+                {
+                    id: "m_d20", startDay: 18, endDay: 24, dayLabel: "Day 18–22 (छंटाई / Thinning)",
+                    title: "पौधों की विरलीकरण (छंटाई)",
+                    perAcreDose: "पौधे से पौधे की दूरी 15 सेमी रखें",
+                    calcFn: (ac) => `${ac} एकड़ में घने पौधे निकालें`,
+                    desc: "घने पौधे निकालने से मुख्य तना मोटा होता है और नीचे से ज्यादा शाखाएं फूटती हैं।"
+                },
+                {
+                    id: "m_d32", startDay: 30, endDay: 38, dayLabel: "Day 30–35 (पहली सिंचाई)",
+                    title: "फूल आने से पहले पहली सिंचाई व यूरिया",
+                    perAcreDose: "35–40 kg यूरिया + हल्की सिंचाई",
+                    calcFn: (ac) => `${Math.round(35*ac)} kg यूरिया + हल्का पानी`,
+                    desc: "बिजाई के 30–35 दिन बाद हल्की सिंचाई करें। सरसों में पानी खड़ा न होने दें वरना जड़ गलन हो सकती है।"
+                },
+                {
+                    id: "m_d60", startDay: 55, endDay: 70, dayLabel: "Day 55–68 (फूल व फली बनना)",
+                    title: "सफेद रतुआ (White Rust) व चेपा निगरानी",
+                    perAcreDose: "Mancozeb 400g + बोरॉन 100g (जरूरत पर Thiamethoxam 40g)",
+                    calcFn: (ac) => `Mancozeb ${Math.round(400*ac)}g + बोरॉन ${Math.round(100*ac)}g`,
+                    desc: "बादल व नमी रहने पर सफेद रतुआ और चेपा (Aphid) की जाँच करें। बोरॉन स्प्रे से फलियों में दाने पूरे भरते हैं।"
+                },
+                {
+                    id: "m_d125", startDay: 120, endDay: 135, dayLabel: "Day 122–132 (कटाई)",
+                    title: "75% फलियां पीली पड़ने पर कटाई",
+                    perAcreDose: "सुबह ओस में कटाई करें ताकि फलियां न चटकें",
+                    calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(9*ac)} से ${Math.round(11*ac)} क्विंटल`,
+                    desc: "कटाई के बाद 4–5 दिन सुखाकर थ्रेशिंग करें और ₹6,613/क्विं. MSP पर बिक्री करें।"
+                }
+            ]
+        },
+        barseem: {
+            name: "बरसीम (हरा चारा)",
+            varieties: ["BL 42 (अधिक कटाई)", "Mescavi", "BL 10"],
+            seedPerAcreKg: 10,
+            dapBagsPerAcre: 1.0,
+            ureaBagsPerAcre: 1.5,
+            mopBagsPerAcre: 0.0,
+            extraNote: "राइजोबियम कल्चर + सरसों 500g",
+            estCostPerAcre: 3400,
+            stages: [
+                {
+                    id: "b_d0", startDay: 0, endDay: 3, dayLabel: "Day 0 (बिजाई)",
+                    title: "खड़े पानी में छिड़काव बिजाई",
+                    perAcreDose: "10 kg बरसीम बीज + 500g सरसों + 50 kg DAP",
+                    calcFn: (ac) => `${Math.round(10*ac)} kg बरसीम बीज + ${(1*ac).toFixed(1)} बैग DAP`,
+                    desc: "कश्नी के बीज निकालकर पानी में भिगोएं, राइजोबियम टीका लगाकर शाम को खड़े पानी में छींटा दें।"
+                },
+                {
+                    id: "b_d45", startDay: 42, endDay: 50, dayLabel: "Day 45–48 (पहली कटाई)",
+                    title: "पहली कटाई व फुटाव बूस्टर खुराक",
+                    perAcreDose: "कटाई के बाद 15–20 kg यूरिया + सिंचाई",
+                    calcFn: (ac) => `${Math.round(18*ac)} kg यूरिया + हल्की सिंचाई`,
+                    desc: "जमीन से 4–5 सेमी ऊपर कटाई करें ताकि नीचे से नए कल्ले तेजी से निकलें।"
+                },
+                {
+                    id: "b_d75", startDay: 70, endDay: 80, dayLabel: "Day 72–76 (दूसरी कटाई)",
+                    title: "दूसरी कटाई व जिंक-ह्यूमिक स्प्रे",
+                    perAcreDose: "15 kg यूरिया + सिंचाई (हर 15 दिन में पानी)",
+                    calcFn: (ac) => `${Math.round(15*ac)} kg यूरिया + सिंचाई`,
+                    desc: "पशुओं के लिए पौष्टिक व मुलायम चारे हेतु 25–28 दिन के अंतराल पर कटाई जारी रखें।"
+                },
+                {
+                    id: "b_d105", startDay: 98, endDay: 112, dayLabel: "Day 100–105 (तीसरी/चौथी कटाई)",
+                    title: "निरंतर चारा उत्पादन चक्र",
+                    perAcreDose: "15 kg यूरिया + NPK 19:19:19 (1 kg स्प्रे)",
+                    calcFn: (ac) => `${Math.round(15*ac)} kg यूरिया + ${ac} kg NPK 19:19:19`,
+                    desc: "गर्मी बढ़ने पर हर 10–12 दिन में हल्की सिंचाई करें।"
+                }
+            ]
+        },
+        cotton: {
+            name: "कपास / नरमा",
+            varieties: ["RCH 773 BG-II", "US 51", "RCH 650 BG-II"],
+            seedPerAcreKg: 1.0,
+            dapBagsPerAcre: 1.0,
+            ureaBagsPerAcre: 2.0,
+            mopBagsPerAcre: 0.5,
+            extraNote: "मैग्नीशियम सल्फेट 10kg",
+            estCostPerAcre: 5800,
+            stages: [
+                {
+                    id: "c_d0", startDay: 0, endDay: 4, dayLabel: "Day 0 (बिजाई)",
+                    title: "पलेवा के बाद सीड ड्रिल बिजाई",
+                    perAcreDose: "2 पैकेट (950g) BG-II बीज + 50 kg DAP + 25 kg पोटाश",
+                    calcFn: (ac) => `${Math.round(2*ac)} पैकेट बीज + ${(1*ac).toFixed(1)} बैग DAP`,
+                    desc: "गहरी जुताई के बाद पलेवा करके सुबह-शाम के समय बिजाई करें।"
+                },
+                {
+                    id: "c_d40", startDay: 35, endDay: 48, dayLabel: "Day 38–45 (पहली सिंचाई व गुड़ाई)",
+                    title: "पहली सिंचाई, यूरिया व रसचूसक कीट नियंत्रण",
+                    perAcreDose: "45 kg यूरिया + सफेद मक्खी/हरा तेला निगरानी",
+                    calcFn: (ac) => `${(1*ac).toFixed(1)} बैग यूरिया + पीले चिपचिपे कार्ड`,
+                    desc: "पहली सिंचाई यथासंभव 40–45 दिन तक रोककर करें ताकि जड़ें गहरी जाएं।"
+                },
+                {
+                    id: "c_d75", startDay: 70, endDay: 85, dayLabel: "Day 72–82 (फूल व टिंडे बनना)",
+                    title: "टिंडा भराव व गुलाबी सुंडी सुरक्षा",
+                    perAcreDose: "NPK 13:0:45 (1 kg) + मैग्नीशियम सल्फेट 1 kg स्प्रे",
+                    calcFn: (ac) => `NPK 13:0:45 (${ac} kg) + MgSO4 (${ac} kg)`,
+                    desc: "लाल पत्ती रोग व फूल झड़ने से रोकने के लिए पोटाश व मैग्नीशियम का छिड़काव करें।"
+                },
+                {
+                    id: "c_d140", startDay: 135, endDay: 165, dayLabel: "Day 140–160 (चुगाई)",
+                    title: "साफ व सूखी रुई की चुगाई",
+                    perAcreDose: "ओस सूखने के बाद चुगाई (MSP ₹8,110/क्विं.)",
+                    calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(9*ac)} से ${Math.round(12*ac)} क्विंटल`,
+                    desc: "चुगाई के बाद नरमे को सूखे फर्श पर रखें और जींद मंडी में बिक्री करें।"
+                }
+            ]
+        },
+        sugarcane: {
+            name: "गन्ना (Sugarcane)",
+            varieties: ["Co 0238", "Co 15023", "CoH 160"],
+            seedPerAcreKg: 2800,
+            dapBagsPerAcre: 1.5,
+            ureaBagsPerAcre: 3.0,
+            mopBagsPerAcre: 0.8,
+            extraNote: "फिप्रोनिल / क्लोरपायरीफॉस (दीमक व कंसुआ)",
+            estCostPerAcre: 9500,
+            stages: [
+                {
+                    id: "s_d0", startDay: 0, endDay: 5, dayLabel: "Day 0 (बिजाई)",
+                    title: "ट्रेंच विधि से गन्ना बिजाई व बीज उपचार",
+                    perAcreDose: "28 क्विं. 2-आंख के टुकड़े + 75 kg DAP + 40 kg पोटाश",
+                    calcFn: (ac) => `${Math.round(28*ac)} क्विं. बीज + ${(1.5*ac).toFixed(1)} बैग DAP`,
+                    desc: "बीज टुकड़ों को Carbendazim घोल में डुबोकर ट्रेंच में बोएं।"
+                },
+                {
+                    id: "s_d45", startDay: 40, endDay: 55, dayLabel: "Day 45–50 (कल्ले व कंसुआ नियंत्रण)",
+                    title: "पहली यूरिया व अर्ली शूट बोरर सुरक्षा",
+                    perAcreDose: "65 kg यूरिया + Coragen 150ml ड्रेंचिंग (जरूरत पर)",
+                    calcFn: (ac) => `${(1.5*ac).toFixed(1)} बैग यूरिया + Coragen ${Math.round(150*ac)} ml`,
+                    desc: "कल्ले फूटने की अवस्था पर यूरिया देकर हल्की सिंचाई व गुड़ाई करें।"
+                },
+                {
+                    id: "s_d110", startDay: 100, endDay: 125, dayLabel: "Day 105–120 (मिट्टी चढ़ाना व बंधाई)",
+                    title: "अंतिम खाद, मिट्टी चढ़ाना (Earthing Up)",
+                    perAcreDose: "65 kg यूरिया + 10 kg फेरस/जिंक + मिट्टी चढ़ाना",
+                    calcFn: (ac) => `${(1.5*ac).toFixed(1)} बैग यूरिया + मिट्टी चढ़ाना`,
+                    desc: "मानसून से पहले गन्ने की जड़ों पर मिट्टी चढ़ाएं और बंधाई करें ताकि तेज हवा में फसल न गिरे।"
+                },
+                {
+                    id: "s_d270", startDay: 260, endDay: 310, dayLabel: "Day 270–300 (कटाई व मिल आपूर्ति)",
+                    title: "गन्ना कटाई व शुगर मिल सप्लाई",
+                    perAcreDose: "हरियाणा सरकारी SAP ₹400/क्विंटल",
+                    calcFn: (ac) => `अनुमानित पैदावार: ~${Math.round(360*ac)} से ${Math.round(420*ac)} क्विंटल`,
+                    desc: "आगौला काटकर साफ गन्ना मिल पर्ची के अनुसार सप्लाई करें।"
+                }
+            ]
+        }
+    };
+
+    function getFasalDoneMap() {
+        try {
+            const raw = localStorage.getItem(FASAL_DONE_KEY);
+            if (raw) return JSON.parse(raw);
+        } catch (e) {}
+        return {};
+    }
+
+    function toggleStageDone(stageId) {
+        const map = getFasalDoneMap();
+        map[stageId] = !map[stageId];
+        try {
+            localStorage.setItem(FASAL_DONE_KEY, JSON.stringify(map));
+        } catch (e) {}
+        renderFasalTimeline();
+        showToast(map[stageId] ? "✅ चरण पूर्ण मार्क कर दिया गया!" : "↩️ चरण को पुनः सक्रिय किया गया");
+    }
+
+    function saveFasalAcresAndRender() {
+        const val = parseFloat(document.getElementById("fasal-acres-input").value) || 5;
+        try {
+            localStorage.setItem(FASAL_ACRES_KEY, String(val));
+        } catch (e) {}
+        renderFasalTimeline();
+    }
+
+    function syncFasalFromGlobal() {
+        // Sync acres
+        try {
+            const savedAc = localStorage.getItem(FASAL_ACRES_KEY);
+            if (savedAc) document.getElementById("fasal-acres-input").value = savedAc;
+        } catch (e) {}
+
+        // Sync crop with AI Brain selector
+        const globalCrop = document.getElementById("ai-crop-select").value;
+        const fasalCropSel = document.getElementById("fasal-crop-sel");
+        if (fasalCropSel && fasalDatabase[globalCrop]) {
+            fasalCropSel.value = globalCrop;
+        }
+        populateFasalVarieties(globalCrop);
+
+        // Sync sowing date
+        const globalDate = document.getElementById("sowing-date-input").value;
+        if (globalDate) {
+            document.getElementById("fasal-sowing-input").value = globalDate;
+        }
+    }
+
+    function populateFasalVarieties(cropKey) {
+        const vSel = document.getElementById("fasal-variety-sel");
+        const cropObj = fasalDatabase[cropKey] || fasalDatabase.wheat;
+        const prev = vSel.value;
+        vSel.innerHTML = cropObj.varieties.map(v => `<option value="${v}">${v}</option>`).join("");
+        if (cropObj.varieties.includes(prev)) vSel.value = prev;
+    }
+
+    function onFasalCropChange() {
+        const cropKey = document.getElementById("fasal-crop-sel").value;
+        populateFasalVarieties(cropKey);
+
+        // Sync back to AI Brain selector so both tabs stay unified
+        const aiSel = document.getElementById("ai-crop-select");
+        if (aiSel) {
+            aiSel.value = cropKey;
+            updateGDDThermalClock();
+            runAIDecisionBrain();
+        }
+        const syncedDate = document.getElementById("sowing-date-input").value;
+        if (syncedDate) document.getElementById("fasal-sowing-input").value = syncedDate;
+
+        renderFasalTimeline();
+    }
+
+    function onFasalSowingChange() {
+        const dVal = document.getElementById("fasal-sowing-input").value;
+        if (!dVal) return;
+        document.getElementById("sowing-date-input").value = dVal;
+        saveSowingDate();
+        renderFasalTimeline();
+    }
+
+    function addDaysFormatted(baseDateStr, daysToAdd) {
+        const d = new Date(baseDateStr);
+        if (isNaN(d.getTime())) return "";
+        d.setDate(d.getDate() + daysToAdd);
+        const dd = String(d.getDate()).padStart(2, "0");
+        const mm = String(d.getMonth() + 1).padStart(2, "0");
+        const yyyy = d.getFullYear();
+        return `${dd}/${mm}/${yyyy}`;
+    }
+
+    function renderFasalTimeline() {
+        const cropKey = document.getElementById("fasal-crop-sel").value;
+        const cropObj = fasalDatabase[cropKey] || fasalDatabase.wheat;
+        const acres = Math.max(0.5, parseFloat(document.getElementById("fasal-acres-input").value) || 5);
+        const sowStr = document.getElementById("fasal-sowing-input").value || "2026-11-05";
+
+        const sowTime = new Date(sowStr).getTime();
+        const ageDays = Math.max(0, Math.floor((Date.now() - sowTime) / (1000 * 60 * 60 * 24)));
+
+        // 1. Update Dose Calculator for Selected Acres
+        document.getElementById("fasal-dose-header").innerText = `🧮 ${acres} एकड़ (${cropObj.name}) कुल खाद-बीज हिसाब`;
+        const totalSeed = Math.round(cropObj.seedPerAcreKg * acres);
+        const totalDap = (cropObj.dapBagsPerAcre * acres).toFixed(1);
+        const totalUrea = (cropObj.ureaBagsPerAcre * acres).toFixed(1);
+        const totalMop = (cropObj.mopBagsPerAcre * acres).toFixed(1);
+        const totalCost = Math.round(cropObj.estCostPerAcre * acres);
+
+        document.getElementById("fasal-dose-grid").innerHTML = `
+            <div class="dose-pill"><span>🌱 कुल बीज मात्रा</span><strong>${totalSeed} किग्रा</strong></div>
+            <div class="dose-pill"><span>🧪 कुल DAP (50kg बैग)</span><strong>${totalDap} बैग</strong></div>
+            <div class="dose-pill"><span>⚪ कुल यूरिया (45kg बैग)</span><strong>${totalUrea} बैग</strong></div>
+            <div class="dose-pill"><span>💰 पोटाश + अनुमानित खर्च</span><strong>${totalMop} बैग • ₹${totalCost.toLocaleString('en-IN')}</strong></div>
+        `;
+
+        // 2. Weather-Synced Field Guard
+        const guardEl = document.getElementById("fasal-weather-guard");
+        if (sharedState.rainProb >= 40) {
+            guardEl.innerHTML = `🌧️ <strong>मौसम गार्ड अलर्ट:</strong> बारिश की ${sharedState.rainProb}% संभावना है — आज किसी भी चरण का स्प्रे या नहर/ट्यूबवेल सिंचाई न करें।`;
+        } else if (sharedState.windSpeed > 15) {
+            guardEl.innerHTML = `💨 <strong>हवा गार्ड अलर्ट:</strong> हवा की गति ${sharedState.windSpeed} km/h तेज है — खरपतवारनाशी या फफूंदनाशक स्प्रे शाम को हवा शांत होने पर करें।`;
+        } else {
+            guardEl.innerHTML = `✅ <strong>लाइव मौसम अनुकूल:</strong> हवा शांत (${sharedState.windSpeed} km/h) और जड़ नमी ${sharedState.rootZoneMoisture}% है — सक्रिय चरण के खाद व स्प्रे कार्य बेझिझक करें।`;
+        }
+
+        // 3. Render Stage-by-Stage Timeline
+        const doneMap = getFasalDoneMap();
+        let completedCount = 0;
+
+        const htmlCards = cropObj.stages.map(st => {
+            const isDone = !!doneMap[st.id];
+            if (isDone) completedCount++;
+
+            const isCurrent = !isDone && (ageDays >= st.startDay - 3 && ageDays <= st.endDay + 5);
+            const isPastPending = !isDone && (ageDays > st.endDay + 5);
+
+            let cardClass = "stage-card";
+            let statusBadge = `<span class="st-status-pill" style="background:rgba(56,189,248,0.16); color:#7dd3fc;">⏳ आगामी</span>`;
+
+            if (isDone) {
+                cardClass += " done-stage";
+                statusBadge = `<span class="st-status-pill" style="background:rgba(16,185,129,0.25); color:#6ee7b7;">✅ पूर्ण</span>`;
+            } else if (isCurrent) {
+                cardClass += " active-stage";
+                statusBadge = `<span class="st-status-pill" style="background:rgba(245,158,11,0.28); color:#fde68a;">🔥 अभी सक्रिय</span>`;
+            } else if (isPastPending) {
+                cardClass += " active-stage";
+                statusBadge = `<span class="st-status-pill" style="background:rgba(239,68,68,0.24); color:#fca5a5;">⚠️ समय निकला / जाँचें</span>`;
+            }
+
+            const dateStart = addDaysFormatted(sowStr, st.startDay);
+            const dateEnd = st.endDay > st.startDay ? ` – ${addDaysFormatted(sowStr, st.endDay)}` : "";
+            const totalForAcres = st.calcFn(acres);
+
+            return `
+                <div class="${cardClass}">
+                    <div class="st-top">
+                        <div>
+                            <span class="st-day-badge">${st.dayLabel} • 📅 ${dateStart}${dateEnd}</span>
+                            <div class="st-title">${st.title}</div>
+                        </div>
+                        ${statusBadge}
+                    </div>
+                    <div class="st-dose-box">
+                        📦 <strong>${acres} एकड़ की कुल मात्रा:</strong> ${totalForAcres}<br>
+                        <span style="font-size:10.5px; color:#94a3b8; font-weight:500;">(मानक: ${st.perAcreDose})</span>
+                    </div>
+                    <div class="st-desc">${st.desc}</div>
+                    <div class="st-actions">
+                        <span style="font-size:10.5px; color:#94a3b8;">खड़क गगर / जींद कृषि शेड्यूल</span>
+                        <button class="st-done-btn ${isDone ? 'is-done' : ''}" onclick="toggleStageDone('${st.id}')">
+                            ${isDone ? '✓ पूर्ण हो गया' : '○ पूर्ण मार्क करें'}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }).join("");
+
+        document.getElementById("fasal-timeline-container").innerHTML = htmlCards;
+
+        const totalStages = cropObj.stages.length;
+        const pct = Math.round((completedCount / totalStages) * 100);
+        document.getElementById("fasal-age-badge").innerText = `फसल उम्र: ${ageDays} दिन`;
+        document.getElementById("fasal-progress-txt").innerText = `${completedCount} / ${totalStages} चरण पूर्ण (${pct}%)`;
+        document.getElementById("fasal-progress-bar").style.width = `${pct}%`;
+    }
+
+    function shareFasalScheduleWA() {
+        const cropKey = document.getElementById("fasal-crop-sel").value;
+        const cropObj = fasalDatabase[cropKey] || fasalDatabase.wheat;
+        const variety = document.getElementById("fasal-variety-sel").value;
+        const acres = document.getElementById("fasal-acres-input").value || 5;
+        const sowStr = document.getElementById("fasal-sowing-input").value || "2026-11-05";
+
+        const lines = cropObj.stages.map(s => `• *${s.dayLabel}* (${addDaysFormatted(sowStr, s.startDay)}): ${s.title} — _${s.calcFn(acres)}_`).join("\n");
+        const msg =
+`🌱 *BAHUBALI फसल चरण शेड्यूल*
+🚜 *फसल:* ${cropObj.name} (${variety})
+📐 *रकबा:* ${acres} एकड़ | 📅 *बुआई:* ${addDaysFormatted(sowStr, 0)}
+
+${lines}
+
+_Bahubali Hyper-AI v20_`;
+
+        const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
+        window.open(waUrl, "_blank", "noopener,noreferrer");
+        showToast("📲 फसल चरण शेड्यूल व्हाट्सएप पर तैयार!");
+    }
+
     // Initialize Everything on Load
     window.addEventListener("DOMContentLoaded", () => {
         try {
@@ -2715,6 +3515,8 @@ _Sent via Bahubali Legend v20_`;
         renderMandiList();
         checkTargetRateAlarm();
         initMasterWeather(false);
+        syncFasalFromGlobal();
+        renderFasalTimeline();
     });
 </script>
 
