@@ -615,7 +615,7 @@ function speakText(rawHtml) {
     const cleanText = (tmp.textContent || tmp.innerText || '').trim();
     if (!cleanText) return;
     const utter = new SpeechSynthesisUtterance(cleanText);
-    utter.lang = /[ऀ-ॿ]/.test(cleanText) ? 'hi-IN' : 'en-IN';
+    utter.lang = /[\u0900-\u097F]/.test(cleanText) ? 'hi-IN' : 'en-IN';
     utter.rate = 0.95;
     window.speechSynthesis.speak(utter);
   } catch (e) {}
@@ -783,12 +783,7 @@ async function solveWithRobotAI() {
 
   const sysInstruction = `You are an expert, friendly Class 10 CBSE & Haryana Board (HBSE) teacher. Explain the scanned page or question with DEEP conceptual clarity yet in VERY SIMPLE, easy-to-understand step-by-step method (सरल और गहराई से समझाने वाली विधि) in BOTH English and Hindi (हिंदी + English). Use clear headings: 1. Given / दिया है, 2. Formula / सूत्र, 3. Step-by-Step Simple Solution / सरल चरणबद्ध हल, 4. Final Answer & Exam Tip / अंतिम उत्तर व परीक्षा टिप.`;
 
-  const parts = [{ text: sysInstruction + (promptText ? `
-
-Student Question / Scanned Text:
-${promptText}` : '
-
-Please read the attached book/notebook page carefully and solve all visible questions step-by-step in simple Hindi and English.') }];
+  const parts = [{ text: sysInstruction + (promptText ? `\n\nStudent Question / Scanned Text:\n${promptText}` : `\n\nPlease read the attached book/notebook page carefully and solve all visible questions step-by-step in simple Hindi and English.`) }];
   if (page && page.base64) {
     parts.push({ inline_data: { mime_type: page.mimeType, data: page.base64 } });
   }
@@ -807,8 +802,7 @@ Please read the attached book/notebook page carefully and solve all visible ques
       const formatted = raw
         .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
         .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
-        .replace(/
-/g, '<br>');
+        .replace(/\n/g, '<br>');
       scanState.aiResult = formatted;
       addXP(25);
     }
