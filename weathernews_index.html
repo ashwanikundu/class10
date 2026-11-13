@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Weathernews (WNI) Live - Pinpoint Weather & Satellite GPS</title>
+    <style>
+        :root {
+            --wni-navy: #071936;
+            --wni-royal: #003893;
+            --wni-blue: #0066cc;
+            --wni-cyan: #00b4d8;
+            --wni-accent: #38bdf8;
+            --card-bg: rgba(13, 33, 68, 0.85);
+            --card-elevated: rgba(20, 48, 94, 0.9);
+            --border-subtle: rgba(56, 189, 248, 0.22);
+            --text-main: #ffffff;
+            --text-sub: #cbd5e1;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(165deg, #040d1f 0%, #09224a 55%, #061733 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 12px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .wni-app {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-bottom: 24px;
+        }
+
+        /* Official Weathernews (WNI) Header */
+        .wni-header {
+            background: linear-gradient(135deg, #002b75 0%, #0055b8 100%);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            border-radius: 15px;
+            padding: 13px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 8px 24px rgba(0, 40, 120, 0.4);
+        }
+
+        .brand-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .wni-badge-logo {
+            background: #ffffff;
+            color: #003893;
+            font-weight: 900;
+            font-size: 14px;
+            letter-spacing: -0.5px;
+            padding: 8px 7px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+            transform: rotate(-3deg);
+        }
+
+        .brand-text h1 {
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: 0.2px;
+            color: #ffffff;
+        }
+
+        .brand-text p {
+            font-size: 11px;
+            color: #bae6fd;
+            margin-top: 1px;
+        }
+
+        .gps-btn {
+            background: rgba(255, 255, 255, 0.16);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            color: #ffffff;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: transform 0.15s ease, background 0.15s ease;
+        }
+
+        .gps-btn:active {
+            transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.28);
+        }
+
+        /* Pinpoint Location Strip */
+        .loc-strip {
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: 11px;
+            padding: 9px 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        .loc-name {
+            font-weight: 600;
+            color: #e0f2fe;
+        }
+
+        .sync-tag {
+            font-size: 11px;
+            color: #7dd3fc;
+            background: rgba(0, 180, 216, 0.18);
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        /* WNI Pinpoint Sky & Rain Alert Card */
+        .pinpoint-alert {
+            background: linear-gradient(135deg, rgba(0, 102, 204, 0.35), rgba(0, 180, 216, 0.18));
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            border-left: 4px solid #00b4d8;
+            border-radius: 13px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .pa-left h4 {
+            font-size: 12.5px;
+            font-weight: 800;
+            color: #7dd3fc;
+            margin-bottom: 3px;
+        }
+
+        .pa-left p {
+            font-size: 12.5px;
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .pa-pill {
+            background: rgba(16, 185, 129, 0.22);
+            border: 1px solid #10b981;
+            color: #6ee7b7;
+            padding: 5px 10px;
+            border-radius: 16px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        /* Hero Current Weather Card */
+        .hero-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        .hero-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .hero-ico {
+            font-size: 52px;
+            line-height: 1;
+            filter: drop-shadow(0 4px 12px rgba(56, 189, 248, 0.35));
+        }
+
+        .hero-temp {
+            font-size: 46px;
+            font-weight: 800;
+            line-height: 1;
+            color: #ffffff;
+        }
+
+        .hero-cond {
+            font-size: 14px;
+            font-weight: 700;
+            color: #7dd3fc;
+            margin-top: 5px;
+        }
+
+        .hero-right {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .hilo-pill {
+            background: var(--card-elevated);
+            border: 1px solid var(--border-subtle);
+            padding: 6px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .max-c { color: #fb923c; }
+        .min-c { color: #38bdf8; }
+
+        .feels-txt {
+            font-size: 11.5px;
+            color: var(--text-sub);
+        }
+
+        /* WNI 6-Metric Precision Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 9px;
+        }
+
+        .m-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: 13px;
+            padding: 11px 8px;
+            text-align: center;
+        }
+
+        .m-ico {
+            font-size: 19px;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .m-val {
+            font-size: 14.5px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .m-lbl {
+            font-size: 10.5px;
+            color: var(--text-sub);
+            margin-top: 2px;
+        }
+
+        /* Sun & Solar Radiation Bar (WNI Special) */
+        .solar-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sun-item {
+            text-align: center;
+        }
+
+        .sun-lbl {
+            font-size: 10.5px;
+            color: var(--text-muted);
+        }
+
+        .sun-val {
+            font-size: 13px;
+            font-weight: 800;
+            color: #fde047;
+            margin-top: 2px;
+        }
+
+        /* Hourly Pinpoint Forecast */
+        .sec-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: 15px;
+            padding: 14px;
+        }
+
+        .sec-head {
+            font-size: 12.5px;
+            font-weight: 800;
+            color: #7dd3fc;
+            margin-bottom: 11px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hr-scroll {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            scrollbar-width: none;
+        }
+
+        .hr-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hr-col {
+            min-width: 65px;
+            background: var(--card-elevated);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 11px;
+            padding: 9px 5px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .hr-t {
+            font-size: 11px;
+            color: var(--text-sub);
+            font-weight: 600;
+        }
+
+        .hr-i {
+            font-size: 20px;
+            margin: 6px 0;
+        }
+
+        .hr-v {
+            font-size: 14.5px;
+            font-weight: 800;
+        }
+
+        .hr-w {
+            font-size: 10px;
+            color: #a5f3fc;
+            margin-top: 3px;
+        }
+
+        .hr-r {
+            font-size: 10px;
+            color: #38bdf8;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+
+        /* 7-Day WNI Forecast */
+        .day-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .day-row {
+            background: var(--card-elevated);
+            border-radius: 10px;
+            padding: 9px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12.5px;
+        }
+
+        .d-name {
+            width: 32%;
+            font-weight: 700;
+        }
+
+        .d-sky {
+            width: 34%;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: #7dd3fc;
+            font-weight: 600;
+        }
+
+        .d-temps {
+            width: 34%;
+            text-align: right;
+            font-weight: 800;
+        }
+
+        .d-temps .lo {
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-left: 6px;
+        }
+
+        .wni-footer {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            padding-top: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="wni-app">
+    <!-- Official Weathernews (WNI) Header -->
+    <header class="wni-header">
+        <div class="brand-wrap">
+            <div class="wni-badge-logo">WNI</div>
+            <div class="brand-text">
+                <h1>Weathernews Live</h1>
+                <p>1km Pinpoint GPS • Hyper-Local Telemetry</p>
+            </div>
+        </div>
+        <button class="gps-btn" onclick="initWNI()">📍 GPS सिंक</button>
+    </header>
+
+    <!-- Location Strip -->
+    <div class="loc-strip">
+        <div class="loc-name" id="wni-loc">📍 खड़क गगर, जींद (हरियाणा)</div>
+        <div class="sync-tag" id="wni-sync">सिंक हो रहा है...</div>
+    </div>
+
+    <!-- WNI Pinpoint Sky & Rain Status -->
+    <div class="pinpoint-alert" id="wni-alert">
+        <div class="pa-left">
+            <h4>🛰️ WNI पिनपॉइंट आकाश रिपोर्ट</h4>
+            <p id="wni-alert-text">मौसम डेटा का विश्लेषण किया जा रहा है...</p>
+        </div>
+        <div class="pa-pill" id="wni-alert-pill">शुष्क</div>
+    </div>
+
+    <!-- Hero Weather Card -->
+    <section class="hero-card">
+        <div class="hero-left">
+            <div class="hero-ico" id="wni-icon">☀️</div>
+            <div>
+                <div class="hero-temp" id="wni-temp">--°C</div>
+                <div class="hero-cond" id="wni-cond">लोड हो रहा है...</div>
+            </div>
+        </div>
+        <div class="hero-right">
+            <div class="hilo-pill">
+                <span class="max-c" id="wni-max">अधिक --°</span> / <span class="min-c" id="wni-min">न्यून --°</span>
+            </div>
+            <div class="feels-txt" id="wni-feels">महसूस तापमान: --°C</div>
+        </div>
+    </section>
+
+    <!-- 6-Metric WNI Telemetry Grid -->
+    <section class="metrics-grid">
+        <div class="m-card">
+            <span class="m-ico">💧</span>
+            <div class="m-val" id="wni-hum">--%</div>
+            <div class="m-lbl">नमी (Humidity)</div>
+        </div>
+        <div class="m-card">
+            <span class="m-ico">💨</span>
+            <div class="m-val" id="wni-wind">-- km/h</div>
+            <div class="m-lbl" id="wni-wdir">हवा की गति</div>
+        </div>
+        <div class="m-card">
+            <span class="m-ico">🌧️</span>
+            <div class="m-val" id="wni-rain">0.0 mm</div>
+            <div class="m-lbl">वर्षा (Rain/hr)</div>
+        </div>
+        <div class="m-card">
+            <span class="m-ico">🧭</span>
+            <div class="m-val" id="wni-press">-- hPa</div>
+            <div class="m-lbl">वायुदाब</div>
+        </div>
+        <div class="m-card">
+            <span class="m-ico">☁️</span>
+            <div class="m-val" id="wni-cloud">--%</div>
+            <div class="m-lbl">बादल आवरण</div>
+        </div>
+        <div class="m-card">
+            <span class="m-ico">👁️</span>
+            <div class="m-val" id="wni-vis">-- km</div>
+            <div class="m-lbl">दृश्यता (Visibility)</div>
+        </div>
+    </section>
+
+    <!-- Sun & Solar Radiation Strip -->
+    <section class="solar-card">
+        <div class="sun-item">
+            <div class="sun-lbl">🌅 सूर्योदय (Sunrise)</div>
+            <div class="sun-val" id="wni-sunrise">06:42 AM</div>
+        </div>
+        <div class="sun-item">
+            <div class="sun-lbl">☀️ सौर विकिरण (Solar)</div>
+            <div class="sun-val" id="wni-solar">-- W/m²</div>
+        </div>
+        <div class="sun-item">
+            <div class="sun-lbl">🌇 सूर्यास्त (Sunset)</div>
+            <div class="sun-val" id="wni-sunset">05:31 PM</div>
+        </div>
+    </section>
+
+    <!-- Hourly Pinpoint Forecast -->
+    <section class="sec-card">
+        <div class="sec-head">
+            <span>🕒 प्रति घंटा पिनपॉइंट पूर्वानुमान</span>
+            <span style="font-size: 10.5px; color: var(--text-muted);">24 घंटे</span>
+        </div>
+        <div class="hr-scroll" id="wni-hourly">
+            <!-- JS Populated -->
+        </div>
+    </section>
+
+    <!-- 7-Day WNI Forecast -->
+    <section class="sec-card">
+        <div class="sec-head">
+            <span>📅 7-दिवसीय WNI सटीक पूर्वानुमान</span>
+            <span style="font-size: 10.5px; color: var(--text-muted);">अधिकतम / न्यूनतम</span>
+        </div>
+        <div class="day-list" id="wni-daily">
+            <!-- JS Populated -->
+        </div>
+    </section>
+
+    <footer class="wni-footer">
+        Weathernews (WNI) Pinpoint Module v1.0 • Zero-Crash Live GPS
+    </footer>
+</div>
+
+<script>
+    function decodeWNIWeather(code, isDay = 1) {
+        if (code === 0) return { text: isDay ? "स्पष्ट धूप" : "साफ आसमान", icon: isDay ? "☀️" : "🌙" };
+        if (code === 1 || code === 2) return { text: "हल्के बादल", icon: isDay ? "🌤️" : "☁️" };
+        if (code === 3) return { text: "घने बादल", icon: "☁️" };
+        if (code === 45 || code === 48) return { text: "कोहरा / धुंध", icon: "🌫️" };
+        if (code >= 51 && code <= 55) return { text: "हल्की फुहार", icon: "🌦️" };
+        if (code >= 61 && code <= 65) return { text: "वर्षा", icon: "🌧️" };
+        if (code >= 80 && code <= 82) return { text: "तेज बौछारें", icon: "⛈️" };
+        if (code >= 95) return { text: "गरज-चमक व तूफान", icon: "⚡" };
+        return { text: "सामान्य मौसम", icon: "⛅" };
+    }
+
+    function windDirHindi(deg) {
+        const dirs = ["उत्तर", "उ-पूर्व", "पूर्व", "द-पूर्व", "दक्षिण", "द-पश्चिम", "पश्चिम", "उ-पश्चिम"];
+        return dirs[Math.round(((deg %= 360) < 0 ? deg + 360 : deg) / 45) % 8];
+    }
+
+    function formatTime12(isoStr) {
+        if (!isoStr) return "--:--";
+        const d = new Date(isoStr);
+        let h = d.getHours();
+        const m = d.getMinutes().toString().padStart(2, '0');
+        const ampm = h >= 12 ? "PM" : "AM";
+        h = h % 12 || 12;
+        return `${h.toString().padStart(2, '0')}:${m} ${ampm}`;
+    }
+
+    function getHindiDayName(dateStr, idx) {
+        if (idx === 0) return "आज";
+        if (idx === 1) return "कल";
+        const days = ["रविवार", "सोमवार", "मंगलवार", "बुधवार", "गुरुवार", "शुक्रवार", "शनिवार"];
+        return days[new Date(dateStr).getDay()];
+    }
+
+    async function fetchWithTimeout(url, ms = 6500) {
+        const ctrl = new AbortController();
+        const tid = setTimeout(() => ctrl.abort(), ms);
+        try {
+            const res = await fetch(url, { signal: ctrl.signal });
+            clearTimeout(tid);
+            return res;
+        } catch (err) {
+            clearTimeout(tid);
+            throw err;
+        }
+    }
+
+    async function fetchWNIData(lat, lon, locLabel) {
+        document.getElementById("wni-loc").innerText = locLabel;
+
+        try {
+            const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,cloud_cover,surface_pressure,wind_speed_10m,wind_direction_10m&hourly=temperature_2m,precipitation_probability,weather_code,wind_speed_10m,visibility,shortwave_radiation&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_probability_max&timezone=auto`;
+
+            const res = await fetchWithTimeout(url, 6500);
+            if (!res.ok) throw new Error("WNI API failed");
+            const data = await res.json();
+
+            const curr = data.current;
+            const hourly = data.hourly;
+            const daily = data.daily;
+            const nowHr = new Date().getHours();
+
+            const wInfo = decodeWNIWeather(curr.weather_code, curr.is_day);
+            document.getElementById("wni-temp").innerText = `${Math.round(curr.temperature_2m)}°C`;
+            document.getElementById("wni-icon").innerText = wInfo.icon;
+            document.getElementById("wni-cond").innerText = wInfo.text;
+            document.getElementById("wni-max").innerText = `अधिक ${Math.round(daily.temperature_2m_max[0])}°`;
+            document.getElementById("wni-min").innerText = `न्यून ${Math.round(daily.temperature_2m_min[0])}°`;
+            document.getElementById("wni-feels").innerText = `महसूस तापमान: ${Math.round(curr.apparent_temperature)}°C`;
+
+            // 6 Metrics
+            document.getElementById("wni-hum").innerText = `${Math.round(curr.relative_humidity_2m)}%`;
+            document.getElementById("wni-wind").innerText = `${Math.round(curr.wind_speed_10m)} km/h`;
+            document.getElementById("wni-wdir").innerText = `हवा: ${windDirHindi(curr.wind_direction_10m)}`;
+            document.getElementById("wni-rain").innerText = `${(curr.precipitation || 0).toFixed(1)} mm`;
+            document.getElementById("wni-press").innerText = `${Math.round(curr.surface_pressure)} hPa`;
+            document.getElementById("wni-cloud").innerText = `${Math.round(curr.cloud_cover)}%`;
+
+            const visKm = hourly.visibility ? (hourly.visibility[nowHr] / 1000).toFixed(1) : "10.0";
+            document.getElementById("wni-vis").innerText = `${visKm} km`;
+
+            // Sun & Solar Radiation
+            document.getElementById("wni-sunrise").innerText = formatTime12(daily.sunrise[0]);
+            document.getElementById("wni-sunset").innerText = formatTime12(daily.sunset[0]);
+            const solarVal = (hourly.shortwave_radiation && hourly.shortwave_radiation[nowHr] !== null)
+                ? Math.round(hourly.shortwave_radiation[nowHr])
+                : 0;
+            document.getElementById("wni-solar").innerText = `${solarVal} W/m²`;
+
+            // Pinpoint Alert Status
+            const rainProbNow = hourly.precipitation_probability ? (hourly.precipitation_probability[nowHr] || 0) : 0;
+            const alertTxt = document.getElementById("wni-alert-text");
+            const alertPill = document.getElementById("wni-alert-pill");
+
+            if (rainProbNow >= 50 || curr.precipitation > 0) {
+                alertTxt.innerText = `आपके क्षेत्र में बारिश की संभावना (${rainProbNow}%) है। छाता व फसल सुरक्षा रखें।`;
+                alertPill.innerText = "वर्षा अलर्ट 🌧️";
+                alertPill.style.background = "rgba(239, 68, 68, 0.25)";
+                alertPill.style.borderColor = "#ef4444";
+                alertPill.style.color = "#fca5a5";
+            } else if (curr.cloud_cover > 65) {
+                alertTxt.innerText = `आसमान में घने बादल (${curr.cloud_cover}%) छाए हुए हैं, लेकिन तत्काल भारी बारिश नहीं है।`;
+                alertPill.innerText = "बादल ☁️";
+                alertPill.style.background = "rgba(245, 158, 11, 0.25)";
+                alertPill.style.borderColor = "#f59e0b";
+                alertPill.style.color = "#fde68a";
+            } else {
+                alertTxt.innerText = "आसमान साफ है और आगामी घंटों में बारिश की कोई संभावना नहीं है।";
+                alertPill.innerText = "शुष्क ✅";
+                alertPill.style.background = "rgba(16, 185, 129, 0.22)";
+                alertPill.style.borderColor = "#10b981";
+                alertPill.style.color = "#6ee7b7";
+            }
+
+            // Hourly Pinpoint Strip
+            const hrContainer = document.getElementById("wni-hourly");
+            hrContainer.innerHTML = "";
+            for (let i = nowHr; i < nowHr + 24 && i < hourly.time.length; i++) {
+                const dt = new Date(hourly.time[i]);
+                const lbl = i === nowHr ? "अभी" : `${dt.getHours()}:00`;
+                const hInfo = decodeWNIWeather(hourly.weather_code[i], dt.getHours() >= 6 && dt.getHours() <= 18 ? 1 : 0);
+                const hTemp = Math.round(hourly.temperature_2m[i]);
+                const hWind = Math.round(hourly.wind_speed_10m[i]);
+                const hRain = hourly.precipitation_probability[i] || 0;
+
+                hrContainer.innerHTML += `
+                    <div class="hr-col">
+                        <div class="hr-t">${lbl}</div>
+                        <div class="hr-i">${hInfo.icon}</div>
+                        <div class="hr-v">${hTemp}°</div>
+                        <div class="hr-w">💨${hWind}</div>
+                        <div class="hr-r">💧${hRain}%</div>
+                    </div>
+                `;
+            }
+
+            // 7-Day Forecast
+            const dayContainer = document.getElementById("wni-daily");
+            dayContainer.innerHTML = "";
+            for (let d = 0; d < daily.time.length; d++) {
+                const dName = getHindiDayName(daily.time[d], d);
+                const dInfo = decodeWNIWeather(daily.weather_code[d], 1);
+                const dMax = Math.round(daily.temperature_2m_max[d]);
+                const dMin = Math.round(daily.temperature_2m_min[d]);
+                const dPop = daily.precipitation_probability_max[d] || 0;
+
+                dayContainer.innerHTML += `
+                    <div class="day-row">
+                        <div class="d-name">${dName}</div>
+                        <div class="d-sky">${dInfo.icon} <span>${dPop}%</span></div>
+                        <div class="d-temps">${dMax}°<span class="lo">/${dMin}°</span></div>
+                    </div>
+                `;
+            }
+
+            const now = new Date();
+            document.getElementById("wni-sync").innerText = `लाइव: ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+
+        } catch (err) {
+            console.warn("WNI Fallback Activated:", err);
+            loadWNIFallback();
+        }
+    }
+
+    function loadWNIFallback() {
+        document.getElementById("wni-loc").innerText = "📍 खड़क गगर, जींद (हरियाणा)";
+        document.getElementById("wni-sync").innerText = "ऑफलाइन बैकअप";
+        document.getElementById("wni-temp").innerText = "24°C";
+        document.getElementById("wni-icon").innerText = "☀️";
+        document.getElementById("wni-cond").innerText = "स्पष्ट धूप";
+        document.getElementById("wni-max").innerText = "अधिक 27°";
+        document.getElementById("wni-min").innerText = "न्यून 12°";
+        document.getElementById("wni-feels").innerText = "महसूस तापमान: 24°C";
+        document.getElementById("wni-hum").innerText = "46%";
+        document.getElementById("wni-wind").innerText = "10 km/h";
+        document.getElementById("wni-rain").innerText = "0.0 mm";
+        document.getElementById("wni-press").innerText = "1015 hPa";
+        document.getElementById("wni-cloud").innerText = "10%";
+        document.getElementById("wni-vis").innerText = "10.0 km";
+        document.getElementById("wni-solar").innerText = "0 W/m²";
+        document.getElementById("wni-alert-text").innerText = "आसमान साफ है और आगामी घंटों में बारिश की कोई संभावना नहीं है।";
+    }
+
+    function initWNI() {
+        document.getElementById("wni-loc").innerText = "🛰️ 1km पिनपॉइंट GPS सिंक जारी...";
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    const lat = pos.coords.latitude.toFixed(4);
+                    const lon = pos.coords.longitude.toFixed(4);
+                    fetchWNIData(lat, lon, `📍 लाइव GPS (${lat}°N, ${lon}°E)`);
+                },
+                () => {
+                    fetchWNIData(29.3250, 76.3150, "📍 खड़क गगर, जींद (हरियाणा)");
+                },
+                { enableHighAccuracy: true, timeout: 6000, maximumAge: 60000 }
+            );
+        } else {
+            fetchWNIData(29.3250, 76.3150, "📍 खड़क गगर, जींद (हरियाणा)");
+        }
+    }
+
+    window.addEventListener("DOMContentLoaded", initWNI);
+</script>
+
+</body>
+</html>
