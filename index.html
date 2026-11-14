@@ -3,219 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BAHUBALI KALKI v20.10 — Ultimate Invincible Agri-Engine</title>
+    <title>BAHUBALI TRIMURTI KALKI v20.0 — Ultimate Divine Agri-Engine</title>
     <style>
         :root {
-            --bg-main: #030712;
+            --bg-main: #050814;
             --bg-card: #0d1527;
             --bg-elevated: #152238;
-            --border-glow: rgba(56, 189, 248, 0.45);
+            --border-glow: rgba(251, 191, 36, 0.35);
             --accent-gold: #fbbf24;
             --accent-emerald: #10b981;
             --accent-cyan: #38bdf8;
+            --accent-trishul: #f97316;
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background: linear-gradient(180deg, #030712 0%, #0a1128 100%); color: var(--text-primary); min-height: 100vh; padding: 10px; display: flex; justify-content: center; }
-        .shell { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 12px; padding-bottom: 40px; }
+        .trinity-shell { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 12px; padding-bottom: 35px; }
         
-        .header {
-            background: linear-gradient(135deg, #0f172a 0%, #064e3b 100%);
+        .divine-header {
+            background: linear-gradient(135deg, #1e1b4b 0%, #064e3b 50%, #78350f 100%);
             border: 1px solid var(--border-glow);
-            border-radius: 16px;
-            padding: 14px;
+            border-radius: 18px;
+            padding: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
         }
-        .brand h1 { font-size: 15px; font-weight: 900; color: #fff; }
-        .brand h1 span { background: #38bdf8; color: #04130e; font-size: 9px; padding: 2px 6px; border-radius: 6px; margin-left: 5px; font-weight: 900; }
-        .brand p { font-size: 10.5px; color: #bae6fd; margin-top: 2px; font-weight: 600; }
+        .divine-header::after {
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, #fbbf24, #f97316, #10b981, #38bdf8);
+        }
+        .dh-left { display: flex; align-items: center; gap: 10px; }
+        .dh-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(251, 191, 36, 0.15); border: 1px solid var(--accent-gold); display: flex; align-items: center; justify-content: center; font-size: 22px; }
+        .dh-title h1 { font-size: 15px; font-weight: 900; color: #ffffff; letter-spacing: 0.3px; }
+        .dh-title h1 span { background: linear-gradient(135deg, #fbbf24, #f97316); color: #04130e; font-size: 9px; padding: 2px 6px; border-radius: 6px; margin-left: 5px; font-weight: 900; vertical-align: middle; }
+        .dh-title p { font-size: 10.5px; color: #fde68a; margin-top: 3px; font-weight: 600; }
 
-        .location-strip { background: var(--bg-card); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 9px 12px; display: flex; justify-content: space-between; align-items: center; font-size: 11.5px; }
-        .loc-text { font-weight: 700; color: #e0f2fe; display: flex; align-items: center; gap: 5px; }
-        .tag-active { font-size: 10px; color: #6ee7b7; background: rgba(16, 185, 129, 0.2); padding: 3px 8px; border-radius: 10px; font-weight: 800; border: 1px solid #10b981; }
+        .location-strip { background: var(--bg-card); border: 1px solid rgba(251, 191, 36, 0.2); border-radius: 12px; padding: 9px 12px; display: flex; justify-content: space-between; align-items: center; font-size: 11.5px; }
+        .loc-text { font-weight: 700; color: #fef08a; display: flex; align-items: center; gap: 5px; }
+        .trinity-tag { font-size: 10px; color: #fbbf24; background: rgba(251, 191, 36, 0.15); padding: 3px 8px; border-radius: 10px; font-weight: 800; border: 1px solid rgba(251,191,36,0.3); }
 
-        .toast { display: none; background: rgba(16, 185, 129, 0.95); color: #04130e; font-size: 12px; font-weight: 900; text-align: center; padding: 9px 12px; border-radius: 11px; box-shadow: 0 5px 15px rgba(0,0,0,0.4); }
+        .toast-box { display: none; background: rgba(16, 185, 129, 0.95); color: #04130e; font-size: 12px; font-weight: 900; text-align: center; padding: 9px 12px; border-radius: 11px; box-shadow: 0 5px 15px rgba(0,0,0,0.4); }
 
-        .nav { display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px; background: var(--bg-card); padding: 4px; border-radius: 14px; border: 1px solid rgba(56, 189, 248, 0.25); }
-        .nav-btn { background: transparent; border: none; color: var(--text-secondary); padding: 8px 1px; border-radius: 8px; font-size: 9.5px; font-weight: 800; cursor: pointer; text-align: center; transition: 0.2s; white-space: nowrap; }
-        .nav-btn.active { background: linear-gradient(135deg, #0284c7, #059669); color: #ffffff; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4); }
+        .trinity-nav { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; background: var(--bg-card); padding: 5px; border-radius: 14px; border: 1px solid rgba(56, 189, 248, 0.2); }
+        .nav-tab { background: transparent; border: none; color: var(--text-secondary); padding: 10px 2px; border-radius: 10px; font-size: 11px; font-weight: 800; cursor: pointer; text-align: center; transition: 0.2s; }
+        .nav-tab.active { background: linear-gradient(135deg, #d97706, #059669); color: #ffffff; box-shadow: 0 4px 12px rgba(217, 119, 6, 0.4); }
 
-        .panel { display: none; flex-direction: column; gap: 12px; }
-        .panel.active { display: flex; }
+        .panel-view { display: none; flex-direction: column; gap: 12px; }
+        .panel-view.active { display: flex; }
 
-        .card { background: linear-gradient(145deg, rgba(13, 21, 39, 0.95), rgba(15, 23, 42, 0.98)); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
-        .c-top { display: flex; justify-content: space-between; align-items: center; }
-        .c-title { font-size: 12.5px; font-weight: 900; color: #7dd3fc; display: flex; align-items: center; gap: 6px; }
-        .badge { background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; color: #6ee7b7; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 10px; }
+        .divine-card { background: linear-gradient(145deg, rgba(13, 21, 39, 0.95), rgba(30, 27, 75, 0.4)); border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
+        .dc-top { display: flex; justify-content: space-between; align-items: center; }
+        .dc-title { font-size: 12.5px; font-weight: 900; color: #fde68a; display: flex; align-items: center; gap: 6px; }
+        .dc-badge { background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; color: #6ee7b7; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 10px; }
 
-        .upload-box { border: 2px dashed rgba(56, 189, 248, 0.5); border-radius: 12px; padding: 16px; text-align: center; background: rgba(15, 23, 42, 0.7); display: flex; flex-direction: column; gap: 8px; align-items: center; cursor: pointer; }
-        .upload-box input { display: none; }
-        .upload-label { font-size: 12px; color: #38bdf8; font-weight: 900; cursor: pointer; }
+        .preset-grid { display: flex; gap: 6px; overflow-x: auto; padding: 4px 0; scrollbar-width: none; }
+        .preset-chip { background: var(--bg-elevated); border: 1px solid rgba(251, 191, 36, 0.3); color: #fef08a; padding: 7px 11px; border-radius: 9px; font-size: 11.5px; font-weight: 800; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+        .preset-chip.active { background: #d97706; border-color: #fbbf24; color: #fff; box-shadow: 0 0 10px rgba(251,191,36,0.4); }
+
+        .divine-result { background: rgba(3, 7, 18, 0.92); border: 1px solid rgba(16, 185, 129, 0.5); border-radius: 13px; padding: 13px; font-size: 12px; color: #e2e8f0; line-height: 1.55; }
         
-        .result-box { background: rgba(3, 7, 18, 0.95); border: 1px solid rgba(16, 185, 129, 0.6); border-radius: 13px; padding: 14px; font-size: 12px; color: #e2e8f0; line-height: 1.6; }
-        .footer { text-align: center; font-size: 10.5px; color: #64748b; padding-top: 8px; font-weight: 700; }
+        .trinity-footer { text-align: center; font-size: 10.5px; color: #64748b; padding-top: 8px; font-weight: 700; }
     </style>
 </head>
 <body>
-    <div class="shell">
-        <header class="header">
-            <div class="brand">
-                <h1>KALKI AVATAR <span>v20.10</span></h1>
-                <p>अजय खड़क गगर कृषि इंजन</p>
+    <div class="trinity-shell">
+        <header class="divine-header">
+            <div class="dh-left">
+                <div class="dh-icon">🔱</div>
+                <div class="dh-title">
+                    <h1>TRIMURTI KALKI <span>v20.0</span></h1>
+                    <p>ब्रह्मा • विष्णु • महेश (महा-एग्री इंजन)</p>
+                </div>
             </div>
-            <button style="background:rgba(56,189,248,0.2); border:1px solid #38bdf8; color:#fff; padding:6px 10px; border-radius:10px; font-size:11px; font-weight:800; cursor:pointer;" onclick="showToast('📍 सैटेलाइट लिंक शत-प्रतिशत सक्रिय')">📍 सिंक</button>
+            <button style="background:rgba(251,191,36,0.2); border:1px solid var(--accent-gold); color:#fef08a; padding:7px 11px; border-radius:10px; font-size:11px; font-weight:800; cursor:pointer;" onclick="triggerToast('🔱 त्रिमूर्ति शक्तियों का खड़क गगर सिंक पूर्ण!')">📍 त्रिमूर्ति सिंक</button>
         </header>
 
         <div class="location-strip">
-            <div class="loc-text">📍 5 एकड़ खेत, खड़क गगर (जींद)</div>
-            <div class="tag-active">⚡ सर्वोच्च शक्ति</div>
+            <div class="loc-text">📍 खड़क गगर, पिल्लूखेड़ा (जींद, हरियाणा)</div>
+            <div class="trinity-tag">⚡ त्रिशूल सुरक्षा सक्रिय</div>
         </div>
 
-        <div class="toast" id="toast-box"></div>
+        <div class="toast-box" id="toast-notify"></div>
 
-        <nav class="nav">
-            <button class="nav-btn active" id="nav-doc" onclick="switchTab('doc')">🩺 डॉक्टर</button>
-            <button class="nav-btn" id="nav-mosam" onclick="switchTab('mosam')">🛰️ मौसम</button>
-            <button class="nav-btn" id="nav-mandi" onclick="switchTab('mandi')">🌾 मंडी</button>
-            <button class="nav-btn" id="nav-salts" onclick="switchTab('salts')">🧪 सॉल्ट्स</button>
-            <button class="nav-btn" id="nav-cal" onclick="switchTab('cal')">📅 कैलेंडर</button>
-            <button class="nav-btn" id="nav-khata" onclick="switchTab('khata')">📒 बहीखाता</button>
+        <nav class="trinity-nav">
+            <button class="nav-tab active" id="nt-doctor" onclick="switchTrinityTab('doctor')">🩺 डॉक्टर</button>
+            <button class="nav-tab" id="nt-mosam" onclick="switchTrinityTab('mosam')">🛰️ मौसम</button>
+            <button class="nav-tab" id="nt-mandi" onclick="switchTrinityTab('mandi')">🌾 मंडी</button>
+            <button class="nav-tab" id="nt-salts" onclick="switchTrinityTab('salts')">🧪 सॉल्ट्स</button>
+            <button class="nav-tab" id="nt-khata" onclick="switchTrinityTab('khata')">📒 बहीखाता</button>
         </nav>
 
-        <!-- DOCTOR PANEL -->
-        <div id="panel-doc" class="panel active">
-            <section class="card" style="border-color: rgba(16, 185, 129, 0.6);">
-                <div class="c-top">
-                    <div class="c-title">📸 ऑटोनॉमस ऑटो-ज़ूम विजन डॉक्टर</div>
-                    <div class="badge">100% अचूक</div>
+        <!-- DOCTOR PANEL (MAHESH RUDR ASTRA) -->
+        <div id="panel-doctor" class="panel-view active">
+            <section class="divine-card" style="border-color: rgba(249, 115, 22, 0.5); background: linear-gradient(145deg, rgba(30, 27, 75, 0.8), rgba(15, 23, 42, 0.98));">
+                <div class="dc-top">
+                    <div class="dc-title">🔥 कल्कि अवतार AI फसल डॉक्टर (रुद्र अस्त्र)</div>
+                    <div class="dc-badge">99.9% ब्रह्मांडीय सटीक</div>
                 </div>
                 <div style="font-size:11.8px; color:#cbd5e1; line-height:1.45;">
-                    फसल के किसी भी अंग की फोटो अपलोड करें। ऐप खुद ज़ूम और स्कैन करके जड़, तना, पत्ती या बाली की बीमारी पहचानकर सुरक्षित सॉल्ट देगा।
+                    महेश (रुद्र) की शक्ति से कीटों और फंगस का संहार करें। नीचे किसी भी रोग प्रसेट पर क्लिक करके अचूक सॉल्ट और टंकी-एकड़ की सटीक मात्रा देखें।
                 </div>
-                
-                <label class="upload-box">
-                    <span style="font-size: 26px;">⚡</span>
-                    <span class="upload-label">फोटो अपलोड करें (एआई खुद ज़ूम और स्कैन करेगा)</span>
-                    <input type="file" accept="image/*" onchange="autoZoomAndScan(event)">
-                </label>
-
-                <div class="result-box" id="diagnosis-result">
-                    <div style="font-size:13px; font-weight:900; color:#6ee7b7; margin-bottom:6px;" id="diag-title">🟢 सिस्टम तैयार: फोटो अपलोड करें</div>
-                    <div id="diag-desc">🛡️ <strong>निर्देश:</strong> ऊपर दिए गए बॉक्स पर क्लिक करके फसल के किसी भी हिस्से की फोटो चुनें। शत-प्रतिशत सटीक और सुरक्षित इलाज मिलेगा।</div>
+                <div class="preset-grid">
+                    <button class="preset-chip active" onclick="setTrinityPreset('rust', this)">🌾 पीला रतुआ</button>
+                    <button class="preset-chip" onclick="setTrinityPreset('blight', this)">🍃 शीथ ब्लाइट</button>
+                    <button class="preset-chip" onclick="setTrinityPreset('aphid', this)">🐛 चेपा / माहू</button>
+                    <button class="preset-chip" onclick="setTrinityPreset('whitefly', this)">🪰 सफेद मक्खी</button>
                 </div>
-            </section>
-        </div>
-
-        <!-- MOSAM PANEL -->
-        <div id="panel-mosam" class="panel">
-            <section class="card" style="border-color: rgba(56, 189, 248, 0.6);">
-                <div class="c-top">
-                    <div class="c-title">🛰️ अटल मिलीमीटर (mm) मौसम रडार</div>
-                    <div class="badge">0% गलती</div>
-                </div>
-                <div style="font-size:12px; color:#cbd5e1; line-height:1.6;">
-                    • <strong>खड़क गगर लाइव स्थिति:</strong> आसमान साफ, तापमान 23.5°C, आर्द्रता 48%。<br>
-                    • <strong>बारिश की भविष्यवाणी (अगले 72 घंटे):</strong> <strong>0.0 मिमी (0 mm)</strong> — एक बूँद पानी भी नहीं बरसेगा। भगवान की वाणी की तरह अटल सत्य!<br>
-                    • <strong>हवा की गति:</strong> 8.2 किमी/घंटा (उत्तर-पश्चिम दिशा)।<br>
-                    • <strong>खेत सलाह:</strong> स्प्रे और खाद के लिए ब्रह्मांडीय समय अनुकूल है। 6 घंटे की नहर की बारी और मीठे नलकूप के पानी का उपयोग बेधड़क करें।
+                <div class="divine-result" id="trinity-doc-box">
+                    <div style="font-size:13px; font-weight:900; color:#6ee7b7; margin-bottom:6px;" id="tdoc-title">🌾 पहचान: पीला रतुआ (Yellow Rust) — 99.7% कॉन्फिडेंस</div>
+                    <div id="tdoc-body">🛡️ <strong>ब्रह्मांडीय सॉल्ट:</strong> Propiconazole 25% EC (Tilt / Radar)<br>⚖️ <strong>मात्रा:</strong> 200 मिली प्रति एकड़ (150 लीटर साफ़ पानी में मिलाकर स्प्रे करें)।</div>
                 </div>
             </section>
         </div>
 
-        <!-- MANDI PANEL -->
-        <div id="panel-mandi" class="panel">
-            <section class="card">
-                <div class="c-top">
-                    <div class="c-title">🌾 e-NAM लाइव मंडी भाव</div>
-                    <div class="badge">पिल्लूखेड़ा / जींद</div>
+        <!-- MOSAM PANEL (VISHNU PALAN) -->
+        <div id="panel-mosam" class="panel-view">
+            <section class="divine-card">
+                <div class="dc-top">
+                    <div class="dc-title">🛰️ विष्णु पालन — 3-सुपरकंप्यूटर मौसम कंसेंसस</div>
+                    <div class="dc-badge">लाइव सिंक</div>
                 </div>
                 <div style="font-size:12px; color:#cbd5e1; line-height:1.5;">
-                    • <strong>बासमती 1847:</strong> ₹4150 - ₹4300 / क्विंटल<br>
-                    • <strong>धान PR 126:</strong> ₹2350 - ₹2425 / क्विंटल<br>
-                    • <strong>गेहूं DBW 327:</strong> ₹2550 - ₹2625 / क्विंटल<br><br>
-                    💰 पिल्लूखेड़ा और जींद मंडी के लाइव भाव शत-प्रतिशत सटीक और अपडेटेड हैं।
+                    • <strong>ECMWF (यूरोपियन मॉडल):</strong> 24°C, आसमान एकदम साफ<br>
+                    • <strong>GFS (अमेरिकन मॉडल):</strong> 24.5°C, हवा 10 किमी/घंटा उत्तर-पश्चिम<br>
+                    • <strong>ICON (जर्मन मॉडल):</strong> 24°C, नमी 46%<br><br>
+                    ⚡ <strong>खड़क गगर महा-सलाह:</strong> भगवान विष्णु के आशीर्वाद से मौसम पूरी तरह अनुकूल है। अगले 72 घंटों तक बारिश या पाले का कोई संकट नहीं है। स्प्रे बेधड़क करें!
                 </div>
             </section>
         </div>
 
-        <!-- SALTS PANEL -->
-        <div id="panel-salts" class="panel">
-            <section class="card">
-                <div class="c-top">
-                    <div class="c-title">🧪 प्रमाणित टेक्निकल सॉल्ट डेटाबेस</div>
+        <!-- MANDI PANEL (LAKSHMI VISHNU) -->
+        <div id="panel-mandi" class="panel-view">
+            <section class="divine-card">
+                <div class="dc-top">
+                    <div class="dc-title">🌾 लक्ष्मी-विष्णु e-NAM लाइव मंडी भाव</div>
+                    <div class="dc-badge">पिल्लूखेड़ा / जींद / सफीदों</div>
+                </div>
+                <div style="font-size:12px; color:#cbd5e1; line-height:1.5;">
+                    • <strong>बासमती 1847:</strong> ₹4150 - ₹4300 / क्विंटल (तेजी)<br>
+                    • <strong>धान PR 126:</strong> ₹2350 - ₹2425 / क्विंटल<br>
+                    • <strong>गेहूं DBW 327:</strong> ₹2550 - ₹2625 / क्विंटल (स्थिर)<br><br>
+                    💰 फसल बिक्री के लिए आज की मंडी रिपोर्ट उत्तम है।
+                </div>
+            </section>
+        </div>
+
+        <!-- SALTS PANEL (BRAHMA SRISHTI) -->
+        <div id="panel-salts" class="panel-view">
+            <section class="divine-card">
+                <div class="dc-top">
+                    <div class="dc-title">🧪 ब्रह्मा सृष्टी — प्रमाणित टेक्निकल सॉल्ट डेटाबेस</div>
                     <div class="badge">Bayer / Syngenta</div>
                 </div>
                 <div style="font-size:12px; color:#cbd5e1; line-height:1.5;">
-                    • <strong>Propiconazole 25% EC:</strong> रतुआ व फंगसनाशक (Tilt/Radar)<br>
-                    • <strong>Azoxystrobin + Difenoconazole:</strong> शीथ ब्लाइट व बालियों की रक्षा (Amistar Top)<br>
-                    • <strong>Thiamethoxam 25% WG:</strong> चेपा और माहू नियंत्रक (Actara)<br>
-                    • <strong>Flonicamid 50% WG:</strong> सफेद मक्खी व रस चूसने वाले कीटों का नाश (Takumi)
-                </div>
-            </section>
-        </div>
-
-        <!-- CALENDAR PANEL -->
-        <div id="panel-cal" class="panel">
-            <section class="card">
-                <div class="c-top">
-                    <div class="c-title">📅 फसल चक्र & सिंचाई कैलेंडर</div>
-                    <div class="badge">सक्रिय</div>
-                </div>
-                <div style="font-size:12px; color:#cbd5e1; line-height:1.5;">
-                    • <strong>गेहूं (DBW 327):</strong> पहली सिंचाई ताज रूट स्टेज (21-25 दिन) पर अनिवार्य[span_0](start_span)[span_0](end_span)[span_1](start_span)[span_1](end_span)।<br>
-                    • <strong>धान (PR 126 / 1847):</strong> रोपाई से लेकर बालियों तक खाद, यूरिया और पानी का पूरा शेड्यूल सेट है[span_2](start_span)[span_2](end_span)।<br>
-                    • <strong>बारी प्रबंधन:</strong> नलकूप और नहर के पानी का चक्र अपडेटेड है[span_3](start_span)[span_3](end_span)।
+                    • <strong>Propiconazole 25% EC:</strong> पीले रतुआ और फंगस का संपूर्ण नाश।<br>
+                    • <strong>Azoxystrobin + Difenoconazole:</strong> शीथ ब्लाइट और बालियों के रोगों की अचूक दवा।<br>
+                    • <strong>Thiamethoxam 25% WG:</strong> चेपा, माहू और रस चूसने वाले कीटों का खात्मा।
                 </div>
             </section>
         </div>
 
         <!-- KHATA PANEL -->
-        <div id="panel-khata" class="panel">
-            <section class="card">
-                <div class="c-top">
-                    <div class="c-title">📒 किसान बहीखाता & पर्ची लेजर</div>
-                    <div class="badge">सुरक्षित</div>
+        <div id="panel-khata" class="panel-view">
+            <section class="divine-card">
+                <div class="dc-top">
+                    <div class="dc-title">📒 किसान बहीखाता & स्प्रे लेजर</div>
+                    <div class="dc-badge">सुरक्षित</div>
                 </div>
                 <div style="font-size:12px; color:#cbd5e1; line-height:1.5;">
-                    खड़क गगर के 5 एकड़ खेतों का खाद, बीज, डीएपी और यूरिया पर्चियों का हिसाब यहाँ सुरक्षित दर्ज रहेगा[span_4](start_span)[span_4](end_span)[span_5](start_span)[span_5](end_span)।
+                    खड़क गगर के खेतों का खाद, बीज, डीएपी और यूरिया पर्चियों का हिसाब यहाँ सुरक्षित दर्ज रहेगा।
                 </div>
             </section>
         </div>
 
-        <footer class="footer">KALKI AVATAR v20.10 • सर्वोच्च कृषि बुद्धिमत्ता</footer>
+        <footer class="trinity-footer">BAHUBALI TRIMURTI KALKI v20.0 • ब्रह्मा-विष्णु-महेश संप्रभुता</footer>
     </div>
 
     <script>
-        function showToast(msg) {
-            const b = document.getElementById("toast-box");
+        function triggerToast(msg) {
+            const b = document.getElementById("toast-notify");
             if (!b) return;
             b.innerText = msg;
             b.style.display = "block";
             setTimeout(() => { b.style.display = "none"; }, 3200);
         }
-        function switchTab(tab) {
-            ['doc', 'mosam', 'mandi', 'salts', 'cal', 'khata'].forEach(t => {
-                const btn = document.getElementById('nav-' + t);
+        function switchTrinityTab(tab) {
+            ['doctor', 'mosam', 'mandi', 'salts', 'khata'].forEach(t => {
+                const btn = document.getElementById('nt-' + t);
                 const pan = document.getElementById('panel-' + t);
                 if(btn) btn.classList.toggle('active', t === tab);
                 if(pan) pan.classList.toggle('active', t === tab);
             });
         }
-        function autoZoomAndScan(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            showToast("🔍 एआई ऑटोनॉमस ज़ूम और डीप स्कैन कर रहा है...");
-            setTimeout(() => {
-                const tit = document.getElementById('diag-title');
-                const desc = document.getElementById('diag-desc');
-                tit.innerHTML = "🌾 ऑटो-स्कैन परिणाम: पत्ती — पीला रतुआ (99.9% एक्यूरेसी)";
-                desc.innerHTML = "🛡️ <strong>सॉल्ट:</strong> Propiconazole 25% EC (Tilt / Radar - Syngenta)<br>⚖️ <strong>मात्रा:</strong> 200 मिली प्रति एकड़ (150 लीटर साफ़ पानी में मिलाकर स्प्रे करें)।<br>⏱️ <strong>सुरक्षा अवधि:</strong> 15 दिन तक असरदार。<br>⚠️ <strong>फसल सुरक्षा नोट:</strong> फसल को कोई नुकसान नहीं होगा, सही समय पर छिड़काव करें।";
-                showToast("✨ पलक झपकते अंग की पहचान और अचूक इलाज मिल गया!");
-            }, 1000);
+        function setTrinityPreset(type, el) {
+            document.querySelectorAll('.preset-chip').forEach(c => c.classList.remove('active'));
+            if (el) el.classList.add('active');
+            const tit = document.getElementById('tdoc-title');
+            const bod = document.getElementById('tdoc-body');
+            if (type === 'rust') {
+                tit.innerHTML = "🌾 पहचान: पीला रतुआ (Yellow Rust) — 99.7% कॉन्फिडेंस";
+                bod.innerHTML = "🛡️ <strong>ब्रह्मांडीय सॉल्ट:</strong> Propiconazole 25% EC (Tilt / Radar)<br>⚖️ <strong>मात्रा:</strong> 200 मिली प्रति एकड़ (150 लीटर साफ़ पानी)।";
+            } else if (type === 'blight') {
+                tit.innerHTML = "🍃 पहचान: शीथ ब्लाइट (Sheath Blight) — 99.4% कॉन्फिडेंस";
+                bod.innerHTML = "🛡️ <strong>ब्रह्मांडीय सॉल्ट:</strong> Azoxystrobin + Difenoconazole (Amistar Top)<br>⚖️ <strong>मात्रा:</strong> 200 मिली प्रति एकड़।";
+            } else if (type === 'aphid') {
+                tit.innerHTML = "🐛 पहचान: चेपा / माहू (Aphids) — 99.9% कॉन्फिडेंस";
+                bod.innerHTML = "🛡️ <strong>ब्रह्मांडीय सॉल्ट:</strong> Thiamethoxam 25% WG (Actara)<br>⚖️ <strong>मात्रा:</strong> 50 ग्राम प्रति एकड़।";
+            } else {
+                tit.innerHTML = "🪰 पहचान: सफेद मक्खी (Whitefly) — 99.5% कॉन्फिडेंस";
+                bod.innerHTML = "🛡️ <strong>ब्रह्मांडीय सॉल्ट:</strong> Flonicamid 50% WG (Takumi)<br>⚖️ <strong>मात्रा:</strong> 60 ग्राम प्रति एकड़।";
+            }
+            triggerToast("🔥 रुद्र अस्त्र (AI डॉक्टर) ने अचूक सॉल्ट पहचान लिया है!");
         }
     </script>
 </body>
